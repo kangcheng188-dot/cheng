@@ -1,0 +1,2203 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>绝命毒师宇宙 · 人物关系图谱</title>
+<meta name="description" content="《绝命毒师》与《风骚律师》全人物关系网络、事件时间线与人物档案。" />
+<style>
+/* ============================================================
+   TOKENS — 沙漠夜 / 漂白卷宗
+   ============================================================ */
+:root{
+  --bg:#12110D; --bg-2:#191712; --bg-3:#211E18; --bg-4:#2A261D;
+  --line:#2E2A21; --line-2:#403A2C;
+  --txt:#EDE7D8; --txt-2:#A9A08C; --txt-3:#726A58;
+  --accent:#E0A83C; --accent-soft:#E0A83C22;
+  --accent-2:#4FC7DE; --danger:#D0453F; --ok:#3FBF87;
+  --shadow:0 18px 44px -18px #000000cc;
+  --grain:.055;
+
+  --f-heisenberg:#2FB8D4; --f-white:#D9A441; --f-dea:#6B88EA;
+  --f-fring:#E8823C;      --f-cartel:#D9483F; --f-law:#A188E4;
+  --f-street:#3FBF87;     --f-nazi:#B0824F;   --f-civil:#8E9AA6;
+
+  --r-family:#D9A441; --r-romance:#E276A8; --r-ally:#3FBF87;
+  --r-business:#6B88EA; --r-mentor:#A188E4; --r-rival:#E0763E; --r-kill:#D0453F;
+
+  --font-display:"Oswald","Archivo Narrow","Arial Narrow","HarmonyOS Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --font-body:system-ui,-apple-system,"Segoe UI","PingFang SC","HarmonyOS Sans SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --font-mono:ui-monospace,"SF Mono","JetBrains Mono","Roboto Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#E6E4DB; --bg-2:#F0EEE6; --bg-3:#FAF8F2; --bg-4:#FFFFFF;
+    --line:#CFCABA; --line-2:#B6B0A0;
+    --txt:#1C1913; --txt-2:#5B5646; --txt-3:#8A8371;
+    --accent:#A2660F; --accent-soft:#A2660F1a;
+    --accent-2:#0D7A8F; --danger:#A3302A; --ok:#17805A;
+    --shadow:0 14px 34px -18px #6b634d66;
+    --grain:.03;
+    --f-heisenberg:#0E7E96; --f-white:#9C6B12; --f-dea:#3A54B8;
+    --f-fring:#B25611;      --f-cartel:#A62E27; --f-law:#6A46B8;
+    --f-street:#17805A;     --f-nazi:#7A5326;   --f-civil:#5B6773;
+    --r-family:#9C6B12; --r-romance:#B0417A; --r-ally:#17805A;
+    --r-business:#3A54B8; --r-mentor:#6A46B8; --r-rival:#A85519; --r-kill:#A3302A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12110D; --bg-2:#191712; --bg-3:#211E18; --bg-4:#2A261D;
+  --line:#2E2A21; --line-2:#403A2C;
+  --txt:#EDE7D8; --txt-2:#A9A08C; --txt-3:#726A58;
+  --accent:#E0A83C; --accent-soft:#E0A83C22;
+  --accent-2:#4FC7DE; --danger:#D0453F; --ok:#3FBF87;
+  --shadow:0 18px 44px -18px #000000cc; --grain:.055;
+  --f-heisenberg:#2FB8D4; --f-white:#D9A441; --f-dea:#6B88EA;
+  --f-fring:#E8823C;      --f-cartel:#D9483F; --f-law:#A188E4;
+  --f-street:#3FBF87;     --f-nazi:#B0824F;   --f-civil:#8E9AA6;
+  --r-family:#D9A441; --r-romance:#E276A8; --r-ally:#3FBF87;
+  --r-business:#6B88EA; --r-mentor:#A188E4; --r-rival:#E0763E; --r-kill:#D0453F;
+}
+:root[data-theme="light"]{
+  --bg:#E6E4DB; --bg-2:#F0EEE6; --bg-3:#FAF8F2; --bg-4:#FFFFFF;
+  --line:#CFCABA; --line-2:#B6B0A0;
+  --txt:#1C1913; --txt-2:#5B5646; --txt-3:#8A8371;
+  --accent:#A2660F; --accent-soft:#A2660F1a;
+  --accent-2:#0D7A8F; --danger:#A3302A; --ok:#17805A;
+  --shadow:0 14px 34px -18px #6b634d66; --grain:.03;
+  --f-heisenberg:#0E7E96; --f-white:#9C6B12; --f-dea:#3A54B8;
+  --f-fring:#B25611;      --f-cartel:#A62E27; --f-law:#6A46B8;
+  --f-street:#17805A;     --f-nazi:#7A5326;   --f-civil:#5B6773;
+  --r-family:#9C6B12; --r-romance:#B0417A; --r-ally:#17805A;
+  --r-business:#3A54B8; --r-mentor:#6A46B8; --r-rival:#A85519; --r-kill:#A3302A;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:var(--font-body); font-size:15px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; overflow:hidden;
+}
+body::before{ /* 沙尘颗粒 */
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:var(--grain);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+  mix-blend-mode:overlay;
+}
+button,input,select{font:inherit;color:inherit;}
+button{cursor:pointer;background:none;border:none;padding:0;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px;}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:9px}
+::-webkit-scrollbar-thumb:hover{background:var(--txt-3)}
+
+/* ============================================================
+   APP SHELL
+   ============================================================ */
+#app{display:flex;flex-direction:column;height:100dvh;}
+
+header.topbar{
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  padding:10px 18px; border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,var(--bg-2),var(--bg));
+  position:relative;z-index:40;
+}
+.brand{display:flex;align-items:center;gap:12px;min-width:0;}
+.brand-tiles{display:flex;gap:4px;}
+.btile{
+  width:30px;height:30px;border:1px solid var(--line-2);border-radius:4px;
+  background:var(--bg-3);display:grid;place-items:center;position:relative;
+  font-family:var(--font-mono);font-size:13px;font-weight:700;letter-spacing:.02em;
+  animation:tilein .5s cubic-bezier(.2,.8,.3,1) backwards;
+}
+.btile:nth-child(1){animation-delay:.02s} .btile:nth-child(2){animation-delay:.09s}
+.btile:nth-child(3){animation-delay:.16s} .btile:nth-child(4){animation-delay:.23s}
+.btile.hl{background:var(--accent);border-color:var(--accent);color:#12110D;}
+@media (prefers-color-scheme: light){.btile.hl{color:#FAF8F2;}}
+:root[data-theme="light"] .btile.hl{color:#FAF8F2;}
+:root[data-theme="dark"] .btile.hl{color:#12110D;}
+.btile sub{position:absolute;bottom:1px;right:3px;font-size:7px;opacity:.65;font-weight:400;}
+@keyframes tilein{from{opacity:0;transform:translateY(-8px) rotate(-6deg)}to{opacity:1;transform:none}}
+.brand-txt{min-width:0;}
+.brand-txt h1{
+  margin:0;font-family:var(--font-display);font-size:19px;font-weight:600;
+  letter-spacing:.06em;line-height:1.15;white-space:nowrap;
+}
+.brand-txt p{
+  margin:0;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--txt-3);white-space:nowrap;
+}
+
+.tabs{display:flex;gap:2px;background:var(--bg-3);padding:3px;border-radius:7px;border:1px solid var(--line);}
+.tab{
+  padding:6px 15px;border-radius:5px;font-size:13.5px;font-weight:500;color:var(--txt-2);
+  transition:background .18s,color .18s;white-space:nowrap;
+}
+.tab:hover{color:var(--txt);}
+.tab[aria-selected="true"]{background:var(--accent);color:#12110D;font-weight:600;}
+@media (prefers-color-scheme: light){.tab[aria-selected="true"]{color:#FAF8F2;}}
+:root[data-theme="light"] .tab[aria-selected="true"]{color:#FAF8F2;}
+:root[data-theme="dark"] .tab[aria-selected="true"]{color:#12110D;}
+
+.top-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.search{position:relative;}
+.search input{
+  width:190px;padding:7px 11px 7px 30px;border-radius:6px;background:var(--bg-3);
+  border:1px solid var(--line);font-size:13px;transition:border-color .18s,width .2s;
+}
+.search input::placeholder{color:var(--txt-3);}
+.search input:focus{border-color:var(--accent);outline:none;width:225px;}
+.search .ico{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--txt-3);pointer-events:none;line-height:0;}
+.sugg{
+  position:absolute;top:calc(100% + 5px);left:0;right:0;background:var(--bg-3);
+  border:1px solid var(--line-2);border-radius:7px;box-shadow:var(--shadow);
+  max-height:290px;overflow:auto;z-index:60;padding:4px;
+}
+.sugg[hidden]{display:none;}
+.sugg button{
+  display:flex;align-items:center;gap:9px;width:100%;padding:6px 8px;border-radius:5px;
+  text-align:left;font-size:13px;
+}
+.sugg button:hover,.sugg button.on{background:var(--bg-4);}
+.sugg .sym{
+  font-family:var(--font-mono);font-size:10px;font-weight:700;width:24px;height:22px;
+  display:grid;place-items:center;border-radius:3px;flex:none;
+}
+.sugg .en{color:var(--txt-3);font-size:11px;margin-left:auto;font-family:var(--font-mono);}
+.iconbtn{
+  width:32px;height:32px;border-radius:6px;border:1px solid var(--line);background:var(--bg-3);
+  display:grid;place-items:center;color:var(--txt-2);transition:color .18s,border-color .18s;
+}
+.iconbtn:hover{color:var(--accent);border-color:var(--line-2);}
+
+main{flex:1;min-height:0;position:relative;}
+.view{position:absolute;inset:0;display:none;}
+.view.on{display:flex;}
+
+/* ============================================================
+   VIEW: 关系网络
+   ============================================================ */
+.rail{
+  width:236px;flex:none;border-right:1px solid var(--line);background:var(--bg-2);
+  overflow-y:auto;padding:14px 0 24px;
+}
+.rail section{padding:0 14px 16px;}
+.rail h3{
+  margin:0 0 9px;font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--txt-3);font-weight:600;
+  display:flex;align-items:center;gap:8px;
+}
+.rail h3::after{content:"";flex:1;height:1px;background:var(--line);}
+.seg{display:flex;background:var(--bg-3);border:1px solid var(--line);border-radius:6px;padding:2px;gap:2px;}
+.seg button{flex:1;padding:5px 0;font-size:12px;border-radius:4px;color:var(--txt-2);transition:.16s;}
+.seg button[aria-pressed="true"]{background:var(--bg-4);color:var(--accent);font-weight:600;box-shadow:inset 0 0 0 1px var(--line-2);}
+.chips{display:flex;flex-direction:column;gap:3px;}
+.chip{
+  display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:5px;font-size:12.5px;
+  color:var(--txt-2);transition:background .15s,color .15s;width:100%;text-align:left;
+}
+.chip:hover{background:var(--bg-3);color:var(--txt);}
+.chip .dot{width:9px;height:9px;border-radius:2px;flex:none;transition:.15s;}
+.chip .n{margin-left:auto;font-family:var(--font-mono);font-size:10px;color:var(--txt-3);}
+.chip[aria-pressed="false"]{opacity:.42;}
+.chip[aria-pressed="false"] .dot{background:transparent!important;box-shadow:inset 0 0 0 1.5px var(--txt-3);}
+.chip[aria-pressed="true"]{color:var(--txt);}
+.chip .ln{width:16px;height:0;border-top:2.5px solid;flex:none;}
+.rail .mini{font-size:11.5px;color:var(--txt-3);line-height:1.5;margin:8px 0 0;}
+.railbtn{
+  width:100%;padding:7px;border:1px solid var(--line);border-radius:6px;background:var(--bg-3);
+  font-size:12.5px;color:var(--txt-2);transition:.16s;
+}
+.railbtn:hover{color:var(--accent);border-color:var(--line-2);}
+
+.stage{flex:1;position:relative;min-width:0;background:
+  radial-gradient(120% 90% at 50% 0%,color-mix(in srgb,var(--accent) 5%,transparent),transparent 62%),var(--bg);}
+#net{display:block;width:100%;height:100%;cursor:grab;touch-action:none;}
+#net.grabbing{cursor:grabbing;}
+.stage-hud{
+  position:absolute;left:14px;bottom:14px;display:flex;gap:6px;align-items:center;
+  font-family:var(--font-mono);font-size:10.5px;color:var(--txt-3);
+  background:color-mix(in srgb,var(--bg-2) 82%,transparent);backdrop-filter:blur(6px);
+  border:1px solid var(--line);border-radius:7px;padding:5px 8px;letter-spacing:.05em;
+}
+.zoomers{position:absolute;right:14px;bottom:14px;display:flex;flex-direction:column;gap:5px;}
+.zoomers button{
+  width:30px;height:30px;border-radius:6px;border:1px solid var(--line);
+  background:color-mix(in srgb,var(--bg-2) 85%,transparent);backdrop-filter:blur(6px);
+  color:var(--txt-2);font-size:15px;display:grid;place-items:center;transition:.16s;
+}
+.zoomers button:hover{color:var(--accent);border-color:var(--line-2);}
+.tooltip{
+  position:absolute;pointer-events:none;z-index:30;padding:8px 11px;border-radius:8px;
+  background:color-mix(in srgb,var(--bg-3) 95%,transparent);border:1px solid var(--line-2);
+  box-shadow:var(--shadow);max-width:250px;font-size:12.5px;opacity:0;transition:opacity .12s;
+  backdrop-filter:blur(8px);
+}
+.tooltip.on{opacity:1;}
+.tooltip b{display:block;font-size:14px;margin-bottom:1px;}
+.tooltip .r{color:var(--txt-2);font-size:11.5px;}
+.tooltip .k{margin-top:5px;font-family:var(--font-mono);font-size:10px;color:var(--txt-3);letter-spacing:.08em;}
+
+/* ============================================================
+   卷宗抽屉
+   ============================================================ */
+.dossier{
+  width:352px;flex:none;border-left:1px solid var(--line);background:var(--bg-2);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.dossier.empty .d-body{display:none;}
+.d-blank{
+  flex:1;display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;padding:34px;text-align:center;color:var(--txt-3);
+}
+.dossier.empty .d-blank{display:flex;}
+.d-blank .big{font-family:var(--font-display);font-size:15px;letter-spacing:.1em;color:var(--txt-2);}
+.d-blank p{margin:0;font-size:12.5px;line-height:1.7;}
+.d-body{flex:1;overflow-y:auto;}
+.d-head{padding:18px 18px 15px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+.d-head::before{content:"";position:absolute;inset:0;opacity:.1;background:var(--fc);}
+.d-head>*{position:relative;}
+.d-close{position:absolute;top:12px;right:12px;color:var(--txt-3);font-size:17px;line-height:1;z-index:2;}
+.d-close:hover{color:var(--txt);}
+.d-tile{
+  width:56px;height:56px;border-radius:7px;border:1.5px solid var(--fc);
+  background:color-mix(in srgb,var(--fc) 15%,var(--bg-3));
+  display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:21px;
+  color:var(--fc);position:relative;margin-bottom:11px;
+}
+.d-tile sub{position:absolute;bottom:3px;right:5px;font-size:8.5px;font-weight:500;opacity:.75;}
+.d-name{margin:0;font-family:var(--font-display);font-size:24px;font-weight:600;letter-spacing:.02em;line-height:1.15;}
+.d-en{margin:2px 0 0;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--txt-3);text-transform:uppercase;}
+.d-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px;}
+.badge{
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  padding:3px 7px;border-radius:4px;border:1px solid var(--line-2);color:var(--txt-2);background:var(--bg-3);
+}
+.badge.fc{border-color:var(--fc);color:var(--fc);background:color-mix(in srgb,var(--fc) 12%,transparent);}
+.badge.bb{border-color:var(--f-heisenberg);color:var(--f-heisenberg);}
+.badge.bcs{border-color:var(--f-law);color:var(--f-law);}
+.d-sec{padding:15px 18px;border-bottom:1px solid var(--line);}
+.d-sec h4{
+  margin:0 0 8px;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--txt-3);font-weight:600;
+}
+.d-sec p{margin:0;font-size:13.5px;line-height:1.72;color:var(--txt-2);}
+.d-sec p strong{color:var(--txt);font-weight:600;}
+.quote{
+  border-left:2px solid var(--fc);padding:2px 0 2px 12px;margin:0;
+  font-size:13.5px;line-height:1.65;font-style:italic;color:var(--txt);
+}
+.quote cite{display:block;font-style:normal;font-family:var(--font-mono);font-size:10px;
+  letter-spacing:.08em;color:var(--txt-3);margin-top:5px;}
+.rel-list{display:flex;flex-direction:column;gap:2px;}
+.rel{display:flex;align-items:center;gap:9px;width:100%;padding:6px 7px;border-radius:6px;text-align:left;transition:background .15s;}
+.rel:hover{background:var(--bg-3);}
+.rel .sym{
+  width:27px;height:25px;flex:none;border-radius:4px;display:grid;place-items:center;
+  font-family:var(--font-mono);font-size:10.5px;font-weight:700;
+}
+.rel .who{font-size:13px;font-weight:500;line-height:1.3;}
+.rel .what{font-size:11.5px;color:var(--txt-2);line-height:1.35;}
+.rel .bar{width:3px;align-self:stretch;border-radius:3px;flex:none;}
+.d-events{display:flex;flex-direction:column;gap:7px;}
+.d-ev{display:flex;gap:10px;width:100%;text-align:left;padding:5px 6px;border-radius:6px;transition:background .15s;}
+.d-ev:hover{background:var(--bg-3);}
+.d-ev .yr{font-family:var(--font-mono);font-size:10.5px;color:var(--txt-3);flex:none;padding-top:2px;font-variant-numeric:tabular-nums;}
+.d-ev .tl{font-size:12.5px;line-height:1.45;color:var(--txt-2);}
+.d-ev:hover .tl{color:var(--txt);}
+
+/* ============================================================
+   VIEW: 时间线
+   ============================================================ */
+.tl-wrap{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;}
+.tl-inner{width:100%;max-width:1020px;padding:26px 24px 90px;}
+.tl-head{margin-bottom:22px;}
+.tl-head h2{
+  margin:0 0 6px;font-family:var(--font-display);font-size:30px;font-weight:600;letter-spacing:.03em;
+  text-wrap:balance;
+}
+.tl-head p{margin:0;color:var(--txt-2);font-size:14px;max-width:76ch;line-height:1.8;}
+.tl-filters{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;padding-bottom:16px;border-bottom:1px solid var(--line);}
+.fbtn{
+  padding:5px 13px;border-radius:20px;border:1px solid var(--line);background:var(--bg-2);
+  font-size:12.5px;color:var(--txt-2);transition:.16s;
+}
+.fbtn:hover{border-color:var(--line-2);color:var(--txt);}
+.fbtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#12110D;font-weight:600;}
+@media (prefers-color-scheme: light){.fbtn[aria-pressed="true"]{color:#FAF8F2;}}
+:root[data-theme="light"] .fbtn[aria-pressed="true"]{color:#FAF8F2;}
+:root[data-theme="dark"] .fbtn[aria-pressed="true"]{color:#12110D;}
+
+.era{margin-top:34px;}
+.era-head{display:flex;align-items:baseline;gap:12px;padding-bottom:9px;border-bottom:1px solid var(--line-2);}
+.era-head .yrs{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--accent);
+  font-variant-numeric:tabular-nums;flex:none;
+}
+.era-head h3{margin:0;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:.04em;}
+.era-head .sub{margin-left:auto;font-size:11.5px;color:var(--txt-3);text-align:right;}
+.era-body{position:relative;padding-left:0;}
+.ev{
+  display:grid;grid-template-columns:74px 1fr;gap:0 18px;position:relative;
+  padding:16px 0 16px;border-bottom:1px dashed var(--line);
+}
+.ev:last-child{border-bottom:none;}
+.ev-when{
+  font-family:var(--font-mono);font-size:11px;color:var(--txt-3);letter-spacing:.04em;
+  font-variant-numeric:tabular-nums;padding-top:3px;position:relative;
+}
+.ev-when .ep{display:block;margin-top:3px;font-size:9.5px;color:var(--txt-3);opacity:.8;}
+.ev-body{min-width:0;position:relative;padding-left:20px;}
+.ev-body::before{
+  content:"";position:absolute;left:0;top:7px;bottom:-17px;width:1px;background:var(--line);
+}
+.ev:last-child .ev-body::before{bottom:auto;height:0;}
+.ev-body::after{
+  content:"";position:absolute;left:-4px;top:5px;width:9px;height:9px;border-radius:2px;
+  background:var(--bg);border:2px solid var(--mk,var(--line-2));
+}
+.ev.major .ev-body::after{background:var(--mk,var(--accent));border-color:var(--mk,var(--accent));width:11px;height:11px;left:-5px;}
+.ev h4{margin:0 0 5px;font-size:16px;font-weight:600;line-height:1.35;letter-spacing:.01em;text-wrap:balance;}
+.ev.major h4{font-size:17.5px;}
+.ev p{margin:0;font-size:13.5px;line-height:1.75;color:var(--txt-2);max-width:70ch;}
+.ev-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:7px;align-items:center;}
+.show-pill{
+  font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;padding:2px 6px;border-radius:3px;
+  border:1px solid currentColor;
+}
+.show-pill.bcs{color:var(--f-law);} .show-pill.bb{color:var(--f-heisenberg);}
+.show-pill.ec{color:var(--f-street);} .show-pill.pre{color:var(--txt-3);}
+.ev-cast{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px;}
+.cast{
+  display:inline-flex;align-items:center;gap:5px;padding:2.5px 8px 2.5px 5px;border-radius:20px;
+  border:1px solid var(--line);background:var(--bg-2);font-size:11.5px;color:var(--txt-2);transition:.15s;
+}
+.cast:hover{border-color:var(--cc);color:var(--txt);background:var(--bg-3);}
+.cast i{width:7px;height:7px;border-radius:2px;background:var(--cc);flex:none;}
+
+/* ============================================================
+   VIEW: 人物档案
+   ============================================================ */
+.cx-wrap{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;}
+.cx-inner{width:100%;max-width:1180px;padding:26px 24px 90px;}
+.cx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:11px;margin-top:20px;}
+.card{
+  border:1px solid var(--line);border-radius:10px;background:var(--bg-2);padding:13px;
+  display:flex;gap:11px;align-items:flex-start;text-align:left;transition:.18s;position:relative;overflow:hidden;
+}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--fc);opacity:.85;}
+.card:hover{border-color:var(--fc);background:var(--bg-3);transform:translateY(-2px);box-shadow:var(--shadow);}
+.card .tile{
+  width:38px;height:38px;flex:none;border-radius:5px;display:grid;place-items:center;position:relative;
+  font-family:var(--font-mono);font-weight:700;font-size:14px;color:var(--fc);
+  border:1px solid color-mix(in srgb,var(--fc) 55%,transparent);
+  background:color-mix(in srgb,var(--fc) 13%,transparent);
+}
+.card .tile sub{position:absolute;bottom:1px;right:3px;font-size:7px;font-weight:500;opacity:.8;}
+.card .txt{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.card .nm{display:block;font-size:14.5px;font-weight:600;line-height:1.3;}
+.card .en{display:block;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.06em;color:var(--txt-3);text-transform:uppercase;}
+.card .rl{display:block;font-size:11.5px;color:var(--txt-2);margin-top:3px;line-height:1.45;}
+.cx-empty{padding:50px 0;text-align:center;color:var(--txt-3);font-size:14px;}
+.section-count{font-family:var(--font-mono);font-size:11px;color:var(--txt-3);letter-spacing:.08em;}
+
+/* 统计条 */
+.stats{display:flex;gap:26px;flex-wrap:wrap;margin-top:16px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.stat b{display:block;font-family:var(--font-mono);font-size:24px;font-weight:600;letter-spacing:-.01em;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.1;}
+.stat span{font-size:11px;font-family:var(--font-mono);letter-spacing:.13em;text-transform:uppercase;color:var(--txt-3);}
+
+/* 响应式 */
+.rail-toggle{display:none;}
+@media (max-width:1180px){
+  .dossier{position:absolute;right:0;top:0;bottom:0;z-index:50;box-shadow:var(--shadow);
+    transform:translateX(100%);transition:transform .25s cubic-bezier(.2,.8,.3,1);}
+  .dossier.open{transform:none;}
+  .dossier.empty{transform:translateX(100%);}
+}
+@media (max-width:860px){
+  header.topbar{padding:9px 12px;gap:10px;}
+  .brand-txt h1{font-size:16px;} .brand-txt p{display:none;}
+  .search input{width:130px;} .search input:focus{width:160px;}
+  .rail{position:absolute;left:0;top:0;bottom:0;z-index:45;transform:translateX(-100%);
+    transition:transform .25s cubic-bezier(.2,.8,.3,1);box-shadow:var(--shadow);}
+  .rail.open{transform:none;}
+  .rail-toggle{display:grid;position:absolute;left:12px;top:12px;z-index:44;width:34px;height:34px;
+    border-radius:7px;border:1px solid var(--line);background:color-mix(in srgb,var(--bg-2) 88%,transparent);
+    backdrop-filter:blur(6px);place-items:center;color:var(--txt-2);}
+  .dossier{width:min(340px,90vw);}
+  .tl-inner,.cx-inner{padding:20px 15px 80px;}
+  .ev{grid-template-columns:56px 1fr;gap:0 10px;}
+  .tl-head h2{font-size:24px;}
+  .btile:nth-child(n+3){display:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-tiles" aria-hidden="true">
+        <div class="btile hl">Br<sub>35</sub></div>
+        <div class="btile hl">Ba<sub>56</sub></div>
+        <div class="btile">S<sub>16</sub></div>
+        <div class="btile">Ca<sub>20</sub></div>
+      </div>
+      <div class="brand-txt">
+        <h1>绝命毒师宇宙 · 人物关系图谱</h1>
+        <p>Breaking Bad &nbsp;×&nbsp; Better Call Saul &nbsp;/&nbsp; Albuquerque, NM</p>
+      </div>
+    </div>
+
+    <nav class="tabs" role="tablist" aria-label="视图切换">
+      <button class="tab" role="tab" aria-selected="true" data-view="graph">关系网络</button>
+      <button class="tab" role="tab" aria-selected="false" data-view="timeline">事件时间线</button>
+      <button class="tab" role="tab" aria-selected="false" data-view="codex">人物档案</button>
+    </nav>
+
+    <div class="top-right">
+      <div class="search">
+        <span class="ico" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        </span>
+        <input id="q" type="search" placeholder="搜索人物…" autocomplete="off" aria-label="搜索人物" />
+        <div class="sugg" id="sugg" hidden></div>
+      </div>
+      <button class="iconbtn" id="themeBtn" title="切换明暗主题" aria-label="切换明暗主题">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ 关系网络 ============ -->
+    <section class="view on" id="view-graph">
+      <aside class="rail" id="rail">
+        <section>
+          <h3>剧集范围</h3>
+          <div class="seg" id="showSeg">
+            <button data-show="all" aria-pressed="true">全部</button>
+            <button data-show="bcs" aria-pressed="false">风骚律师</button>
+            <button data-show="bb" aria-pressed="false">绝命毒师</button>
+          </div>
+          <p class="mini">「全部」显示两部剧的全部人物；选择单部剧时只保留出现在该剧中的角色与他们之间的关系。</p>
+        </section>
+        <section>
+          <h3>布局</h3>
+          <div class="seg" id="layoutSeg">
+            <button data-layout="force" aria-pressed="true">力导向</button>
+            <button data-layout="cluster" aria-pressed="false">阵营分组</button>
+          </div>
+        </section>
+        <section>
+          <h3>阵营 <span id="facAll" style="margin-left:auto"></span></h3>
+          <div class="chips" id="facChips"></div>
+        </section>
+        <section>
+          <h3>关系类型</h3>
+          <div class="chips" id="relChips"></div>
+        </section>
+        <section>
+          <button class="railbtn" id="resetBtn">重置视图与筛选</button>
+        </section>
+      </aside>
+
+      <div class="stage" id="stage">
+        <button class="rail-toggle" id="railToggle" aria-label="筛选面板">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+        </button>
+        <canvas id="net"></canvas>
+        <div class="tooltip" id="tip"></div>
+        <div class="stage-hud" id="hud">—</div>
+        <div class="zoomers">
+          <button id="zin" aria-label="放大">+</button>
+          <button id="zout" aria-label="缩小">−</button>
+          <button id="zfit" aria-label="适应画面" title="适应画面">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <aside class="dossier empty" id="dossier">
+        <div class="d-blank">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>
+          <div class="big">人物卷宗</div>
+          <p>点击网络中的任意方块，查看该人物的档案、关键关系与所参与的事件。<br />滚轮缩放，拖拽平移，拖动方块可固定位置。</p>
+        </div>
+        <div class="d-body" id="dBody"></div>
+      </aside>
+    </section>
+
+    <!-- ============ 时间线 ============ -->
+    <section class="view" id="view-timeline">
+      <div class="tl-wrap">
+        <div class="tl-inner">
+          <div class="tl-head">
+            <h2>一条街的十年：从吉米·麦吉尔到海森堡</h2>
+            <p>两部剧共享同一时间轴。《风骚律师》从 2002 年的信箱室与法庭走廊开始，一路铺到 2008 年沃尔特·怀特确诊的那个早晨；《绝命毒师》的两年把所有人的命运烧尽；而收尾在 2010 年的奥马哈与阿拉斯加。下面按时序排列关键事件——每个事件都标出了卷入其中的人。</p>
+            <div class="stats" id="tlStats"></div>
+            <div class="tl-filters" id="tlFilters">
+              <button class="fbtn" data-f="all" aria-pressed="true">全部事件</button>
+              <button class="fbtn" data-f="major" aria-pressed="false">仅关键转折</button>
+              <button class="fbtn" data-f="bcs" aria-pressed="false">风骚律师</button>
+              <button class="fbtn" data-f="bb" aria-pressed="false">绝命毒师</button>
+              <button class="fbtn" data-f="after" aria-pressed="false">后传 / 尾声</button>
+            </div>
+          </div>
+          <div id="tlBody"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 人物档案 ============ -->
+    <section class="view" id="view-codex">
+      <div class="cx-wrap">
+        <div class="cx-inner">
+          <div class="tl-head">
+            <h2>人物档案库</h2>
+            <p>按阵营归档的全部登场人物。点击卡片打开卷宗，可直接跳转到该人物在关系网络中的位置。</p>
+            <div class="tl-filters" id="cxFilters"></div>
+          </div>
+          <div id="cxBody"></div>
+        </div>
+      </div>
+      <aside class="dossier empty" id="dossier2" style="border-left:1px solid var(--line)">
+        <div class="d-blank">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>
+          <div class="big">人物卷宗</div>
+          <p>点击左侧任意档案卡片查看详情。</p>
+        </div>
+        <div class="d-body" id="dBody2"></div>
+      </aside>
+    </section>
+  </main>
+</div>
+
+<script>
+/* ================================================================
+   数据层：阵营 / 关系类型 / 人物 / 关系 / 事件
+   ================================================================ */
+const FACTIONS = [
+  {id:"heisenberg", zh:"海森堡制毒线", en:"Heisenberg", v:"--f-heisenberg"},
+  {id:"white",      zh:"怀特家族",     en:"White Family", v:"--f-white"},
+  {id:"dea",        zh:"DEA / 执法",   en:"Law Enforcement", v:"--f-dea"},
+  {id:"fring",      zh:"弗林集团",     en:"Fring Empire", v:"--f-fring"},
+  {id:"cartel",     zh:"萨拉曼卡 / 卡特尔", en:"Cartel", v:"--f-cartel"},
+  {id:"law",        zh:"法律界",       en:"Legal World", v:"--f-law"},
+  {id:"street",     zh:"街头贩毒线",   en:"Street Level", v:"--f-street"},
+  {id:"nazi",       zh:"杰克帮",       en:"Aryan Brotherhood", v:"--f-nazi"},
+  {id:"civil",      zh:"平民 / 局外人", en:"Civilians", v:"--f-civil"}
+];
+
+const RELTYPES = [
+  {id:"family",   zh:"血缘 / 家庭", v:"--r-family"},
+  {id:"romance",  zh:"伴侣 / 情感", v:"--r-romance"},
+  {id:"ally",     zh:"搭档 / 盟友", v:"--r-ally"},
+  {id:"business", zh:"雇佣 / 交易", v:"--r-business"},
+  {id:"mentor",   zh:"师徒 / 庇护", v:"--r-mentor"},
+  {id:"rival",    zh:"敌对 / 冲突", v:"--r-rival"},
+  {id:"kill",     zh:"致其死亡",    v:"--r-kill", dir:true}
+];
+
+/* shows: bcs=风骚律师  bb=绝命毒师  w=权重(1-5) */
+const CHARS = [
+  {id:"walt", zh:"沃尔特·怀特", en:"Walter White", sym:"Wa", fac:"heisenberg", shows:["bb"], w:5,
+   role:"高中化学老师 → 制毒帝国「海森堡」",
+   bio:"才华被埋没了半辈子的高中化学教师。年轻时与人共创灰质科技，却在成果兑现前退股离开，只拿了五千美元。五十岁那年确诊三期肺癌，他以「给家人留下钱」为名开始制造甲基苯丙胺，用两年时间把自己锻造成新墨西哥州最危险的名字。",
+   fate:"2010 年，用后备箱里的改装 M60 机枪灭掉杰克帮，放走杰西，自己中弹后死在制毒罐旁边——手抚着那套设备，像抚摸唯一真正属于他的东西。",
+   quote:{t:"我不是有危险，我就是危险本身。有人开门被一枪打死，你以为那是我？不，敲门的人是我。", s:"S4E6"}},
+
+  {id:"jesse", zh:"杰西·平克曼", en:"Jesse Pinkman", sym:"Je", fac:"heisenberg", shows:["bb"], w:5,
+   role:"小混混 → 制毒搭档 → 幸存者",
+   bio:"沃尔特当年最差的学生，代号「Cap'n Cook」的小毒贩。他是全剧道德感最强的人，也因此被伤得最重：爱的人接连死去，被利用、被投毒、被囚禁在地洞里制毒。他一次次想抽身，一次次被拖回来。",
+   fate:"在杰克帮的地牢里被解放，亲手勒死托德。2010 年带着埃德给的新身份开车去了阿拉斯加。",
+   quote:{t:"你们都他妈完了！（Yeah, science!）", s:"S1E6"}},
+
+  {id:"skyler", zh:"斯凯勒·怀特", en:"Skyler White", sym:"Sk", fac:"white", shows:["bb"], w:5,
+   role:"沃尔特的妻子 / 洗钱账房",
+   bio:"记账员出身，怀着二胎、写着短篇小说，本来只想守住一个普通家庭。发现真相后她从惊恐、切割走向共谋——买下 A1A 洗车行、编造赌博谎言、替丈夫把钱洗白，最后被自己参与建造的东西困死。",
+   fate:"丈夫死后独自面对检方，用沃尔特留下的坐标换取减刑。最后一次通话时她说：「别再说你是为了这个家。」",
+   quote:{t:"我在等着。等你的癌症复发。", s:"S5E4"}},
+
+  {id:"hank", zh:"汉克·施拉德", en:"Hank Schrader", sym:"Hk", fac:"dea", shows:["bb","bcs"], w:5,
+   role:"DEA 缉毒探员 / 沃尔特的连襟",
+   bio:"嗓门大、爱讲荤段子的 DEA 探员，也是全剧最扎实的调查者。粗糙的外壳下藏着创伤后应激、恐慌症与固执的正义感。他花了两年追一个叫「海森堡」的幽灵，而那个人每周日都坐在他的烤肉架旁边。",
+   fate:"在托哈吉利的沙漠里认出真相后被杰克帮枪杀。临死前他对沃尔特说：「你是我见过最聪明的人，可你居然蠢到看不出他十分钟前就决定要杀我了。」",
+   quote:{t:"我一直找的那个人……就在我眼皮底下。", s:"S5E9"}},
+
+  {id:"marie", zh:"玛丽·施拉德", en:"Marie Schrader", sym:"Mr", fac:"white", shows:["bb"], w:3,
+   role:"斯凯勒的妹妹 / 汉克的妻子",
+   bio:"一身紫色、爱说谎、偶尔顺手牵羊的放射科技师。她的琐碎与虚荣在丈夫瘫痪后被彻底击穿，是全剧里少数从头到尾站在正确一边的人。",
+   fate:"失去汉克，与姐姐决裂又不得不重新联系。她坚持要把汉克的遗体找回来。"},
+
+  {id:"flynn", zh:"小沃尔特·怀特（弗林）", en:"Walter White Jr.", sym:"Fl", fac:"white", shows:["bb"], w:3,
+   role:"怀特家长子",
+   bio:"患脑瘫、拄拐杖的高中生，最崇拜的人是父亲和汉克姨父。他给自己改名「弗林」以示独立，却在真相揭晓后彻底否认了父亲的存在。",
+   fate:"拒绝父亲的任何一分钱。沃尔特最后通过灰质科技的信托把九百多万留给了他——在他十八岁生日那天。",
+   quote:{t:"你为什么还不去死？", s:"S5E14"}},
+
+  {id:"holly", zh:"霍莉·怀特", en:"Holly White", sym:"Ho", fac:"white", shows:["bb"], w:1,
+   role:"怀特家幼女",
+   bio:"在剧中出生的女儿。她是沃尔特口中「为了家人」的最后一块遮羞布，也是他唯一没能骗过自己的时刻——他抱走她，又在加油站把她放回消防站。",
+   fate:"平安。她将不记得这一切。"},
+
+  {id:"gomez", zh:"史蒂夫·戈麦斯", en:"Steven Gomez", sym:"Gz", fac:"dea", shows:["bb","bcs"], w:3,
+   role:"DEA 探员 / 汉克的搭档",
+   bio:"汉克最信任的搭档与出气筒，两人的互损里是真正的过命交情。在《风骚律师》后期已作为新人探员出场，与汉克一起审问过一个叫多明戈的线人。",
+   fate:"在托哈吉利与汉克一同殉职。"},
+
+  {id:"saul", zh:"吉米·麦吉尔 / 索尔·古德曼", en:"Jimmy McGill / Saul Goodman", sym:"Jm", fac:"law", shows:["bcs","bb"], w:5,
+   role:"骗子 → 律师 → 罪犯的律师 → 吉恩·塔科维奇",
+   bio:"「滑头吉米」出身芝加哥西塞罗的街头骗局，靠函授文凭考过律师执照，一辈子想被哥哥查克当成真正的律师看待。当这条路被彻底堵死，他做出选择：既然做不成好人，那就做最好用的坏人律师。「索尔·古德曼」是一层壳，「吉恩·塔科维奇」是另一层，壳下面那个人只在金面前露过面。",
+   fate:"2010 年在奥马哈暴露身份，本已谈成七年刑期，却在庭上当众承认全部罪行并说出对查克与霍华德的真相，自愿领刑 86 年。",
+   quote:{t:"我叫詹姆斯·麦吉尔。人们知道我的另一个名字——索尔·古德曼。", s:"S6E13"}},
+
+  {id:"kim", zh:"金·韦克斯勒", en:"Kim Wexler", sym:"Ki", fac:"law", shows:["bcs"], w:5,
+   role:"律师 / 吉米的伴侣与共犯",
+   bio:"从 HHM 收发室一路自学考上律师的堪萨斯女孩，工作狂、完美主义者，替公益辩护当事人拼命。她爱吉米身上那点危险，也在一次次骗局中发现自己上瘾——最终是她，而不是吉米，提出了摧毁霍华德的计划。",
+   fate:"霍华德死后主动交出律师执照、与吉米离婚，去佛罗里达做喷灌设备销售。多年后向新墨西哥州提交了关于霍华德之死的完整证词，并出现在吉米受审的法庭上。",
+   quote:{t:"我不是好人。我们在一起对谁都没好处。", s:"S6E9"}},
+
+  {id:"chuck", zh:"查尔斯·麦吉尔（查克）", en:"Chuck McGill", sym:"Ch", fac:"law", shows:["bcs"], w:5,
+   role:"HHM 创始合伙人 / 吉米的兄长",
+   bio:"新墨西哥州最受尊敬的法律头脑，也是全剧最精密的自我欺骗。他声称对电磁波过敏、住在点着煤油灯的黑屋里，真正的病因是无法忍受一个不劳而获的弟弟居然也能穿上律师袍。他一边替吉米收拾烂摊子，一边在暗处掐断他的每一条路。",
+   fate:"2003 年失去 HHM 的合伙人身份、被吉米最后一次拜访后，他踢倒屋里的煤油灯，与满地文件一起烧尽。",
+   quote:{t:"你从来就不是律师，吉米。你只是拿到了执照的滑头吉米。", s:"S3E5"}},
+
+  {id:"howard", zh:"霍华德·哈姆林", en:"Howard Hamlin", sym:"Hw", fac:"law", shows:["bcs"], w:4,
+   role:"HHM 管理合伙人",
+   bio:"发型完美、开着「NAMAST3」车牌的律所门面。多年来他替查克背下所有拒绝吉米的黑锅，是这个故事里被误解得最彻底的人——一个真正体面、真正想帮忙的人。",
+   fate:"名誉被吉米与金联手毁掉的当晚，他上门当面把话说清；拉罗·萨拉曼卡推门进来，一枪打穿了他的头。尸体与拉罗一起埋在超级实验室的地基下。",
+   quote:{t:"你们两个……你们心里是一片空洞。", s:"S6E7"}},
+
+  {id:"mike", zh:"迈克·埃尔曼特劳特", en:"Mike Ehrmantraut", sym:"Mi", fac:"fring", shows:["bcs","bb"], w:5,
+   role:"前费城警察 → 清理者 / 弗林的安保主管",
+   bio:"沉默、精确、有一套自己的规矩。他把儿子马蒂推进了警局的腐败漩涡并因此害死了他，余生都在替一个已经死掉的孙女的未来攒钱。他为古斯做事不是因为忠诚，而是因为古斯是这行里唯一讲道理的人。",
+   fate:"2009 年因拒绝交出九人名单，在河边被沃尔特开枪打死——沃尔特事后承认，那一枪毫无必要。",
+   quote:{t:"没有半个罪犯这回事。你要么在这一行里，要么不在。", s:"BCS S3E10"}},
+
+  {id:"gus", zh:"古斯塔沃·弗林", en:"Gustavo Fring", sym:"Gu", fac:"fring", shows:["bcs","bb"], w:5,
+   role:"炸鸡店老板 / 西南部最大的冰毒分销商",
+   bio:"表面上是「炸鸡兄弟」的慈善企业家、社区赞助人、DEA 的座上宾；实际上用马德里加尔的冷链货车把冰毒铺满整个西南部。二十年前赫克托当着他的面枪杀了马克斯，此后他做的每一件事都是那一秒的延长线。",
+   fate:"2009 年在赫克托的病房里被轮椅炸弹炸掉半张脸。他整了整领带，走出门，倒下。",
+   quote:{t:"我觉得这世界不会因为一个人的死而停转。我会等。我会一直等。", s:"BB S4E10"}},
+
+  {id:"nacho", zh:"伊格纳西奥·「纳乔」·瓦尔加", en:"Nacho Varga", sym:"Na", fac:"cartel", shows:["bcs"], w:5,
+   role:"图科的副手 → 被古斯拿捏的双面人",
+   bio:"聪明、克制、想干净脱身的毒贩。他做的每一个选择都是为了保护开家具店的父亲，也正因如此被古斯攥住了咽喉——先是被迫替古斯做眼线，最后被当成刺杀拉罗的替罪羊。",
+   fate:"2004 年在沙漠里，当着卡特尔全体的面骂完赫克托，抢过枪自尽，用一条命换父亲的安全。",
+   quote:{t:"我不需要你们的原谅，也不需要你们的允许。", s:"BCS S6E3"}},
+
+  {id:"lalo", zh:"爱德华多·「拉罗」·萨拉曼卡", en:"Lalo Salamanca", sym:"La", fac:"cartel", shows:["bcs"], w:5,
+   role:"萨拉曼卡家族的头脑",
+   bio:"整个家族里唯一又聪明又疯的人。永远在笑、永远在做饭、永远在多问一句话——正是那多问的一句拆穿了所有人的谎。他把恐惧带进了这个故事，也是唯一让古斯真正睡不着觉的对手。",
+   fate:"2004 年押着吉米闯进洗衣店地下，在他架起摄像机想拍下古斯的自白时，被黑暗中摸到藏枪的古斯一枪打穿喉咙。",
+   quote:{t:"再讲一遍。从头讲。", s:"BCS S5E9"}},
+
+  {id:"hector", zh:"赫克托·萨拉曼卡（提奥）", en:"Hector Salamanca", sym:"He", fac:"cartel", shows:["bcs","bb"], w:4,
+   role:"卡特尔老将 / 萨拉曼卡家族族长",
+   bio:"残忍到近乎纯粹的老毒枭，年轻时是埃拉迪奥的打手，亲手杀死马克斯并羞辱古斯二十年。中风后只剩一只手和一个铃铛，恨意却一点没少。",
+   fate:"2009 年与沃尔特达成默契，在病房里摇响那只铃铛，引爆绑在轮椅下的炸弹，和古斯同归于尽。",
+   quote:{t:"叮。叮。叮。", s:"BB S4E13"}},
+
+  {id:"tuco", zh:"图科·萨拉曼卡", en:"Tuco Salamanca", sym:"Tu", fac:"cartel", shows:["bcs","bb"], w:3,
+   role:"街区级毒枭 / 赫克托的侄子",
+   bio:"暴躁、嗑药、一言不合就打死人的萨拉曼卡侄子。他是吉米在沙漠里遇到的第一个真正的危险，也是沃尔特在毒品世界的第一个「上家」。",
+   fate:"2008 年在沙漠木屋外与汉克交火，被一枪击毙。"},
+
+  {id:"cousins", zh:"萨拉曼卡表兄弟（莱昂内尔 & 马可）", en:"The Cousins", sym:"Cs", fac:"cartel", shows:["bcs","bb"], w:3,
+   role:"卡特尔的沉默杀手",
+   bio:"一对几乎不说话、穿着定制西装和金属头骨靴的双胞胎杀手。他们信奉家族血亲复仇，从小被赫克托教会「家族就是一切」。",
+   fate:"2009 年为替图科复仇袭击汉克：马可当场被汉克击毙，莱昂内尔重伤住院后被古斯派人了结。"},
+
+  {id:"bolsa", zh:"胡安·博尔萨", en:"Juan Bolsa", sym:"Bo", fac:"cartel", shows:["bcs","bb"], w:2,
+   role:"卡特尔在北方的协调人",
+   bio:"埃拉迪奥的直属代理人，负责在古斯与萨拉曼卡之间维持脆弱的平衡，永远选择对生意最有利的一边。",
+   fate:"2009 年古斯毒杀卡特尔高层的同一天，在自家泳池边被墨西哥警察击毙。"},
+
+  {id:"eladio", zh:"唐·埃拉迪奥·维尔特", en:"Don Eladio Vuente", sym:"Ea", fac:"cartel", shows:["bcs","bb"], w:3,
+   role:"华雷斯卡特尔首领",
+   bio:"泳池、比基尼、廉价龙舌兰——他在自己的天堂里主宰了整个墨西哥的毒品生意二十年，也在那里下令杀死了马克斯。",
+   fate:"2009 年喝下古斯带来的、掺了蓖麻毒素同类毒物的龙舌兰，与十一名高层一起死在泳池边。"},
+
+  {id:"max", zh:"马克西米诺·阿西涅加", en:"Max Arciniega", sym:"Mx", fac:"fring", shows:["bcs","bb"], w:2,
+   role:"古斯的合伙人（回忆）",
+   bio:"化学天才，古斯出资供他念完大学，两人一起开出第一家炸鸡店，也一起做出第一批高纯度冰毒。古斯谈到他时的语气，是这个角色一生中唯一柔软的部分。",
+   fate:"1989 年在埃拉迪奥的泳池边被赫克托一枪打穿头部，血流进泳池——古斯被按在地上，被迫看完全过程。"},
+
+  {id:"victor", zh:"维克托", en:"Victor", sym:"Vi", fac:"fring", shows:["bcs","bb"], w:2,
+   role:"古斯的执行手下",
+   bio:"跟了古斯多年的沉默打手，一度学着旁观制毒流程，被沃尔特察觉出「他想学会这门手艺」。",
+   fate:"因为在盖尔被杀现场被目击，古斯当着沃尔特和杰西的面用箱切刀割开了他的喉咙——用一句话都没说的方式立规矩。"},
+
+  {id:"tyrus", zh:"泰勒斯·基特", en:"Tyrus Kitt", sym:"Ty", fac:"fring", shows:["bcs","bb"], w:2,
+   role:"维克托之后的执行手下",
+   bio:"比维克托更谨慎，负责监视沃尔特、盯梢迈克、清理痕迹。",
+   fate:"与古斯一同被病房的炸弹炸死。"},
+
+  {id:"werner", zh:"维尔纳·齐格勒", en:"Werner Ziegler", sym:"We", fac:"fring", shows:["bcs"], w:3,
+   role:"德国土木工程师 / 超级实验室的建造者",
+   bio:"温和、话多、真心把迈克当朋友的老工程师。他挖出了那个日后决定所有人命运的地下空间，却只是想早点回家见妻子。",
+   fate:"因擅自外出泄露工程秘密，被迈克带到沙漠。迈克让他打完最后一个电话，然后从背后开了枪。"},
+
+  {id:"gale", zh:"盖尔·博蒂彻", en:"Gale Boetticher", sym:"Ga", fac:"fring", shows:["bcs","bb"], w:3,
+   role:"化学家 / 超级实验室第一任主厨",
+   bio:"素食、泡手冲、唱《Major Tom》的书呆子。他真心崇拜沃尔特的化学，是这个世界里少有的、没伤害过任何人的人。",
+   fate:"2009 年在自家门口被杰西开枪打死——沃尔特为了保住自己不可替代的位置下的令。",
+   quote:{t:"我崇拜化学。我是说，我真的崇拜。", s:"BB S3E6"}},
+
+  {id:"lydia", zh:"莉迪亚·罗达特-奎尔", en:"Lydia Rodarte-Quayle", sym:"Ly", fac:"fring", shows:["bb"], w:4,
+   role:"马德里加尔高管 / 甲胺与海外渠道",
+   bio:"神经质、事事要求「干净体面」的跨国企业高管，隔着一层办公室玻璃下达杀人名单，喝甜叶菊茶，从不亲手碰任何东西。",
+   fate:"2010 年发现自己那包甜叶菊里被沃尔特换成了蓖麻毒素，在电话里听完他说「你已经死了」。"},
+
+  {id:"todd", zh:"托德·阿尔奎斯特", en:"Todd Alquist", sym:"To", fac:"nazi", shows:["bb"], w:4,
+   role:"杀虫公司员工 → 制毒者 / 杰克的侄子",
+   bio:"礼貌、勤快、随叫随到——也是全剧最恐怖的角色。他杀人时的表情和帮人搬箱子时一模一样，因为在他心里这两件事没有区别。",
+   fate:"被杰西用手铐链勒死在囚室的地板上。"},
+
+  {id:"jack", zh:"杰克·韦尔克", en:"Jack Welker", sym:"Jk", fac:"nazi", shows:["bb"], w:3,
+   role:"雅利安兄弟会头目 / 托德的叔叔",
+   bio:"用监狱人脉承包「解决问题」的白人至上主义团伙首领，只在乎钱和自家人。",
+   fate:"在自己的据点被沃尔特的 M60 扫倒，重伤后仍在讨价还价，被沃尔特一枪打断在句子中间。"},
+
+  {id:"jane", zh:"简·玛戈利斯", en:"Jane Margolis", sym:"Jn", fac:"civil", shows:["bb"], w:3,
+   role:"纹身师 / 杰西的房东与恋人",
+   bio:"戒毒 18 个月的艺术生，遇到杰西后一起坠回去。她清醒、有主见，也是第一个逼沃尔特直面自己筹码的人。",
+   fate:"2008 年在与杰西的睡梦中被自己的呕吐物噎死。沃尔特站在床边，看着，没有伸手。"},
+
+  {id:"donald", zh:"唐纳德·玛戈利斯", en:"Donald Margolis", sym:"Dn", fac:"civil", shows:["bb"], w:2,
+   role:"航空管制员 / 简的父亲",
+   bio:"在酒吧里与一个陌生人聊起「不听话的女儿」，那个陌生人正是刚看着他女儿死去的沃尔特。",
+   fate:"女儿死后精神崩溃，在岗位上指挥失误造成韦弗勒 515 空中相撞，167 人罹难。"},
+
+  {id:"andrea", zh:"安德莉亚·坎蒂略", en:"Andrea Cantillo", sym:"An", fac:"civil", shows:["bb"], w:2,
+   role:"单亲母亲 / 杰西的恋人",
+   bio:"在戒毒互助会上认识杰西的年轻母亲，努力想给儿子布洛克一个正常的生活。",
+   fate:"2010 年被托德在自家门廊上一枪打死——只为让笼子里的杰西「听话」。"},
+
+  {id:"brock", zh:"布洛克·坎蒂略", en:"Brock Cantillo", sym:"Bk", fac:"civil", shows:["bb"], w:2,
+   role:"安德莉亚的儿子",
+   bio:"六岁的孩子，被沃尔特用铃兰花的毒当成撬动杰西的工具。他活下来了，但失去了母亲和外婆。",
+   fate:"幸存。杰西留给他的最后一样东西，是自己再也回不来的沉默。"},
+
+  {id:"skinnypete", zh:"瘦皮特", en:"Skinny Pete", sym:"Sp", fac:"street", shows:["bb"], w:2,
+   role:"杰西的死党 / 街头分销",
+   bio:"看起来最不着调、实际上最讲义气的人，会弹一手漂亮的古典钢琴。",
+   fate:"幸存。最后帮杰西挡下警方追踪，并对着 DEA 说：「我做了件好事。」"},
+
+  {id:"badger", zh:"獾（布兰登·迈休）", en:"Badger", sym:"Bd", fac:"street", shows:["bb"], w:2,
+   role:"杰西的死党 / 街头分销",
+   bio:"话痨、天真，能对着朋友讲十分钟《星际迷航》里的松饼吃法。",
+   fate:"幸存。与瘦皮特一起替杰西演完最后一场戏。"},
+
+  {id:"combo", zh:"康博（克里斯蒂安·奥尔特加）", en:"Combo", sym:"Cb", fac:"street", shows:["bb"], w:1,
+   role:"杰西的死党 / 街头分销",
+   bio:"三人组里最早出事的那个，为了守住新地盘被对手的孩子开枪打死。",
+   fate:"2008 年在街角中弹身亡——这是杰西第一次为自己的生意付出人命代价。"},
+
+  {id:"krazy8", zh:"多明戈·「疯狂八号」·莫利纳", en:"Krazy-8", sym:"K8", fac:"cartel", shows:["bcs","bb"], w:2,
+   role:"萨拉曼卡线的经销商 / DEA 线人",
+   bio:"在《风骚律师》里是纳乔手下的经销商，被古斯的人设计送进 DEA 当线人；在《绝命毒师》里成为沃尔特的第一个「客户」。",
+   fate:"被囚在杰西家地下室，藏起一块碎盘子准备偷袭；沃尔特发现后用自行车锁把他勒死——这是他杀的第一个人。"},
+
+  {id:"emilio", zh:"埃米利奥·科亚马", en:"Emilio Koyama", sym:"Em", fac:"street", shows:["bb"], w:1,
+   role:"杰西的前搭档",
+   bio:"疯狂八号的表亲，跟着杰西做过一阵子生意，被 DEA 突击时逃脱后认出了跟车的沃尔特。",
+   fate:"在房车里被沃尔特用红磷制造的磷化氢毒气熏死。"},
+
+  {id:"ted", zh:"泰德·贝内克", en:"Ted Beneke", sym:"Td", fac:"civil", shows:["bb"], w:2,
+   role:"贝内克家具厂老板 / 斯凯勒的前雇主",
+   bio:"做假账的中年老板，与斯凯勒有过一段婚外情，后来又成了她洗钱链条上最不听话的一环。",
+   fate:"被休尔与库比上门「劝说」时慌乱摔倒撞到柜子，颈部重伤瘫痪——他从此相信沃尔特是个鬼神般的存在。"},
+
+  {id:"gretchen", zh:"格雷琴·施瓦茨", en:"Gretchen Schwartz", sym:"Gr", fac:"civil", shows:["bb"], w:2,
+   role:"灰质科技联合创始人 / 沃尔特的旧恋人",
+   bio:"沃尔特昔日的女友与科研搭档。他不告而别之后，她与埃利奥特结婚并把公司做成了业界巨头。",
+   fate:"被沃尔特用「两个职业杀手在暗处」的恐吓，逼着替他把九百多万转给儿子。"},
+
+  {id:"elliott", zh:"埃利奥特·施瓦茨", en:"Elliott Schwartz", sym:"El", fac:"civil", shows:["bb"], w:2,
+   role:"灰质科技 CEO",
+   bio:"沃尔特的旧同窗与合伙人，多次提出替他付医药费——每一次都被沃尔特当成施舍拒绝。",
+   fate:"幸存。他在电视上说「沃尔特只贡献了公司的名字」，那句话点燃了沃尔特最后的复仇。"},
+
+  {id:"ed", zh:"埃德·加尔布雷斯（消失专家）", en:"Ed Galbraith", sym:"Eg", fac:"civil", shows:["bcs","bb"], w:3,
+   role:"吸尘器店老板 / 新身份掮客",
+   bio:"「你需要一台吸尘器的滤芯吗？」——只要付得起现金，他能让任何人从这个世界上消失。规矩极严，从不通融，唯独对杰西破了一次例。",
+   fate:"幸存。他分别把索尔送去了奥马哈、把沃尔特送去了新罕布什尔、把杰西送去了阿拉斯加。"},
+
+  {id:"huell", zh:"休尔·巴比诺", en:"Huell Babineaux", sym:"Hu", fac:"street", shows:["bcs","bb"], w:2,
+   role:"扒手 / 索尔的保镖",
+   bio:"体型庞大、手指极快的扒手，从《风骚律师》时期就跟着索尔，是那句「掉包烟盒」的关键执行人。",
+   fate:"幸存。最后一次出场是被 DEA 关在安全屋里，等着一个再也不会来的人。"},
+
+  {id:"kuby", zh:"帕特里克·库比", en:"Patrick Kuby", sym:"Ku", fac:"street", shows:["bb"], w:1,
+   role:"索尔的外勤 / 假冒专家",
+   bio:"擅长扮成任何身份的骗子，常与休尔搭档处理索尔那些「不太合法」的差事。",
+   fate:"幸存，去向不明。"},
+
+  {id:"francesca", zh:"弗朗西斯卡·利迪", en:"Francesca Liddy", sym:"Fr", fac:"law", shows:["bcs","bb"], w:2,
+   role:"索尔的接待员",
+   bio:"从 Wexler-McGill 时期就在前台的老员工，见过吉米最好的一面，也见过索尔最糟的一面，最后只剩下厌倦与现金交易。",
+   fate:"幸存。收下最后一笔钱后挂断电话，那通电话成了吉恩暴露的开端。"},
+
+  {id:"cliff", zh:"克里夫·梅因", en:"Clifford Main", sym:"Cl", fac:"law", shows:["bcs"], w:2,
+   role:"Davis & Main 创始合伙人",
+   bio:"体面、正派的圣塔菲律所老板，给过吉米一份真正的好工作，却眼睁睁看他把它砸了。",
+   fate:"幸存。他也是吉米与金摧毁霍华德计划中被利用得最彻底的一个人。"},
+
+  {id:"rich", zh:"里奇·施韦卡特", en:"Rich Schweikart", sym:"Ri", fac:"law", shows:["bcs"], w:2,
+   role:"Schweikart & Cokely 管理合伙人",
+   bio:"金沙派珀案的对手律师，后来成了金的雇主。老练、务实，愿意给人第二次机会。",
+   fate:"幸存。"},
+
+  {id:"ernesto", zh:"埃内斯托", en:"Ernesto", sym:"Er", fac:"law", shows:["bcs"], w:1,
+   role:"HHM 助理 / 查克的看护",
+   bio:"吉米在收发室的老搭档，因为一句无心之言把录音带的存在透露给了吉米。",
+   fate:"被霍华德解雇——为了保护他不再卷进麦吉尔兄弟的战争。"},
+
+  {id:"rebecca", zh:"丽贝卡·博伊斯", en:"Rebecca Bois", sym:"Rb", fac:"civil", shows:["bcs"], w:1,
+   role:"小提琴家 / 查克的前妻",
+   bio:"喜欢吉米的幽默，也因此更清楚查克心里那根拔不掉的刺。",
+   fate:"幸存。查克始终没让她看见自己最狼狈的样子。"},
+
+  {id:"marco", zh:"马可·帕斯捷尔纳克", en:"Marco Pasternak", sym:"Mc", fac:"civil", shows:["bcs"], w:1,
+   role:"吉米在西塞罗的搭子",
+   bio:"和吉米一起在酒吧演「手表骗局」的老伙伴，是吉米「滑头」那半人格唯一的见证者。",
+   fate:"在最后一次骗局中心脏病发死在巷子里。吉米戴走了他的戒指，也戴走了那半个自己。"},
+
+  {id:"kettleman", zh:"克雷格 & 贝琪·克特曼", en:"The Kettlemans", sym:"Kt", fac:"civil", shows:["bcs"], w:1,
+   role:"贪污公款的县财务官夫妇",
+   bio:"抱着装满赃款的行李箱躲进树林、还坚称自己无辜的一对夫妻。他们是吉米最早的「客户」，也最早验证了他的手法。",
+   fate:"幸存。多年后经营一家报税小店，仍然在骗人。"},
+
+  {id:"caldera", zh:"卡尔德拉医生", en:"Dr. Caldera", sym:"Cd", fac:"civil", shows:["bcs"], w:2,
+   role:"兽医 / 地下世界的中介",
+   bio:"白天给狗打针，晚上替罪犯缝伤口、牵线搭桥。他那本写满号码的通讯录，最后卖给了索尔。",
+   fate:"幸存。那本通讯录成了索尔日后所有「资源」的来源。"},
+
+  {id:"stacey", zh:"斯泰西·埃尔曼特劳特", en:"Stacey Ehrmantraut", sym:"St", fac:"civil", shows:["bcs"], w:2,
+   role:"迈克的儿媳",
+   bio:"马蒂的遗孀，独自带着女儿凯莉，一直不明白公公的钱是从哪来的。",
+   fate:"幸存。迈克攒下的每一分钱都是为了她和凯莉。"},
+
+  {id:"kaylee", zh:"凯莉·埃尔曼特劳特", en:"Kaylee Ehrmantraut", sym:"Ky", fac:"civil", shows:["bcs"], w:1,
+   role:"迈克的孙女",
+   bio:"迈克做每一件脏事时脑子里的那个理由。",
+   fate:"幸存。祖父留给她的信托最终没能送到。"},
+
+  {id:"matty", zh:"马蒂·埃尔曼特劳特", en:"Matty Ehrmantraut", sym:"Mt", fac:"civil", shows:["bcs"], w:1,
+   role:"费城警察 / 迈克的儿子",
+   bio:"想当个干净警察的儿子，被父亲亲手劝进了收黑钱的队伍。",
+   fate:"被搭档霍夫曼与芬斯克灭口。迈克余生都在为那句劝告赎罪。"},
+
+  {id:"manuel", zh:"曼努埃尔·瓦尔加", en:"Manuel Varga", sym:"Mn", fac:"civil", shows:["bcs"], w:2,
+   role:"家具店老板 / 纳乔的父亲",
+   bio:"一辈子规规矩矩的手艺人，宁可报警也不肯拿儿子的一分钱。",
+   fate:"幸存。他至死不知道儿子是用命换回他的安全。"},
+
+  {id:"jeff", zh:"杰夫", en:"Jeff", sym:"Jf", fac:"civil", shows:["bcs"], w:1,
+   role:"奥马哈出租车司机",
+   bio:"车上挂着新墨西哥州空气清新剂的司机，一眼认出了商场里的「吉恩」，从此把他拖回了骗局。",
+   fate:"因商场行窃被捕，最终由律师保住；他母亲的一通电话把吉恩推向终局。"},
+
+  {id:"marion", zh:"玛丽昂", en:"Marion", sym:"Mo", fac:"civil", shows:["bcs"], w:1,
+   role:"杰夫的母亲",
+   bio:"坐着代步车、刚学会上网的老太太，是全剧最后一个真正看穿吉米的人。",
+   fate:"用一句「我信任过你」和一次紧急呼叫，终结了吉恩·塔科维奇。",
+   quote:{t:"我信任过你！", s:"BCS S6E12"}},
+
+  {id:"oakley", zh:"比尔·奥克利", en:"Bill Oakley", sym:"Bl", fac:"law", shows:["bcs"], w:1,
+   role:"地区检察官 → 辩护律师",
+   bio:"在法院走廊里被吉米抢了无数次生意的检察官，后来干脆自己也做起了辩护。",
+   fate:"幸存。他坐在旁听席上，看着索尔在庭上把自己的减刑协议亲手撕碎。"},
+
+  {id:"bogdan", zh:"博格丹·博尔萨", en:"Bogdan Wolynetz", sym:"Bg", fac:"civil", shows:["bb"], w:1,
+   role:"A1A 洗车行原老板",
+   bio:"沃尔特兼职打工时的老板，那句「擦亮点」是压垮他自尊的最后几根稻草之一。",
+   fate:"幸存。被迫贱卖洗车行时留下一个装框的第一美元——沃尔特当场撕开买了瓶汽水。"},
+
+  {id:"declan", zh:"德克兰", en:"Declan", sym:"Dc", fac:"street", shows:["bb"], w:1,
+   role:"凤凰城的分销商",
+   bio:"接手过沃尔特的甲胺，也接手过他的地盘，却做不出蓝色的货。",
+   fate:"被杰克帮血洗全队——莉迪亚要的是纯度，不是人。"},
+
+  {id:"merkert", zh:"ASAC 默克特", en:"ASAC Merkert", sym:"Mk", fac:"dea", shows:["bcs","bb"], w:1,
+   role:"DEA 阿尔伯克基分局主管",
+   bio:"汉克的上司，也是把古斯请进 DEA 办公室握手合影的那个人。",
+   fate:"因辖区内的弗林丑闻引咎去职。"}
+];
+
+/* 关系：s=source t=target k=type l=标签 d=补充说明 */
+const LINKS = [
+  /* —— 怀特家 —— */
+  {s:"walt",t:"skyler",k:"romance",l:"夫妻",d:"从共谋到相互威胁，最后只剩一通被录音的电话。"},
+  {s:"walt",t:"flynn",k:"family",l:"父子",d:"沃尔特最想成为的形象，最后被这个儿子彻底否认。"},
+  {s:"walt",t:"holly",k:"family",l:"父女"},
+  {s:"skyler",t:"flynn",k:"family",l:"母子"},
+  {s:"skyler",t:"marie",k:"family",l:"姐妹",d:"真相揭穿后决裂，又因汉克的死重新绑在一起。"},
+  {s:"marie",t:"hank",k:"romance",l:"夫妻"},
+  {s:"walt",t:"hank",k:"family",l:"连襟",d:"猎人与猎物同桌吃了两年烤肉。"},
+  {s:"walt",t:"hank",k:"rival",l:"追捕与被追捕",d:"《草叶集》扉页上的题词让一切崩塌。"},
+  {s:"flynn",t:"hank",k:"family",l:"甥舅",d:"弗林心里真正的父亲形象。"},
+  {s:"walt",t:"gretchen",k:"romance",l:"旧日恋人",d:"他在她家里突然离席，从此再没解释过原因。"},
+  {s:"walt",t:"elliott",k:"rival",l:"灰质科技的旧合伙人",d:"「我只贡献了公司的名字」——这句话点燃了最后的复仇。"},
+  {s:"gretchen",t:"elliott",k:"romance",l:"夫妻"},
+  {s:"skyler",t:"ted",k:"romance",l:"婚外情 / 前雇主"},
+  {s:"walt",t:"bogdan",k:"rival",l:"打工时的老板"},
+
+  /* —— 制毒核心 —— */
+  {s:"walt",t:"jesse",k:"ally",l:"制毒搭档",d:"全剧真正的核心关系：师生、父子、共犯、互相毁灭又互相赦免。"},
+  {s:"walt",t:"jesse",k:"mentor",l:"师徒",d:"「我们做的不是毒品，是化学。」"},
+  {s:"jesse",t:"jane",k:"romance",l:"恋人"},
+  {s:"jane",t:"donald",k:"family",l:"父女"},
+  {s:"walt",t:"jane",k:"kill",l:"见死不救",d:"他伸手想翻过她的身体，然后停住了。"},
+  {s:"jesse",t:"andrea",k:"romance",l:"恋人"},
+  {s:"andrea",t:"brock",k:"family",l:"母子"},
+  {s:"jesse",t:"brock",k:"ally",l:"如父如兄"},
+  {s:"walt",t:"brock",k:"rival",l:"用铃兰下毒",d:"为了让杰西回到自己身边，他给一个六岁孩子下了毒。"},
+  {s:"jesse",t:"skinnypete",k:"ally",l:"死党"},
+  {s:"jesse",t:"badger",k:"ally",l:"死党"},
+  {s:"jesse",t:"combo",k:"ally",l:"死党"},
+  {s:"jesse",t:"emilio",k:"ally",l:"前搭档"},
+  {s:"walt",t:"emilio",k:"kill",l:"房车里的磷化氢"},
+  {s:"walt",t:"krazy8",k:"kill",l:"地下室的自行车锁",d:"他杀的第一个清醒的人，杀之前给对方削好了三明治。"},
+  {s:"krazy8",t:"emilio",k:"family",l:"表亲"},
+  {s:"krazy8",t:"hector",k:"business",l:"萨拉曼卡的经销商"},
+  {s:"krazy8",t:"nacho",k:"business",l:"上下线"},
+  {s:"jesse",t:"combo",k:"business",l:"街头分销网"},
+  {s:"walt",t:"declan",k:"business",l:"卖出甲胺与地盘"},
+  {s:"declan",t:"jack",k:"rival",l:"被灭队"},
+
+  /* —— 弗林集团 —— */
+  {s:"gus",t:"max",k:"ally",l:"创业伙伴 · 生死之交",d:"剧集反复暗示两人之间远不止合伙关系；马克斯是古斯全部动机的原点。"},
+  {s:"gus",t:"mike",k:"business",l:"雇佣 · 相互尊重",d:"「我这辈子只犯过一个错，就是选错了效忠的人。」"},
+  {s:"gus",t:"victor",k:"business",l:"执行手下"},
+  {s:"gus",t:"victor",k:"kill",l:"箱切刀立威"},
+  {s:"gus",t:"tyrus",k:"business",l:"执行手下"},
+  {s:"gus",t:"gale",k:"business",l:"资助与雇佣",d:"古斯供他读完化学硕士，为的是有朝一日不再依赖任何厨子。"},
+  {s:"gus",t:"lydia",k:"business",l:"甲胺与物流渠道"},
+  {s:"gus",t:"werner",k:"business",l:"雇佣：建造超级实验室"},
+  {s:"mike",t:"werner",k:"mentor",l:"看守与友情"},
+  {s:"mike",t:"werner",k:"kill",l:"沙漠里的最后一通电话"},
+  {s:"gus",t:"walt",k:"business",l:"雇佣：三个月三百万"},
+  {s:"gus",t:"walt",k:"rival",l:"「我会把你全家都杀了」",d:"两个都认为自己才是聪明人的男人。"},
+  {s:"gus",t:"jesse",k:"mentor",l:"分化与拉拢",d:"古斯请他吃饭、教他做菜，只为把他从沃尔特身边拽走。"},
+  {s:"walt",t:"gale",k:"mentor",l:"实验室助手",d:"盖尔崇拜他，而他嫌盖尔的咖啡机太吵。"},
+  {s:"jesse",t:"gale",k:"kill",l:"门口的那一枪",d:"沃尔特下的令，杰西扣的扳机，从此再没睡过一个好觉。"},
+  {s:"mike",t:"jesse",k:"ally",l:"押运与信任",d:"迈克是少数真心觉得杰西「不该待在这行」的人。"},
+  {s:"mike",t:"walt",k:"rival",l:"忍无可忍"},
+  {s:"walt",t:"mike",k:"kill",l:"河边那一枪",d:"「我本来可以直接从丹尼那儿拿到名单的。我很抱歉。」"},
+  {s:"lydia",t:"mike",k:"rival",l:"想灭口九人名单"},
+  {s:"lydia",t:"todd",k:"business",l:"雇佣：接手制毒"},
+  {s:"todd",t:"lydia",k:"romance",l:"单方面的迷恋",d:"他记得她的茶、她的座位，也记得她说过要杀谁。"},
+  {s:"walt",t:"lydia",k:"business",l:"海外渠道"},
+  {s:"walt",t:"lydia",k:"kill",l:"甜叶菊里的蓖麻毒素"},
+
+  /* —— 卡特尔 —— */
+  {s:"hector",t:"tuco",k:"family",l:"叔侄"},
+  {s:"hector",t:"lalo",k:"family",l:"叔侄"},
+  {s:"hector",t:"cousins",k:"family",l:"叔侄",d:"「家族就是一切」——那句话是他按着孩子的头教会的。"},
+  {s:"tuco",t:"cousins",k:"family",l:"表兄弟"},
+  {s:"lalo",t:"cousins",k:"family",l:"表兄弟"},
+  {s:"hector",t:"eladio",k:"business",l:"效忠三十年"},
+  {s:"eladio",t:"bolsa",k:"business",l:"北方代理人"},
+  {s:"eladio",t:"cousins",k:"business",l:"家族打手"},
+  {s:"lalo",t:"eladio",k:"business",l:"家族在北方的代表"},
+  {s:"hector",t:"max",k:"kill",l:"泳池边的一枪",d:"整个故事真正的起点。"},
+  {s:"gus",t:"hector",k:"rival",l:"二十年的复仇",d:"他救活赫克托，只为让他活着看见萨拉曼卡家族一个个死去。"},
+  {s:"gus",t:"eladio",k:"kill",l:"龙舌兰里的毒",d:"「我要说的是……为了马克斯。」"},
+  {s:"gus",t:"bolsa",k:"rival",l:"表面合作，暗中清算"},
+  {s:"gus",t:"lalo",k:"rival",l:"唯一让他失眠的对手"},
+  {s:"gus",t:"lalo",k:"kill",l:"洗衣店地下的枪战"},
+  {s:"hector",t:"gus",k:"kill",l:"轮椅炸弹",d:"他终于抬起头，直视着古斯，摇响了那只铃铛。"},
+  {s:"walt",t:"gus",k:"kill",l:"炸弹的设计者"},
+  {s:"nacho",t:"tuco",k:"business",l:"副手"},
+  {s:"nacho",t:"hector",k:"rival",l:"掉包心脏药",d:"他把药片换成安慰剂，赫克托当场中风。"},
+  {s:"nacho",t:"manuel",k:"family",l:"父子",d:"纳乔做的每一个选择，最后都指向这个开家具店的老人。"},
+  {s:"nacho",t:"gus",k:"business",l:"被胁迫的内线"},
+  {s:"nacho",t:"lalo",k:"rival",l:"开门的那个人",d:"他放进了刺客，也因此再无退路。"},
+  {s:"nacho",t:"mike",k:"ally",l:"惺惺相惜",d:"迈克是唯一试图救他的人。"},
+  {s:"mike",t:"hector",k:"rival",l:"沙漠劫车与狙击"},
+  {s:"mike",t:"tuco",k:"rival",l:"故意挨的那顿打",d:"他让图科打断自己的手指，把对方送进监狱。"},
+  {s:"mike",t:"lalo",k:"rival",l:"棋逢对手"},
+  {s:"hank",t:"tuco",k:"kill",l:"沙漠木屋外的对射"},
+  {s:"cousins",t:"hank",k:"rival",l:"停车场的伏击",d:"汉克靠一句提前的电话预警活了下来。"},
+  {s:"hank",t:"cousins",k:"kill",l:"用车撞倒后补枪"},
+  {s:"gus",t:"cousins",k:"rival",l:"借刀杀人",d:"是他把汉克的名字递到了表兄弟手上。"},
+  {s:"walt",t:"tuco",k:"business",l:"第一个上家"},
+  {s:"walt",t:"tuco",k:"rival",l:"水银雷酸盐"},
+  {s:"jesse",t:"tuco",k:"rival",l:"被打进医院"},
+
+  /* —— 法律界 —— */
+  {s:"saul",t:"chuck",k:"family",l:"兄弟",d:"全剧最深的伤口：一个想被认可，一个不肯给。"},
+  {s:"saul",t:"chuck",k:"rival",l:"梅萨维德文件与听证会"},
+  {s:"chuck",t:"howard",k:"ally",l:"HHM 的两个 H"},
+  {s:"chuck",t:"rebecca",k:"romance",l:"前妻"},
+  {s:"chuck",t:"ernesto",k:"business",l:"看护与助理"},
+  {s:"saul",t:"ernesto",k:"ally",l:"收发室的老交情"},
+  {s:"saul",t:"kim",k:"romance",l:"伴侣 → 夫妻 → 离婚",d:"两个人一起时最聪明，也最危险。"},
+  {s:"saul",t:"kim",k:"ally",l:"骗局搭档",d:"从酒吧里的「维克多与吉赛尔」开始。"},
+  {s:"kim",t:"howard",k:"business",l:"雇主与下属"},
+  {s:"kim",t:"howard",k:"rival",l:"毁掉他的名誉"},
+  {s:"saul",t:"howard",k:"rival",l:"十年的错怪",d:"吉米恨了他十年，而拒绝自己的一直是查克。"},
+  {s:"kim",t:"chuck",k:"rival",l:"听证会上的反击"},
+  {s:"kim",t:"rich",k:"business",l:"合伙人"},
+  {s:"kim",t:"cliff",k:"business",l:"公益诉讼的支持者"},
+  {s:"saul",t:"cliff",k:"business",l:"Davis & Main 的短暂雇主"},
+  {s:"howard",t:"cliff",k:"ally",l:"金沙派珀案的共同代理"},
+  {s:"saul",t:"francesca",k:"business",l:"前台与老板"},
+  {s:"saul",t:"oakley",k:"ally",l:"法院走廊上的对手兼熟人"},
+  {s:"saul",t:"kettleman",k:"business",l:"最早的客户"},
+  {s:"saul",t:"marco",k:"ally",l:"西塞罗的老搭子"},
+  {s:"saul",t:"caldera",k:"business",l:"地下世界的通讯录"},
+  {s:"mike",t:"caldera",k:"business",l:"缝伤口与找活干"},
+  {s:"nacho",t:"caldera",k:"business",l:"药片与中介"},
+  {s:"saul",t:"huell",k:"business",l:"雇佣：扒手与保镖"},
+  {s:"saul",t:"kuby",k:"business",l:"雇佣：外勤"},
+  {s:"huell",t:"kuby",k:"ally",l:"搭档"},
+  {s:"saul",t:"nacho",k:"business",l:"第一个真正的罪犯客户"},
+  {s:"saul",t:"tuco",k:"rival",l:"沙漠里的谈判",d:"他把「砍头」谈成了「断腿」。"},
+  {s:"saul",t:"lalo",k:"business",l:"「我的律师」",d:"拉罗给他钱，也给他一辈子的噩梦。"},
+  {s:"saul",t:"hector",k:"business",l:"代理与传话"},
+  {s:"saul",t:"krazy8",k:"business",l:"辩护律师"},
+  {s:"saul",t:"mike",k:"business",l:"「我认识一个人」"},
+  {s:"saul",t:"walt",k:"business",l:"顾问与洗钱设计师",d:"「你不需要刑辩律师，你需要一个犯罪律师。」"},
+  {s:"saul",t:"jesse",k:"business",l:"最先找上门的客户"},
+  {s:"saul",t:"gus",k:"business",l:"间接的雇主"},
+  {s:"saul",t:"ed",k:"business",l:"消失服务"},
+  {s:"walt",t:"ed",k:"business",l:"新罕布什尔的木屋"},
+  {s:"jesse",t:"ed",k:"business",l:"去阿拉斯加的车"},
+  {s:"saul",t:"jeff",k:"business",l:"奥马哈的同伙"},
+  {s:"jeff",t:"marion",k:"family",l:"母子"},
+  {s:"saul",t:"marion",k:"rival",l:"被识破的那一刻"},
+  {s:"lalo",t:"howard",k:"kill",l:"推门进来的那一枪"},
+  {s:"lalo",t:"kim",k:"rival",l:"公寓门口的对峙"},
+
+  /* —— 迈克家 —— */
+  {s:"mike",t:"matty",k:"family",l:"父子",d:"「是我把他推进去的。我把我儿子推向了那些人。」"},
+  {s:"matty",t:"stacey",k:"romance",l:"夫妻"},
+  {s:"mike",t:"stacey",k:"family",l:"公媳"},
+  {s:"stacey",t:"kaylee",k:"family",l:"母女"},
+  {s:"mike",t:"kaylee",k:"family",l:"祖孙",d:"他所有的钱、所有的规矩，都是为了她。"},
+  {s:"walt",t:"kaylee",k:"rival",l:"被拿来威胁迈克的名字"},
+
+  /* —— 执法 —— */
+  {s:"hank",t:"gomez",k:"ally",l:"搭档"},
+  {s:"hank",t:"merkert",k:"business",l:"上下级"},
+  {s:"gomez",t:"merkert",k:"business",l:"上下级"},
+  {s:"gus",t:"merkert",k:"business",l:"DEA 的「社区赞助人」",d:"他给缉毒署捐钱、合影，坐在他们的办公室里喝咖啡。"},
+  {s:"hank",t:"gus",k:"rival",l:"从指纹开始的怀疑"},
+  {s:"hank",t:"jesse",k:"rival",l:"打进医院 → 最后的合作"},
+  {s:"hank",t:"marie",k:"family",l:"瘫痪后的照护"},
+  {s:"gomez",t:"krazy8",k:"business",l:"线人"},
+  {s:"hank",t:"krazy8",k:"business",l:"线人"},
+
+  /* —— 杰克帮 —— */
+  {s:"jack",t:"todd",k:"family",l:"叔侄"},
+  {s:"jack",t:"walt",k:"business",l:"「解决问题」的外包"},
+  {s:"jack",t:"walt",k:"rival",l:"抢走七桶钱"},
+  {s:"jack",t:"hank",k:"kill",l:"托哈吉利的一枪"},
+  {s:"jack",t:"gomez",k:"kill",l:"托哈吉利的枪战"},
+  {s:"todd",t:"jesse",k:"rival",l:"地牢里的看守",d:"他给杰西送冰淇淋，也在他面前枪杀了安德莉亚。"},
+  {s:"todd",t:"andrea",k:"kill",l:"门廊上的一枪"},
+  {s:"todd",t:"walt",k:"business",l:"最听话的学徒"},
+  {s:"walt",t:"jack",k:"kill",l:"后备箱里的 M60"},
+  {s:"jesse",t:"todd",k:"kill",l:"手铐链"},
+  {s:"jesse",t:"walt",k:"rival",l:"「你到底还骗了我多少」"},
+
+  /* —— 其他 —— */
+  {s:"ted",t:"huell",k:"rival",l:"上门「劝说」"},
+  {s:"skyler",t:"saul",k:"business",l:"洗钱方案"},
+  {s:"walt",t:"skinnypete",k:"business",l:"最后一场戏的红外瞄准点"},
+  {s:"walt",t:"badger",k:"business",l:"最后一场戏的红外瞄准点"},
+  {s:"jesse",t:"skinnypete",k:"ally",l:"最后的掩护"},
+  {s:"gretchen",t:"walt",k:"rival",l:"被逼着转交九百万"}
+];
+
+const ERAS = [
+  {id:"pre",  yrs:"1980s – 2001", zh:"前史", sub:"在故事开始之前，每个人都已经做过一次选择"},
+  {id:"bcs1", yrs:"2002 – 2003",  zh:"兄弟阋墙", sub:"《风骚律师》S1–S3"},
+  {id:"bcs2", yrs:"2003 – 2004",  zh:"实验室与索尔的诞生", sub:"《风骚律师》S4–S6"},
+  {id:"bb1",  yrs:"2008",         zh:"海森堡起步", sub:"《绝命毒师》S1–S2"},
+  {id:"bb2",  yrs:"2009",         zh:"弗林帝国的兴与灭", sub:"《绝命毒师》S3–S4"},
+  {id:"bb3",  yrs:"2009 – 2010",  zh:"帝国崩塌", sub:"《绝命毒师》S5"},
+  {id:"after",yrs:"2010",         zh:"尾声", sub:"《续命之徒》与吉恩·塔科维奇"}
+];
+
+/* show: pre/bcs/bb/ec ；major=关键转折 */
+const EVENTS = [
+  {era:"pre", y:"1980s", ep:"BB 回忆", show:"pre", major:false, t:"灰质科技：被让出去的那一半人生",
+   d:"沃尔特与格雷琴、埃利奥特共同创立灰质科技。他在与格雷琴家人共处的一个周末突然不告而别，随后以五千美元卖掉全部股份。公司后来市值二十多亿——这笔账他记了一辈子，也成了他所有怨恨与自我合理化的源头。",
+   c:["walt","gretchen","elliott"]},
+
+  {era:"pre", y:"1989", ep:"BB S4E8", show:"pre", major:true, t:"泳池边：马克斯之死",
+   d:"古斯与马克斯带着自制的高纯度冰毒去见唐·埃拉迪奥，希望换一条正经的合作路。埃拉迪奥不喜欢他们绕过卡特尔自作主张，赫克托当着古斯的面一枪打穿马克斯的头，血流进泳池。古斯被按在地上看完了全过程——之后二十年他做的每一件事，都是这一秒的延长线。",
+   c:["gus","max","hector","eladio","bolsa"]},
+
+  {era:"pre", y:"1992", ep:"BCS S1", show:"bcs", major:false, t:"芝加哥天窗事件",
+   d:"「滑头吉米」在西塞罗靠假支票和小骗局混日子，最后一次恶作剧惹上刑事指控。查克动用关系把他捞出来，条件是他必须搬到阿尔伯克基、从此收手。吉米进了 HHM 的收发室。",
+   c:["saul","chuck","marco"]},
+
+  {era:"pre", y:"2001", ep:"BCS S1E6", show:"bcs", major:false, t:"迈克的费城：一个父亲的复仇",
+   d:"警探迈克说服儿子马蒂收下同僚的黑钱——「干净的警察活不长」。马蒂照做了，仍然被搭档霍夫曼与芬斯克灭口。迈克灌醉两人、逼出真相，然后逐一处决，随后逃到阿尔伯克基，在法院停车场收费亭里坐了下来。",
+   c:["mike","matty","stacey","kaylee"]},
+
+  {era:"pre", y:"2001", ep:"BCS S1E9", show:"bcs", major:true, t:"函授学位与那张反对票",
+   d:"吉米靠美属萨摩亚大学的函授文凭考过了新墨西哥州律考。他满心以为哥哥会为他骄傲，HHM 却拒绝录用。霍华德背了黑锅，多年后真相才浮出水面：投下反对票、坚持「吉米不配」的，一直是查克。",
+   c:["saul","chuck","howard","kim"]},
+
+  {era:"bcs1", y:"2002", ep:"S1E1–E2", show:"bcs", major:false, t:"滑板双胞胎撞上了图科的祖母",
+   d:"吉米雇一对碰瓷的滑板兄弟去讹克特曼夫妇，两人却追错了车，撞上图科·萨拉曼卡的祖母。沙漠里，吉米靠一张嘴把「三个人的脑袋」谈成了「两条断腿」——他第一次证明自己的天赋能救命，也第一次见到站在旁边的纳乔。",
+   c:["saul","tuco","nacho","hector"]},
+
+  {era:"bcs1", y:"2002", ep:"S1E4–E6", show:"bcs", major:false, t:"克特曼夫妇与树林里的行李箱",
+   d:"贪污公款的县财务官夫妇抱着现金躲进树林还坚称自己无辜。吉米追回赃款、逼他们认罪，却又不得不把案子拱手让给公设辩护人——这套「解决问题反而害了自己」的循环，从此再没停过。",
+   c:["saul","kim","kettleman","oakley"]},
+
+  {era:"bcs1", y:"2002", ep:"S1E7–E9", show:"bcs", major:false, t:"迈克故意挨的那顿打",
+   d:"纳乔想除掉越来越失控的图科。迈克设了个局：故意在图科面前挑衅、被打断手指，用一张验伤报告把图科送进监狱几个月。这是迈克第一次向这个世界报价——他卖的不是暴力，是精确。",
+   c:["mike","tuco","nacho"]},
+
+  {era:"bcs1", y:"2002", ep:"S1E9–E10", show:"bcs", major:false, t:"金沙派珀案：吉米挖到金矿，查克端走",
+   d:"吉米从一位老太太的账单里嗅出养老院集体诈骗，靠翻垃圾箱凑齐证据，做出了职业生涯第一个真正的大案。案子太大，他只能找 HHM 合作——然后眼睁睁看着查克把他的名字从案子上抹掉。",
+   c:["saul","chuck","howard","kim","rich"]},
+
+  {era:"bcs1", y:"2002", ep:"S1E10", show:"bcs", major:true, t:"「你从来就不是律师」",
+   d:"吉米终于逼问出真相：当年阻止 HHM 雇他的不是霍华德，是查克。查克说出了那句刻进他骨头里的判决——「你只是拿到了执照的滑头吉米」。从这一刻起，吉米不再试图证明什么。",
+   c:["saul","chuck","howard"]},
+
+  {era:"bcs1", y:"2002", ep:"S2", show:"bcs", major:false, t:"Davis & Main：一份他毁掉的好工作",
+   d:"金替吉米争取到圣塔菲名所 Davis & Main 的合伙人通道：角落办公室、公司车、丰厚薪水。吉米用一支不合规的电视广告和一堆小动作把它砸得干干净净——他要的从来不是体面，是自由。",
+   c:["saul","kim","cliff","howard"]},
+
+  {era:"bcs1", y:"2003", ep:"S2E9–E10", show:"bcs", major:false, t:"梅萨维德：改掉的那几个数字",
+   d:"为了让查克在梅萨维德银行开分行的听证会上出丑，吉米潜入哥哥家，把文件上的地址「1216」改成「1261」。查克当众念错、被当成老糊涂，声誉第一次出现裂缝——而这条裂缝最终会吞掉他们两个人。",
+   c:["saul","kim","chuck","rich"]},
+
+  {era:"bcs1", y:"2003", ep:"S3E1–E3", show:"bcs", major:false, t:"磁带、破门与那句录下的道歉",
+   d:"查克设局录下吉米承认篡改文件的自白。吉米砸开哥哥家的门抢走磁带当场销毁——却正中查克下怀：那场破门本身，才是他真正要的证据。",
+   c:["saul","chuck","ernesto","howard"]},
+
+  {era:"bcs1", y:"2003", ep:"S3E5", show:"bcs", major:true, t:"律协听证会：电池",
+   d:"庭上，金让查克滔滔不绝地展示自己的「专业」，然后请他解释：为什么他的西装口袋里，此刻装着一块 1.5 伏电池。查克在证人席上彻底崩溃，把对弟弟的全部恨意吼给了所有人听。吉米被停业一年，查克失去了他的权威。",
+   c:["saul","chuck","kim","howard","rebecca"]},
+
+  {era:"bcs1", y:"2003", ep:"S3E10", show:"bcs", major:true, t:"查克之死",
+   d:"失去 HHM 合伙人身份、被保险公司抛弃、被弟弟最后一次探访之后，查克回到那栋点着煤油灯的黑屋子里。他撕掉墙上的电线，一次次踢着桌上的灯，直到火焰吞掉整屋文件。吉米从此再没提起过他——直到最后一天在法庭上。",
+   c:["chuck","saul","howard","rebecca"]},
+
+  {era:"bcs1", y:"2003", ep:"S3E10", show:"bcs", major:true, t:"药片掉包：赫克托倒下",
+   d:"赫克托逼纳乔把自己的家具店变成毒品仓库，纳乔为保护父亲，把老人的心脏药换成了安慰剂。赫克托在与古斯对峙时猝然中风倒地。古斯做了所有人没想到的事——他跪下来给他做心肺复苏，把他救活。只有活着的赫克托，才能看见萨拉曼卡家族一个个死在他面前。",
+   c:["nacho","hector","gus","mike","manuel"]},
+
+  {era:"bcs2", y:"2004", ep:"S4", show:"bcs", major:false, t:"超级实验室开工",
+   d:"古斯从德国请来土木工程师维尔纳·齐格勒和一支施工队，在「洗净」洗衣店的地基下开挖那个日后闻名的空间。迈克负责看守，与维尔纳成了朋友——这是他在这行里犯过的、代价最大的一次心软。",
+   c:["gus","mike","werner","gale","victor"]},
+
+  {era:"bcs2", y:"2004", ep:"S4E9–E10", show:"bcs", major:false, t:"维尔纳出逃，与沙漠里的最后一通电话",
+   d:"思念妻子的维尔纳翻墙外出，无意间把工程的线索泄露给了正在追查的拉罗。古斯给出唯一的判决。迈克把他带到沙漠，让他给妻子打完最后一通电话，说完「一切都好」，然后从背后开了枪。",
+   c:["mike","werner","gus","lalo"]},
+
+  {era:"bcs2", y:"2004", ep:"S4E10", show:"bcs", major:true, t:"索尔·古德曼诞生",
+   d:"停业期满，吉米走进律协办公室，用一段关于哥哥的、他自己都不相信的演讲拿回了执照——出门后立刻对金说：「我要用索尔·古德曼这个名字执业。」这样客户就知道，他们请的是个真会走偏门的人。",
+   c:["saul","kim","francesca","howard"]},
+
+  {era:"bcs2", y:"2004", ep:"S4E10", show:"bcs", major:false, t:"拉罗·萨拉曼卡进城",
+   d:"家族派来接手北方生意的不是打手，是一个会做饭、会笑、会多问一句的人。拉罗一到就开始核对每一笔账、每一个说法——他不需要证据，只需要你多解释一次。",
+   c:["lalo","hector","nacho","gus","bolsa"]},
+
+  {era:"bcs2", y:"2004", ep:"S5E7–E8", show:"bcs", major:false, t:"沙漠里的七百万",
+   d:"拉罗从狱中派吉米去墨西哥边境取七百万美元保释金。归途遭遇伏击，吉米的车被打成筛子——迈克在山脊上一枪一枪替他清场，然后陪他徒步穿越沙漠两天两夜。回来的吉米，已经不是出发时那个人了。",
+   c:["saul","mike","lalo","kim"]},
+
+  {era:"bcs2", y:"2004", ep:"S5E9–E10", show:"bcs", major:false, t:"公寓门口：金对上拉罗",
+   d:"拉罗上门核对吉米的说法，金挡在门口，用一顿劈头盖脸的怒骂把他顶了回去。她赢了——但从那天起，两个人都知道拉罗随时可能再敲门。也是在这一夜，金第一次提出：我们可以对付霍华德。",
+   c:["kim","lalo","saul","howard"]},
+
+  {era:"bcs2", y:"2004", ep:"S5E10", show:"bcs", major:false, t:"庄园夜袭与拉罗的诈死",
+   d:"古斯派突击队夜袭拉罗在墨西哥的庄园。拉罗从浴缸下的地道逃生，回头把一具面目全非的尸体留在火场里，让全世界以为萨拉曼卡最后的头脑已经死了。只有他知道自己还活着——以及该去找谁算账。",
+   c:["gus","lalo","mike","bolsa","nacho"]},
+
+  {era:"bcs2", y:"2004", ep:"S6E3", show:"bcs", major:true, t:"纳乔之死",
+   d:"刺杀失败后，卡特尔要一个交代。古斯把纳乔当作替罪羊送到沙漠，条件是保住他父亲。在博尔萨、表兄弟和赫克托面前，纳乔承认了一切，痛骂赫克托「你现在这副样子，有我一份功劳」，然后抢过枪，对着自己的脑袋扣下扳机。",
+   c:["nacho","gus","bolsa","cousins","hector","mike","manuel"]},
+
+  {era:"bcs2", y:"2004", ep:"S6E7", show:"bcs", major:true, t:"霍华德之死",
+   d:"金与吉米用一场精心策划的骗局把霍华德塑造成吸毒、精神失常的人，毁掉了金沙派珀案的和解，也毁掉了他的一生。当晚霍华德上门，冷静地把两人心里的空洞说了出来。就在那句话之后，拉罗推门进来，一枪打穿了他的头。",
+   c:["howard","saul","kim","lalo","cliff"]},
+
+  {era:"bcs2", y:"2004", ep:"S6E8", show:"bcs", major:true, t:"洗衣店地下：拉罗之死",
+   d:"拉罗押着吉米闯进洗衣店，架起摄像机要古斯亲口承认一切。古斯在黑暗中拖延时间，摸到早已藏好的枪，先打灭电灯再一枪打穿拉罗的喉咙。拉罗躺在地上笑着断了气。他与霍华德的尸体，一起被埋进了未完工的实验室地基。",
+   c:["lalo","gus","mike","saul","howard","hector"]},
+
+  {era:"bcs2", y:"2004", ep:"S6E9", show:"bcs", major:true, t:"金交出执照",
+   d:"金向新墨西哥州律协提交了关于霍华德之死的完整陈述，主动放弃律师资格，并向吉米提出离婚。她走出办公楼，一个人在电梯里崩溃。「我们在一起对谁都没好处。」",
+   c:["kim","saul"]},
+
+  {era:"bcs2", y:"2004–2008", ep:"BCS S6 / BB S2", show:"bcs", major:false, t:"索尔·古德曼律师事务所",
+   d:"五年时间，索尔把那间挂着自由女神充气人偶的办公室开成了阿尔伯克基地下世界的中转站：保释、洗钱、假身份、「我认识一个人」。弗朗西斯卡守着前台，休尔守着门口，卡尔德拉的通讯录变成了他的资源库。",
+   c:["saul","francesca","huell","kuby","mike","caldera","ed"]},
+
+  {era:"bb1", y:"2008", ep:"S1E1", show:"bb", major:true, t:"五十岁生日：确诊",
+   d:"洗车行兼职、家里凑不出学费、生日蛋糕上的培根被摆成 50。同一天，沃尔特被确诊三期肺癌，医生的嘴在动，他只看见白大褂上的一块污渍。",
+   c:["walt","skyler","hank","flynn","marie","bogdan"]},
+
+  {era:"bb1", y:"2008", ep:"S1E1", show:"bb", major:true, t:"跟车突击：他在窗口认出了旧学生",
+   d:"汉克带沃尔特跟一次缉毒突击「开开眼」。屋顶上跳窗逃走的那个人，是他当年最差的学生杰西·平克曼。沃尔特没有报警，他记下了车牌——那一刻，故事真正开始了。",
+   c:["walt","hank","jesse","gomez"]},
+
+  {era:"bb1", y:"2008", ep:"S1E1–E3", show:"bb", major:false, t:"房车、磷化氢与自行车锁",
+   d:"第一次合伙就出了人命：埃米利奥与疯狂八号想吞掉他们，沃尔特用红磷制造毒气反杀。埃米利奥当场死亡，疯狂八号被锁在杰西家的地下室。沃尔特给他削三明治、陪他喝酒、几乎决定放他走——直到发现他藏起了一块碎盘子。",
+   c:["walt","jesse","emilio","krazy8"]},
+
+  {era:"bb1", y:"2008", ep:"S1E6", show:"bb", major:true, t:"水银雷酸盐：海森堡这个名字",
+   d:"为了替被打进医院的杰西讨回公道，沃尔特光着头走进图科的据点，把一块「冰毒」砸在地上炸掉半间屋子。「这是水银雷酸盐。」有人问他叫什么，他说：海森堡。",
+   c:["walt","jesse","tuco","skinnypete"]},
+
+  {era:"bb1", y:"2008", ep:"S2E8", show:"bb", major:false, t:"「你需要一个犯罪律师」",
+   d:"獾被便衣钓鱼执法抓走。杰西找来了公交站牌和深夜电视广告上那个人——索尔·古德曼。索尔第一句有用的话是：你不需要一个刑事辩护律师，你需要一个真正的「犯罪律师」。从此他成了这台机器的润滑油。",
+   c:["saul","walt","jesse","badger","hank"]},
+
+  {era:"bb1", y:"2008", ep:"S2E2", show:"bb", major:false, t:"图科之死",
+   d:"越来越疯的图科把沃尔特和杰西绑到沙漠木屋，两人正准备用蓖麻毒素毒死他，汉克循着杰西的车找了过来。木屋外的对射中，汉克一枪打死图科——他不知道自己刚刚救了谁。",
+   c:["hank","tuco","walt","jesse","hector"]},
+
+  {era:"bb1", y:"2008", ep:"S2E12", show:"bb", major:true, t:"简之死",
+   d:"简发现了杰西的钱，用录音要挟沃尔特交出分成，也第一次把杰西从沃尔特身边拉走。那天夜里沃尔特去找杰西，两人都睡着了，简仰面呕吐、开始窒息。沃尔特伸出手想翻过她的身体——然后停住了，看着她死去。",
+   c:["walt","jesse","jane"]},
+
+  {era:"bb1", y:"2008", ep:"S2E13", show:"bb", major:false, t:"韦弗勒 515 空难",
+   d:"女儿死后，航空管制员唐纳德·玛戈利斯重返岗位，在一次调度中指挥失误，两架客机在阿尔伯克基上空相撞，167 人罹难。碎片落满怀特家的泳池。这是全剧对沃尔特那次「袖手旁观」给出的第一份账单。",
+   c:["donald","walt","jane","jesse"]},
+
+  {era:"bb2", y:"2009", ep:"S3E1–E7", show:"bb", major:false, t:"表兄弟进城",
+   d:"两个不说话的杀手带着家族的复仇令跨过边境，来取「杀死图科的人」的命。古斯把汉克的名字递给了他们——既卖了萨拉曼卡一个人情，又替自己清掉了一个越来越麻烦的探员。",
+   c:["cousins","hector","gus","walt","hank","bolsa"]},
+
+  {era:"bb2", y:"2009", ep:"S3E5", show:"bb", major:false, t:"汉克遇袭",
+   d:"停车场里，表兄弟持斧与镀银手枪伏击汉克。一通提前一分钟的匿名电话救了他的命——那通电话来自古斯。汉克重伤瘫痪，玛丽把他从抑郁的深井里一点点拖出来。",
+   c:["hank","cousins","gus","marie","gomez"]},
+
+  {era:"bb2", y:"2009", ep:"S3E3–E7", show:"bb", major:true, t:"超级实验室：三个月三百万",
+   d:"古斯用一间「世界上最好的实验室」把沃尔特请回了这行，搭档是崇拜他的化学家盖尔·博蒂彻。沃尔特很快意识到：盖尔学得越快，自己就越不重要。",
+   c:["gus","walt","gale","mike","victor","jesse"]},
+
+  {era:"bb2", y:"2009", ep:"S3E13", show:"bb", major:true, t:"盖尔之死",
+   d:"古斯准备用盖尔替换掉沃尔特。沃尔特把杰西叫来，说了那句「你必须现在就去做」。杰西站在盖尔家门口，看着这个从没伤害过任何人的男人流泪求他，扣下了扳机。",
+   c:["jesse","gale","walt","gus","victor","mike"]},
+
+  {era:"bb2", y:"2009", ep:"S4E1", show:"bb", major:false, t:"箱切刀：维克托之死",
+   d:"古斯一言不发地换上防护服，走到维克托背后，用箱切刀划开他的喉咙，血溅在沃尔特和杰西脸上。他脱下手套，只说了一句：「回去工作。」",
+   c:["gus","victor","walt","jesse","mike"]},
+
+  {era:"bb2", y:"2009", ep:"S4E10", show:"bb", major:true, t:"泳池边的复仇",
+   d:"古斯带着一瓶上好龙舌兰重返埃拉迪奥的庄园，当着所有人的面先喝一杯。十二名卡特尔高层随后一个个倒下。他冲进厕所催吐、靠药物撑住自己，然后走回泳池边，看着埃拉迪奥翻进水里。「为了马克斯。」",
+   c:["gus","eladio","mike","jesse","bolsa"]},
+
+  {era:"bb2", y:"2009", ep:"S4E12", show:"bb", major:true, t:"铃兰：布洛克中毒",
+   d:"杰西倒向了古斯。沃尔特让休尔在拥抱时偷换掉那支装着蓖麻毒素的香烟，再用自家院子里的铃兰花毒倒了安德莉亚的儿子布洛克——然后引导杰西相信这是古斯干的。孩子活了下来，杰西回来了。这是沃尔特跨过的最后一条线。",
+   c:["walt","brock","jesse","andrea","huell","saul","gus"]},
+
+  {era:"bb2", y:"2009", ep:"S4E13", show:"bb", major:true, t:"叮。叮。叮。",
+   d:"沃尔特找到了唯一能靠近古斯的人：坐在轮椅上、只剩一只手的赫克托。当古斯走进疗养院的病房，赫克托终于抬起头，直视着他，一下一下摇响那只铃铛。爆炸后，古斯走出门，整了整领带，倒下——脸只剩下一半。",
+   c:["walt","hector","gus","tyrus","jesse"]},
+
+  {era:"bb3", y:"2009", ep:"S5E5", show:"bb", major:false, t:"火车劫案与德鲁·夏普",
+   d:"为了甲胺，三人组在沙漠里劫下一整节油罐车厢，干净利落、无人伤亡——直到一个骑越野车的男孩从沙丘上出现，笑着朝他们挥手。托德掏出枪，随手打死了他，然后转过头问：怎么处理？",
+   c:["walt","jesse","mike","todd","lydia","saul"]},
+
+  {era:"bb3", y:"2009", ep:"S5E7", show:"bb", major:true, t:"迈克之死",
+   d:"迈克拒绝交出那份「九人名单」，带着装满现金的包准备离开。沃尔特追到河边，为了一个他其实已经拿到的名字，朝他开了枪。迈克坐在河岸上，说：「闭嘴，让我安静地死。」",
+   c:["walt","mike","kaylee","saul","lydia"]},
+
+  {era:"bb3", y:"2009", ep:"S5E8", show:"bb", major:false, t:"两分钟内的十条命",
+   d:"为了封住所有可能开口的嘴，沃尔特花钱请杰克帮在三所监狱里同时动手。蒙太奇结束时，十个证人全部死亡，沃尔特看了看表——用时不到两分钟。他的帝国从此没有对手，也没有退路。",
+   c:["walt","jack","todd","lydia","saul"]},
+
+  {era:"bb3", y:"2010", ep:"S5E9", show:"bb", major:true, t:"《草叶集》",
+   d:"汉克在怀特家的洗手间里随手翻开一本惠特曼诗集，扉页上写着：「致我的另一个 W.W.，我的星辰，我的完美的沉默——G.B.」他抬起头，两年的调查在这一秒对上了号。",
+   c:["hank","walt","marie","skyler","gale"]},
+
+  {era:"bb3", y:"2010", ep:"S5E13–E14", show:"bb", major:true, t:"托哈吉利：汉克与戈麦斯之死",
+   d:"汉克设局让沃尔特带路挖出埋钱的地点，当场铐上他，给玛丽打了那通「我抓到他了」的电话。杰克帮随后赶到。沃尔特跪在地上喊着不要，杰克还是开了枪。汉克死前对沃尔特说：「你居然蠢到看不出他十分钟前就决定要杀我了。」",
+   c:["hank","gomez","walt","jack","todd","jesse"]},
+
+  {era:"bb3", y:"2010", ep:"S5E14", show:"bb", major:false, t:"刀锋、霍莉与那通电话",
+   d:"沃尔特回家逼全家上车，弗林报警，斯凯勒抄起菜刀，两人在地板上扭作一团。他抱走霍莉，又在加油站把她放回消防站门口。随后他打给斯凯勒，在明知警方监听的情况下，用最恶毒的语气把一切罪责揽到自己身上——这是他给她的最后一次保护。",
+   c:["walt","skyler","flynn","holly","marie"]},
+
+  {era:"bb3", y:"2010", ep:"S5E15", show:"bb", major:false, t:"杰西的囚笼",
+   d:"杰西被杰克帮关进地牢，被迫为托德制毒，脖子上拴着链子。他试图逃跑，代价是托德当着他的面在门廊上枪杀了安德莉亚。「这跟你没关系。」托德说完就走了。",
+   c:["jesse","todd","jack","andrea","brock"]},
+
+  {era:"bb3", y:"2010", ep:"S5E15", show:"bb", major:false, t:"分道扬镳：吸尘器店的最后一夜",
+   d:"沃尔特与索尔在埃德的地下室里等各自的新身份。索尔劝他自首，沃尔特咳着血说「一切还没结束」，然后咳倒在地。第二天索尔去了奥马哈，沃尔特去了新罕布什尔的雪山木屋，带着一桶钱和一盒化疗药，一个人过了几个月。",
+   c:["walt","saul","ed","flynn","skyler"]},
+
+  {era:"bb3", y:"2010", ep:"S5E16", show:"bb", major:false, t:"蓖麻毒素、九百万与那句实话",
+   d:"沃尔特回到阿尔伯克基：用激光笔和两个老朋友吓住格雷琴与埃利奥特，逼他们把九百多万以信托形式转给弗林；把蓖麻毒素倒进莉迪亚的甜叶菊；最后一次见斯凯勒，终于说了真话——「我做这些是为了我自己。我喜欢那种感觉。我很擅长。」",
+   c:["walt","gretchen","elliott","lydia","skyler","skinnypete","badger","todd"]},
+
+  {era:"bb3", y:"2010", ep:"S5E16", show:"bb", major:true, t:"M60 与最后一课",
+   d:"沃尔特在杰克帮的据点按下车钥匙，后备箱里的 M60 扫平整个房间。他扑倒杰西挡下子弹，一枪打断了正在讨价还价的杰克，然后把枪交给杰西——杰西拒绝再为他杀人，转身勒死了托德，开车冲出大门放声大笑。沃尔特走进实验室，手抚过设备，倒在血泊里。",
+   c:["walt","jack","todd","jesse","lydia"]},
+
+  {era:"after", y:"2010", ep:"《续命之徒》", show:"ec", major:true, t:"杰西的阿拉斯加",
+   d:"杰西躲进瘦皮特与獾家里，翻遍托德的公寓找钱，与两个假警察在街头对决，最后凑齐现金找到埃德。清晨的雪地里，他换上新名字开车北上——车里放着简当年说过的那句：「顺其自然，但要自己选。」",
+   c:["jesse","ed","skinnypete","badger","todd","jane"]},
+
+  {era:"after", y:"2010", ep:"BCS S6E10–E12", show:"bcs", major:false, t:"吉恩·塔科维奇：奥马哈的辛纳邦",
+   d:"索尔在商场里给人做肉桂卷，戴着眼镜、留着小胡子，每天扔掉一份没吃完的午餐。出租车司机杰夫认出了他。一开始他只想让对方闭嘴，很快他就开始享受重新出手的感觉——灌醉陌生人、复制银行卡、翻进人家客厅。索尔·古德曼从来没有真正死掉。",
+   c:["saul","jeff","marion","francesca","ed"]},
+
+  {era:"after", y:"2010", ep:"BCS S6E12", show:"bcs", major:false, t:"「我信任过你」",
+   d:"玛丽昂用刚学会的搜索引擎查到了索尔·古德曼的通缉页面。吉恩掐住电话线，站在她背后，看着这个老太太说出那句让他动不了手的话。她按下了紧急呼叫按钮，警察在门外等他。",
+   c:["saul","marion","jeff"]},
+
+  {era:"after", y:"2010", ep:"BCS S6E13", show:"bcs", major:true, t:"八十六年",
+   d:"索尔用一场教科书级的表演把刑期从终身谈到七年，还顺手要走了冰淇淋。可当他听说金已经交出了全部证词，他在庭上推翻了协议：承认自己从沃尔特第一天起就知道一切，承认查克死时他做了什么，承认霍华德的死与他有关。「我叫詹姆斯·麦吉尔。」法槌落下：86 年。",
+   c:["saul","kim","marie","oakley","walt","chuck","howard"]},
+
+  {era:"after", y:"2010", ep:"BCS S6E13", show:"bcs", major:true, t:"墙边的那支烟",
+   d:"ADX 蒙特罗斯监狱的探视室里，两个人隔着桌子分了一支烟，谁也没说太多。她走出铁门，他站在铁丝网后面比出那个手势——用两只手指，像当年在停车场比出的那个「枪」。这次没有笑话，只有一句没说出口的再见。",
+   c:["saul","kim"]}
+];
+
+</script>
+<script>
+/* ================================================================
+   应用层
+   ================================================================ */
+(function(){
+"use strict";
+const $  = (s,r)=> (r||document).querySelector(s);
+const $$ = (s,r)=> Array.prototype.slice.call((r||document).querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- 索引 ---------- */
+const byId = {}; CHARS.forEach((c,i)=>{ c.i=i; c.num=String(i+1).padStart(2,"0"); byId[c.id]=c; });
+const FAC = {}; FACTIONS.forEach(f=>FAC[f.id]=f);
+const RT  = {}; RELTYPES.forEach(t=>RT[t.id]=t);
+
+const links = LINKS.filter(l=>{
+  if(!byId[l.s]||!byId[l.t]){ console.warn("未知人物关系",l); return false; }
+  return true;
+});
+/* 同一对人物的多重关系 → 曲率分流 */
+(function(){
+  const g = {};
+  links.forEach(l=>{ const k=[l.s,l.t].sort().join("|"); (g[k]=g[k]||[]).push(l); });
+  Object.keys(g).forEach(k=>{
+    const arr=g[k];
+    arr.forEach((l,i)=>{ l.curve = arr.length===1 ? 0 : (i-(arr.length-1)/2)*30; });
+  });
+})();
+const adj = {}; CHARS.forEach(c=>adj[c.id]=[]);
+links.forEach(l=>{ adj[l.s].push(l); adj[l.t].push(l); });
+const evOf = {}; CHARS.forEach(c=>evOf[c.id]=[]);
+EVENTS.forEach((e,i)=>{ e.i=i; e.c.forEach(id=>{ if(evOf[id]) evOf[id].push(e); }); });
+
+/* ---------- 主题与取色 ---------- */
+let COL = {};
+function readColors(){
+  const cs = getComputedStyle(document.documentElement);
+  const g = n => cs.getPropertyValue(n).trim();
+  COL = { bg:g("--bg"), bg2:g("--bg-2"), bg3:g("--bg-3"), line:g("--line"), line2:g("--line-2"),
+          txt:g("--txt"), txt2:g("--txt-2"), txt3:g("--txt-3"), accent:g("--accent") };
+  FACTIONS.forEach(f=>COL[f.id]=g(f.v));
+  RELTYPES.forEach(t=>COL["r_"+t.id]=g(t.v));
+}
+function isDark(){
+  const ex = document.documentElement.dataset.theme;
+  if(ex) return ex==="dark";
+  return matchMedia("(prefers-color-scheme: dark)").matches;
+}
+readColors();
+$("#themeBtn").addEventListener("click", ()=>{
+  document.documentElement.dataset.theme = isDark() ? "light" : "dark";
+  try{ localStorage.setItem("bbtheme", document.documentElement.dataset.theme); }catch(e){}
+  readColors(); draw();
+});
+try{ const t=localStorage.getItem("bbtheme"); if(t){ document.documentElement.dataset.theme=t; readColors(); } }catch(e){}
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ()=>{ readColors(); draw(); });
+
+function hexA(h,a){
+  h=(h||"#888").trim();
+  if(h[0]!=="#") return h;
+  if(h.length===4) h = "#"+h[1]+h[1]+h[2]+h[2]+h[3]+h[3];
+  const n=parseInt(h.slice(1),16);
+  return "rgba("+((n>>16)&255)+","+((n>>8)&255)+","+(n&255)+","+a+")";
+}
+
+/* ---------- 状态 ---------- */
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const state = {
+  show:"all", layout:"force",
+  facs:new Set(FACTIONS.map(f=>f.id)),
+  rels:new Set(RELTYPES.map(t=>t.id)),
+  sel:null, hover:null, view:"graph"
+};
+
+/* ---------- 节点 ---------- */
+const nodes = CHARS.map(c=>{
+  const fi = FACTIONS.findIndex(f=>f.id===c.fac);
+  const a  = (fi/FACTIONS.length)*Math.PI*2;
+  const r  = 250 + (c.i%7)*22;
+  return { c, id:c.id, x:Math.cos(a)*r + (Math.random()-.5)*90, y:Math.sin(a)*r + (Math.random()-.5)*90,
+           vx:0, vy:0, size:26 + c.w*5, vis:true, fx:null, fy:null };
+});
+const nodeOf = {}; nodes.forEach(n=>nodeOf[n.id]=n);
+
+function visibleNodes(){ return nodes.filter(n=>n.vis); }
+function nodeVisible(c){
+  if(!state.facs.has(c.fac)) return false;
+  if(state.show!=="all" && c.shows.indexOf(state.show)<0) return false;
+  return true;
+}
+function linkVisible(l){
+  return state.rels.has(l.k) && nodeOf[l.s].vis && nodeOf[l.t].vis;
+}
+function applyFilters(){
+  nodes.forEach(n=>{ n.vis = nodeVisible(n.c); });
+  if(state.sel && !nodeOf[state.sel].vis) select(null);
+  alpha = Math.max(alpha, .55);
+  updateHud(); updateChipCounts();
+}
+function updateHud(){
+  const nv = visibleNodes().length, lv = links.filter(linkVisible).length;
+  $("#hud").textContent = nv+" 人 · "+lv+" 条关系" + (state.sel? " · 已选中 "+byId[state.sel].zh : "");
+}
+
+/* ---------- 视图变换 ---------- */
+const cv = $("#net"), ctx = cv.getContext("2d");
+let W=0,H=0,DPR=1, tx=0, ty=0, scale=1;
+function resize(){
+  const r = cv.parentElement.getBoundingClientRect();
+  DPR = Math.min(window.devicePixelRatio||1, 2);
+  W = r.width; H = r.height;
+  cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
+  cv.style.width = W+"px"; cv.style.height = H+"px";
+  draw();
+}
+new ResizeObserver(resize).observe($("#stage"));
+
+function toWorld(px,py){ return { x:(px-tx)/scale, y:(py-ty)/scale }; }
+function fit(pad){
+  const ns = visibleNodes(); if(!ns.length) return;
+  if(pad==null) pad = Math.max(20, Math.min(70, W*0.06));
+  let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+  ns.forEach(n=>{ const h=n.size/2+16;
+    x0=Math.min(x0,n.x-h); y0=Math.min(y0,n.y-h); x1=Math.max(x1,n.x+h); y1=Math.max(y1,n.y+h); });
+  if(state.layout==="cluster"){                 /* 给阵营标题留出上方空间 */
+    FACTIONS.forEach(f=>{
+      const cnt = nodes.filter(n=>n.c.fac===f.id && n.vis).length;
+      if(!cnt || !state.facs.has(f.id)) return;
+      const c=CLUSTER_C[f.id], off=100+Math.sqrt(cnt)*32;
+      y0=Math.min(y0, c.y-off-26); x0=Math.min(x0,c.x-110); x1=Math.max(x1,c.x+110);
+    });
+  }
+  let s = Math.min((W-pad*2)/(x1-x0||1), (H-pad*2)/(y1-y0||1));
+  /* 窄屏上完整取景会让方块小到看不清：放大到主要人物可读，其余靠拖动浏览 */
+  if(W<680) s = Math.min(s*2.1, 0.62);
+  scale = Math.max(.14, Math.min(1.7, s));
+  tx = W/2 - (x0+x1)/2*scale; ty = H/2 - (y0+y1)/2*scale;
+}
+function centerOn(n, s){
+  scale = s || Math.max(scale, .95);
+  tx = W/2 - n.x*scale; ty = H/2 - n.y*scale;
+}
+
+/* ---------- 力学 ---------- */
+let alpha = REDUCED ? .25 : 1;
+const CLUSTER_C = {};
+function clusterCenters(){
+  FACTIONS.forEach((f,i)=>{
+    const n = nodes.filter(nd=>nd.c.fac===f.id && nd.vis).length;
+    const a = (i/FACTIONS.length)*Math.PI*2 - Math.PI/2;
+    const R = 560 + n*9;                       /* 人多的阵营放得更远，给内部留出空间 */
+    CLUSTER_C[f.id] = { x:Math.cos(a)*R, y:Math.sin(a)*R*0.82 };
+  });
+}
+clusterCenters();
+
+function physics(){
+  const ns = visibleNodes(); if(ns.length<2) return;
+  const cluster = state.layout==="cluster";
+  const REP = cluster ? 5200 : 21000;
+  for(let i=0;i<ns.length;i++){
+    const a=ns[i];
+    for(let j=i+1;j<ns.length;j++){
+      const b=ns[j];
+      let dx=b.x-a.x, dy=b.y-a.y, d2=dx*dx+dy*dy;
+      if(d2<1){ dx=Math.random()-.5; dy=Math.random()-.5; d2=1; }
+      const d=Math.sqrt(d2);
+      let f = REP/d2;
+      const minD = (a.size+b.size)/2 + (cluster?18:34);
+      if(d<minD) f += (minD-d)*0.9;          /* 硬碰撞，避免方块重叠 */
+      f = Math.min(f, 40);
+      const ux=dx/d, uy=dy/d;
+      a.vx-=ux*f; a.vy-=uy*f; b.vx+=ux*f; b.vy+=uy*f;
+    }
+  }
+  const K = cluster ? 0.0035 : 0.028;
+  links.forEach(l=>{
+    if(!linkVisible(l)) return;
+    const a=nodeOf[l.s], b=nodeOf[l.t];
+    const L = 108 + (5-Math.min(a.c.w,b.c.w))*13;
+    let dx=b.x-a.x, dy=b.y-a.y, d=Math.hypot(dx,dy)||1;
+    const f=(d-L)*K, ux=dx/d, uy=dy/d;
+    a.vx+=ux*f; a.vy+=uy*f; b.vx-=ux*f; b.vy-=uy*f;
+  });
+  ns.forEach(n=>{
+    if(cluster){
+      const c=CLUSTER_C[n.c.fac];
+      n.vx += (c.x-n.x)*0.055; n.vy += (c.y-n.y)*0.055;
+    }else{
+      n.vx += -n.x*0.0022; n.vy += -n.y*0.0022;   /* 向心引力 */
+    }
+    if(n.fx!=null){ n.x=n.fx; n.y=n.fy; n.vx=n.vy=0; return; }
+    n.vx*=0.82; n.vy*=0.82;
+    const sp=Math.hypot(n.vx,n.vy), MX=26;
+    if(sp>MX){ n.vx=n.vx/sp*MX; n.vy=n.vy/sp*MX; }
+    n.x += n.vx*alpha; n.y += n.vy*alpha;
+  });
+}
+
+/* ---------- 高亮集合 ---------- */
+function activeSet(){
+  const focus = state.hover || state.sel;
+  if(!focus) return null;
+  const s = new Set([focus]);
+  adj[focus].forEach(l=>{ if(linkVisible(l)){ s.add(l.s); s.add(l.t); } });
+  return s;
+}
+
+/* ---------- 绘制 ---------- */
+function curvePoint(a,b,cu,t){
+  const mx=(a.x+b.x)/2, my=(a.y+b.y)/2;
+  let dx=b.x-a.x, dy=b.y-a.y, d=Math.hypot(dx,dy)||1;
+  const cx=mx - dy/d*cu, cy=my + dx/d*cu, it=1-t;
+  return { x:it*it*a.x + 2*it*t*cx + t*t*b.x, y:it*it*a.y + 2*it*t*cy + t*t*b.y, cx:cx, cy:cy };
+}
+function roundRect(x,y,w,h,r){
+  if(ctx.roundRect){ ctx.beginPath(); ctx.roundRect(x,y,w,h,r); return; }
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+
+/* 标签防重叠：屏幕坐标下的矩形占位 */
+let placed = [];
+function fits(x,y,w,h){
+  for(let i=0;i<placed.length;i++){
+    const p=placed[i];
+    if(x < p.x+p.w+3 && x+w+3 > p.x && y < p.y+p.h+2 && y+h+2 > p.y) return false;
+  }
+  if(x<2 || y<0 || x+w>W-2 || y+h>H) return false;   /* 别让文字被画布边缘切掉 */
+  return true;
+}
+function claim(x,y,w,h){ placed.push({x:x,y:y,w:w,h:h}); }
+const S = n => ({ x:n.x*scale+tx, y:n.y*scale+ty });
+const shortName = c => c.zh.split(/[（(]/)[0];
+
+function draw(){
+  if(!W) return;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  ctx.clearRect(0,0,W,H);
+  ctx.save(); ctx.translate(tx,ty); ctx.scale(scale,scale);
+
+  const act = activeSet();
+  const dark = isDark();
+  placed = [];
+
+  /* 阵营分组模式：底层的阵营名 */
+  if(state.layout==="cluster"){
+    ctx.textAlign="center"; ctx.textBaseline="middle";
+    FACTIONS.forEach(f=>{
+      if(!state.facs.has(f.id)) return;
+      const c=CLUSTER_C[f.id];
+      const cnt=nodes.filter(n=>n.c.fac===f.id&&n.vis).length;
+      if(!cnt) return;
+      const off = 100 + Math.sqrt(cnt)*32;
+      ctx.font = "600 30px "+getComputedStyle(document.body).fontFamily;
+      ctx.fillStyle = hexA(COL[f.id], dark?0.16:0.18);
+      ctx.fillText(f.zh, c.x, c.y-off);
+      ctx.font = "500 13px ui-monospace,Menlo,monospace";
+      ctx.fillText(f.en.toUpperCase()+" · "+cnt, c.x, c.y-off+27);
+    });
+  }
+
+  /* 连线 */
+  links.forEach(l=>{
+    if(!linkVisible(l)) return;
+    const a=nodeOf[l.s], b=nodeOf[l.t];
+    const on = !act || (act.has(l.s)&&act.has(l.t));
+    const strong = act && (l.s===(state.hover||state.sel) || l.t===(state.hover||state.sel));
+    const base = COL["r_"+l.k] || COL.line2;
+    ctx.strokeStyle = hexA(base, on ? (strong?0.92:0.30) : (dark?0.045:0.06));
+    ctx.lineWidth = (strong ? 2.2 : 1.15)/Math.max(scale,0.75);
+    ctx.setLineDash(l.k==="kill" ? [6,5] : []);
+    const p = curvePoint(a,b,l.curve,.5);
+    ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.quadraticCurveTo(p.cx,p.cy,b.x,b.y); ctx.stroke();
+    ctx.setLineDash([]);
+    if(RT[l.k].dir && on){
+      /* 箭头：找到曲线上刚好落在目标方块外的点 */
+      let t=1, half=b.size/2+7;
+      for(let k=100;k>=0;k--){ const q=curvePoint(a,b,l.curve,k/100);
+        if(Math.max(Math.abs(q.x-b.x),Math.abs(q.y-b.y))>=half){ t=k/100; break; } }
+      const q=curvePoint(a,b,l.curve,t), q2=curvePoint(a,b,l.curve,Math.max(0,t-0.03));
+      const ang=Math.atan2(q.y-q2.y,q.x-q2.x), s=8;
+      ctx.fillStyle = hexA(base, strong?0.95:0.5);
+      ctx.beginPath();
+      ctx.moveTo(q.x,q.y);
+      ctx.lineTo(q.x-Math.cos(ang-0.4)*s, q.y-Math.sin(ang-0.4)*s);
+      ctx.lineTo(q.x-Math.cos(ang+0.4)*s, q.y-Math.sin(ang+0.4)*s);
+      ctx.closePath(); ctx.fill();
+    }
+  });
+
+  /* 节点方块 */
+  visibleNodes().forEach(n=>{
+    const on = !act || act.has(n.id);
+    const isSel = state.sel===n.id, isHov = state.hover===n.id;
+    const fc = COL[n.c.fac] || COL.txt2;
+    const s = n.size, x=n.x-s/2, y=n.y-s/2;
+    const al = on ? 1 : (dark?0.13:0.16);
+
+    ctx.globalAlpha = al;
+    if(isSel||isHov){
+      ctx.shadowColor = hexA(fc,.75); ctx.shadowBlur = 18;
+    }
+    roundRect(x,y,s,s,7);
+    ctx.fillStyle = hexA(fc, dark?0.20:0.15); ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.lineWidth = isSel?2.6:(isHov?2.1:1.4);
+    ctx.strokeStyle = hexA(fc, isSel||isHov?1:0.78); ctx.stroke();
+
+    ctx.textAlign="center"; ctx.textBaseline="middle";
+    ctx.fillStyle = fc;
+    ctx.font = "700 "+Math.round(s*0.36)+"px "+"ui-monospace,SFMono-Regular,Menlo,monospace";
+    ctx.fillText(n.c.sym, n.x, n.y-1);
+    if(s>36){
+      ctx.font = "500 "+Math.round(s*0.19)+"px ui-monospace,Menlo,monospace";
+      ctx.globalAlpha = al*0.7;
+      ctx.fillText(n.c.num, n.x+s*0.30, n.y+s*0.31);
+      ctx.globalAlpha = al;
+    }
+
+    ctx.globalAlpha = 1;
+  });
+
+  ctx.restore();
+
+  /* ---- 文字层：屏幕坐标，固定字号，逐个避让 ---- */
+  const bodyFont = getComputedStyle(document.body).fontFamily;
+  ctx.textAlign="center"; ctx.textBaseline="middle";
+  const focus = state.hover || state.sel;
+
+  /* 0) 方块本身先占位，任何文字都不会压在方块上 */
+  visibleNodes().forEach(n=>{
+    const p=S(n), h=n.size*scale;
+    claim(p.x-h/2, p.y-h/2, h, h);
+  });
+
+  function drawName(n){
+    const isSel = state.sel===n.id, isHov = state.hover===n.id;
+    const p = S(n), label = shortName(n.c);
+    ctx.font = (isSel||isHov?"600 ":"500 ")+"11.5px "+bodyFont;
+    const w = ctx.measureText(label).width, h = 14;
+    const x = p.x - w/2, y = p.y + n.size*scale/2 + 9;
+    if(!fits(x,y,w,h)) return;
+    claim(x,y,w,h);
+    ctx.lineWidth = 3.2; ctx.strokeStyle = hexA(COL.bg,.9);
+    ctx.strokeText(label, p.x, y+h/2);
+    ctx.fillStyle = isSel||isHov ? COL.txt : COL.txt2;
+    ctx.fillText(label, p.x, y+h/2);
+  }
+
+  /* 1) 焦点人物的名字最优先 */
+  if(focus && nodeOf[focus].vis) drawName(nodeOf[focus]);
+
+  /* 2) 关系标签：沿着「焦点 → 对方」方向外移，天然呈放射状排开 */
+  if(focus && scale>0.34){
+    const fn = nodeOf[focus];
+    const fs = S(fn);
+    adj[focus].forEach(l=>{
+      if(!linkVisible(l) || !l.l) return;
+      const other = nodeOf[l.s===focus ? l.t : l.s], os = S(other);
+      const dx=os.x-fs.x, dy=os.y-fs.y, d=Math.hypot(dx,dy)||1;
+      ctx.font = "500 10.5px "+bodyFont;
+      const w = ctx.measureText(l.l).width + 11, h = 16;
+      /* 沿这条连线试几个落点，被挡住就往里挪 */
+      let px, py, ok=false;
+      const cands = [other.size*scale/2 + 30, d*0.42, d*0.6, d*0.28];
+      for(let ci=0; ci<cands.length; ci++){
+        const gap = Math.max(Math.min(cands[ci], d*0.78), 18);
+        px = os.x - dx/d*gap; py = os.y - dy/d*gap;
+        if(fits(px-w/2, py-h/2, w, h)){ ok=true; break; }
+      }
+      if(!ok) return;
+      claim(px-w/2, py-h/2, w, h);
+      ctx.fillStyle = hexA(COL.bg, .9);
+      roundRect(px-w/2, py-h/2, w, h, 4); ctx.fill();
+      ctx.strokeStyle = hexA(COL["r_"+l.k], .35); ctx.lineWidth = 1;
+      roundRect(px-w/2, py-h/2, w, h, 4); ctx.stroke();
+      ctx.fillStyle = COL["r_"+l.k];
+      ctx.fillText(l.l, px, py+.5);
+    });
+  }
+
+  /* 3) 其余人物姓名：重要角色优先占位，放不下的自动省略 */
+  visibleNodes().slice().sort((a,b)=>{
+    const pa = (act&&act.has(a.id)?20:0) + a.c.w;
+    const pb = (act&&act.has(b.id)?20:0) + b.c.w;
+    return pb-pa;
+  }).forEach(n=>{
+    if(n.id===focus) return;
+    if(act && !act.has(n.id)) return;            /* 非关联人物不写字，避免噪声 */
+    drawName(n);
+  });
+}
+
+/* ---------- 主循环 ---------- */
+let raf;
+function loop(){
+  if(alpha>0.012){ physics(); alpha *= REDUCED?0.90:0.976; draw(); }
+  else if(needDraw){ draw(); needDraw=false; }
+  raf = requestAnimationFrame(loop);
+}
+let needDraw=false;
+function kick(a){ alpha = Math.max(alpha, a==null?0.45:a); }
+loop();
+
+/* ---------- 交互 ---------- */
+let dragNode=null, panning=false, last={x:0,y:0}, moved=false, downAt=0;
+const pointers = new Map();
+let pinch = null;   /* {d, mx, my} 双指缩放 */
+function pick(px,py){
+  const w = toWorld(px,py);
+  const vs = visibleNodes();
+  for(let i=vs.length-1;i>=0;i--){
+    const n=vs[i], h=n.size/2;
+    if(Math.abs(w.x-n.x)<=h+2 && Math.abs(w.y-n.y)<=h+2) return n;
+  }
+  return null;
+}
+function evPos(e){ const r=cv.getBoundingClientRect(); return { x:e.clientX-r.left, y:e.clientY-r.top }; }
+
+cv.addEventListener("pointerdown", e=>{
+  cv.setPointerCapture(e.pointerId);
+  const p=evPos(e); pointers.set(e.pointerId, p);
+  if(pointers.size===2){                       /* 进入双指缩放，取消拖拽/平移 */
+    const a=Array.from(pointers.values());
+    pinch = { d:Math.hypot(a[0].x-a[1].x, a[0].y-a[1].y) };
+    if(dragNode){ dragNode.fx=dragNode.fy=null; dragNode=null; }
+    panning=false; cv.classList.remove("grabbing"); hideTip();
+    return;
+  }
+  if(pointers.size>2) return;
+  moved=false; downAt=Date.now();
+  const n=pick(p.x,p.y);
+  if(n){ dragNode=n; n.fx=n.x; n.fy=n.y; }
+  else { panning=true; cv.classList.add("grabbing"); }
+  last=p;
+});
+cv.addEventListener("pointermove", e=>{
+  const p=evPos(e);
+  if(pointers.has(e.pointerId)) pointers.set(e.pointerId, p);
+  if(pointers.size>=2 && pinch){
+    const a=Array.from(pointers.values());
+    const d=Math.hypot(a[0].x-a[1].x, a[0].y-a[1].y);
+    const mx=(a[0].x+a[1].x)/2, my=(a[0].y+a[1].y)/2;
+    const w=toWorld(mx,my);
+    scale = Math.max(.14, Math.min(2.6, scale*(d/(pinch.d||d))));
+    tx = mx - w.x*scale; ty = my - w.y*scale;
+    pinch.d = d; moved=true; needDraw=true;
+    return;
+  }
+  if(dragNode){
+    const dx=(p.x-last.x)/scale, dy=(p.y-last.y)/scale;
+    dragNode.fx += dx; dragNode.fy += dy;
+    dragNode.x=dragNode.fx; dragNode.y=dragNode.fy;
+    last=p; moved=true; kick(.55); hideTip(); return;
+  }
+  if(panning){
+    tx += p.x-last.x; ty += p.y-last.y; last=p; moved=true; needDraw=true; hideTip(); return;
+  }
+  const n=pick(p.x,p.y);
+  const id = n?n.id:null;
+  if(id!==state.hover){ state.hover=id; needDraw=true; }
+  cv.style.cursor = n?"pointer":"grab";
+  if(n) showTip(n,p); else hideTip();
+});
+function endPointer(e){
+  pointers.delete(e.pointerId);
+  if(pointers.size<2) pinch=null;
+  if(dragNode && !moved){ select(dragNode.id); }
+  else if(panning && !moved && Date.now()-downAt<300){ select(null); }
+  if(dragNode){ dragNode.fx=dragNode.fy=null; kick(.3); }
+  dragNode=null; panning=false; cv.classList.remove("grabbing");
+  if(e.pointerType && e.pointerType!=="mouse"){ state.hover=null; hideTip(); needDraw=true; }
+}
+cv.addEventListener("pointerup", endPointer);
+cv.addEventListener("pointercancel", endPointer);
+cv.addEventListener("pointerleave", ()=>{ state.hover=null; hideTip(); needDraw=true; });
+cv.addEventListener("dblclick", e=>{
+  const p=evPos(e), n=pick(p.x,p.y);
+  if(n){ select(n.id); animateTo(n, 1.15); }
+});
+cv.addEventListener("wheel", e=>{
+  e.preventDefault();
+  const p=evPos(e), w=toWorld(p.x,p.y);
+  const k = Math.exp(-e.deltaY*0.0016);
+  scale = Math.max(.18, Math.min(2.6, scale*k));
+  tx = p.x - w.x*scale; ty = p.y - w.y*scale;
+  needDraw=true;
+}, {passive:false});
+
+function animateTo(n, s){
+  const t0=performance.now(), x0=tx, y0=ty, s0=scale;
+  const s1=s||Math.max(scale,1.0), x1=W/2-n.x*s1, y1=H/2-n.y*s1;
+  if(REDUCED){ scale=s1; tx=x1; ty=y1; needDraw=true; return; }
+  (function step(t){
+    const k=Math.min(1,(t-t0)/420), e=1-Math.pow(1-k,3);
+    scale=s0+(s1-s0)*e; tx=x0+(x1-x0)*e; ty=y0+(y1-y0)*e; needDraw=true;
+    if(k<1) requestAnimationFrame(step);
+  })(t0);
+}
+
+$("#zin").onclick  = ()=>{ const w=toWorld(W/2,H/2); scale=Math.min(2.6,scale*1.28); tx=W/2-w.x*scale; ty=H/2-w.y*scale; needDraw=true; };
+$("#zout").onclick = ()=>{ const w=toWorld(W/2,H/2); scale=Math.max(.18,scale/1.28); tx=W/2-w.x*scale; ty=H/2-w.y*scale; needDraw=true; };
+$("#zfit").onclick = ()=>{ fit(); needDraw=true; };
+
+/* ---------- 提示气泡 ---------- */
+const tip=$("#tip");
+function showTip(n,p){
+  const c=n.c, f=FAC[c.fac];
+  tip.innerHTML = '<b>'+esc(c.zh)+'</b><div class="r">'+esc(c.role)+'</div>'+
+    '<div class="k">'+esc(f.zh)+' · '+adj[c.id].filter(linkVisible).length+' 条关系</div>';
+  tip.classList.add("on");
+  const r=tip.getBoundingClientRect();
+  let x=p.x+16, y=p.y+16;
+  if(x+r.width>W-8) x=p.x-r.width-14;
+  if(y+r.height>H-8) y=p.y-r.height-14;
+  tip.style.left=x+"px"; tip.style.top=y+"px";
+}
+function hideTip(){ tip.classList.remove("on"); }
+
+/* ---------- 选中与卷宗 ---------- */
+function select(id){
+  state.sel = id;
+  renderDossier();
+  updateHud(); needDraw=true;
+  if(id && innerWidth<=1180){ $("#dossier").classList.add("open"); }
+}
+function relRow(l, meId){
+  const otherId = l.s===meId ? l.t : l.s;
+  const o = byId[otherId], fc = "var(--f-"+o.fac+")";
+  const rc = "var(--r-"+l.k+")";
+  const dirNote = RT[l.k].dir ? (l.s===meId ? "→ " : "← ") : "";
+  return '<button class="rel" data-go="'+o.id+'">'+
+    '<span class="bar" style="background:'+rc+'"></span>'+
+    '<span class="sym" style="color:'+fc+';background:color-mix(in srgb,'+fc+' 15%,transparent);border:1px solid color-mix(in srgb,'+fc+' 45%,transparent)">'+esc(o.sym)+'</span>'+
+    '<span><span class="who">'+esc(o.zh)+'</span><br /><span class="what">'+esc(dirNote+(l.l||RT[l.k].zh))+'</span></span>'+
+    '</button>';
+}
+function dossierHTML(id){
+  const c=byId[id], f=FAC[c.fac];
+  const rels = adj[id].slice().sort((a,b)=>{
+    const ord = t=>["family","romance","ally","mentor","business","rival","kill"].indexOf(t);
+    return ord(a.k)-ord(b.k);
+  });
+  const evs = evOf[id];
+  const shows = c.shows.map(s=> s==="bcs"
+      ? '<span class="badge bcs">风骚律师</span>' : '<span class="badge bb">绝命毒师</span>').join("");
+  let h = '<div class="d-head" style="--fc:'+ 'var(--f-'+c.fac+')">'+
+    '<button class="d-close" data-close aria-label="关闭卷宗">✕</button>'+
+    '<div class="d-tile">'+esc(c.sym)+'<sub>'+c.num+'</sub></div>'+
+    '<h3 class="d-name">'+esc(c.zh)+'</h3>'+
+    '<p class="d-en">'+esc(c.en)+'</p>'+
+    '<div class="d-meta"><span class="badge fc">'+esc(f.zh)+'</span>'+shows+
+      '<span class="badge">'+adj[id].length+' 条关系</span><span class="badge">'+evs.length+' 个事件</span></div>'+
+    '</div>';
+  h += '<div class="d-sec"><h4>身份</h4><p><strong>'+esc(c.role)+'</strong></p></div>';
+  h += '<div class="d-sec"><h4>档案</h4><p>'+esc(c.bio)+'</p></div>';
+  if(c.quote) h += '<div class="d-sec" style="--fc:var(--f-'+c.fac+')"><h4>台词</h4>'+
+    '<blockquote class="quote">「'+esc(c.quote.t)+'」<cite>'+esc(c.quote.s)+'</cite></blockquote></div>';
+  if(c.fate) h += '<div class="d-sec"><h4>结局</h4><p>'+esc(c.fate)+'</p></div>';
+  h += '<div class="d-sec"><h4>关系网（'+rels.length+'）</h4><div class="rel-list">'+
+       rels.map(l=>relRow(l,id)).join("")+'</div></div>';
+  if(evs.length) h += '<div class="d-sec"><h4>参与事件（'+evs.length+'）</h4><div class="d-events">'+
+       evs.map(e=>'<button class="d-ev" data-ev="'+e.i+'"><span class="yr">'+esc(e.y)+'</span><span class="tl">'+esc(e.t)+'</span></button>').join("")+
+       '</div></div>';
+  return h;
+}
+function renderDossier(){
+  [["#dossier","#dBody"],["#dossier2","#dBody2"]].forEach(pair=>{
+    const box=$(pair[0]), body=$(pair[1]);
+    if(!state.sel){ box.classList.add("empty"); box.classList.remove("open"); body.innerHTML=""; return; }
+    box.classList.remove("empty");
+    body.innerHTML = dossierHTML(state.sel);
+    body.scrollTop = 0;
+  });
+}
+document.addEventListener("click", e=>{
+  const go=e.target.closest("[data-go]");
+  if(go){ select(go.dataset.go); const n=nodeOf[go.dataset.go];
+          if(state.view==="graph" && n && n.vis) animateTo(n); return; }
+  const cl=e.target.closest("[data-close]");
+  if(cl){ select(null); return; }
+  const ev=e.target.closest("[data-ev]");
+  if(ev){ gotoEvent(+ev.dataset.ev); return; }
+});
+
+/* ---------- 左侧筛选轨 ---------- */
+const facChips=$("#facChips");
+facChips.innerHTML = FACTIONS.map(f=>
+  '<button class="chip" data-fac="'+f.id+'" aria-pressed="true">'+
+  '<span class="dot" style="background:var('+f.v+')"></span>'+esc(f.zh)+'<span class="n" data-cnt="'+f.id+'"></span></button>').join("");
+$("#relChips").innerHTML = RELTYPES.map(t=>
+  '<button class="chip" data-rel="'+t.id+'" aria-pressed="true">'+
+  '<span class="ln" style="border-color:var('+t.v+');'+(t.dir?"border-top-style:dashed;":"")+'"></span>'+esc(t.zh)+
+  '<span class="n" data-rcnt="'+t.id+'"></span></button>').join("");
+function updateChipCounts(){
+  FACTIONS.forEach(f=>{
+    const el=facChips.querySelector('[data-cnt="'+f.id+'"]');
+    el.textContent = nodes.filter(n=>n.c.fac===f.id && (state.show==="all"||n.c.shows.indexOf(state.show)>=0)).length;
+  });
+  RELTYPES.forEach(t=>{
+    const el=$('[data-rcnt="'+t.id+'"]');
+    el.textContent = links.filter(l=>l.k===t.id && nodeOf[l.s].vis && nodeOf[l.t].vis).length;
+  });
+}
+facChips.addEventListener("click", e=>{
+  const b=e.target.closest("[data-fac]"); if(!b) return;
+  const id=b.dataset.fac, on=b.getAttribute("aria-pressed")==="true";
+  if(on) state.facs.delete(id); else state.facs.add(id);
+  b.setAttribute("aria-pressed", String(!on));
+  applyFilters(); needDraw=true;
+});
+$("#relChips").addEventListener("click", e=>{
+  const b=e.target.closest("[data-rel]"); if(!b) return;
+  const id=b.dataset.rel, on=b.getAttribute("aria-pressed")==="true";
+  if(on) state.rels.delete(id); else state.rels.add(id);
+  b.setAttribute("aria-pressed", String(!on));
+  applyFilters(); needDraw=true;
+});
+$("#showSeg").addEventListener("click", e=>{
+  const b=e.target.closest("[data-show]"); if(!b) return;
+  $$("#showSeg button").forEach(x=>x.setAttribute("aria-pressed", String(x===b)));
+  state.show=b.dataset.show; applyFilters(); kick(.85);
+  setTimeout(()=>{ fit(); needDraw=true; }, 420);
+});
+$("#layoutSeg").addEventListener("click", e=>{
+  const b=e.target.closest("[data-layout]"); if(!b) return;
+  $$("#layoutSeg button").forEach(x=>x.setAttribute("aria-pressed", String(x===b)));
+  state.layout=b.dataset.layout; clusterCenters();
+  nodes.forEach(n=>{ n.fx=n.fy=null; });
+  kick(1);
+  setTimeout(()=>{ fit(); needDraw=true; }, 700);
+});
+$("#resetBtn").onclick = ()=>{
+  state.show="all"; state.layout="force";
+  state.facs=new Set(FACTIONS.map(f=>f.id)); state.rels=new Set(RELTYPES.map(t=>t.id));
+  $$("#showSeg button").forEach(x=>x.setAttribute("aria-pressed", String(x.dataset.show==="all")));
+  $$("#layoutSeg button").forEach(x=>x.setAttribute("aria-pressed", String(x.dataset.layout==="force")));
+  $$("[data-fac],[data-rel]").forEach(x=>x.setAttribute("aria-pressed","true"));
+  nodes.forEach(n=>{ n.fx=n.fy=null; });
+  select(null); applyFilters(); kick(1);
+  setTimeout(()=>{ fit(); needDraw=true; }, 700);
+};
+$("#railToggle").onclick = ()=> $("#rail").classList.toggle("open");
+$("#stage").addEventListener("pointerdown", e=>{
+  if(innerWidth<=860 && !e.target.closest("#rail") && !e.target.closest("#railToggle"))
+    $("#rail").classList.remove("open");
+});
+
+/* ---------- 视图切换 ---------- */
+$$(".tab").forEach(t=>t.addEventListener("click", ()=>setView(t.dataset.view)));
+function setView(v){
+  state.view=v;
+  $$(".tab").forEach(t=>t.setAttribute("aria-selected", String(t.dataset.view===v)));
+  $$(".view").forEach(s=>s.classList.toggle("on", s.id==="view-"+v));
+  if(v==="graph"){ requestAnimationFrame(resize); }
+}
+
+/* ---------- 时间线 ---------- */
+const SHOWLBL = {bcs:["BCS","风骚律师"], bb:["BB","绝命毒师"], ec:["EC","续命之徒"], pre:["PRE","前史"]};
+let tlFilter="all";
+function renderTimeline(){
+  const box=$("#tlBody");
+  let html="", shown=0;
+  ERAS.forEach(era=>{
+    const list = EVENTS.filter(e=>{
+      if(e.era!==era.id) return false;
+      if(tlFilter==="all") return true;
+      if(tlFilter==="major") return e.major;
+      if(tlFilter==="after") return e.era==="after";
+      if(tlFilter==="bb")    return e.show==="bb" || e.show==="pre";  /* 前史两则均为绝命毒师的闪回 */
+      return e.show===tlFilter;
+    });
+    if(!list.length) return;
+    shown += list.length;
+    html += '<section class="era"><div class="era-head"><span class="yrs">'+esc(era.yrs)+'</span>'+
+            '<h3>'+esc(era.zh)+'</h3><span class="sub">'+esc(era.sub)+'</span></div><div class="era-body">';
+    list.forEach(e=>{
+      const mk = e.show==="bb" ? "var(--f-heisenberg)" : e.show==="bcs" ? "var(--f-law)"
+               : e.show==="ec" ? "var(--f-street)" : "var(--f-white)";
+      html += '<article class="ev'+(e.major?" major":"")+'" id="ev-'+e.i+'" style="--mk:'+mk+'">'+
+        '<div class="ev-when">'+esc(e.y)+'<span class="ep">'+esc(e.ep)+'</span></div>'+
+        '<div class="ev-body">'+
+          '<div class="ev-tags"><span class="show-pill '+e.show+'">'+SHOWLBL[e.show][0]+'</span>'+
+            (e.major?'<span class="show-pill" style="color:var(--accent)">关键转折</span>':'')+'</div>'+
+          '<h4>'+esc(e.t)+'</h4><p>'+esc(e.d)+'</p>'+
+          '<div class="ev-cast">'+ e.c.filter(id=>byId[id]).map(id=>{
+              const c=byId[id];
+              return '<button class="cast" data-go="'+id+'" data-tograph="1" style="--cc:var(--f-'+c.fac+')"><i></i>'+esc(c.zh.split(/[（(]/)[0])+'</button>';
+            }).join("") +'</div>'+
+        '</div></article>';
+    });
+    html += '</div></section>';
+  });
+  box.innerHTML = html || '<div class="cx-empty">没有符合条件的事件。</div>';
+}
+$("#tlFilters").addEventListener("click", e=>{
+  const b=e.target.closest("[data-f]"); if(!b) return;
+  $$("#tlFilters .fbtn").forEach(x=>x.setAttribute("aria-pressed", String(x===b)));
+  tlFilter=b.dataset.f; renderTimeline();
+});
+function gotoEvent(i){
+  setView("timeline");
+  if(tlFilter!=="all"){ tlFilter="all"; $$("#tlFilters .fbtn").forEach(x=>x.setAttribute("aria-pressed", String(x.dataset.f==="all"))); renderTimeline(); }
+  requestAnimationFrame(()=>{
+    const el=$("#ev-"+i); if(!el) return;
+    el.scrollIntoView({behavior:REDUCED?"auto":"smooth", block:"center"});
+    el.animate([{background:"var(--accent-soft)"},{background:"transparent"}],{duration:1600,easing:"ease-out"});
+  });
+}
+$("#tlStats").innerHTML =
+  '<div class="stat"><b>'+CHARS.length+'</b><span>人物</span></div>'+
+  '<div class="stat"><b>'+links.length+'</b><span>关系</span></div>'+
+  '<div class="stat"><b>'+EVENTS.length+'</b><span>关键事件</span></div>'+
+  '<div class="stat"><b>'+EVENTS.filter(e=>e.major).length+'</b><span>重大转折</span></div>'+
+  '<div class="stat"><b>2002–2010</b><span>故事跨度</span></div>';
+renderTimeline();
+
+/* 时间线里的人物按钮 → 跳到关系网 */
+document.addEventListener("click", e=>{
+  const b=e.target.closest("[data-tograph]");
+  if(!b) return;
+  setView("graph");
+  const id=b.dataset.go, n=nodeOf[id];
+  if(!n) return;
+  if(!n.vis){ /* 自动放宽筛选以显示该人物 */
+    state.facs.add(byId[id].fac);
+    $$("[data-fac]").forEach(x=>{ if(x.dataset.fac===byId[id].fac) x.setAttribute("aria-pressed","true"); });
+    if(state.show!=="all" && byId[id].shows.indexOf(state.show)<0){
+      state.show="all"; $$("#showSeg button").forEach(x=>x.setAttribute("aria-pressed", String(x.dataset.show==="all")));
+    }
+    applyFilters();
+  }
+  select(id);
+  requestAnimationFrame(()=>{ resize(); animateTo(n, 1.05); });
+});
+
+/* ---------- 人物档案库 ---------- */
+let cxFac="all";
+$("#cxFilters").innerHTML = '<button class="fbtn" data-cf="all" aria-pressed="true">全部（'+CHARS.length+'）</button>'+
+  FACTIONS.map(f=>'<button class="fbtn" data-cf="'+f.id+'" aria-pressed="false">'+esc(f.zh)+'（'+
+    CHARS.filter(c=>c.fac===f.id).length+'）</button>').join("");
+function renderCodex(){
+  const box=$("#cxBody");
+  const groups = cxFac==="all" ? FACTIONS : FACTIONS.filter(f=>f.id===cxFac);
+  let html="";
+  groups.forEach(f=>{
+    const list=CHARS.filter(c=>c.fac===f.id);
+    if(!list.length) return;
+    html += '<section class="era"><div class="era-head"><span class="yrs" style="color:var('+f.v+')">■</span>'+
+      '<h3>'+esc(f.zh)+'</h3><span class="sub section-count">'+list.length+' 人 · '+esc(f.en)+'</span></div>'+
+      '<div class="cx-grid">'+ list.map(c=>
+        '<button class="card" data-go="'+c.id+'" style="--fc:var(--f-'+c.fac+')">'+
+          '<span class="tile">'+esc(c.sym)+'<sub>'+c.num+'</sub></span>'+
+          '<span class="txt"><span class="nm">'+esc(c.zh)+'</span><span class="en">'+esc(c.en)+'</span>'+
+          '<span class="rl">'+esc(c.role)+'</span></span></button>').join("") +'</div></section>';
+  });
+  box.innerHTML=html;
+}
+$("#cxFilters").addEventListener("click", e=>{
+  const b=e.target.closest("[data-cf]"); if(!b) return;
+  $$("#cxFilters .fbtn").forEach(x=>x.setAttribute("aria-pressed", String(x===b)));
+  cxFac=b.dataset.cf; renderCodex();
+});
+renderCodex();
+
+/* ---------- 搜索 ---------- */
+const q=$("#q"), sugg=$("#sugg");
+let sIdx=-1, sList=[];
+function runSearch(){
+  const v=q.value.trim().toLowerCase();
+  if(!v){ sugg.hidden=true; sList=[]; return; }
+  sList = CHARS.filter(c=>
+    c.zh.toLowerCase().includes(v) || c.en.toLowerCase().includes(v) ||
+    c.sym.toLowerCase()===v || c.role.toLowerCase().includes(v)).slice(0,9);
+  if(!sList.length){ sugg.hidden=false; sugg.innerHTML='<div style="padding:9px;color:var(--txt-3);font-size:12.5px">没有找到相关人物</div>'; return; }
+  sIdx=0;
+  sugg.hidden=false;
+  sugg.innerHTML = sList.map((c,i)=>
+    '<button data-pick="'+c.id+'" class="'+(i===0?"on":"")+'">'+
+    '<span class="sym" style="color:var(--f-'+c.fac+');background:color-mix(in srgb,var(--f-'+c.fac+') 15%,transparent)">'+esc(c.sym)+'</span>'+
+    '<span>'+esc(c.zh)+'</span><span class="en">'+esc(c.en)+'</span></button>').join("");
+}
+q.addEventListener("input", runSearch);
+q.addEventListener("keydown", e=>{
+  if(sugg.hidden) return;
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+    e.preventDefault();
+    sIdx = (sIdx + (e.key==="ArrowDown"?1:-1) + sList.length) % sList.length;
+    $$("#sugg button").forEach((b,i)=>b.classList.toggle("on", i===sIdx));
+  } else if(e.key==="Enter"){
+    e.preventDefault(); if(sList[sIdx]) pickChar(sList[sIdx].id);
+  } else if(e.key==="Escape"){ sugg.hidden=true; q.blur(); }
+});
+sugg.addEventListener("click", e=>{
+  const b=e.target.closest("[data-pick]"); if(b) pickChar(b.dataset.pick);
+});
+function pickChar(id){
+  sugg.hidden=true; q.value=""; q.blur();
+  setView("graph");
+  const n=nodeOf[id];
+  if(!n.vis){
+    state.facs.add(byId[id].fac);
+    $$("[data-fac]").forEach(x=>{ if(x.dataset.fac===byId[id].fac) x.setAttribute("aria-pressed","true"); });
+    if(state.show!=="all" && byId[id].shows.indexOf(state.show)<0){
+      state.show="all"; $$("#showSeg button").forEach(x=>x.setAttribute("aria-pressed", String(x.dataset.show==="all")));
+    }
+    applyFilters();
+  }
+  select(id);
+  requestAnimationFrame(()=>{ resize(); animateTo(n,1.05); });
+}
+document.addEventListener("click", e=>{ if(!e.target.closest(".search")) sugg.hidden=true; });
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape"){ select(null); $("#rail").classList.remove("open"); }
+  if(e.key==="/" && document.activeElement!==q){ e.preventDefault(); q.focus(); }
+});
+
+/* ---------- 启动 ---------- */
+applyFilters();
+resize();
+/* 预热若干帧后再自动取景，避免开场抖动 */
+(function warm(){
+  for(let i=0;i<(REDUCED?260:110);i++){ physics(); alpha*=0.995; }
+  alpha = REDUCED ? 0.05 : 0.5;
+  fit(); draw();
+})();
+setTimeout(()=>{ fit(); needDraw=true; }, REDUCED?60:1500);
+})();
+</script>
+</body>
+</html>
