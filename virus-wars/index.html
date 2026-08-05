@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#04100d">
+<meta name="description" content="触手大战 — Tentacle Wars 网页复刻版。培养皿里的微生物战争。">
+<title>触手大战 · Tentacle Wars</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦠</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <canvas id="game"></canvas>
+
+  <!-- ======================= 游戏内 HUD ======================= -->
+  <div id="hud" class="hidden">
+    <div class="hud-left">
+      <button class="icon-btn" id="btn-pause" title="暂停">❚❚</button>
+      <div class="hud-level">
+        <div class="hud-level-no" id="hud-no">关卡 1</div>
+        <div class="hud-level-name" id="hud-name">初次接触</div>
+      </div>
+    </div>
+    <div class="hud-mid">
+      <div id="force-bar" class="force-bar"></div>
+      <div id="hud-objective" class="hud-objective">同化所有敌方细胞</div>
+    </div>
+    <div class="hud-right">
+      <div class="hud-timer" id="hud-timer">0:00</div>
+      <button class="icon-btn" id="btn-sound" title="声音">🔊</button>
+      <button class="icon-btn" id="btn-restart" title="重来">↻</button>
+    </div>
+  </div>
+
+  <div id="tip" class="tip hidden"></div>
+
+  <!-- ======================= 主菜单 ======================= -->
+  <div id="menu" class="screen">
+    <div class="screen-inner">
+      <div class="logo">
+        <div class="logo-sub">TENTACLE WARS</div>
+        <h1>触手大战</h1>
+        <div class="logo-tag">培养皿中的微生物战争 · 网页复刻版</div>
+      </div>
+      <div class="menu-btns">
+        <button class="btn primary" id="btn-campaign">开始战役</button>
+        <button class="btn" id="btn-skirmish">随机对战</button>
+        <button class="btn" id="btn-howto">玩法说明</button>
+        <button class="btn ghost" id="btn-reset-save">清除进度</button>
+      </div>
+      <div class="credit">按原版《Tentacle Wars》(Gamezhero / FDG, 2010) 机制复刻</div>
+    </div>
+  </div>
+
+  <!-- ======================= 选关 ======================= -->
+  <div id="levels" class="screen hidden">
+    <div class="screen-inner wide">
+      <h2>选择关卡</h2>
+      <div class="level-grid" id="level-grid"></div>
+      <button class="btn ghost" data-back>返回</button>
+    </div>
+  </div>
+
+  <!-- ======================= 随机对战设置 ======================= -->
+  <div id="skirmish" class="screen hidden">
+    <div class="screen-inner">
+      <h2>随机对战</h2>
+      <div class="opt-row">
+        <span>敌方数量</span>
+        <div class="seg" id="sk-enemies">
+          <button data-v="1">1</button><button data-v="2" class="on">2</button><button data-v="3">3</button><button data-v="4">4</button>
+        </div>
+      </div>
+      <div class="opt-row">
+        <span>地图规模</span>
+        <div class="seg" id="sk-size">
+          <button data-v="s">小</button><button data-v="m" class="on">中</button><button data-v="l">大</button>
+        </div>
+      </div>
+      <div class="opt-row">
+        <span>难度</span>
+        <div class="seg" id="sk-diff">
+          <button data-v="e">轻松</button><button data-v="n" class="on">普通</button><button data-v="h">困难</button><button data-v="x">噩梦</button>
+        </div>
+      </div>
+      <div class="menu-btns">
+        <button class="btn primary" id="btn-sk-start">进入培养皿</button>
+        <button class="btn ghost" data-back>返回</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= 玩法说明 ======================= -->
+  <div id="howto" class="screen hidden">
+    <div class="screen-inner wide scroll">
+      <h2>玩法说明</h2>
+      <div class="howto-grid">
+        <section>
+          <h3>目标</h3>
+          <p>把培养皿里<strong>所有敌方细胞</strong>同化成绿色即可通关。绿色细胞全部失守则失败。</p>
+        </section>
+        <section>
+          <h3>伸出触手</h3>
+          <p>从<strong>自己的细胞拖拽</strong>到目标细胞（也可以先点自己、再点目标）。触手会一节一节长过去，<strong>每长出一节消耗 1 点能量</strong>。</p>
+        </section>
+        <section>
+          <h3>同化</h3>
+          <p>触手接上以后开始输送能量：对<strong>敌方/中立</strong>细胞每输送 1 点，对方数字 −1；数字归零的瞬间它就变成你的，并重置为 10 点能量。对<strong>自己人</strong>输送则是 +1，用来补血。</p>
+        </section>
+        <section>
+          <h3>剪断 · 注射</h3>
+          <p>点一下自己的触手，或者在屏幕上<strong>划一刀</strong>，就能剪断它。<strong>触手上有几节，就一次性射进对面几点能量</strong>——这是原版的"注射"战术：先养一条长触手，再剪断，瞬间秒杀。<br>还没接上的触手被剪断则把能量退回本体。</p>
+        </section>
+        <section>
+          <h3>进化</h3>
+          <p>能量累积到 <b>15 / 40 / 80 / 120 / 160</b> 时细胞进化一级（跌到 5 / 30 / 60 / 100 / 140 以下会退化）。<br>等级越高 → <strong>触手输送更快</strong>，能同时伸出的触手更多（1 → 2 → 3 条）。<br>能量恢复速度固定：<strong>每 2 秒 +1</strong>，进化不会加快恢复。</p>
+        </section>
+        <section>
+          <h3>颜色</h3>
+          <p><span class="dot f1"></span>绿色是你　<span class="dot f0"></span>灰色是中立（不会自己恢复能量）<br><span class="dot f2"></span><span class="dot f3"></span><span class="dot f4"></span><span class="dot f5"></span>其余颜色都是敌方菌群，其中<strong>紫菌</strong>最狡猾，会主动防守并使用注射战术。</p>
+        </section>
+      </div>
+      <button class="btn ghost" data-back>返回</button>
+    </div>
+  </div>
+
+  <!-- ======================= 暂停 ======================= -->
+  <div id="pause" class="screen dim hidden">
+    <div class="screen-inner">
+      <h2>暂停</h2>
+      <div class="menu-btns">
+        <button class="btn primary" id="btn-resume">继续</button>
+        <button class="btn" id="btn-pause-restart">重新开始</button>
+        <button class="btn ghost" id="btn-pause-menu">返回主菜单</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= 结算 ======================= -->
+  <div id="result" class="screen dim hidden">
+    <div class="screen-inner">
+      <h2 id="result-title">培养皿已被同化</h2>
+      <div class="stars" id="result-stars"><span>★</span><span>★</span><span>★</span></div>
+      <div class="result-meta" id="result-meta"></div>
+      <div class="menu-btns">
+        <button class="btn primary" id="btn-next">下一关</button>
+        <button class="btn" id="btn-retry">再来一次</button>
+        <button class="btn ghost" id="btn-result-menu">选择关卡</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="rotate-hint" class="rotate-hint hidden">↻ 建议横屏游玩</div>
+</div>
+
+<script src="js/audio.js"></script>
+<script src="js/core.js"></script>
+<script src="js/levels.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/render.js"></script>
+<script src="js/game.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
