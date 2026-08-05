@@ -159,6 +159,12 @@ html,body{
 
 /* ---------------------------- HUD ---------------------------- */
 
+#overlay{
+  position:absolute;inset:0;z-index:10;
+  pointer-events:none;
+  transform-origin:0 0;
+}
+
 #hud{
   position:absolute;top:0;left:0;right:0;z-index:10;
   display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
@@ -210,7 +216,7 @@ html,body{
 /* ---------------------------- 竖屏提示 ---------------------------- */
 
 .rotate-hint{
-  position:absolute;left:50%;top:calc(50% + 150px);transform:translateX(-50%);
+  position:absolute;left:50%;top:70px;transform:translateX(-50%);
   z-index:12;pointer-events:none;font-size:12px;letter-spacing:.16em;color:var(--ink-dim);
   background:rgba(4,16,13,.8);padding:7px 15px;border-radius:20px;
   border:1px solid rgba(127,224,74,.2);

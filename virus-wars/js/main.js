@@ -55,6 +55,7 @@
     startDemo();
     showScreen('menu');
 
+    layoutOverlay();
     window.addEventListener('resize', function () { game.resize(); updateRotateHint(); });
     window.addEventListener('orientationchange', function () {
       setTimeout(function () { game.resize(); updateRotateHint(); }, 240);
@@ -86,7 +87,22 @@
     updateRotateHint();
   }
 
+  /** 竖屏时把整层界面旋转 90°，和画布里的世界朝向对齐 */
+  function layoutOverlay() {
+    var el = $('overlay');
+    var w = canvas.clientWidth || window.innerWidth;
+    var h = canvas.clientHeight || window.innerHeight;
+    if (game.portrait) {
+      el.style.width = h + 'px';
+      el.style.height = w + 'px';
+      el.style.transform = 'translateX(' + w + 'px) rotate(90deg)';
+    } else {
+      el.style.width = ''; el.style.height = ''; el.style.transform = '';
+    }
+  }
+
   function updateRotateHint() {
+    layoutOverlay();
     var show = game && game.portrait && curLevel && game.state === 'playing';
     $('rotate-hint').classList.toggle('hidden', !show);
   }

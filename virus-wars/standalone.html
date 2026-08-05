@@ -1,0 +1,2418 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#04100d">
+<meta name="description" content="触手大战 — Tentacle Wars 网页复刻版。培养皿里的微生物战争。">
+<title>触手大战 · Tentacle Wars</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦠</text></svg>">
+<style>
+/* ===========================================================
+   触手大战 / Tentacle Wars — 网页复刻版
+   =========================================================== */
+
+:root{
+  --bg:        #04100d;
+  --bg2:       #071a15;
+  --ink:       #e8f5e6;
+  --ink-dim:   #8fa79b;
+  --green:     #7fe04a;
+  --green-dk:  #2c6a1c;
+  --line:      rgba(127,224,74,.28);
+  --panel:     rgba(6,24,19,.92);
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+html,body{
+  margin:0;padding:0;height:100%;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  overflow:hidden;
+  overscroll-behavior:none;
+  user-select:none;-webkit-user-select:none;
+}
+
+#app{position:fixed;inset:0;overflow:hidden}
+
+#game{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  display:block;
+  touch-action:none;
+}
+
+.hidden{display:none !important}
+
+/* ---------------------------- 通用控件 ---------------------------- */
+
+.btn{
+  appearance:none;border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(127,224,74,.10),rgba(127,224,74,.02));
+  color:var(--ink);
+  font:600 16px/1 inherit;
+  padding:14px 26px;border-radius:10px;
+  cursor:pointer;letter-spacing:.06em;
+  transition:transform .08s ease,background .18s ease,border-color .18s ease;
+  min-width:190px;
+}
+.btn:hover{background:rgba(127,224,74,.18);border-color:rgba(127,224,74,.55)}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn.primary{
+  background:linear-gradient(180deg,rgba(127,224,74,.34),rgba(127,224,74,.12));
+  border-color:rgba(127,224,74,.7);
+  box-shadow:0 0 22px rgba(127,224,74,.18),inset 0 0 18px rgba(127,224,74,.10);
+}
+.btn.ghost{background:transparent;border-color:rgba(160,190,175,.22);color:var(--ink-dim)}
+.btn.ghost:hover{color:var(--ink);border-color:rgba(160,190,175,.5)}
+
+.icon-btn{
+  appearance:none;border:1px solid var(--line);border-radius:9px;
+  background:rgba(6,24,19,.7);color:var(--ink);
+  width:38px;height:38px;font-size:15px;line-height:1;cursor:pointer;
+  display:grid;place-items:center;
+  transition:background .15s ease;
+}
+.icon-btn:hover{background:rgba(127,224,74,.2)}
+
+/* ---------------------------- 全屏面板 ---------------------------- */
+
+.screen{
+  position:absolute;inset:0;z-index:20;
+  display:grid;place-items:center;
+  padding:24px;
+  background:radial-gradient(120% 90% at 50% 40%,rgba(4,20,16,.86),rgba(2,9,7,.97));
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  animation:fade .25s ease;
+}
+.screen.dim{background:rgba(2,9,7,.82)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+.screen-inner{
+  width:min(460px,100%);
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:18px;
+}
+.screen-inner.wide{width:min(900px,100%)}
+.screen-inner.scroll{max-height:88vh;overflow:auto;padding-right:6px}
+
+.screen h2{
+  margin:0;font-size:clamp(20px,4.4vw,28px);font-weight:700;letter-spacing:.22em;
+  color:var(--green);text-shadow:0 0 24px rgba(127,224,74,.35);
+}
+.screen h3{margin:0 0 6px;font-size:15px;color:var(--green);letter-spacing:.1em}
+.screen p{margin:0;font-size:14px;line-height:1.75;color:#c3d6c8}
+.screen strong,.screen b{color:#eaffdc}
+
+.menu-btns{display:flex;flex-direction:column;gap:11px;align-items:center;width:100%}
+
+/* ---------------------------- LOGO ---------------------------- */
+
+.logo{margin-bottom:6px}
+.logo-sub{font-size:11px;letter-spacing:.62em;color:var(--ink-dim);margin-bottom:10px;padding-left:.62em}
+.logo h1{
+  margin:0;font-size:clamp(42px,11vw,74px);font-weight:800;letter-spacing:.14em;
+  color:#dcffb8;
+  text-shadow:0 0 10px rgba(127,224,74,.55),0 0 44px rgba(127,224,74,.34),0 0 90px rgba(127,224,74,.18);
+}
+.logo-tag{margin-top:12px;font-size:12.5px;color:var(--ink-dim);letter-spacing:.16em}
+.credit{margin-top:8px;font-size:11px;color:#4e6459;letter-spacing:.05em}
+
+/* ---------------------------- 选关 ---------------------------- */
+
+.level-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
+  gap:10px;width:100%;max-height:64vh;overflow:auto;padding:4px;
+}
+.lv{
+  position:relative;aspect-ratio:1/.82;
+  border:1px solid var(--line);border-radius:11px;
+  background:linear-gradient(180deg,rgba(127,224,74,.08),rgba(127,224,74,.01));
+  color:var(--ink);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  transition:transform .1s ease,background .18s ease;
+  font-family:inherit;
+}
+.lv:hover{background:rgba(127,224,74,.2);transform:translateY(-2px)}
+.lv .n{font-size:21px;font-weight:800;line-height:1}
+.lv .t{font-size:10px;color:var(--ink-dim);letter-spacing:.04em;max-width:92%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lv .s{font-size:10px;color:#ffd85e;letter-spacing:2px;height:12px}
+.lv.locked{opacity:.34;cursor:not-allowed;border-style:dashed}
+.lv.locked:hover{transform:none;background:rgba(127,224,74,.02)}
+
+/* ---------------------------- 分段选择 ---------------------------- */
+
+.opt-row{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;font-size:14px;color:#c3d6c8}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg button{
+  appearance:none;border:0;background:transparent;color:var(--ink-dim);
+  padding:9px 15px;font:600 13px/1 inherit;cursor:pointer;transition:.15s;
+}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on{background:rgba(127,224,74,.28);color:#eaffdc}
+
+/* ---------------------------- 玩法说明 ---------------------------- */
+
+.howto-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:16px;text-align:left;width:100%;
+}
+.howto-grid section{
+  border:1px solid rgba(127,224,74,.16);border-radius:12px;
+  padding:14px 16px;background:rgba(127,224,74,.035);
+}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin:0 3px -1px 0;vertical-align:middle}
+.dot.f0{background:#93a49b}.dot.f1{background:#7fe04a}.dot.f2{background:#f9453f}
+.dot.f3{background:#38a1f7}.dot.f4{background:#b163ff}.dot.f5{background:#ffa22e}
+
+/* ---------------------------- HUD ---------------------------- */
+
+#overlay{
+  position:absolute;inset:0;z-index:10;
+  pointer-events:none;
+  transform-origin:0 0;
+}
+
+#hud{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top)) 14px 10px;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(2,10,8,.78),rgba(2,10,8,0));
+}
+#hud button{pointer-events:auto}
+.hud-left,.hud-right{display:flex;align-items:center;gap:8px}
+.hud-level-no{font-size:10px;letter-spacing:.24em;color:var(--ink-dim)}
+.hud-level-name{font-size:15px;font-weight:700;letter-spacing:.08em;margin-top:2px}
+.hud-mid{flex:1;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:4px}
+.hud-objective{font-size:10.5px;color:var(--ink-dim);letter-spacing:.1em}
+.hud-timer{font-size:13px;color:var(--ink-dim);font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
+
+.force-bar{
+  width:100%;height:7px;border-radius:4px;overflow:hidden;
+  display:flex;border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05);
+}
+.force-bar i{display:block;height:100%;transition:width .35s ease}
+
+/* ---------------------------- 提示条 ---------------------------- */
+
+.tip{
+  position:absolute;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  z-index:11;pointer-events:none;
+  max-width:min(620px,88vw);
+  padding:11px 20px;border-radius:26px;
+  background:rgba(5,22,17,.92);border:1px solid rgba(127,224,74,.3);
+  font-size:13.5px;line-height:1.6;color:#d7ead9;text-align:center;
+  box-shadow:0 6px 30px rgba(0,0,0,.5);
+  animation:tipin .3s ease;
+}
+.tip b{color:var(--green)}
+@keyframes tipin{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+
+/* ---------------------------- 结算 ---------------------------- */
+
+.stars{display:flex;gap:12px;font-size:36px;color:#2c3b33}
+.stars span.on{color:#ffd85e;text-shadow:0 0 20px rgba(255,216,94,.55);animation:pop .4s backwards}
+.stars span.on:nth-child(1){animation-delay:.05s}
+.stars span.on:nth-child(2){animation-delay:.2s}
+.stars span.on:nth-child(3){animation-delay:.35s}
+@keyframes pop{from{transform:scale(0) rotate(-40deg);opacity:0}to{transform:none;opacity:1}}
+.result-meta{font-size:13px;color:var(--ink-dim);letter-spacing:.08em}
+
+/* ---------------------------- 竖屏提示 ---------------------------- */
+
+.rotate-hint{
+  position:absolute;left:50%;top:70px;transform:translateX(-50%);
+  z-index:12;pointer-events:none;font-size:12px;letter-spacing:.16em;color:var(--ink-dim);
+  background:rgba(4,16,13,.8);padding:7px 15px;border-radius:20px;
+  border:1px solid rgba(127,224,74,.2);
+  animation:fade .4s ease;
+}
+
+/* ---------------------------- 窄屏适配 ---------------------------- */
+
+@media (max-width:560px){
+  .btn{min-width:0;width:100%;padding:13px 18px;font-size:15px}
+  .hud-level-name{font-size:13px}
+  .hud-mid{max-width:180px}
+  .icon-btn{width:34px;height:34px}
+  .screen{padding:18px}
+  .level-grid{grid-template-columns:repeat(auto-fill,minmax(78px,1fr))}
+  .opt-row{flex-direction:column;align-items:stretch;gap:8px}
+  .seg{width:100%}
+  .seg button{flex:1}
+}
+
+</style>
+</head>
+<body>
+<div id="app">
+  <canvas id="game"></canvas>
+
+  <!-- 覆盖层：竖屏时整层跟画面一起旋转 -->
+  <div id="overlay">
+
+  <!-- ======================= 游戏内 HUD ======================= -->
+  <div id="hud" class="hidden">
+    <div class="hud-left">
+      <button class="icon-btn" id="btn-pause" title="暂停">❚❚</button>
+      <div class="hud-level">
+        <div class="hud-level-no" id="hud-no">关卡 1</div>
+        <div class="hud-level-name" id="hud-name">初次接触</div>
+      </div>
+    </div>
+    <div class="hud-mid">
+      <div id="force-bar" class="force-bar"></div>
+      <div id="hud-objective" class="hud-objective">同化所有敌方细胞</div>
+    </div>
+    <div class="hud-right">
+      <div class="hud-timer" id="hud-timer">0:00</div>
+      <button class="icon-btn" id="btn-sound" title="声音">🔊</button>
+      <button class="icon-btn" id="btn-restart" title="重来">↻</button>
+    </div>
+  </div>
+
+  <div id="tip" class="tip hidden"></div>
+  <div id="rotate-hint" class="rotate-hint hidden">↻ 建议横屏游玩</div>
+  </div>
+
+  <!-- ======================= 主菜单 ======================= -->
+  <div id="menu" class="screen">
+    <div class="screen-inner">
+      <div class="logo">
+        <div class="logo-sub">TENTACLE WARS</div>
+        <h1>触手大战</h1>
+        <div class="logo-tag">培养皿中的微生物战争 · 网页复刻版</div>
+      </div>
+      <div class="menu-btns">
+        <button class="btn primary" id="btn-campaign">开始战役</button>
+        <button class="btn" id="btn-skirmish">随机对战</button>
+        <button class="btn" id="btn-howto">玩法说明</button>
+        <button class="btn ghost" id="btn-reset-save">清除进度</button>
+      </div>
+      <div class="credit">按原版《Tentacle Wars》(Gamezhero / FDG, 2010) 机制复刻</div>
+    </div>
+  </div>
+
+  <!-- ======================= 选关 ======================= -->
+  <div id="levels" class="screen hidden">
+    <div class="screen-inner wide">
+      <h2>选择关卡</h2>
+      <div class="level-grid" id="level-grid"></div>
+      <button class="btn ghost" data-back>返回</button>
+    </div>
+  </div>
+
+  <!-- ======================= 随机对战设置 ======================= -->
+  <div id="skirmish" class="screen hidden">
+    <div class="screen-inner">
+      <h2>随机对战</h2>
+      <div class="opt-row">
+        <span>敌方数量</span>
+        <div class="seg" id="sk-enemies">
+          <button data-v="1">1</button><button data-v="2" class="on">2</button><button data-v="3">3</button><button data-v="4">4</button>
+        </div>
+      </div>
+      <div class="opt-row">
+        <span>地图规模</span>
+        <div class="seg" id="sk-size">
+          <button data-v="s">小</button><button data-v="m" class="on">中</button><button data-v="l">大</button>
+        </div>
+      </div>
+      <div class="opt-row">
+        <span>难度</span>
+        <div class="seg" id="sk-diff">
+          <button data-v="e">轻松</button><button data-v="n" class="on">普通</button><button data-v="h">困难</button><button data-v="x">噩梦</button>
+        </div>
+      </div>
+      <div class="menu-btns">
+        <button class="btn primary" id="btn-sk-start">进入培养皿</button>
+        <button class="btn ghost" data-back>返回</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= 玩法说明 ======================= -->
+  <div id="howto" class="screen hidden">
+    <div class="screen-inner wide scroll">
+      <h2>玩法说明</h2>
+      <div class="howto-grid">
+        <section>
+          <h3>目标</h3>
+          <p>把培养皿里<strong>所有敌方细胞</strong>同化成绿色即可通关。绿色细胞全部失守则失败。</p>
+        </section>
+        <section>
+          <h3>伸出触手</h3>
+          <p>从<strong>自己的细胞拖拽</strong>到目标细胞（也可以先点自己、再点目标）。触手会一节一节长过去，<strong>每长出一节消耗 1 点能量</strong>。</p>
+        </section>
+        <section>
+          <h3>同化</h3>
+          <p>触手接上以后开始输送能量：对<strong>敌方/中立</strong>细胞每输送 1 点，对方数字 −1；数字归零的瞬间它就变成你的，并重置为 10 点能量。对<strong>自己人</strong>输送则是 +1，用来补血。</p>
+        </section>
+        <section>
+          <h3>剪断 · 注射</h3>
+          <p>点一下自己的触手，或者在屏幕上<strong>划一刀</strong>，就能剪断它。<strong>触手上有几节，就一次性射进对面几点能量</strong>——这是原版的"注射"战术：先养一条长触手，再剪断，瞬间秒杀。<br>还没接上的触手被剪断则把能量退回本体。</p>
+        </section>
+        <section>
+          <h3>进化</h3>
+          <p>能量累积到 <b>15 / 40 / 80 / 120 / 160</b> 时细胞进化一级（跌到 5 / 30 / 60 / 100 / 140 以下会退化）。<br>等级越高 → <strong>触手输送更快</strong>，能同时伸出的触手更多（1 → 2 → 3 条）。<br>能量恢复速度固定：<strong>每 2 秒 +1</strong>，进化不会加快恢复。</p>
+        </section>
+        <section>
+          <h3>颜色</h3>
+          <p><span class="dot f1"></span>绿色是你　<span class="dot f0"></span>灰色是中立（不会自己恢复能量）<br><span class="dot f2"></span><span class="dot f3"></span><span class="dot f4"></span><span class="dot f5"></span>其余颜色都是敌方菌群，其中<strong>紫菌</strong>最狡猾，会主动防守并使用注射战术。</p>
+        </section>
+      </div>
+      <button class="btn ghost" data-back>返回</button>
+    </div>
+  </div>
+
+  <!-- ======================= 暂停 ======================= -->
+  <div id="pause" class="screen dim hidden">
+    <div class="screen-inner">
+      <h2>暂停</h2>
+      <div class="menu-btns">
+        <button class="btn primary" id="btn-resume">继续</button>
+        <button class="btn" id="btn-pause-restart">重新开始</button>
+        <button class="btn ghost" id="btn-pause-menu">返回主菜单</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= 结算 ======================= -->
+  <div id="result" class="screen dim hidden">
+    <div class="screen-inner">
+      <h2 id="result-title">培养皿已被同化</h2>
+      <div class="stars" id="result-stars"><span>★</span><span>★</span><span>★</span></div>
+      <div class="result-meta" id="result-meta"></div>
+      <div class="menu-btns">
+        <button class="btn primary" id="btn-next">下一关</button>
+        <button class="btn" id="btn-retry">再来一次</button>
+        <button class="btn ghost" id="btn-result-menu">选择关卡</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ===========================================================
+   Sfx — 纯 WebAudio 合成音效，不依赖任何外部资源
+   =========================================================== */
+(function (global) {
+  'use strict';
+
+  var Sfx = {
+    ctx: null,
+    master: null,
+    enabled: true,
+    _lastPulse: 0,
+
+    init: function () {
+      if (this.ctx) return;
+      var AC = global.AudioContext || global.webkitAudioContext;
+      if (!AC) { this.enabled = false; return; }
+      this.ctx = new AC();
+      this.master = this.ctx.createGain();
+      this.master.gain.value = 0.32;
+      this.master.connect(this.ctx.destination);
+    },
+
+    /** 浏览器要求用户手势后才能出声 */
+    resume: function () {
+      this.init();
+      if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+    },
+
+    setEnabled: function (on) {
+      this.enabled = on;
+      if (this.master) this.master.gain.value = on ? 0.32 : 0;
+    },
+
+    _tone: function (o) {
+      if (!this.enabled || !this.ctx) return;
+      var ctx = this.ctx, t0 = ctx.currentTime + (o.delay || 0);
+      var osc = ctx.createOscillator();
+      var g = ctx.createGain();
+      osc.type = o.type || 'sine';
+      osc.frequency.setValueAtTime(o.f, t0);
+      if (o.f2) osc.frequency.exponentialRampToValueAtTime(Math.max(1, o.f2), t0 + o.dur);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(o.gain || 0.2, t0 + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + o.dur);
+      osc.connect(g); g.connect(this.master);
+      osc.start(t0); osc.stop(t0 + o.dur + 0.02);
+    },
+
+    _noise: function (dur, gain, freq, delay) {
+      if (!this.enabled || !this.ctx) return;
+      var ctx = this.ctx, t0 = ctx.currentTime + (delay || 0);
+      var n = Math.floor(ctx.sampleRate * dur);
+      var buf = ctx.createBuffer(1, n, ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+      var src = ctx.createBufferSource(); src.buffer = buf;
+      var flt = ctx.createBiquadFilter(); flt.type = 'bandpass';
+      flt.frequency.value = freq || 900; flt.Q.value = 0.9;
+      var g = ctx.createGain(); g.gain.value = gain || 0.15;
+      src.connect(flt); flt.connect(g); g.connect(this.master);
+      src.start(t0);
+    },
+
+    /* ---------- 具体音效 ---------- */
+
+    connect: function () { this._tone({ f: 220, f2: 520, dur: 0.22, type: 'triangle', gain: 0.18 }); },
+
+    reject: function () { this._tone({ f: 160, f2: 90, dur: 0.16, type: 'square', gain: 0.09 }); },
+
+    cut: function () { this._noise(0.2, 0.22, 1600); this._tone({ f: 700, f2: 200, dur: 0.14, type: 'sawtooth', gain: 0.08 }); },
+
+    inject: function () {
+      this._tone({ f: 300, f2: 1100, dur: 0.18, type: 'sawtooth', gain: 0.16 });
+      this._noise(0.22, 0.18, 2200, 0.02);
+    },
+
+    pulse: function () {
+      // 输送能量的滴答声：限流，避免同一帧堆叠
+      var now = performance.now();
+      if (now - this._lastPulse < 55) return;
+      this._lastPulse = now;
+      this._tone({ f: 640 + Math.random() * 90, dur: 0.05, type: 'sine', gain: 0.045 });
+    },
+
+    capture: function (mine) {
+      var base = mine ? 330 : 200;
+      this._tone({ f: base, dur: 0.3, type: 'triangle', gain: 0.16 });
+      this._tone({ f: base * 1.5, dur: 0.3, type: 'triangle', gain: 0.11, delay: 0.06 });
+      this._tone({ f: base * 2, dur: 0.34, type: 'sine', gain: 0.09, delay: 0.12 });
+    },
+
+    evolve: function () {
+      this._tone({ f: 420, f2: 840, dur: 0.28, type: 'triangle', gain: 0.11 });
+    },
+
+    win: function () {
+      var n = [392, 494, 587, 784];
+      for (var i = 0; i < n.length; i++) this._tone({ f: n[i], dur: 0.55, type: 'triangle', gain: 0.15, delay: i * 0.13 });
+    },
+
+    lose: function () {
+      var n = [330, 262, 220, 165];
+      for (var i = 0; i < n.length; i++) this._tone({ f: n[i], dur: 0.6, type: 'sawtooth', gain: 0.1, delay: i * 0.17 });
+    },
+
+    click: function () { this._tone({ f: 520, dur: 0.05, type: 'square', gain: 0.06 }); }
+  };
+
+  global.Sfx = Sfx;
+})(window);
+
+</script>
+<script>
+/* ===========================================================
+   core.js — 常量、阵营、细胞与触手的模拟逻辑
+   规则依据原版《Tentacle Wars》:
+     · 所有细胞每 2 秒恢复 1 点能量（中立细胞不恢复）
+     · 能量到 15/40/80/120/160 进化，跌破 5/30/60/100/140 退化
+     · 进化不加快恢复，只提升「触手输送力」与可同时伸出的触手数(1~3)
+     · 触手每一节 = 1 点能量，由本体支付
+     · 接通后每输送 1 点：友方 +1 / 敌方 −1；敌方归零即被同化，重置为 10 点
+     · 剪断已接通的触手 → 触手上剩余节数一次性注入对面（注射战术）
+     · 剪断未接通的触手 → 能量退回本体
+   =========================================================== */
+(function (global) {
+  'use strict';
+
+  /* ---------------------------- 常量 ---------------------------- */
+
+  var WORLD_W = 1000, WORLD_H = 640;
+
+  var EVOLVE_UP   = [15, 40, 80, 120, 160];   // 升级门槛
+  var EVOLVE_DOWN = [5, 30, 60, 100, 140];    // 退化门槛（迟滞）
+  var LEVEL_RADIUS = [24, 30, 36, 42, 48, 55];
+  var MAX_LEVEL = 5;
+
+  var REGEN        = 0.5;   // 每秒恢复能量（= 每 2 秒 +1）
+  var NODE_SPACING = 15;    // 触手每节的像素间距（1 节 = 1 能量）
+  var GROW_SPEED   = 86;    // 触手生长速度 px/s
+  var PULSE_SPEED  = 265;   // 能量沿触手流动速度 px/s
+  var PUMP_BASE    = 1.5;   // 0 级细胞每秒输送量
+  var PUMP_PER_LV  = 0.5;   // 每提升一级增加的输送量
+  var CAPTURE_ENERGY = 10;  // 被同化后重置到的能量
+
+  /** 阵营。0=中立，1=玩家，2+ = 敌方 */
+  var FACTIONS = [
+    { id: 0, name: '中立',   h: 150, s: 8,  l: 62 },
+    { id: 1, name: '你',     h: 96,  s: 72, l: 55 },
+    { id: 2, name: '赤菌',   h: 355, s: 82, l: 58 },
+    { id: 3, name: '蓝菌',   h: 206, s: 88, l: 57 },
+    { id: 4, name: '紫菌',   h: 275, s: 76, l: 63 },
+    { id: 5, name: '橙菌',   h: 32,  s: 92, l: 55 }
+  ];
+  var PLAYER = 1;
+
+  /** 取阵营色，可覆盖亮度与透明度 */
+  function fcol(id, l, a) {
+    var f = FACTIONS[id] || FACTIONS[0];
+    var L = (l === undefined || l === null) ? f.l : l;
+    if (a === undefined || a === null) return 'hsl(' + f.h + ',' + f.s + '%,' + L + '%)';
+    return 'hsla(' + f.h + ',' + f.s + '%,' + L + '%,' + a + ')';
+  }
+
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+  function dist(ax, ay, bx, by) { var dx = bx - ax, dy = by - ay; return Math.sqrt(dx * dx + dy * dy); }
+
+  /* ---------------------------- 细胞 ---------------------------- */
+
+  var _cellId = 0;
+
+  function Cell(x, y, owner, energy, maxEnergy) {
+    this.id = ++_cellId;
+    this.x = x; this.y = y;
+    this.owner = owner | 0;
+    this.energy = energy;
+    this.maxEnergy = maxEnergy || 100;
+    this.level = 0;
+    this.seed = Math.random() * 100;
+    this.spin = Math.random() * Math.PI * 2;
+    this.flash = 0;        // 被击中/被同化时的高光
+    this.captureAnim = 0;  // 同化动画进度
+    this.hitDir = 0;
+    this.pop = 0;          // 进化时的缩放弹跳
+    this.syncLevel(true);
+  }
+
+  Cell.prototype.radius = function () {
+    var r = LEVEL_RADIUS[this.level];
+    return r * (1 + this.pop * 0.18);
+  };
+
+  /** 根据能量刷新等级（带迟滞），返回是否进化了 */
+  Cell.prototype.syncLevel = function (silent) {
+    var changed = 0, guard = 0;
+    while (guard++ < 12) {
+      if (this.level < MAX_LEVEL && this.energy >= EVOLVE_UP[this.level]) { this.level++; changed = 1; }
+      else if (this.level > 0 && this.energy < EVOLVE_DOWN[this.level - 1]) { this.level--; changed = -1; }
+      else break;
+    }
+    if (changed > 0 && !silent) this.pop = 1;
+    return changed;
+  };
+
+  /** 触手输送力（能量/秒） */
+  Cell.prototype.pumpRate = function () { return PUMP_BASE + PUMP_PER_LV * this.level; };
+
+  /** 可同时伸出的触手数：1 → 2(40能量) → 3(120能量) */
+  Cell.prototype.maxTentacles = function () { return Math.min(3, 1 + Math.floor(this.level / 2)); };
+
+  Cell.prototype.isNeutral = function () { return this.owner === 0; };
+
+  Cell.prototype.update = function (dt) {
+    if (!this.isNeutral() && this.energy < this.maxEnergy) {
+      this.energy = Math.min(this.maxEnergy, this.energy + REGEN * dt);
+    }
+    this.syncLevel();
+    this.spin += dt * (0.12 + this.level * 0.02);
+    if (this.flash > 0) this.flash = Math.max(0, this.flash - dt * 3.2);
+    if (this.pop > 0) this.pop = Math.max(0, this.pop - dt * 2.6);
+    if (this.captureAnim > 0) this.captureAnim = Math.max(0, this.captureAnim - dt * 1.4);
+  };
+
+  /* ---------------------------- 触手 ---------------------------- */
+
+  var _tentId = 0;
+
+  /**
+   * 触手：从 from 细胞长向 to 细胞。
+   * 状态 growing → connected。剪断时按状态结算能量。
+   */
+  function Tentacle(from, to) {
+    this.id = ++_tentId;
+    this.from = from;
+    this.to = to;
+    this.owner = from.owner;
+    this.state = 'growing';
+    this.grown = 0;            // 已长出的长度（像素）
+    this.paidNodes = 0;        // 已支付能量的节数
+    this.growCost = 0;         // 累积待支付
+    this.pumpAcc = 0;
+    this.pulses = [];          // {p:0..1}
+    this.dead = false;
+    this.age = 0;
+    this.wob = Math.random() * Math.PI * 2;
+    this.recomputePath();
+  }
+
+  /** 起点/终点贴着两个细胞的边缘，中间给一点有机的弧度 */
+  Tentacle.prototype.recomputePath = function () {
+    var a = this.from, b = this.to;
+    var dx = b.x - a.x, dy = b.y - a.y;
+    var d = Math.max(1, Math.sqrt(dx * dx + dy * dy));
+    var ux = dx / d, uy = dy / d;
+    this.ax = a.x + ux * (a.radius() - 3);
+    this.ay = a.y + uy * (a.radius() - 3);
+    this.bx = b.x - ux * (b.radius() - 3);
+    this.by = b.y - uy * (b.radius() - 3);
+    var mx = (this.ax + this.bx) / 2, my = (this.ay + this.by) / 2;
+    var bend = Math.min(26, d * 0.09) * (this.id % 2 ? 1 : -1);
+    this.cx = mx - uy * bend;
+    this.cy = my + ux * bend;
+    this.len = this._approxLen();
+  };
+
+  Tentacle.prototype._approxLen = function () {
+    var last = null, sum = 0;
+    for (var i = 0; i <= 12; i++) {
+      var p = this.pointAt(i / 12, true);
+      if (last) sum += dist(last[0], last[1], p[0], p[1]);
+      last = p;
+    }
+    return sum;
+  };
+
+  /** 二次贝塞尔取点；raw=true 时不加摆动 */
+  Tentacle.prototype.pointAt = function (t, raw, time) {
+    var mt = 1 - t;
+    var x = mt * mt * this.ax + 2 * mt * t * this.cx + t * t * this.bx;
+    var y = mt * mt * this.ay + 2 * mt * t * this.cy + t * t * this.by;
+    if (raw) return [x, y];
+    // 垂直方向的呼吸摆动，越靠中间越明显
+    var dx = this.bx - this.ax, dy = this.by - this.ay;
+    var d = Math.max(1, Math.sqrt(dx * dx + dy * dy));
+    var nx = -dy / d, ny = dx / d;
+    var amp = Math.sin(t * Math.PI) * 3.0;
+    var w = Math.sin(t * 7 + (time || 0) * 2.2 + this.wob) * amp;
+    return [x + nx * w, y + ny * w];
+  };
+
+  Tentacle.prototype.progress = function () { return clamp(this.grown / this.len, 0, 1); };
+
+  /** 触手上现存的节数 = 可注射的能量 */
+  Tentacle.prototype.nodeCount = function () {
+    return Math.max(0, Math.floor(this.grown / NODE_SPACING));
+  };
+
+  Tentacle.prototype.update = function (dt, game) {
+    this.age += dt;
+    if (this.from.owner !== this.owner) { game.killTentacle(this, 'lost'); return; }
+
+    if (this.state === 'growing') {
+      // 先付钱再生长：本体没能量就停在原地
+      var want = GROW_SPEED * dt;
+      var need = (this.grown + want) / NODE_SPACING - this.paidNodes;
+      if (need > 0) {
+        var afford = Math.min(need, Math.max(0, this.from.energy));
+        this.from.energy -= afford;
+        this.paidNodes += afford;
+        if (afford < need - 1e-6) {
+          want = Math.max(0, (this.paidNodes + 0) * NODE_SPACING - this.grown);
+        }
+      }
+      this.grown += want;
+      if (this.grown >= this.len) {
+        this.grown = this.len;
+        this.state = 'connected';
+        game.onConnect(this);
+      }
+    } else if (this.state === 'connected') {
+      this.grown = this.len;   // 两端细胞胀缩时保持贴合
+      var tgt = this.to, src = this.from;
+      var friendly = tgt.owner === src.owner;
+      var full = friendly && tgt.energy >= tgt.maxEnergy - 0.001;
+      if (!full && src.energy >= 1) {
+        this.pumpAcc += src.pumpRate() * dt;
+        while (this.pumpAcc >= 1 && src.energy >= 1) {
+          this.pumpAcc -= 1;
+          src.energy -= 1;
+          this.pulses.push({ p: 0 });
+        }
+      } else {
+        this.pumpAcc = Math.min(this.pumpAcc, 1);
+      }
+    }
+
+    // 能量脉冲沿触手前进
+    var step = PULSE_SPEED * dt / Math.max(1, this.len);
+    for (var i = this.pulses.length - 1; i >= 0; i--) {
+      var pl = this.pulses[i];
+      pl.p += step;
+      if (pl.p >= 1) {
+        this.pulses.splice(i, 1);
+        game.deliver(this, 1);
+      }
+    }
+  };
+
+  /* ---------------------------- 粒子 ---------------------------- */
+
+  function Particle(x, y, vx, vy, life, color, size) {
+    this.x = x; this.y = y; this.vx = vx; this.vy = vy;
+    this.life = life; this.max = life; this.color = color; this.size = size;
+  }
+  Particle.prototype.update = function (dt) {
+    this.x += this.vx * dt; this.y += this.vy * dt;
+    this.vx *= 1 - dt * 1.6; this.vy *= 1 - dt * 1.6;
+    this.life -= dt;
+  };
+
+  /* ---------------------------- 导出 ---------------------------- */
+
+  global.TW = {
+    WORLD_W: WORLD_W, WORLD_H: WORLD_H,
+    EVOLVE_UP: EVOLVE_UP, EVOLVE_DOWN: EVOLVE_DOWN,
+    LEVEL_RADIUS: LEVEL_RADIUS, MAX_LEVEL: MAX_LEVEL,
+    REGEN: REGEN, NODE_SPACING: NODE_SPACING, GROW_SPEED: GROW_SPEED,
+    PULSE_SPEED: PULSE_SPEED, CAPTURE_ENERGY: CAPTURE_ENERGY,
+    FACTIONS: FACTIONS, PLAYER: PLAYER,
+    fcol: fcol, clamp: clamp, dist: dist,
+    Cell: Cell, Tentacle: Tentacle, Particle: Particle
+  };
+})(window);
+
+</script>
+<script>
+/* ===========================================================
+   levels.js — 战役关卡数据 + 随机对战地图生成
+   坐标系：1000 x 640 的虚拟培养皿
+   =========================================================== */
+(function (global) {
+  'use strict';
+
+  /** 细胞快捷构造：C(x, y, 阵营, 起始能量, 能量上限) */
+  function C(x, y, o, e, m) { return { x: x, y: y, owner: o, energy: e, max: m || 100 }; }
+
+  /** AI 性格预设：aggr 进攻欲 / think 决策间隔(秒) / skill 战术水平 */
+  var AI = {
+    dozy:   { aggr: 0.30, think: 3.0, skill: 0.10 },
+    calm:   { aggr: 0.42, think: 2.4, skill: 0.28 },
+    brisk:  { aggr: 0.55, think: 1.9, skill: 0.45 },
+    sharp:  { aggr: 0.68, think: 1.5, skill: 0.65 },
+    cruel:  { aggr: 0.82, think: 1.1, skill: 0.82 },
+    purple: { aggr: 0.72, think: 1.2, skill: 0.95 }
+  };
+
+  var LEVELS = [
+    /* ---------------- 教学 ---------------- */
+    {
+      name: '初次接触', par: 45,
+      hint: '从你的<b>绿色细胞</b>拖一条触手到灰色细胞，把它的数字压到 0 就能同化它。',
+      cells: [C(220, 320, 1, 30), C(510, 320, 0, 10, 60), C(790, 320, 0, 18, 60)]
+    },
+    {
+      name: '注射', par: 70,
+      hint: '触手<b>每一节 = 1 点能量</b>。<b>点一下自己的触手</b>（或在屏幕上划一刀）剪断它，所有节数会一次性射进对面。',
+      cells: [C(170, 320, 1, 48), C(450, 180, 0, 20, 60), C(450, 460, 0, 20, 60), C(800, 320, 0, 34, 80)]
+    },
+    {
+      name: '进化', par: 80,
+      hint: '能量到 <b>40</b> 时细胞可以同时伸出 <b>2 条</b>触手，到 <b>120</b> 是 3 条。先养肥再进攻。',
+      cells: [C(150, 320, 1, 42), C(390, 160, 0, 14, 60), C(390, 480, 0, 14, 60),
+              C(640, 320, 0, 30, 90), C(870, 180, 0, 22, 90), C(870, 470, 0, 22, 90)]
+    },
+
+    /* ---------------- 赤菌 ---------------- */
+    {
+      name: '赤菌', par: 95,
+      hint: '红色是敌人。它也会恢复能量、也会向你伸触手——别让它把中间的细胞先吃光。',
+      cells: [C(140, 320, 1, 34), C(360, 170, 0, 12, 80), C(360, 470, 0, 12, 80),
+              C(620, 320, 0, 22, 90), C(880, 320, 2, 26)],
+      ai: { 2: AI.dozy }
+    },
+    {
+      name: '双线', par: 110,
+      cells: [C(120, 320, 1, 38), C(330, 140, 0, 15), C(330, 500, 0, 15), C(560, 320, 0, 26, 90),
+              C(760, 150, 0, 14), C(760, 490, 0, 14), C(900, 320, 2, 32)],
+      ai: { 2: AI.calm }
+    },
+    {
+      name: '中央要塞', par: 130,
+      hint: '中间那颗上限很高——占下来它能长得比谁都大。',
+      cells: [C(120, 320, 1, 40), C(500, 320, 0, 48, 200), C(330, 150, 0, 12), C(330, 490, 0, 12),
+              C(670, 150, 0, 12), C(670, 490, 0, 12), C(890, 320, 2, 34)],
+      ai: { 2: AI.calm }
+    },
+    {
+      name: '走廊', par: 120,
+      cells: [C(100, 320, 1, 42), C(250, 200, 0, 14), C(250, 440, 0, 14),
+              C(430, 320, 0, 24, 90), C(600, 320, 0, 24, 90),
+              C(770, 200, 0, 16), C(770, 440, 0, 16), C(920, 320, 2, 38)],
+      ai: { 2: AI.brisk }
+    },
+
+    /* ---------------- 蓝菌 ---------------- */
+    {
+      name: '蓝菌', par: 135,
+      hint: '蓝菌扩张很快。两个敌人互相之间也会打起来——有时候可以坐山观虎斗。',
+      cells: [C(120, 540, 1, 42), C(140, 120, 3, 28), C(880, 320, 2, 30),
+              C(400, 330, 0, 22, 120), C(620, 160, 0, 16), C(620, 500, 0, 16),
+              C(340, 100, 0, 12), C(320, 545, 0, 12)],
+      ai: { 2: AI.calm, 3: AI.calm }
+    },
+    {
+      name: '环', par: 140,
+      cells: [C(500, 320, 1, 40, 150),
+              C(500, 110, 0, 18), C(760, 200, 0, 18), C(830, 450, 0, 18),
+              C(500, 560, 0, 18), C(240, 450, 0, 18), C(170, 200, 0, 18),
+              C(120, 320, 2, 34), C(880, 320, 3, 34)],
+      ai: { 2: AI.brisk, 3: AI.brisk }
+    },
+    {
+      name: '资源匮乏', par: 150,
+      hint: '地图上没什么可捡的，能量都在敌人身上。距离越远触手越贵，别乱伸。',
+      cells: [C(150, 320, 1, 54), C(380, 175, 0, 24, 90), C(380, 465, 0, 24, 90),
+              C(620, 320, 0, 34, 120), C(880, 320, 2, 46)],
+      ai: { 2: AI.sharp }
+    },
+    {
+      name: '包夹', par: 155,
+      cells: [C(500, 330, 1, 52, 130), C(500, 130, 0, 14), C(500, 530, 0, 14),
+              C(330, 230, 0, 14), C(330, 430, 0, 14), C(670, 230, 0, 14), C(670, 430, 0, 14),
+              C(110, 330, 2, 36), C(890, 330, 3, 36)],
+      ai: { 2: AI.brisk, 3: AI.sharp }
+    },
+    {
+      name: '蜂巢', par: 165,
+      cells: [C(120, 320, 1, 40),
+              C(320, 180, 0, 16), C(320, 320, 0, 16), C(320, 460, 0, 16),
+              C(500, 250, 0, 20, 90), C(500, 390, 0, 20, 90),
+              C(680, 180, 0, 16), C(680, 320, 0, 16), C(680, 460, 0, 16),
+              C(890, 200, 2, 30), C(890, 440, 3, 30)],
+      ai: { 2: AI.brisk, 3: AI.brisk }
+    },
+
+    /* ---------------- 紫菌 ---------------- */
+    {
+      name: '紫色威胁', par: 175,
+      hint: '<b>紫菌</b>会主动补防，也会用注射战术偷袭。别把细胞晾在低能量状态。',
+      cells: [C(130, 320, 1, 52), C(400, 170, 0, 18), C(400, 470, 0, 18), C(620, 320, 0, 28, 120),
+              C(880, 170, 4, 30), C(880, 470, 4, 30)],
+      ai: { 4: AI.purple }
+    },
+    {
+      name: '三方混战', par: 185,
+      cells: [C(150, 540, 1, 46), C(500, 110, 2, 35), C(850, 540, 3, 35),
+              C(500, 330, 0, 34, 150), C(300, 250, 0, 16), C(700, 250, 0, 16), C(500, 540, 0, 16)],
+      ai: { 2: AI.sharp, 3: AI.sharp }
+    },
+    {
+      name: '长征', par: 190,
+      hint: '距离越远，触手越贵。看清楚再连。',
+      cells: [C(90, 320, 1, 52, 130),
+              C(300, 130, 0, 14), C(300, 510, 0, 14),
+              C(500, 320, 0, 26, 110),
+              C(700, 130, 0, 14), C(700, 510, 0, 14),
+              C(910, 320, 4, 44, 130)],
+      ai: { 4: AI.purple }
+    },
+    {
+      name: '孤岛', par: 180,
+      cells: [C(500, 320, 1, 50, 160),
+              C(250, 150, 2, 26), C(750, 150, 3, 26), C(250, 490, 5, 26), C(750, 490, 4, 26),
+              C(500, 130, 0, 14), C(500, 510, 0, 14), C(180, 320, 0, 14), C(820, 320, 0, 14)],
+      ai: { 2: AI.calm, 3: AI.calm, 4: AI.brisk, 5: AI.calm }
+    },
+    {
+      name: '橙菌', par: 175,
+      cells: [C(120, 180, 1, 42), C(120, 470, 1, 26),
+              C(360, 320, 0, 24, 110), C(600, 180, 0, 18), C(600, 470, 0, 18),
+              C(880, 180, 5, 34), C(880, 470, 5, 34)],
+      ai: { 5: AI.sharp }
+    },
+    {
+      name: '天平', par: 190,
+      cells: [C(110, 320, 1, 46, 150), C(890, 320, 2, 46, 150),
+              C(500, 150, 0, 30, 120), C(500, 490, 0, 30, 120),
+              C(320, 320, 0, 16), C(680, 320, 0, 16)],
+      ai: { 2: AI.cruel }
+    },
+
+    /* ---------------- 后期 ---------------- */
+    {
+      name: '四面楚歌', par: 200,
+      hint: '同时被四家围住。先抢下身边四颗中立细胞筑墙，再挑最弱的一家下手。',
+      cells: [C(500, 330, 1, 80, 180),
+              C(500, 165, 0, 14), C(500, 495, 0, 14), C(320, 330, 0, 14), C(680, 330, 0, 14),
+              C(110, 110, 2, 26), C(890, 110, 3, 26), C(890, 550, 4, 26), C(110, 550, 5, 26)],
+      ai: { 2: AI.brisk, 3: AI.brisk, 4: AI.purple, 5: AI.brisk }
+    },
+    {
+      name: '巨兽', par: 210,
+      hint: '那颗紫色巨细胞输送极快，硬碰硬打不过。先把周围的地盘全占了，再一起上。',
+      cells: [C(110, 200, 1, 40), C(110, 450, 1, 40),
+              C(340, 130, 0, 16), C(340, 330, 0, 22, 100), C(340, 530, 0, 16),
+              C(580, 200, 0, 18), C(580, 460, 0, 18),
+              C(880, 330, 4, 95, 200)],
+      ai: { 4: AI.purple }
+    },
+    {
+      name: '迷宫', par: 215,
+      cells: [C(90, 320, 1, 50),
+              C(250, 140, 0, 12), C(250, 320, 0, 20, 90), C(250, 500, 0, 12),
+              C(430, 220, 0, 16), C(430, 420, 0, 16),
+              C(610, 140, 0, 12), C(610, 320, 0, 20, 90), C(610, 500, 0, 12),
+              C(790, 220, 3, 26), C(790, 420, 2, 26), C(930, 320, 4, 30)],
+      ai: { 2: AI.sharp, 3: AI.sharp, 4: AI.purple }
+    },
+    {
+      name: '反攻', par: 220,
+      hint: '开局你只有一颗小细胞，而对面已经成型了。撑住，找机会。',
+      cells: [C(120, 320, 1, 32),
+              C(300, 170, 0, 12), C(300, 470, 0, 12), C(490, 320, 0, 26, 130),
+              C(700, 150, 2, 36), C(700, 490, 3, 36), C(910, 320, 4, 48, 150)],
+      ai: { 2: AI.brisk, 3: AI.brisk, 4: AI.purple }
+    },
+    {
+      name: '终局', par: 240,
+      hint: '最后一皿。四家全在，而且都不好惹。',
+      cells: [C(500, 565, 1, 74, 200),
+              C(290, 470, 0, 16), C(710, 470, 0, 16), C(170, 330, 0, 20, 90), C(830, 330, 0, 20, 90),
+              C(500, 330, 0, 40, 200),
+              C(140, 105, 2, 40), C(380, 85, 3, 36), C(620, 85, 4, 36), C(860, 105, 5, 40)],
+      ai: { 2: AI.cruel, 3: AI.cruel, 4: AI.purple, 5: AI.cruel }
+    }
+  ];
+
+  LEVELS.forEach(function (lv, i) {
+    lv.no = i + 1;
+    // 没有敌人的教学关 → 必须占满全图才算过
+    lv.winAll = !lv.cells.some(function (c) { return c.owner > 1; });
+  });
+
+  /* ---------------- 随机对战 ---------------- */
+
+  var SK_DIFF = { e: AI.dozy, n: AI.calm, h: AI.sharp, x: AI.cruel };
+
+  function makeSkirmish(opt) {
+    var enemies = Math.max(1, Math.min(4, opt.enemies | 0 || 2));
+    var sizeKey = opt.size || 'm';
+    var count = { s: 9, m: 14, l: 20 }[sizeKey] || 14;
+    var diff = SK_DIFF[opt.diff] || AI.calm;
+
+    var W = global.TW.WORLD_W, H = global.TW.WORLD_H;
+    var pad = 100, minGap = 128;
+    var pts = [], tries = 0;
+    while (pts.length < count && tries++ < 4000) {
+      var p = { x: pad + Math.random() * (W - pad * 2), y: pad + Math.random() * (H - pad * 2) };
+      var ok = true;
+      for (var i = 0; i < pts.length; i++) {
+        if (global.TW.dist(p.x, p.y, pts[i].x, pts[i].y) < minGap) { ok = false; break; }
+      }
+      if (ok) pts.push(p);
+    }
+
+    // 玩家占最左边的点，敌人依次占离玩家最远、且彼此最远的点
+    pts.sort(function (a, b) { return a.x - b.x; });
+    var cells = [], used = {};
+    var base = pts[0];
+    cells.push(C(base.x, base.y, 1, 40, 120));
+    used[0] = 1;
+
+    var order = [2, 3, 4, 5];
+    for (var e = 0; e < enemies; e++) {
+      var bestIdx = -1, bestScore = -1;
+      for (var j = 0; j < pts.length; j++) {
+        if (used[j]) continue;
+        var score = 1e9;
+        for (var k in used) score = Math.min(score, global.TW.dist(pts[j].x, pts[j].y, pts[k].x, pts[k].y));
+        if (score > bestScore) { bestScore = score; bestIdx = j; }
+      }
+      if (bestIdx < 0) break;
+      used[bestIdx] = 1;
+      cells.push(C(pts[bestIdx].x, pts[bestIdx].y, order[e], 40, 120));
+    }
+
+    for (var m = 0; m < pts.length; m++) {
+      if (used[m]) continue;
+      var big = Math.random() < 0.22;
+      cells.push(C(pts[m].x, pts[m].y, 0,
+        big ? 26 + Math.floor(Math.random() * 22) : 10 + Math.floor(Math.random() * 14),
+        big ? 150 : 100));
+    }
+
+    var ai = {};
+    for (var q = 0; q < enemies; q++) ai[order[q]] = diff;
+
+    return {
+      no: 0, name: '随机对战', par: 60 + count * 9, custom: true,
+      hint: null, winAll: false, cells: cells, ai: ai
+    };
+  }
+
+  global.LEVELS = LEVELS;
+  global.makeSkirmish = makeSkirmish;
+  global.AI_PRESETS = AI;
+})(window);
+
+</script>
+<script>
+/* ===========================================================
+   ai.js — 敌方菌群的行为
+   每个阵营一个控制器，按 think 间隔做一次决策：
+     1) 整理自己的触手（撤掉浪费的、该注射的就注射）
+     2) 防守：给被攻击的细胞补能量
+     3) 进攻：挑性价比最高的目标伸触手
+   =========================================================== */
+(function (global) {
+  'use strict';
+
+  var TW = global.TW;
+
+  function AIController(fid, cfg) {
+    this.fid = fid;
+    this.cfg = cfg || { aggr: 0.5, think: 2.0, skill: 0.3 };
+    this.timer = Math.random() * this.cfg.think;
+    this.idle = 0;   // 距上一次伸出触手过了多久
+  }
+
+  AIController.prototype.update = function (dt, game) {
+    this.timer -= dt;
+    this.idle += dt;
+    if (this.timer > 0) return;
+    this.timer = this.cfg.think * (0.7 + Math.random() * 0.6);
+    this.decide(game);
+  };
+
+  AIController.prototype.decide = function (game) {
+    var fid = this.fid, cfg = this.cfg;
+    var mine = [], foes = [];
+    for (var i = 0; i < game.cells.length; i++) {
+      var c = game.cells[i];
+      if (c.owner === fid) mine.push(c); else foes.push(c);
+    }
+    if (!mine.length) return;
+
+    this.maintain(game, fid, cfg);
+    if (cfg.skill > 0.25) this.defend(game, fid, cfg, mine);
+    this.attack(game, fid, cfg, mine, foes);
+  };
+
+  /* ---------------- 1. 整理已有触手 ---------------- */
+
+  AIController.prototype.maintain = function (game, fid, cfg) {
+    var list = game.tentacles.slice();
+    for (var i = 0; i < list.length; i++) {
+      var t = list[i];
+      if (t.dead || t.from.owner !== fid) continue;
+      var src = t.from, tgt = t.to;
+
+      // 已经喂饱的自己人 → 收回触手，腾出接口
+      if (t.state === 'connected' && tgt.owner === fid && tgt.energy >= tgt.maxEnergy - 2) {
+        game.cutTentacle(t, true); continue;
+      }
+      // 补血补到本体比对方还虚 → 停手，别把自己抽干
+      if (t.state === 'connected' && tgt.owner === fid && src.energy <= 8 && tgt.energy > 18) {
+        game.cutTentacle(t, true); continue;
+      }
+      // 注射战术：触手里的能量已经够一击拿下 → 剪断秒杀
+      if (cfg.skill > 0.45 && t.state === 'connected' && tgt.owner !== fid &&
+          t.nodeCount() >= Math.ceil(tgt.energy) && tgt.energy > 0) {
+        game.cutTentacle(t, true); continue;
+      }
+      // 本体快空了还在硬打 → 撤（撤退时能量也会注射出去，不亏）
+      if (cfg.skill > 0.4 && t.state === 'connected' && tgt.owner !== fid &&
+          src.energy < 2 && tgt.energy > src.pumpRate() * 8) {
+        game.cutTentacle(t, true); continue;
+      }
+      // 还在生长但本体已经没钱了，而且离目标还很远 → 放弃
+      if (cfg.skill > 0.55 && t.state === 'growing' && src.energy < 1 && t.progress() < 0.35 && t.age > 4) {
+        game.cutTentacle(t, true); continue;
+      }
+    }
+  };
+
+  /* ---------------- 2. 防守 ---------------- */
+
+  AIController.prototype.defend = function (game, fid, cfg, mine) {
+    var worst = null, worstScore = 0;
+    for (var i = 0; i < mine.length; i++) {
+      var c = mine[i];
+      var incoming = game.incomingAttack(c);
+      if (!incoming) continue;
+      var score = incoming / Math.max(1, c.energy);
+      if (c.energy < 22 && score > worstScore) { worstScore = score; worst = c; }
+    }
+    if (!worst) return;
+    if (game.isFedBy(worst, fid)) return;
+
+    var best = null, bestD = 1e9;
+    for (var j = 0; j < mine.length; j++) {
+      var s = mine[j];
+      if (s === worst) continue;
+      if (!game.hasFreeSlot(s)) continue;
+      if (s.energy < 18) continue;
+      var d = TW.dist(s.x, s.y, worst.x, worst.y);
+      if (d < bestD) { bestD = d; best = s; }
+    }
+    if (best && bestD / TW.NODE_SPACING < best.energy * 0.7) game.connect(best, worst, true);
+  };
+
+  /* ---------------- 3. 进攻 ---------------- */
+
+  AIController.prototype.attack = function (game, fid, cfg, mine, foes) {
+    // 同时进行的进攻数量上限，随进攻欲上升
+    var ongoing = 0;
+    for (var i = 0; i < game.tentacles.length; i++) {
+      var t = game.tentacles[i];
+      if (!t.dead && t.from.owner === fid && t.to.owner !== fid) ongoing++;
+    }
+    var cap = Math.max(1, Math.ceil(mine.length * (0.25 + cfg.aggr * 0.4)));
+    if (ongoing >= cap) return;
+
+    var reserve = 12 + (1 - cfg.aggr) * 20;   // 出手前想留的家底
+    var best = null, bestScore = -1;
+    // 憋太久没动手就逐渐放宽标准，避免双方互相干瞪眼
+    var bold = this.idle > 20 ? 1 + Math.min(1.4, (this.idle - 20) / 22) : 1;
+
+    for (var a = 0; a < mine.length; a++) {
+      var src = mine[a];
+      if (!game.hasFreeSlot(src)) continue;
+      if (src.energy < reserve) continue;
+      var pump = src.pumpRate();
+
+      for (var b = 0; b < foes.length; b++) {
+        var tgt = foes[b];
+        if (game.linked(src, tgt)) continue;
+        var allies = game.attackersOn(tgt, fid);
+        if (allies >= (cfg.skill > 0.6 ? 3 : 2)) continue;
+
+        var d = TW.dist(src.x, src.y, tgt.x, tgt.y);
+        var buildCost = d / TW.NODE_SPACING;
+        if (buildCost > src.energy - 4) continue;
+
+        // 打穿目标要多久：净输出 = 自己的输送力 − 对方的回血（中立不回血）
+        var eff = pump * (1 + allies * 0.8) - (tgt.owner === 0 ? 0 : TW.REGEN);
+        if (eff <= 0.2) continue;
+        var secs = tgt.energy / eff;
+        if (secs > 70 * bold) continue;
+
+        // 这段时间里我要花多少、能有多少
+        var spend = buildCost + pump * secs;
+        var have = src.energy + TW.REGEN * secs;
+        if (spend > have * (0.72 + cfg.aggr * 0.55) * bold) continue;
+
+        // 目标价值：上限高的、玩家的、快死的更值钱
+        var value = 1 + tgt.maxEnergy / 240;
+        if (tgt.owner === TW.PLAYER) value *= 1.2 + cfg.aggr * 0.4;
+        else if (tgt.owner !== 0) value *= 1.05;
+        if (tgt.owner !== 0 && tgt.energy < 12) value *= 1.6;      // 补刀
+        if (game.incomingAttack(tgt) > 0) value *= 1.15;           // 抢人头
+
+        var score = value / (secs * 0.06 + d * 0.003 + 1);
+        score *= 0.85 + Math.random() * 0.35 * (1 - cfg.skill);    // 水平越低越随机
+
+        if (score > bestScore) { bestScore = score; best = { s: src, t: tgt }; }
+      }
+    }
+
+    if (best && game.connect(best.s, best.t, true)) this.idle = 0;
+  };
+
+  global.AIController = AIController;
+})(window);
+
+</script>
+<script>
+/* ===========================================================
+   render.js — 培养皿的画面
+   全部在 1000x640 的世界坐标里绘制，缩放由 game.js 的视图矩阵负责
+   =========================================================== */
+(function (global) {
+  'use strict';
+
+  var TW = global.TW;
+  var W = TW.WORLD_W, H = TW.WORLD_H;
+
+  var bgCanvas = null;
+
+  /* ---------------------------- 背景 ---------------------------- */
+
+  function buildBackground() {
+    bgCanvas = document.createElement('canvas');
+    bgCanvas.width = W; bgCanvas.height = H;
+    var g = bgCanvas.getContext('2d');
+
+    var grad = g.createRadialGradient(W * 0.5, H * 0.45, 60, W * 0.5, H * 0.5, W * 0.78);
+    grad.addColorStop(0, '#0d2b23');
+    grad.addColorStop(0.55, '#082019');
+    grad.addColorStop(1, '#03100c');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, W, H);
+
+    // 培养基里的絮状物
+    for (var i = 0; i < 70; i++) {
+      var x = Math.random() * W, y = Math.random() * H;
+      var r = 40 + Math.random() * 190;
+      var bg = g.createRadialGradient(x, y, 0, x, y, r);
+      var a = 0.012 + Math.random() * 0.03;
+      bg.addColorStop(0, 'rgba(110,220,150,' + a + ')');
+      bg.addColorStop(1, 'rgba(110,220,150,0)');
+      g.fillStyle = bg;
+      g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill();
+    }
+
+    // 悬浮的微粒
+    for (var j = 0; j < 460; j++) {
+      var px = Math.random() * W, py = Math.random() * H;
+      var pr = 0.4 + Math.random() * 1.5;
+      g.fillStyle = 'rgba(180,255,205,' + (0.03 + Math.random() * 0.11) + ')';
+      g.beginPath(); g.arc(px, py, pr, 0, 6.2832); g.fill();
+    }
+
+    // 细胞网络般的丝状纹理
+    g.lineWidth = 1;
+    for (var k = 0; k < 46; k++) {
+      var sx = Math.random() * W, sy = Math.random() * H;
+      var ang = Math.random() * 6.2832, len = 60 + Math.random() * 210;
+      g.strokeStyle = 'rgba(120,210,160,' + (0.015 + Math.random() * 0.035) + ')';
+      g.beginPath();
+      g.moveTo(sx, sy);
+      g.quadraticCurveTo(
+        sx + Math.cos(ang) * len * 0.5 + (Math.random() - 0.5) * 70,
+        sy + Math.sin(ang) * len * 0.5 + (Math.random() - 0.5) * 70,
+        sx + Math.cos(ang) * len, sy + Math.sin(ang) * len);
+      g.stroke();
+    }
+
+    // 皿壁的暗角
+    var vg = g.createRadialGradient(W / 2, H / 2, H * 0.34, W / 2, H / 2, W * 0.72);
+    vg.addColorStop(0, 'rgba(0,0,0,0)');
+    vg.addColorStop(1, 'rgba(0,0,0,0.72)');
+    g.fillStyle = vg;
+    g.fillRect(0, 0, W, H);
+  }
+
+  function drawBackground(ctx, time) {
+    if (!bgCanvas) buildBackground();
+    ctx.drawImage(bgCanvas, 0, 0);
+
+    // 缓慢漂移的光斑，让画面「活」起来
+    ctx.globalCompositeOperation = 'lighter';
+    for (var i = 0; i < 4; i++) {
+      var t = time * 0.06 + i * 1.7;
+      var x = W * 0.5 + Math.cos(t * 0.7 + i) * W * 0.34;
+      var y = H * 0.5 + Math.sin(t * 0.53 + i * 2.1) * H * 0.34;
+      var r = 150 + Math.sin(t + i) * 40;
+      var g2 = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g2.addColorStop(0, 'rgba(70,190,130,0.035)');
+      g2.addColorStop(1, 'rgba(70,190,130,0)');
+      ctx.fillStyle = g2;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  /* ---------------------------- 形状工具 ---------------------------- */
+
+  function blobPath(ctx, x, y, r, wob, seed, time, pts) {
+    pts = pts || 22;
+    ctx.beginPath();
+    for (var i = 0; i <= pts; i++) {
+      var a = i / pts * 6.2832;
+      var rr = r
+        + Math.sin(a * 3 + time * 1.5 + seed) * wob
+        + Math.sin(a * 5 - time * 1.1 + seed * 1.7) * wob * 0.55
+        + Math.sin(a * 2 + time * 0.7 + seed * 0.3) * wob * 0.4;
+      var px = x + Math.cos(a) * rr, py = y + Math.sin(a) * rr;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+  }
+
+  /* ---------------------------- 细胞 ---------------------------- */
+
+  function drawCell(ctx, c, time, state) {
+    var r = c.radius();
+    var o = c.owner;
+    var wob = 1.4 + c.level * 0.35;
+
+    // 外发光
+    ctx.globalCompositeOperation = 'lighter';
+    var gl = ctx.createRadialGradient(c.x, c.y, r * 0.55, c.x, c.y, r * 2.15);
+    gl.addColorStop(0, TW.fcol(o, o === 0 ? 45 : null, 0.24 + c.flash * 0.3));
+    gl.addColorStop(1, TW.fcol(o, null, 0));
+    ctx.fillStyle = gl;
+    ctx.beginPath(); ctx.arc(c.x, c.y, r * 2.15, 0, 6.2832); ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+
+    // 纤毛
+    ctx.strokeStyle = TW.fcol(o, null, 0.45);
+    ctx.lineWidth = 1.4;
+    var cilia = 10 + c.level * 3;
+    ctx.beginPath();
+    for (var i = 0; i < cilia; i++) {
+      var a = i / cilia * 6.2832 + c.spin * 0.6;
+      var l = 4 + Math.sin(time * 3 + i * 1.3 + c.seed) * 2.4 + c.level * 0.5;
+      ctx.moveTo(c.x + Math.cos(a) * (r + 1), c.y + Math.sin(a) * (r + 1));
+      ctx.lineTo(c.x + Math.cos(a) * (r + 1 + l), c.y + Math.sin(a) * (r + 1 + l));
+    }
+    ctx.stroke();
+
+    // 细胞质
+    blobPath(ctx, c.x, c.y, r, wob, c.seed, time);
+    var body = ctx.createRadialGradient(c.x - r * 0.3, c.y - r * 0.35, r * 0.15, c.x, c.y, r * 1.05);
+    body.addColorStop(0, TW.fcol(o, o === 0 ? 74 : 72, 0.98));
+    body.addColorStop(0.55, TW.fcol(o, o === 0 ? 52 : 48, 0.94));
+    body.addColorStop(1, TW.fcol(o, o === 0 ? 30 : 24, 0.92));
+    ctx.fillStyle = body;
+    ctx.fill();
+
+    // 膜
+    ctx.lineWidth = 2.2;
+    ctx.strokeStyle = TW.fcol(o, o === 0 ? 80 : 78, 0.95);
+    ctx.stroke();
+
+    // 细胞核
+    ctx.save();
+    ctx.clip();
+    var nx = c.x + Math.cos(c.spin) * r * 0.18;
+    var ny = c.y + Math.sin(c.spin * 1.3) * r * 0.18;
+    blobPath(ctx, nx, ny, r * 0.52, wob * 0.8, c.seed + 3, time * 1.3, 16);
+    ctx.fillStyle = TW.fcol(o, o === 0 ? 22 : 18, 0.42);
+    ctx.fill();
+    // 高光
+    var hg = ctx.createRadialGradient(c.x - r * 0.42, c.y - r * 0.48, 0, c.x - r * 0.42, c.y - r * 0.48, r * 0.95);
+    hg.addColorStop(0, 'rgba(255,255,255,0.30)');
+    hg.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = hg;
+    ctx.fillRect(c.x - r * 1.2, c.y - r * 1.2, r * 2.4, r * 2.4);
+    ctx.restore();
+
+    // 触手接口：亮点=空闲，暗点=已占用
+    var slots = c.maxTentacles(), used = state.used || 0;
+    if (slots > 0) {
+      for (var s = 0; s < slots; s++) {
+        var sa = -Math.PI / 2 + (s - (slots - 1) / 2) * 0.42 + c.spin * 0.25;
+        var sx = c.x + Math.cos(sa) * (r + 6.5), sy = c.y + Math.sin(sa) * (r + 6.5);
+        ctx.beginPath(); ctx.arc(sx, sy, 2.5, 0, 6.2832);
+        ctx.fillStyle = s < slots - used ? TW.fcol(o, 88, 0.95) : TW.fcol(o, 40, 0.5);
+        ctx.fill();
+      }
+    }
+
+    // 被击中的闪光
+    if (c.flash > 0.01) {
+      blobPath(ctx, c.x, c.y, r, wob, c.seed, time);
+      ctx.fillStyle = 'rgba(255,255,255,' + (c.flash * 0.3) + ')';
+      ctx.fill();
+    }
+
+    // 同化涟漪
+    if (c.captureAnim > 0.01) {
+      var k = 1 - c.captureAnim;
+      ctx.strokeStyle = TW.fcol(o, 78, c.captureAnim * 0.8);
+      ctx.lineWidth = 3 * c.captureAnim + 0.5;
+      ctx.beginPath(); ctx.arc(c.x, c.y, r + k * r * 1.8, 0, 6.2832); ctx.stroke();
+    }
+
+    // 选中 / 悬停
+    if (state.selected || state.hover) {
+      ctx.save();
+      ctx.translate(c.x, c.y);
+      ctx.rotate(time * (state.selected ? 1.1 : 0.5));
+      ctx.strokeStyle = state.valid === false ? 'rgba(255,90,80,0.9)' : 'rgba(255,255,255,' + (state.selected ? 0.85 : 0.5) + ')';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 7]);
+      ctx.beginPath(); ctx.arc(0, 0, r + 9, 0, 6.2832); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+    }
+
+    // 数字
+    var n = Math.max(0, Math.floor(c.energy));
+    var fs = Math.round(r * 0.92);
+    ctx.font = '800 ' + fs + 'px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineWidth = 3.5;
+    ctx.strokeStyle = 'rgba(0,0,0,0.45)';
+    ctx.strokeText(n, c.x, c.y + 1);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(n, c.x, c.y + 1);
+  }
+
+  /* ---------------------------- 触手 ---------------------------- */
+
+  function drawTentacle(ctx, t, time) {
+    var prog = t.progress();
+    if (prog <= 0.001) return;
+    var o = t.owner;
+    var nodes = Math.max(1, Math.floor(t.grown / TW.NODE_SPACING));
+    var col = TW.fcol(o, 60, 0.95);
+    var colDim = TW.fcol(o, 34, 0.85);
+    var colHot = TW.fcol(o, 82, 1);
+
+    // 底层的连续外壳
+    ctx.beginPath();
+    var steps = Math.max(6, Math.floor(nodes * 1.4));
+    for (var i = 0; i <= steps; i++) {
+      var p = t.pointAt(prog * i / steps, false, time);
+      if (i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]);
+    }
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = colDim;
+    ctx.lineWidth = 7.5;
+    ctx.stroke();
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    // 一节一节的能量珠
+    for (var k = 0; k <= nodes; k++) {
+      var tt = (k * TW.NODE_SPACING) / Math.max(1, t.len);
+      if (tt > prog) break;
+      var q = t.pointAt(tt, false, time);
+      var breathe = 1 + Math.sin(time * 4 - k * 0.55) * 0.13;
+      var rad = (3.5 + (k === nodes ? 1.6 : 0)) * breathe;
+      ctx.beginPath(); ctx.arc(q[0], q[1], rad, 0, 6.2832);
+      ctx.fillStyle = TW.fcol(o, 68, 0.95);
+      ctx.fill();
+    }
+
+    // 生长中的头部
+    if (t.state === 'growing') {
+      var head = t.pointAt(prog, false, time);
+      ctx.globalCompositeOperation = 'lighter';
+      var hg = ctx.createRadialGradient(head[0], head[1], 0, head[0], head[1], 14);
+      hg.addColorStop(0, TW.fcol(o, 80, 0.55));
+      hg.addColorStop(1, TW.fcol(o, 80, 0));
+      ctx.fillStyle = hg;
+      ctx.beginPath(); ctx.arc(head[0], head[1], 14, 0, 6.2832); ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.beginPath(); ctx.arc(head[0], head[1], 5.2, 0, 6.2832);
+      ctx.fillStyle = colHot; ctx.fill();
+    }
+
+    // 流动的能量
+    ctx.globalCompositeOperation = 'lighter';
+    for (var m = 0; m < t.pulses.length; m++) {
+      var pp = t.pointAt(t.pulses[m].p, false, time);
+      var pg = ctx.createRadialGradient(pp[0], pp[1], 0, pp[0], pp[1], 11);
+      pg.addColorStop(0, 'rgba(255,255,255,0.85)');
+      pg.addColorStop(0.35, TW.fcol(o, 78, 0.65));
+      pg.addColorStop(1, TW.fcol(o, 78, 0));
+      ctx.fillStyle = pg;
+      ctx.beginPath(); ctx.arc(pp[0], pp[1], 11, 0, 6.2832); ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  /* ---------------------------- 拖拽预览 ---------------------------- */
+
+  function drawDrag(ctx, from, tx, ty, time, ok) {
+    var dx = tx - from.x, dy = ty - from.y;
+    var d = Math.max(1, Math.sqrt(dx * dx + dy * dy));
+    var ux = dx / d, uy = dy / d;
+    var ax = from.x + ux * (from.radius() - 2), ay = from.y + uy * (from.radius() - 2);
+    var col = ok ? TW.fcol(from.owner, 70, 0.9) : 'rgba(255,95,85,0.9)';
+
+    ctx.save();
+    ctx.setLineDash([7, 9]);
+    ctx.lineDashOffset = -time * 34;
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(tx, ty); ctx.stroke();
+    ctx.restore();
+
+    ctx.beginPath(); ctx.arc(tx, ty, 5, 0, 6.2832);
+    ctx.fillStyle = col; ctx.fill();
+  }
+
+  /* ---------------------------- 粒子 ---------------------------- */
+
+  function drawParticles(ctx, list) {
+    ctx.globalCompositeOperation = 'lighter';
+    for (var i = 0; i < list.length; i++) {
+      var p = list[i];
+      var a = Math.max(0, p.life / p.max);
+      ctx.fillStyle = p.color.replace('ALPHA', (a * 0.9).toFixed(3));
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.size * (0.35 + a * 0.85), 0, 6.2832); ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  /* ---------------------------- 划线切断的刀痕 ---------------------------- */
+
+  function drawSlash(ctx, pts) {
+    if (!pts || pts.length < 2) return;
+    ctx.save();
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.strokeStyle = 'rgba(255,255,255,0.30)';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (var i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,255,255,0.75)';
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  global.Render = {
+    drawBackground: drawBackground,
+    drawCell: drawCell,
+    drawTentacle: drawTentacle,
+    drawDrag: drawDrag,
+    drawParticles: drawParticles,
+    drawSlash: drawSlash
+  };
+})(window);
+
+</script>
+<script>
+/* ===========================================================
+   game.js — 模拟主循环、输入、视图变换、胜负判定
+   =========================================================== */
+(function (global) {
+  'use strict';
+
+  var TW = global.TW;
+  var W = TW.WORLD_W, H = TW.WORLD_H;
+
+  function pointSegDist(px, py, ax, ay, bx, by) {
+    var dx = bx - ax, dy = by - ay;
+    var l2 = dx * dx + dy * dy;
+    var t = l2 ? ((px - ax) * dx + (py - ay) * dy) / l2 : 0;
+    t = TW.clamp(t, 0, 1);
+    var qx = ax + dx * t, qy = ay + dy * t;
+    return Math.hypot(px - qx, py - qy);
+  }
+
+  function Game(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.cells = [];
+    this.tentacles = [];
+    this.particles = [];
+    this.ais = [];
+    this.state = 'idle';           // idle | playing | paused | ending | over
+    this.time = 0;
+    this.elapsed = 0;
+    this.demo = false;
+    this.autoRotate = true;
+    this.level = null;
+    this.endTimer = 0;
+    this.won = false;
+
+    this.selected = null;
+    this.dragFrom = null;
+    this.dragPt = null;
+    this.dragMoved = 0;
+    this.hover = null;
+    this.slash = null;
+    this.slashFade = 0;
+    this.portrait = false;
+
+    this.onEnd = null;
+    this.onEvent = null;           // (type, payload) 给 UI 用
+
+    this._bindInput();
+    this.resize();
+  }
+
+  /* ---------------------------- 视图 ---------------------------- */
+
+  Game.prototype.resize = function () {
+    var c = this.canvas;
+    var cw = c.clientWidth || window.innerWidth;
+    var ch = c.clientHeight || window.innerHeight;
+    var dpr = Math.min(2.5, window.devicePixelRatio || 1);
+    c.width = Math.max(1, Math.round(cw * dpr));
+    c.height = Math.max(1, Math.round(ch * dpr));
+
+    var rot = this.autoRotate && ch > cw * 1.04;
+    var availW = rot ? ch : cw, availH = rot ? cw : ch;
+    var s = Math.min(availW / W, availH / H);
+
+    this.view = { cw: cw, ch: ch, dpr: dpr, rot: rot, s: s };
+    this.portrait = rot;
+  };
+
+  Game.prototype.applyTransform = function () {
+    var v = this.view, s = v.s, d = v.dpr;
+    if (v.rot) {
+      this.ctx.setTransform(0, d * s, -d * s, 0, d * (v.cw / 2 + s * H / 2), d * (v.ch / 2 - s * W / 2));
+    } else {
+      this.ctx.setTransform(d * s, 0, 0, d * s, d * (v.cw / 2 - s * W / 2), d * (v.ch / 2 - s * H / 2));
+    }
+  };
+
+  Game.prototype.toWorld = function (x, y) {
+    var v = this.view, s = v.s;
+    if (v.rot) return { x: (y - v.ch / 2) / s + W / 2, y: (v.cw / 2 - x) / s + H / 2 };
+    return { x: (x - v.cw / 2) / s + W / 2, y: (y - v.ch / 2) / s + H / 2 };
+  };
+
+  /* ---------------------------- 开局 ---------------------------- */
+
+  Game.prototype.start = function (level, demo) {
+    this.level = level;
+    this.demo = !!demo;
+    this.cells = [];
+    this.tentacles = [];
+    this.particles = [];
+    this.ais = [];
+    this.time = 0;
+    this.elapsed = 0;
+    this.endTimer = 0;
+    this.won = false;
+    this.selected = this.dragFrom = this.hover = null;
+    this.slash = null;
+
+    for (var i = 0; i < level.cells.length; i++) {
+      var d = level.cells[i];
+      this.cells.push(new TW.Cell(d.x, d.y, d.owner, d.energy, d.max));
+    }
+
+    var cfgs = level.ai || {};
+    for (var k in cfgs) this.ais.push(new global.AIController(parseInt(k, 10), cfgs[k]));
+    if (demo) {
+      // 演示模式下玩家阵营也交给 AI
+      this.ais.push(new global.AIController(TW.PLAYER, global.AI_PRESETS.brisk));
+    }
+    this.state = 'playing';
+  };
+
+  Game.prototype.setPaused = function (p) {
+    if (this.state === 'playing' && p) this.state = 'paused';
+    else if (this.state === 'paused' && !p) this.state = 'playing';
+  };
+
+  /* ---------------------------- 查询工具 ---------------------------- */
+
+  Game.prototype.outCount = function (cell) {
+    var n = 0;
+    for (var i = 0; i < this.tentacles.length; i++) {
+      var t = this.tentacles[i];
+      if (!t.dead && t.from === cell) n++;
+    }
+    return n;
+  };
+
+  Game.prototype.hasFreeSlot = function (cell) {
+    return this.outCount(cell) < cell.maxTentacles();
+  };
+
+  Game.prototype.linked = function (a, b) {
+    for (var i = 0; i < this.tentacles.length; i++) {
+      var t = this.tentacles[i];
+      if (t.dead) continue;
+      if (t.owner !== a.owner) continue;
+      if ((t.from === a && t.to === b) || (t.from === b && t.to === a)) return true;
+    }
+    return false;
+  };
+
+  Game.prototype.attackersOn = function (cell, fid) {
+    var n = 0;
+    for (var i = 0; i < this.tentacles.length; i++) {
+      var t = this.tentacles[i];
+      if (!t.dead && t.to === cell && t.from.owner === fid) n++;
+    }
+    return n;
+  };
+
+  Game.prototype.incomingAttack = function (cell) {
+    var n = 0;
+    for (var i = 0; i < this.tentacles.length; i++) {
+      var t = this.tentacles[i];
+      if (!t.dead && t.to === cell && t.state === 'connected' && t.from.owner !== cell.owner) n++;
+    }
+    return n;
+  };
+
+  Game.prototype.isFedBy = function (cell, fid) {
+    for (var i = 0; i < this.tentacles.length; i++) {
+      var t = this.tentacles[i];
+      if (!t.dead && t.to === cell && t.from.owner === fid) return true;
+    }
+    return false;
+  };
+
+  Game.prototype.cellAt = function (x, y, pad) {
+    var best = null, bestD = 1e9;
+    for (var i = 0; i < this.cells.length; i++) {
+      var c = this.cells[i];
+      var d = TW.dist(x, y, c.x, c.y);
+      if (d < c.radius() + (pad || 10) && d < bestD) { bestD = d; best = c; }
+    }
+    return best;
+  };
+
+  Game.prototype.tentacleAt = function (x, y, owner, tol) {
+    tol = tol || 15;
+    for (var i = 0; i < this.tentacles.length; i++) {
+      var t = this.tentacles[i];
+      if (t.dead || (owner !== undefined && t.owner !== owner)) continue;
+      var prog = t.progress();
+      for (var k = 0; k <= 16; k++) {
+        var a = t.pointAt(prog * k / 16, true);
+        var b = t.pointAt(prog * Math.min(1, (k + 1) / 16), true);
+        if (pointSegDist(x, y, a[0], a[1], b[0], b[1]) < tol) return t;
+      }
+    }
+    return null;
+  };
+
+  Game.prototype.tentaclesCrossing = function (ax, ay, bx, by, owner) {
+    var hit = [];
+    for (var i = 0; i < this.tentacles.length; i++) {
+      var t = this.tentacles[i];
+      if (t.dead || t.owner !== owner) continue;
+      var prog = t.progress();
+      for (var k = 0; k <= 14; k++) {
+        var p = t.pointAt(prog * k / 14, true);
+        if (pointSegDist(p[0], p[1], ax, ay, bx, by) < 13) { hit.push(t); break; }
+      }
+    }
+    return hit;
+  };
+
+  /* ---------------------------- 触手操作 ---------------------------- */
+
+  Game.prototype.connect = function (from, to, silent) {
+    if (!from || !to || from === to) return false;
+    if (from.owner === 0) return false;
+    if (!this.hasFreeSlot(from)) { if (!silent) global.Sfx.reject(); return false; }
+    if (this.linked(from, to)) { if (!silent) global.Sfx.reject(); return false; }
+    if (from.energy < 1) { if (!silent) global.Sfx.reject(); return false; }
+    var t = new TW.Tentacle(from, to);
+    this.tentacles.push(t);
+    if (!silent) global.Sfx.connect();
+    return true;
+  };
+
+  Game.prototype.onConnect = function () { /* 接通瞬间的钩子，留给音效/特效 */ };
+
+  /** 单点能量抵达目标 */
+  Game.prototype.deliver = function (t, amount) {
+    var src = t.from, tgt = t.to;
+    for (var i = 0; i < amount; i++) {
+      if (tgt.owner === src.owner) {
+        tgt.energy = Math.min(tgt.maxEnergy, tgt.energy + 1);
+      } else {
+        tgt.energy -= 1;
+        tgt.flash = Math.min(1, tgt.flash + 0.5);
+        if (tgt.energy <= 0) this.capture(tgt, src.owner);
+      }
+    }
+    tgt.syncLevel();
+    if (src.owner === TW.PLAYER || tgt.owner === TW.PLAYER) global.Sfx.pulse();
+  };
+
+  Game.prototype.capture = function (cell, newOwner) {
+    var old = cell.owner;
+    cell.owner = newOwner;
+    cell.energy = Math.min(TW.CAPTURE_ENERGY, cell.maxEnergy);
+    cell.level = 0;
+    cell.syncLevel(true);
+    cell.captureAnim = 1;
+    cell.flash = 1;
+
+    // 原主人从这颗细胞伸出的触手全部断掉
+    for (var i = 0; i < this.tentacles.length; i++) {
+      var t = this.tentacles[i];
+      if (!t.dead && t.from === cell && t.owner === old) this.killTentacle(t);
+    }
+
+    this.burst(cell.x, cell.y, newOwner, 26, 130);
+    global.Sfx.capture(newOwner === TW.PLAYER);
+    if (this.onEvent) this.onEvent('capture', { cell: cell, from: old, to: newOwner });
+  };
+
+  /** 玩家/AI 主动剪断：结算注射或退款 */
+  Game.prototype.cutTentacle = function (t, silent) {
+    if (!t || t.dead) return;
+    var nodes = t.nodeCount();
+    if (t.state === 'connected' && nodes > 0) {
+      // 一次性把触手里的能量射进对面
+      var pending = nodes + t.pulses.length;
+      this.deliver(t, pending);
+      this.burst(t.to.x, t.to.y, t.owner, 14, 90);
+      if (!silent) global.Sfx.inject();
+      var mid = t.pointAt(0.5, true);
+      this.burst(mid[0], mid[1], t.owner, 8, 60);
+    } else {
+      // 还没接上 → 能量退回本体
+      t.from.energy = Math.min(t.from.maxEnergy, t.from.energy + nodes);
+      t.from.syncLevel();
+      if (!silent) global.Sfx.cut();
+      var mid2 = t.pointAt(0.5, true);
+      this.burst(mid2[0], mid2[1], t.owner, 8, 60);
+    }
+    this.killTentacle(t);
+  };
+
+  /** 无结算地移除（本体易主时用） */
+  Game.prototype.killTentacle = function (t) {
+    if (t.dead) return;
+    t.dead = true;
+    var i = this.tentacles.indexOf(t);
+    if (i >= 0) this.tentacles.splice(i, 1);
+  };
+
+  Game.prototype.burst = function (x, y, owner, n, speed) {
+    var f = TW.FACTIONS[owner] || TW.FACTIONS[0];
+    var col = 'hsla(' + f.h + ',' + f.s + '%,72%,ALPHA)';
+    for (var i = 0; i < n; i++) {
+      var a = Math.random() * 6.2832;
+      var v = speed * (0.25 + Math.random() * 0.9);
+      this.particles.push(new TW.Particle(
+        x + Math.cos(a) * 4, y + Math.sin(a) * 4,
+        Math.cos(a) * v, Math.sin(a) * v,
+        0.4 + Math.random() * 0.6, col, 1.6 + Math.random() * 2.6));
+    }
+  };
+
+  /* ---------------------------- 主循环 ---------------------------- */
+
+  Game.prototype.update = function (dt) {
+    this.time += dt;
+    if (this.state !== 'playing' && this.state !== 'ending') return;
+    if (this.state === 'playing') this.elapsed += dt;
+
+    var i;
+    for (i = 0; i < this.cells.length; i++) this.cells[i].update(dt);
+    // 快照遍历：模拟过程中可能有触手被同化/剪断而移出数组
+    var list = this.tentacles.slice();
+    for (i = 0; i < list.length; i++) {
+      var t = list[i];
+      if (t.dead) continue;
+      t.recomputePath();
+      t.update(dt, this);
+    }
+    if (this.state === 'playing') {
+      for (i = 0; i < this.ais.length; i++) this.ais[i].update(dt, this);
+    }
+    for (i = this.particles.length - 1; i >= 0; i--) {
+      var p = this.particles[i];
+      p.update(dt);
+      if (p.life <= 0) this.particles.splice(i, 1);
+    }
+    if (this.slashFade > 0) {
+      this.slashFade -= dt * 3;
+      if (this.slashFade <= 0) this.slash = null;
+    }
+
+    if (this.state === 'playing') this.checkEnd();
+    else if (this.state === 'ending') {
+      this.endTimer -= dt;
+      if (this.endTimer <= 0) {
+        this.state = 'over';
+        if (this.demo) { if (this.onEvent) this.onEvent('demo-end'); }
+        else if (this.onEnd) this.onEnd(this.won, this.elapsed);
+      }
+    }
+  };
+
+  Game.prototype.checkEnd = function () {
+    var mine = 0, foes = 0, neutral = 0;
+    for (var i = 0; i < this.cells.length; i++) {
+      var o = this.cells[i].owner;
+      if (o === TW.PLAYER) mine++;
+      else if (o === 0) neutral++;
+      else foes++;
+    }
+    if (this.demo) {
+      if (foes === 0 || mine === 0) { this.won = false; this.state = 'ending'; this.endTimer = 1.6; }
+      return;
+    }
+    if (mine === 0) {
+      // 还有触手在飞就再等等
+      this.won = false; this.state = 'ending'; this.endTimer = 1.4;
+      global.Sfx.lose();
+      return;
+    }
+    var need = this.level.winAll ? (foes + neutral) : foes;
+    if (need === 0) {
+      this.won = true; this.state = 'ending'; this.endTimer = 1.4;
+      global.Sfx.win();
+    }
+  };
+
+  Game.prototype.factionStats = function () {
+    var m = {};
+    for (var i = 0; i < this.cells.length; i++) {
+      var c = this.cells[i];
+      if (!m[c.owner]) m[c.owner] = { cells: 0, energy: 0 };
+      m[c.owner].cells++;
+      m[c.owner].energy += Math.max(1, c.energy);
+    }
+    return m;
+  };
+
+  /* ---------------------------- 绘制 ---------------------------- */
+
+  Game.prototype.draw = function () {
+    var ctx = this.ctx;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.applyTransform();
+
+    global.Render.drawBackground(ctx, this.time);
+
+    var i;
+    for (i = 0; i < this.tentacles.length; i++) global.Render.drawTentacle(ctx, this.tentacles[i], this.time);
+
+    if (this.dragFrom && this.dragPt) {
+      var target = this.hover;
+      var ok = !target || target !== this.dragFrom;
+      global.Render.drawDrag(ctx, this.dragFrom, this.dragPt.x, this.dragPt.y, this.time, ok);
+    }
+
+    for (i = 0; i < this.cells.length; i++) {
+      var c = this.cells[i];
+      global.Render.drawCell(ctx, c, this.time, {
+        used: this.outCount(c),
+        selected: c === this.selected || c === this.dragFrom,
+        hover: c === this.hover && this.dragFrom && c !== this.dragFrom,
+        valid: true
+      });
+    }
+
+    global.Render.drawParticles(ctx, this.particles);
+    if (this.slash && this.slashFade > 0) {
+      ctx.globalAlpha = TW.clamp(this.slashFade, 0, 1);
+      global.Render.drawSlash(ctx, this.slash);
+      ctx.globalAlpha = 1;
+    }
+  };
+
+  /* ---------------------------- 输入 ---------------------------- */
+
+  Game.prototype._bindInput = function () {
+    var self = this, c = this.canvas;
+    var down = false, slashing = false, startPt = null, lastPt = null;
+
+    function pos(e) {
+      var r = c.getBoundingClientRect();
+      return self.toWorld(e.clientX - r.left, e.clientY - r.top);
+    }
+
+    c.addEventListener('pointerdown', function (e) {
+      if (self.state !== 'playing' || self.demo) return;
+      c.setPointerCapture && c.setPointerCapture(e.pointerId);
+      var p = pos(e);
+      down = true; startPt = p; lastPt = p; self.dragMoved = 0;
+
+      var cell = self.cellAt(p.x, p.y);
+      if (cell) {
+        if (self.selected && self.selected !== cell) {
+          self.connect(self.selected, cell);
+          self.selected = null;
+          down = false;
+          return;
+        }
+        if (cell.owner === TW.PLAYER) {
+          self._reSelect = (self.selected === cell);
+          self.dragFrom = cell;
+          self.selected = cell;
+          self.dragPt = p;
+        } else {
+          self.selected = null;
+        }
+        return;
+      }
+
+      // 点自己的触手 = 剪断
+      var t = self.tentacleAt(p.x, p.y, TW.PLAYER);
+      if (t) { self.cutTentacle(t); down = false; return; }
+
+      self.selected = null;
+      slashing = true;
+      self.slash = [{ x: p.x, y: p.y }];
+      self.slashFade = 1;
+    });
+
+    c.addEventListener('pointermove', function (e) {
+      if (self.state !== 'playing' || self.demo) return;
+      var p = pos(e);
+      if (self.dragFrom) {
+        self.dragPt = p;
+        self.dragMoved += TW.dist(p.x, p.y, lastPt.x, lastPt.y);
+        self.hover = self.cellAt(p.x, p.y, 14);
+      } else if (slashing && down) {
+        var cut = self.tentaclesCrossing(lastPt.x, lastPt.y, p.x, p.y, TW.PLAYER);
+        for (var i = 0; i < cut.length; i++) self.cutTentacle(cut[i]);
+        self.slash.push({ x: p.x, y: p.y });
+        if (self.slash.length > 26) self.slash.shift();
+        self.slashFade = 1;
+      } else if (!down) {
+        self.hover = self.cellAt(p.x, p.y, 6);
+      }
+      lastPt = p;
+    });
+
+    function up(e) {
+      if (self.demo) return;
+      if (self.dragFrom) {
+        var p = self.dragPt;
+        var target = p ? self.cellAt(p.x, p.y, 14) : null;
+        if (target && target !== self.dragFrom) {
+          self.connect(self.dragFrom, target);
+          self.selected = null;
+        } else if (self.dragMoved > 16 || self._reSelect) {
+          self.selected = null;   // 拖到空处 / 再点一次自己 → 取消选中
+        }
+        self.dragFrom = null; self.dragPt = null; self.hover = null;
+      }
+      down = false; slashing = false;
+    }
+
+    c.addEventListener('pointerup', up);
+    c.addEventListener('pointercancel', up);
+    c.addEventListener('pointerleave', function () { if (!down) self.hover = null; });
+    c.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  };
+
+  global.Game = Game;
+})(window);
+
+</script>
+<script>
+/* ===========================================================
+   main.js — 界面、存档、关卡流程
+   =========================================================== */
+(function (global) {
+  'use strict';
+
+  var TW = global.TW;
+  var SAVE_KEY = 'tentacle-wars-save-v1';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------------------------- 存档 ---------------------------- */
+
+  var save = { unlocked: 1, stars: {}, best: {}, sound: true };
+
+  function loadSave() {
+    try {
+      var raw = localStorage.getItem(SAVE_KEY);
+      if (raw) {
+        var s = JSON.parse(raw);
+        if (s && typeof s === 'object') {
+          save.unlocked = Math.max(1, s.unlocked | 0);
+          save.stars = s.stars || {};
+          save.best = s.best || {};
+          save.sound = s.sound !== false;
+        }
+      }
+    } catch (e) { /* 无痕模式等情况直接用默认值 */ }
+  }
+  function persist() {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch (e) {}
+  }
+
+  /* ---------------------------- 启动 ---------------------------- */
+
+  var game, canvas, curLevel = null, isSkirmish = false;
+  var lastHud = 0;
+
+  function boot() {
+    loadSave();
+    canvas = $('game');
+    game = new Game(canvas);
+    global.game = game;
+
+    game.onEnd = onLevelEnd;
+    game.onEvent = function (type) {
+      if (type === 'demo-end') startDemo();
+    };
+
+    global.Sfx.setEnabled(save.sound);
+    $('btn-sound').textContent = save.sound ? '🔊' : '🔈';
+
+    buildLevelGrid();
+    bindUI();
+    startDemo();
+    showScreen('menu');
+
+    layoutOverlay();
+    window.addEventListener('resize', function () { game.resize(); updateRotateHint(); });
+    window.addEventListener('orientationchange', function () {
+      setTimeout(function () { game.resize(); updateRotateHint(); }, 240);
+    });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden && game.state === 'playing' && !game.demo) doPause();
+    });
+
+    var last = performance.now();
+    (function frame(now) {
+      var dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      game.update(dt);
+      game.draw();
+      if (now - lastHud > 90) { lastHud = now; updateHud(); }
+      requestAnimationFrame(frame);
+    })(last);
+  }
+
+  /* ---------------------------- 屏幕切换 ---------------------------- */
+
+  var SCREENS = ['menu', 'levels', 'skirmish', 'howto', 'pause', 'result'];
+
+  function showScreen(name) {
+    SCREENS.forEach(function (s) { $(s).classList.toggle('hidden', s !== name); });
+    var inGame = (name === null || name === 'pause');
+    $('hud').classList.toggle('hidden', !(inGame && curLevel));
+    if (name !== null && name !== 'pause') $('tip').classList.add('hidden');
+    updateRotateHint();
+  }
+
+  /** 竖屏时把整层界面旋转 90°，和画布里的世界朝向对齐 */
+  function layoutOverlay() {
+    var el = $('overlay');
+    var w = canvas.clientWidth || window.innerWidth;
+    var h = canvas.clientHeight || window.innerHeight;
+    if (game.portrait) {
+      el.style.width = h + 'px';
+      el.style.height = w + 'px';
+      el.style.transform = 'translateX(' + w + 'px) rotate(90deg)';
+    } else {
+      el.style.width = ''; el.style.height = ''; el.style.transform = '';
+    }
+  }
+
+  function updateRotateHint() {
+    layoutOverlay();
+    var show = game && game.portrait && curLevel && game.state === 'playing';
+    $('rotate-hint').classList.toggle('hidden', !show);
+  }
+
+  /* ---------------------------- 选关界面 ---------------------------- */
+
+  function buildLevelGrid() {
+    var grid = $('level-grid');
+    grid.innerHTML = '';
+    global.LEVELS.forEach(function (lv) {
+      var b = document.createElement('button');
+      var locked = lv.no > save.unlocked;
+      b.className = 'lv' + (locked ? ' locked' : '');
+      var st = save.stars[lv.no] || 0;
+      b.innerHTML = '<span class="n">' + (locked ? '🔒' : lv.no) + '</span>' +
+        '<span class="t">' + lv.name + '</span>' +
+        '<span class="s">' + (st ? new Array(st + 1).join('★') : '') + '</span>';
+      if (!locked) b.addEventListener('click', function () { global.Sfx.click(); startLevel(lv.no); });
+      grid.appendChild(b);
+    });
+  }
+
+  /* ---------------------------- 关卡流程 ---------------------------- */
+
+  function startDemo() {
+    if (curLevel) return;
+    game.start(global.makeSkirmish({ enemies: 3, size: 'm', diff: 'n' }), true);
+  }
+
+  function startLevel(no) {
+    isSkirmish = false;
+    curLevel = global.LEVELS[no - 1];
+    game.start(curLevel, false);
+    showScreen(null);
+    showTip(curLevel.hint, 9);
+  }
+
+  function startSkirmish(opt) {
+    isSkirmish = true;
+    curLevel = global.makeSkirmish(opt);
+    game.start(curLevel, false);
+    showScreen(null);
+    showTip(null);
+  }
+
+  function backToMenu() {
+    curLevel = null;
+    startDemo();
+    showScreen('menu');
+  }
+
+  function starsFor(lv, sec) {
+    if (sec <= lv.par) return 3;
+    if (sec <= lv.par * 1.7) return 2;
+    return 1;
+  }
+
+  function onLevelEnd(won, sec) {
+    var lv = curLevel;
+    $('result-title').textContent = won ? '培养皿已被同化' : '你的菌群灭绝了';
+    $('result-title').style.color = won ? '' : '#ff7a6e';
+
+    var st = 0;
+    if (won && !isSkirmish) {
+      st = starsFor(lv, sec);
+      save.stars[lv.no] = Math.max(save.stars[lv.no] || 0, st);
+      if (!save.best[lv.no] || sec < save.best[lv.no]) save.best[lv.no] = sec;
+      if (lv.no >= save.unlocked && lv.no < global.LEVELS.length) save.unlocked = lv.no + 1;
+      persist();
+      buildLevelGrid();
+    }
+
+    var starEls = $('result-stars').children;
+    for (var i = 0; i < 3; i++) starEls[i].className = i < st ? 'on' : '';
+    $('result-stars').style.display = (won && !isSkirmish) ? '' : 'none';
+
+    var meta = '用时 ' + fmt(sec);
+    if (won && !isSkirmish) {
+      meta += ' · 三星线 ' + fmt(lv.par);
+      if (save.best[lv.no]) meta += ' · 最佳 ' + fmt(save.best[lv.no]);
+    }
+    $('result-meta').textContent = meta;
+
+    var hasNext = won && !isSkirmish && lv.no < global.LEVELS.length && lv.no + 1 <= save.unlocked;
+    $('btn-next').classList.toggle('hidden', !hasNext);
+    if (isSkirmish) $('btn-next').classList.add('hidden');
+
+    showScreen('result');
+  }
+
+  function fmt(s) {
+    s = Math.round(s);
+    return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
+  }
+
+  function doPause() {
+    if (!curLevel || game.state !== 'playing') return;
+    game.setPaused(true);
+    showScreen('pause');
+    $('hud').classList.remove('hidden');
+  }
+  function doResume() {
+    game.setPaused(false);
+    showScreen(null);
+    updateRotateHint();
+  }
+  function doRestart() {
+    if (!curLevel) return;
+    game.start(curLevel, false);
+    showScreen(null);
+    showTip(curLevel.hint, 7);
+  }
+
+  /* ---------------------------- 提示条 ---------------------------- */
+
+  var tipTimer = null;
+  function showTip(html, sec) {
+    var el = $('tip');
+    if (tipTimer) { clearTimeout(tipTimer); tipTimer = null; }
+    if (!html) { el.classList.add('hidden'); return; }
+    el.innerHTML = html;
+    el.classList.remove('hidden');
+    tipTimer = setTimeout(function () { el.classList.add('hidden'); }, (sec || 6) * 1000);
+  }
+
+  /* ---------------------------- HUD ---------------------------- */
+
+  function updateHud() {
+    if (!curLevel || game.demo) return;
+    $('hud-no').textContent = isSkirmish ? '随机对战' : ('关卡 ' + curLevel.no);
+    $('hud-name').textContent = curLevel.name;
+    $('hud-timer').textContent = fmt(game.elapsed);
+    $('hud-objective').textContent = curLevel.winAll ? '占领培养皿中所有细胞' : '同化所有敌方细胞';
+
+    var stats = game.factionStats();
+    var total = 0, k;
+    for (k in stats) total += stats[k].energy;
+    if (total <= 0) return;
+
+    var bar = $('force-bar');
+    var order = [1, 2, 3, 4, 5, 0];
+    var html = '';
+    for (var i = 0; i < order.length; i++) {
+      var f = order[i];
+      if (!stats[f]) continue;
+      var pct = stats[f].energy / total * 100;
+      html += '<i style="width:' + pct.toFixed(2) + '%;background:' +
+        TW.fcol(f, f === 0 ? 45 : null) + '"></i>';
+    }
+    bar.innerHTML = html;
+  }
+
+  /* ---------------------------- 事件绑定 ---------------------------- */
+
+  function bindUI() {
+    function tap(id, fn) {
+      var el = $(id);
+      if (el) el.addEventListener('click', function (e) { e.preventDefault(); global.Sfx.resume(); global.Sfx.click(); fn(); });
+    }
+
+    tap('btn-campaign', function () { showScreen('levels'); });
+    tap('btn-skirmish', function () { showScreen('skirmish'); });
+    tap('btn-howto', function () { showScreen('howto'); });
+    tap('btn-reset-save', function () {
+      if (!confirm('确定要清除所有关卡进度吗？')) return;
+      save.unlocked = 1; save.stars = {}; save.best = {};
+      persist(); buildLevelGrid();
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-back]'), function (b) {
+      b.addEventListener('click', function () { global.Sfx.click(); showScreen('menu'); });
+    });
+
+    // 随机对战选项
+    var skOpt = { enemies: 2, size: 'm', diff: 'n' };
+    [['sk-enemies', 'enemies'], ['sk-size', 'size'], ['sk-diff', 'diff']].forEach(function (pair) {
+      var box = $(pair[0]);
+      box.addEventListener('click', function (e) {
+        var b = e.target.closest('button');
+        if (!b) return;
+        Array.prototype.forEach.call(box.children, function (x) { x.classList.remove('on'); });
+        b.classList.add('on');
+        var v = b.getAttribute('data-v');
+        skOpt[pair[1]] = pair[1] === 'enemies' ? parseInt(v, 10) : v;
+        global.Sfx.click();
+      });
+    });
+    tap('btn-sk-start', function () { startSkirmish(skOpt); });
+
+    tap('btn-pause', doPause);
+    tap('btn-resume', doResume);
+    tap('btn-pause-restart', doRestart);
+    tap('btn-pause-menu', backToMenu);
+    tap('btn-restart', doRestart);
+    tap('btn-retry', doRestart);
+    tap('btn-result-menu', function () {
+      curLevel = null; startDemo();
+      showScreen(isSkirmish ? 'skirmish' : 'levels');
+    });
+    tap('btn-next', function () {
+      var n = curLevel.no + 1;
+      if (n <= global.LEVELS.length) startLevel(n);
+      else backToMenu();
+    });
+    tap('btn-sound', function () {
+      save.sound = !save.sound;
+      global.Sfx.setEnabled(save.sound);
+      $('btn-sound').textContent = save.sound ? '🔊' : '🔈';
+      persist();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        if (game.state === 'playing' && curLevel) doPause();
+        else if (game.state === 'paused') doResume();
+      } else if (e.key === 'r' || e.key === 'R') {
+        if (curLevel && (game.state === 'playing' || game.state === 'paused')) doRestart();
+      }
+    });
+
+    // 首次交互解锁音频
+    ['pointerdown', 'keydown'].forEach(function (ev) {
+      window.addEventListener(ev, function once() {
+        global.Sfx.resume();
+        window.removeEventListener(ev, once);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})(window);
+
+</script>
+</body>
+</html>

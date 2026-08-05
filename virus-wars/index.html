@@ -13,6 +13,9 @@
 <div id="app">
   <canvas id="game"></canvas>
 
+  <!-- 覆盖层：竖屏时整层跟画面一起旋转 -->
+  <div id="overlay">
+
   <!-- ======================= 游戏内 HUD ======================= -->
   <div id="hud" class="hidden">
     <div class="hud-left">
@@ -34,6 +37,8 @@
   </div>
 
   <div id="tip" class="tip hidden"></div>
+  <div id="rotate-hint" class="rotate-hint hidden">↻ 建议横屏游玩</div>
+  </div>
 
   <!-- ======================= 主菜单 ======================= -->
   <div id="menu" class="screen">
@@ -151,7 +156,6 @@
     </div>
   </div>
 
-  <div id="rotate-hint" class="rotate-hint hidden">↻ 建议横屏游玩</div>
 </div>
 
 <script src="js/audio.js"></script>
