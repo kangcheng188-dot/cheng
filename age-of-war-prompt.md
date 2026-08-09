@@ -1,6 +1,15 @@
 # 《Age of War（战争进化史）》复刻提示词
 
-> 使用方法：把下面「===== 提示词开始 =====」到「===== 提示词结束 =====」之间的全部内容，
+> 使用方法：把下面「===== 提示词开始 =====」到「---
+
+# 九、已知特性（不是 bug，不用去"修"）
+
+这个玩法有一个固有性质：**双方水平完全对等时，战线会稳定卡在中间，谁也推不动**。
+因为只有最前排的近战 + 射程够得着的远程能输出，后排单位纯粹排队，所以「钱更多」并不能直接换成战线推进；
+两个策略一模一样的对手会打成长期拉锯。实测中，只要一方打法有偏差（只造便宜兵、只造远程、囤钱不出兵），
+3~10 分钟内就会分出胜负。所以不要为了"让 AI 对打能结束"去魔改机制——对人类玩家是正常的。
+
+===== 提示词结束 =====」之间的全部内容，
 > 原样发给 AI（Claude / ChatGPT / Gemini 均可）。数值表已经写成 JS 常量，AI 可以直接抄进代码。
 > 文末附「迭代追问模板」，用于第一版出来后继续打磨手感。
 
@@ -61,6 +70,9 @@
 - 远程单位发射**可见弹丸**（箭/子弹/炮弹，直线或小抛物线），伤害在弹丸命中时结算（不是发射瞬间）。
 - 单位死亡时，**击杀方立刻获得该单位的 `goldReward` 和 `xpReward`**——无论击杀者是士兵、炮塔还是必杀技。
 - 走到敌方基地前就攻击基地（基地视作射程内的目标）。
+- **攻城规则（必须实现，否则基地永远掉不了血）**：当单位与敌方基地正面的距离 ≤ 60px 时，
+  **直接攻击基地，不再去追新刷出来的挡路兵**。否则防守方只要不停刷最便宜的兵贴脸挡路，
+  进攻方就会无限追杀这些挡路兵，基地一滴血都掉不了，对局永远打不完。
 
 ## 2.2 生产队列
 
@@ -102,7 +114,7 @@
 
 ```js
 const BALANCE = {
-  baseHp: 4000,          // 双方基地血量，全程不变
+  baseHp: 1500,          // 双方基地血量，全程不变（实测 4000 会导致对局永远打不完）
   laneY: 560,            // 地面高度
   playerBaseX: 90,
   enemyBaseX: 1190,
@@ -117,10 +129,10 @@ const BALANCE = {
 
 // 进化所需经验（进化后经验清零，逐档累计）
 const AGES = [
-  { id: 1, name: '石器时代',   xpToNext: 2000  },
-  { id: 2, name: '城堡时代',   xpToNext: 5000  },
-  { id: 3, name: '文艺复兴',   xpToNext: 13000 },
-  { id: 4, name: '现代',       xpToNext: 30000 },
+  { id: 1, name: '石器时代',   xpToNext: 1000  },
+  { id: 2, name: '城堡时代',   xpToNext: 2500  },
+  { id: 3, name: '文艺复兴',   xpToNext: 6000  },
+  { id: 4, name: '现代',       xpToNext: 11000 },
   { id: 5, name: '未来时代',   xpToNext: null  }, // 最终时代
 ];
 
@@ -128,29 +140,29 @@ const AGES = [
 // range<40 视为近战；speed 单位 px/s；atkInterval 单位秒
 const UNITS = {
   1: [
-    { key:'clubman',   name:'棍棒人',   cost:25,   hp:55,   dmg:12,  atkInterval:1.0, range:22,  speed:32, buildTime:1.0, gold:12,   xp:20   },
-    { key:'slinger',   name:'投石人',   cost:50,   hp:45,   dmg:14,  atkInterval:1.4, range:140, speed:28, buildTime:2.0, gold:22,   xp:40   },
-    { key:'dinorider', name:'恐龙骑士', cost:120,  hp:200,  dmg:32,  atkInterval:1.3, range:28,  speed:24, buildTime:4.5, gold:55,   xp:110  },
+    { key:'clubman',   name:'棍棒人',   cost:25,   hp:55,   dmg:12,  atkInterval:1.0, range:22,  speed:32, buildTime:1.0, gold:30,   xp:20   },
+    { key:'slinger',   name:'投石人',   cost:50,   hp:45,   dmg:14,  atkInterval:1.4, range:140, speed:28, buildTime:2.0, gold:65,   xp:40   },
+    { key:'dinorider', name:'恐龙骑士', cost:120,  hp:200,  dmg:32,  atkInterval:1.3, range:28,  speed:24, buildTime:4.5, gold:155,   xp:110  },
   ],
   2: [
-    { key:'swordsman', name:'剑士',     cost:60,   hp:130,  dmg:26,  atkInterval:0.9, range:24,  speed:34, buildTime:1.4, gold:30,   xp:55   },
-    { key:'archer',    name:'弓箭手',   cost:120,  hp:100,  dmg:30,  atkInterval:1.3, range:170, speed:30, buildTime:2.4, gold:55,   xp:100  },
-    { key:'knight',    name:'骑士',     cost:260,  hp:420,  dmg:65,  atkInterval:1.2, range:30,  speed:26, buildTime:5.0, gold:120,  xp:240  },
+    { key:'swordsman', name:'剑士',     cost:60,   hp:130,  dmg:26,  atkInterval:0.9, range:24,  speed:34, buildTime:1.4, gold:80,   xp:55   },
+    { key:'archer',    name:'弓箭手',   cost:120,  hp:100,  dmg:30,  atkInterval:1.3, range:170, speed:30, buildTime:2.4, gold:155,   xp:100  },
+    { key:'knight',    name:'骑士',     cost:260,  hp:420,  dmg:65,  atkInterval:1.2, range:30,  speed:26, buildTime:5.0, gold:340,  xp:240  },
   ],
   3: [
-    { key:'pikeman',   name:'长矛兵',   cost:140,  hp:300,  dmg:55,  atkInterval:0.9, range:26,  speed:34, buildTime:1.6, gold:65,   xp:120  },
-    { key:'musketeer', name:'火枪手',   cost:280,  hp:230,  dmg:70,  atkInterval:1.5, range:200, speed:30, buildTime:2.6, gold:120,  xp:230  },
-    { key:'cannon',    name:'加农炮',   cost:600,  hp:900,  dmg:150, atkInterval:2.0, range:230, speed:20, buildTime:5.5, gold:260,  xp:520  },
+    { key:'pikeman',   name:'长矛兵',   cost:140,  hp:300,  dmg:55,  atkInterval:0.9, range:26,  speed:34, buildTime:1.6, gold:180,   xp:120  },
+    { key:'musketeer', name:'火枪手',   cost:280,  hp:230,  dmg:70,  atkInterval:1.5, range:200, speed:30, buildTime:2.6, gold:365,  xp:230  },
+    { key:'cannon',    name:'加农炮',   cost:600,  hp:900,  dmg:150, atkInterval:2.0, range:230, speed:20, buildTime:5.5, gold:780,  xp:520  },
   ],
   4: [
-    { key:'rifleman',  name:'突击兵',   cost:320,  hp:700,  dmg:120, atkInterval:0.7, range:70,  speed:36, buildTime:1.8, gold:140,  xp:260  },
-    { key:'bazooka',   name:'火箭筒兵', cost:620,  hp:520,  dmg:170, atkInterval:1.6, range:230, speed:30, buildTime:2.8, gold:260,  xp:500  },
-    { key:'tank',      name:'坦克',     cost:1300, hp:2000, dmg:330, atkInterval:1.8, range:210, speed:22, buildTime:6.0, gold:560,  xp:1100 },
+    { key:'rifleman',  name:'突击兵',   cost:320,  hp:700,  dmg:120, atkInterval:0.7, range:70,  speed:36, buildTime:1.8, gold:415,  xp:260  },
+    { key:'bazooka',   name:'火箭筒兵', cost:620,  hp:520,  dmg:170, atkInterval:1.6, range:230, speed:30, buildTime:2.8, gold:805,  xp:500  },
+    { key:'tank',      name:'坦克',     cost:1300, hp:2000, dmg:330, atkInterval:1.8, range:210, speed:22, buildTime:6.0, gold:1690,  xp:1100 },
   ],
   5: [
-    { key:'laser',     name:'激光兵',   cost:700,  hp:1500, dmg:260, atkInterval:0.7, range:90,  speed:38, buildTime:2.0, gold:300,  xp:560  },
-    { key:'plasma',    name:'等离子炮手',cost:1300,hp:1100, dmg:380, atkInterval:1.5, range:250, speed:32, buildTime:3.0, gold:560,  xp:1100 },
-    { key:'mech',      name:'战斗机甲', cost:2600, hp:4500, dmg:700, atkInterval:1.7, range:220, speed:22, buildTime:6.5, gold:1200, xp:2400 },
+    { key:'laser',     name:'激光兵',   cost:700,  hp:1500, dmg:260, atkInterval:0.7, range:90,  speed:38, buildTime:2.0, gold:910,  xp:560  },
+    { key:'plasma',    name:'等离子炮手',cost:1300,hp:1100, dmg:380, atkInterval:1.5, range:250, speed:32, buildTime:3.0, gold:1690,  xp:1100 },
+    { key:'mech',      name:'战斗机甲', cost:2600, hp:4500, dmg:700, atkInterval:1.7, range:220, speed:22, buildTime:6.5, gold:3380, xp:2400 },
   ],
 };
 
@@ -173,22 +185,34 @@ const SPECIALS = {
 };
 ```
 
-**数值说明**：以上是经过配平的还原值，用于重现原版"前期几十块钱一个兵、后期上千块一个机甲"的经济曲线，
-以及一局约 10~20 分钟、能打满 5 个时代的节奏。请原样实现，不要自行改动比例。
+**数值说明**：以上数值经过实机模拟配平（AI 自动对打上百局验证），请原样实现。三条最关键的约束：
+
+- **击杀金币 ≈ 单位造价 × 1.3**。这条决定整局经济能不能转起来。低于 1.0 时，1 换 1 的交换会持续净亏钱，
+  双方会在 1 分钟内同时破产、永远卡在石器时代；等于 1.0 时全场金币守恒（总共就那点本金），
+  永远攒不出后期的重型兵和炮塔。1.3 才能既维持出兵、又让局势随时代升级。
+- **基地血量 1500**。看着低，但防守方在自家门口优势极大（新兵贴着基地刷出来挡路），
+  血量给到 2500 以上时对局基本永远打不完。
+- **经验阈值 1000/2500/6000/11000**，对应每个时代约 2~3 分钟、一局 8~20 分钟打满 5 个时代。
 
 ---
 
 # 四、敌方 AI
 
-- **敌方使用与玩家完全相同的规则**：同样从击杀获得金币/经验、同样的队列、同样的炮塔位与必杀技，不作弊、不凭空刷钱（难度只通过下面的收入倍率体现）。
+- **敌方使用与玩家完全相同的规则**：同样从击杀获得金币/经验、同样的队列、同样的炮塔位与必杀技，不作弊、不凭空刷钱（难度只通过下面的倍率体现）。
+- 倍率**同时作用于金币和经验**：只加金币是没用的——后排单位打不到人，钱多并不能转化成战线压力，
+  必须让高难度 AI 在**时代进度**上压制玩家，难度梯度才真的能被感觉到。
 - 决策循环：每 `reactionSec` 秒评估一次
   1. 能进化就**立刻进化**；
-  2. 场上己方单位 < 3 或队列为空 → 出兵：70% 概率买**买得起的最贵兵种**，30% 概率买最便宜的凑人数；
-  3. 若距离进化只差一次击杀左右，倾向存钱等重型兵；
-  4. 金币 > `炮塔位价格 + 炮塔价格 + 500` 时，买炮塔位并建塔（优先补满已有空位）；
-  5. 己方基地 400px 内敌方单位 ≥ 4，或基地血量 < 40% 且有充能时，放必杀。
+  2. **先保证前排有近战顶着**：如果场上没有单位、或最前面的单位射程 ≥ 100，就先买 1 号兵种（射程最短的那个）。
+     这条很重要——远程单位站在队首会按自己的射程停下，把后面的己方近战全堵在射程之外，
+     双方就会隔着 200px 干瞪眼对射，谁也推不动；
+  3. 场上己方单位 < 3 或队列里不足 2 个 → 出兵：70% 概率买**买得起的最贵兵种**，30% 概率买最便宜的凑人数；
+     （只在"队列为空"时才补兵会导致 AI 后期囤几万金币不花）
+  4. 若距离进化只差一次击杀左右，倾向存钱等重型兵；
+  5. 金币 > `炮塔位价格 + 炮塔价格 + 500` 时，买炮塔位并建塔（优先补满已有空位）；
+  6. 己方基地 400px 内敌方单位 ≥ 4，或基地血量 < 40% 且有充能时，放必杀。
 - **难度 1~5**（开局菜单选择）：
-  | 难度 | 击杀收入倍率 | reactionSec | 备注 |
+  | 难度 | 击杀金币与经验倍率 | reactionSec | 备注 |
   |---|---|---|---|
   | 1 简单 | 0.8 | 1.2 | 不建炮塔 |
   | 2 普通 | 1.0 | 0.9 | 最多 1 座炮塔 |
@@ -226,7 +250,9 @@ const SPECIALS = {
 
 - [ ] 单文件 `index.html` 打开即玩，控制台无报错
 - [ ] 5 个时代 × 3 兵种 = 15 个兵种全部可用，数值与上表一致
-- [ ] 金币和经验**只**从击杀产生
+- [ ] 金币和经验**只**从击杀产生，且击杀金币 ≈ 造价 ×1.3（拿一局跑 3 分钟，双方金币不能双双归零）
+- [ ] 单位顶到敌方基地 60px 内会直接砸基地，不会被源源不断的挡路兵无限拖住
+- [ ] AI 会先出近战顶前排，不会让远程站队首把自己人堵在射程外
 - [ ] 同阵营单位不会互相穿模，会排队堵住
 - [ ] 远程单位有可见弹丸，伤害在命中时结算
 - [ ] 生产队列上限 6，第一格有进度条，出生点被堵时会暂停出兵
@@ -242,6 +268,15 @@ const SPECIALS = {
 
 先输出**完整的 `index.html` 代码**（一次性给全，不要省略成 `// ...`），代码后再用不超过 10 行说明：
 数值表在第几行、怎么调难度、怎么加新时代。
+
+---
+
+# 九、已知特性（不是 bug，不用去"修"）
+
+这个玩法有一个固有性质：**双方水平完全对等时，战线会稳定卡在中间，谁也推不动**。
+因为只有最前排的近战 + 射程够得着的远程能输出，后排单位纯粹排队，所以「钱更多」并不能直接换成战线推进；
+两个策略一模一样的对手会打成长期拉锯。实测中，只要一方打法有偏差（只造便宜兵、只造远程、囤钱不出兵），
+3~10 分钟内就会分出胜负。所以不要为了"让 AI 对打能结束"去魔改机制——对人类玩家是正常的。
 
 ===== 提示词结束 =====
 
