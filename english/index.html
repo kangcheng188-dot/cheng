@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0E1216">
+<!--ART-->
+<title>娱乐即输入</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600&display=swap">
+<style>
+:root{
+  --ground:#EDEFF0; --paper:#FFFFFF; --paper-2:#F7F8F9;
+  --ink:#151A1F; --ink-2:#3E464F; --ink-3:#6E7883;
+  --line:#D6DBDE; --line-2:#E5E9EB;
+  --fun:#B0670F; --fun-soft:#E6D6BE;
+  --learn:#0C6A62; --learn-soft:#CBDFDC;
+  --plate:#12171B; --plate-ink:#F3F5F6; --plate-ink-2:#9AA5AE;
+  --nav-bg:rgba(237,239,240,.88);
+  --serif:"Newsreader","Noto Serif SC",Georgia,serif;
+  --sans:"Noto Sans SC","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1216; --paper:#151A1F; --paper-2:#1A2026;
+    --ink:#E7EBEE; --ink-2:#B2BBC3; --ink-3:#7F8992;
+    --line:#2A323A; --line-2:#212830;
+    --fun:#EDA53A; --fun-soft:#42320F;
+    --learn:#48C4B3; --learn-soft:#103935;
+    --plate:#05080A; --plate-ink:#F3F5F6; --plate-ink-2:#98A2AB;
+    --nav-bg:rgba(14,18,22,.86);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1216; --paper:#151A1F; --paper-2:#1A2026;
+  --ink:#E7EBEE; --ink-2:#B2BBC3; --ink-3:#7F8992;
+  --line:#2A323A; --line-2:#212830;
+  --fun:#EDA53A; --fun-soft:#42320F;
+  --learn:#48C4B3; --learn-soft:#103935;
+  --plate:#05080A; --plate-ink:#F3F5F6; --plate-ink-2:#98A2AB;
+  --nav-bg:rgba(14,18,22,.86);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.85;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+p{margin:0}
+h1,h2,h3,h4{margin:0;font-weight:600;text-wrap:balance}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--fun);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+.col{max-width:42rem;margin-inline:auto}
+.stack{display:grid;gap:18px}
+.stack-lg{display:grid;gap:34px}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);border-bottom:1px solid var(--line);
+     backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px)}
+.nav-in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:9px 22px;max-width:1080px;margin:0 auto}
+.nav-in::-webkit-scrollbar{display:none}
+.nav a{flex:0 0 auto;font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:var(--ink-3);
+       text-decoration:none;padding:5px 10px;border-radius:3px;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--paper-2)}
+.nav a.on{color:var(--ink);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
+
+/* ---------- hero ---------- */
+.hero{padding:64px 0 44px}
+.kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fun)}
+h1{font-family:var(--serif);font-size:clamp(2.6rem,10vw,4.4rem);line-height:1.02;letter-spacing:-.01em;margin:.28em 0 0}
+.lede{margin-top:22px;font-size:1.06rem;color:var(--ink-2)}
+.hero-meta{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px 20px;font-family:var(--mono);font-size:.74rem;color:var(--ink-3)}
+
+/* ---------- sections ---------- */
+.sec{padding:56px 0;border-top:1px solid var(--line);scroll-margin-top:52px}
+.sec-head{margin-bottom:30px}
+.stack-lg>.sec-head,.stack>.sec-head{margin-bottom:0}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+h2{font-family:var(--serif);font-size:clamp(1.85rem,5vw,2.5rem);line-height:1.18;margin-top:.24em}
+.sec-head p{margin-top:14px;color:var(--ink-2)}
+h3{font-family:var(--serif);font-size:1.4rem;line-height:1.35;margin-top:6px}
+h4{font-size:1rem;line-height:1.5}
+.sub{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+     padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.stack>.sub,.stack-lg>.sub{margin-bottom:0}
+
+/* ---------- subtitle plate ---------- */
+.plate{background:var(--plate);color:var(--plate-ink);border:1px solid var(--line);border-radius:5px;
+       padding:26px 24px;text-align:center;margin:6px auto}
+.plate .en{font-family:var(--serif);font-size:clamp(1.15rem,3.6vw,1.55rem);line-height:1.35}
+.plate .zh{margin-top:10px;font-size:.88rem;color:var(--plate-ink-2);line-height:1.7}
+
+/* ---------- lists ---------- */
+ul.tight{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+ul.tight>li{position:relative;padding-left:19px;color:var(--ink-2)}
+ul.tight>li::before{content:"";position:absolute;left:0;top:.85em;width:9px;height:1px;background:var(--ink-3)}
+ul.tight>li b,ul.tight>li strong{color:var(--ink);font-weight:500}
+ol.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:16px}
+ol.steps>li{counter-increment:s;position:relative;padding-left:38px;color:var(--ink-2)}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:25px;height:25px;border-radius:50%;
+  border:1px solid var(--line);display:grid;place-items:center;font-family:var(--mono);font-size:.75rem;color:var(--ink-3)}
+ol.steps>li b{color:var(--ink);font-weight:500}
+
+/* ---------- pros & cons ---------- */
+.pc{display:grid;gap:26px;grid-template-columns:1fr 1fr}
+@media (max-width:700px){.pc{grid-template-columns:1fr}}
+.pc>div{padding-top:12px}
+.pc .pro{border-top:2px solid var(--ink)}
+.pc .con{border-top:2px dashed var(--ink-3)}
+.pc h4{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
+       color:var(--ink-3);margin-bottom:14px}
+
+/* ---------- recommendation cards ---------- */
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(288px,1fr))}
+.rec{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:17px 19px 19px;
+     display:flex;flex-direction:column;gap:11px}
+.rec-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.rec-h h4{font-family:var(--serif);font-size:1.18rem;line-height:1.25}
+.rec-cn{display:block;font-size:.78rem;color:var(--ink-3);margin-top:2px;letter-spacing:.02em}
+.lvl{flex:0 0 auto;font-family:var(--mono);font-size:.72rem;color:var(--ink-3);border:1px solid var(--line);
+     border-radius:3px;padding:1px 7px;font-variant-numeric:tabular-nums}
+.meters{display:flex;flex-wrap:wrap;gap:6px 18px}
+.meter{display:flex;align-items:center;gap:7px}
+.meter[data-kind="fun"]{--on:var(--fun);--off:var(--fun-soft)}
+.meter[data-kind="learn"]{--on:var(--learn);--off:var(--learn-soft)}
+.m-lab{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--ink-3)}
+.bars{display:inline-flex;gap:3px}
+.bars i{display:block;width:15px;height:6px;border-radius:1px;background:var(--off)}
+.bars i.on{background:var(--on)}
+.rec p{font-size:.93rem;line-height:1.72;color:var(--ink-2)}
+.rec .note{font-size:.85rem;color:var(--ink-3);padding-top:9px;border-top:1px solid var(--line-2)}
+.rec .note b{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-right:7px}
+.rec.warn{background:var(--paper-2);border-style:dashed}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;margin:0;padding:0}
+.tl>li{display:grid;grid-template-columns:82px 1fr;gap:20px;padding:17px 0;border-top:1px solid var(--line-2)}
+.tl>li:first-child{border-top:0}
+.tl-time{font-family:var(--mono);font-size:.78rem;color:var(--ink-3);font-variant-numeric:tabular-nums;line-height:1.5;padding-top:3px}
+.tl-h{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:5px}
+.tl p{font-size:.94rem;color:var(--ink-2);line-height:1.75}
+@media (max-width:620px){.tl>li{grid-template-columns:1fr;gap:5px}}
+.tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;padding:2px 8px;border-radius:3px;white-space:nowrap}
+.tag-learn{color:var(--learn);background:var(--learn-soft)}
+.tag-fun{color:var(--fun);background:var(--fun-soft)}
+.tag-flat{color:var(--ink-3);box-shadow:inset 0 0 0 1px var(--line)}
+
+/* ---------- table ---------- */
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.9rem}
+th,td{text-align:left;padding:12px 15px;border-bottom:1px solid var(--line-2);vertical-align:top;line-height:1.65}
+th{font-family:var(--mono);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+   background:var(--paper-2);font-weight:400;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+td{color:var(--ink-2)}
+
+/* ---------- plan cards ---------- */
+.plans{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.plan{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:20px;display:flex;flex-direction:column;gap:13px}
+.plan.pick{border-color:var(--fun);box-shadow:inset 0 2px 0 var(--fun)}
+.plan-t{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.plan-n{font-family:var(--serif);font-size:1.9rem;line-height:1;font-variant-numeric:tabular-nums}
+.plan-n span{font-size:.85rem;font-family:var(--mono);color:var(--ink-3);margin-left:5px}
+.plan ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;font-size:.9rem;color:var(--ink-2)}
+.plan ul li{padding-left:16px;position:relative}
+.plan ul li::before{content:"";position:absolute;left:0;top:.8em;width:7px;height:1px;background:var(--ink-3)}
+.plan .out{margin-top:auto;padding-top:12px;border-top:1px solid var(--line-2);font-size:.85rem;color:var(--ink-3)}
+
+/* ---------- traps ---------- */
+.traps{list-style:none;margin:0;padding:0;counter-reset:t;display:grid;gap:2px}
+.traps>li{counter-increment:t;background:var(--paper);border:1px solid var(--line);border-radius:4px;
+  padding:15px 18px;display:grid;grid-template-columns:30px 1fr;gap:14px;align-items:start}
+.traps>li::before{content:counter(t,decimal-leading-zero);font-family:var(--mono);font-size:.78rem;color:var(--ink-3);padding-top:2px}
+.traps b{display:block;font-weight:500;margin-bottom:3px}
+.traps span{font-size:.9rem;color:var(--ink-2);line-height:1.7}
+
+/* ---------- week ---------- */
+.week{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.week>li{display:grid;grid-template-columns:64px 1fr;gap:16px;padding:13px 0;border-top:1px solid var(--line-2);font-size:.94rem;color:var(--ink-2)}
+.week>li:first-child{border-top:0}
+.week .d{font-family:var(--mono);font-size:.74rem;color:var(--ink-3);letter-spacing:.06em;padding-top:2px}
+
+footer{border-top:1px solid var(--line);padding:34px 0 60px;color:var(--ink-3);font-size:.86rem}
+</style>
+<!--/HEAD-->
+</head>
+<body>
+
+<nav class="nav"><div class="nav-in">
+  <a href="#tldr">先看结论</a>
+  <a href="#principles">五条原则</a>
+  <a href="#tv">看美剧</a>
+  <a href="#audio">听播客</a>
+  <a href="#games">玩游戏</a>
+  <a href="#timing">什么时候做什么</a>
+  <a href="#output">输出闭环</a>
+  <a href="#plans">三档日程</a>
+  <a href="#check">怎么看出进步</a>
+  <a href="#traps">十个陷阱</a>
+  <a href="#week1">第一周</a>
+</div></nav>
+
+<header class="hero"><div class="wrap"><div class="col">
+  <div class="kicker">Daily English · 输入 / 输出 / 时机</div>
+  <h1>娱乐即输入</h1>
+  <p class="lede">这份指南解决一件事：怎么把你本来就会花掉的时间——看剧、听播客、玩游戏、通勤、洗碗——变成真的能提升英语的时间，而不是变成「我今天也算学了英语吧」的自我安慰。</p>
+  <p class="lede">下面每一条推荐都标了两个刻度：<b>娱乐性</b>和<b>学习性</b>。这两个刻度经常打架，认清哪个高哪个低，比盲目相信「看美剧能学英语」有用得多。</p>
+  <div class="hero-meta">
+    <span>约 25 分钟读完</span>
+    <span>覆盖 剧集 / 音频 / 游戏 / 时间安排</span>
+    <span>适合 已有基础、想在日常里持续提升</span>
+  </div>
+</div></div></header>
+
+<main>
+
+<section class="sec" id="tldr"><div class="wrap"><div class="col stack-lg">
+  <div class="sec-head">
+    <div class="eyebrow">TL;DR</div>
+    <h2>如果你只看一段，就看这段</h2>
+    <p>整篇指南可以压缩成六句话。剩下的部分是这六句话的展开和材料清单。</p>
+  </div>
+  <ul class="tight">
+    <li><b>把「泛」和「精」分开。</b>大量轻松的输入（泛听、泛看）负责养耳朵和语感，少量费力的输入（精听、跟读）负责提升精度。两件事混在同一小时里做，结果是剧没看爽、词也没记住。</li>
+    <li><b>八二分配。</b>八成时间用于泛，两成时间用于精。泛的部分必须足够爽，你才能一年后还在做这件事。</li>
+    <li><b>难度选「能听懂七八成」的。</b>低于五成是背景噪音，高于九成是原地踏步。选材料时唯一重要的指标就是这个。</li>
+    <li><b>按当下的精力选活动，不按计划表硬撑。</b>清醒的时候做费力的事，累的时候做娱乐的事，手上在忙的时候泛听。这一条决定了你能不能坚持。</li>
+    <li><b>必须有输出。</b>只输入的结果是「听得懂，说不出」。每天 5 分钟跟读 + 3 句自己造的话，就够形成闭环。</li>
+    <li><b>只记「我下次能说出口的」。</b>说不清这句话用在什么场合、对谁说，就不要记它。</li>
+  </ul>
+  <div class="plate">
+    <div class="en">Watch for fun. Study one slice.</div>
+    <div class="zh">整集用来看爽，切一片用来学。这是全篇最重要的一句。</div>
+  </div>
+</div></div></section>
+
+<section class="sec" id="principles"><div class="wrap"><div class="col stack-lg">
+  <div class="sec-head">
+    <div class="eyebrow">底层逻辑</div>
+    <h2>五条原则，决定所有方法的成败</h2>
+    <p>方法论满地都是，但真正把人区分开的是下面五件事。任何一条没做到，投入再多时间也会卡住。</p>
+  </div>
+
+  <div class="stack">
+    <div>
+      <h3>一、可理解的输入，才叫输入</h3>
+      <p style="color:var(--ink-2);margin-top:10px">听不懂的东西听一万小时也不会自动变懂。有效的材料是「稍微高于你现在水平一点点」的那一档：大部分能跟上，少数地方需要猜。判断方法很土但很准——<b>不看字幕能抓住七八成剧情，就是对的难度</b>。低于五成，换简单的；高于九成，换难的。</p>
+    </div>
+    <div>
+      <h3>二、娱乐性就是续航能力</h3>
+      <p style="color:var(--ink-2);margin-top:10px">一个每天能坚持 20 分钟的烂方法，胜过一个三天就放弃的完美方法。所以「这个材料我看得下去吗」不是次要问题，它和「这个材料含金量高吗」同等重要。这也是为什么下面每一条推荐都标了娱乐性——那不是装饰，那是可行性评估。</p>
+    </div>
+    <div>
+      <h3>三、泛与精，是两种不同的训练</h3>
+      <p style="color:var(--ink-2);margin-top:10px"><b>泛</b>=量大、轻松、允许走神，练的是耳朵对英语语流的耐受度和整体语感。<b>精</b>=量小、费力、逐句抠，练的是听辨精度和表达储备。两者都必要，但必须分开做：泛听时不要停下来查词，精听时不要指望享受剧情。<b>把两者混在一起，是最常见的低效来源。</b></p>
+    </div>
+    <div>
+      <h3>四、没有输出，就没有闭环</h3>
+      <p style="color:var(--ink-2);margin-top:10px">输入建立的是「认识」，输出建立的是「调用」。只做输入的人会长期停在「一听就懂、一说就废」的状态。输出不需要很重——每天 5 分钟影子跟读，加上用今天学的表达造 3 个和自己生活有关的句子，就足够把被动词汇往主动词汇推。</p>
+    </div>
+    <div>
+      <h3>五、语言的真正敌人是遗忘，不是难度</h3>
+      <p style="color:var(--ink-2);margin-top:10px">今天记的 5 个表达，不复习的话一周后剩不到 1 个。做法极简单：<b>第二天早上花 5 分钟看一遍昨天的记录，周日花 15 分钟看一遍这一周的。</b>每天 3–5 个表达，一年就是一千多个——前提只是这两次复习。</p>
+    </div>
+  </div>
+</div></div></section>
+
+<section class="sec" id="tv"><div class="wrap"><div class="stack-lg">
+  <div class="col sec-head">
+    <div class="eyebrow">Medium 01 · 影视</div>
+    <h2>看美剧：收益最高，也最容易骗自己</h2>
+    <p>美剧是所有材料里娱乐性最高的，也是「伪学习」发生率最高的。同样看三个小时，做法不同，收益能差出十倍。</p>
+  </div>
+
+  <div class="col pc">
+    <div class="pro">
+      <h4>它真正的优势</h4>
+      <ul class="tight">
+        <li><b>情境绑定，忘得慢。</b>一句话连着表情、场景、剧情一起进脑子，比孤立背单词的记忆锚点强得多。</li>
+        <li><b>真实口语密度高。</b>缩读、俚语、语气词、抢话、话轮转换——这些教材里根本不会出现，但真实对话里占一大半。</li>
+        <li><b>复现率高，这是剧优于电影的核心。</b>同一批角色反复用同一批词和句式，一季看下来，很多表达你自然见过几十次。</li>
+        <li><b>内在动机最可靠。</b>「想知道后面发生什么」比「我要提升英语」耐用得多。</li>
+        <li><b>教语用，不只是教语言。</b>什么场合说什么话、怎么开玩笑、怎么委婉拒绝、怎么道歉——这部分只能从真实对话里学。</li>
+      </ul>
+    </div>
+    <div class="con">
+      <h4>它的代价</h4>
+      <ul class="tight">
+        <li><b>伪学习风险最高。</b>开中文字幕的三小时，语言收益接近于零。大脑一旦有母语捷径，语音通道基本就关了。</li>
+        <li><b>输入不可控。</b>语速、俚语、口音都不迁就你。超出水平太多，就退化成背景噪音。</li>
+        <li><b>注意力天然在剧情上。</b>你关心的是「发生了什么」，不是「他是怎么说的」。</li>
+        <li><b>领域偏斜。</b>奇幻剧、医疗剧、律政剧的高频词，日常生活里用不上。</li>
+        <li><b>学习密度低。</b>45 分钟里真正产生学习的可能只有几分钟——除非你主动切出一片来精看。</li>
+        <li><b>纯被动。</b>没有输出，没有反馈，很容易「看着都懂，一开口全废」。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col stack">
+    <div class="sub">怎么看 · 一集两吃法</div>
+    <p style="color:var(--ink-2)">不要试图「精看一整集」——没人坚持得下来。正确的做法是把一集切成两段用途完全不同的时间：</p>
+    <ol class="steps">
+      <li><b>第一遍 · 娱乐（约 45 分钟）</b><br>开<b>英文字幕</b>，正常速度，不暂停、不查词、不倒回。目的只有一个：看爽。这一遍的价值来自「大量可理解输入」，不来自精确度。看不懂的地方直接放过去。</li>
+      <li><b>第二遍 · 精听（约 15 分钟）</b><br>从这一集里挑<b>一个 3–5 分钟的场景</b>（不是整集），走四步：<br>① 关字幕盲听一遍，记下卡住的位置；<br>② 开英文字幕对一遍，只查真正挡住理解的词，通常不超过 3 个；<br>③ 跟读 2–3 遍，落后音频 1–2 秒，模仿语调和连读，不追求逐字；<br>④ 记下 3–5 个「我下次能说出口」的表达，并写清使用场景。</li>
+    </ol>
+    <p style="color:var(--ink-3);font-size:.92rem">时间账：一小时里，45 分钟是娱乐，15 分钟是学习。两边都不亏，这就是关键。</p>
+  </div>
+
+  <div class="col stack">
+    <div class="sub">挑片段的三个标准</div>
+    <ul class="tight">
+      <li><b>对话密集、两三个人的日常场景</b>——点餐、约时间、吵架、道歉、开会、闲聊。</li>
+      <li><b>语速正常、没有背景音乐压着</b>——配乐一起就说明这段是气氛戏，不是语言素材。</li>
+      <li><b>你现实中会遇到的场景</b>——追车戏和长篇独白再精彩，可迁移价值也接近零。</li>
+    </ul>
+  </div>
+
+  <div class="col stack">
+    <div class="sub">字幕的三个阶段</div>
+    <ul class="tight">
+      <li><b>阶段一（能听懂 50% 以下）</b>：英文字幕全程开着。<b>不要用中文字幕，双语字幕也不行</b>——眼睛一定会走中文那行，你控制不住。</li>
+      <li><b>阶段二（60–80%）</b>：字幕开着，但先听、听不懂再看。也可以用最土的办法：拿东西挡住屏幕下方，卡住时再移开。</li>
+      <li><b>阶段三（80% 以上）</b>：第一遍关字幕看，第二遍开字幕查漏。</li>
+    </ul>
+    <p style="color:var(--ink-3);font-size:.92rem">这不是三个月的计划，是按年计的路径。停在阶段一很正常，硬跳阶段只会让你放弃。</p>
+  </div>
+
+  <div class="col plate">
+    <div class="en">You're not watching for the plot this time.</div>
+    <div class="zh">精听那一片时，你不是在追剧情——这一次听的是「他是怎么说的」。</div>
+  </div>
+
+  <div class="stack-lg">
+<div class="stack">
+<div class="col"><div class="sub">入门档 · L1–L2 —— 语速友好、场景日常</div></div>
+<div class="grid">
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Modern Family</h4><span class="rec-cn">摩登家庭</span></div><span class="lvl">L2</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div>
+<p><b>如果只能选一部，选它。</b>伪纪录片形式让角色经常对着镜头说话，语速清晰、句子完整，等于自带一条「慢速讲解轨」。三个家庭覆盖育儿、装修、职场、代际冲突等成年人真实话题，学到的表达明天就能用。Gloria 的哥伦比亚口音和 Phil 的美式碎嘴形成天然的口音对照。</p>
+<p class="note"><b>注意</b>家庭梗密度高，前几集人物关系需要适应，撑过三集就顺了。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Friends</h4><span class="rec-cn">老友记</span></div><span class="lvl">L1</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>经典是有原因的：棚内录制、音轨干净没有环境噪音；话题全是吃饭、约会、租房、找工作；每集 22 分钟正好是一次「一集两吃」的量；十季 236 集，同一批角色反复使用同一批句式，复现率高到不可思议。</p>
+<p class="note"><b>注意</b>九十年代的俚语有些已经过时，罐头笑声会盖住句尾。当入门材料极佳，别当唯一材料。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>The Good Place</h4><span class="rec-cn">善地</span></div><span class="lvl">L2</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>设定上角色说不出脏话（会被自动替换成 fork、shirt 之类），所以词汇异常干净；句子短、22 分钟一集、四季完结不注水。有哲学概念但表达全是大白话。适合怕「开了坑弃剧」的人——它短到你一定能看完。</p>
+<p class="note"><b>注意</b>哲学名词偶尔出现，跳过即可，不影响剧情。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Ted Lasso</h4><span class="rec-cn">足球教练</span></div><span class="lvl">L2</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>美式英语和英式英语同场对照，是难得的双口音素材。更值钱的是它满屏都是<b>鼓励、道歉、化解冲突、给反馈</b>的表达——这类「情商英语」在职场和生活里的使用频率，远高于任何专业词汇。</p>
+<p class="note"><b>注意</b>Roy Kent 的英式脏话密集，学不学随你，但别当日常表达用。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Brooklyn Nine-Nine</h4><span class="rec-cn">神烦警探</span></div><span class="lvl">L2</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+<p>句子短、节奏快、办公室玩笑多，警局设定但基本是职场喜剧。适合当「疲惫时的娱乐档」——门槛低，随便点开一集都能看。</p>
+<p class="note"><b>注意</b>梗密度高、语速偏快，笑点常依赖美国流行文化背景，前期可能 get 不到一半。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Pixar / Disney 动画</h4><span class="rec-cn">头脑特工队、疯狂动物城、飞屋环游记等</span></div><span class="lvl">L1</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>被严重低估的一类材料。为儿童做的配音必然咬字清晰、语速适中、句子结构标准，而故事质量又足够成年人看进去。状态最差、什么都不想学的那天，放一部动画是最不亏的选择。</p>
+<p class="note"><b>注意</b>是电影不是剧，缺少「同一批角色反复用同一批词」的复现优势。</p>
+</article>
+</div></div>
+<div class="stack">
+<div class="col"><div class="sub">进阶档 · L3 —— 语速正常、开始有专业场景</div></div>
+<div class="grid">
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>The Office (US)</h4><span class="rec-cn">办公室</span></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div>
+<p><b>职场英语的天花板素材。</b>开会、写邮件、绩效面谈、茶水间闲聊、被裁员、团建——全是你真用得上的场景，而且同样是伪纪录片，对镜头独白清晰。如果你需要用英语工作，这部的性价比高于任何商务英语教材。</p>
+<p class="note"><b>注意</b>大量反讽（sarcasm）和「尴尬幽默」，第一季可能完全笑不出来，这很正常。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Silicon Valley</h4><span class="rec-cn">硅谷</span></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>融资、产品、技术黑话的高密度输入：pitch、demo、scale、term sheet、ship it。理工科、创业、科技行业的人，学习性可以直接按 5 分算——这些词你在论文和会议里天天遇到。</p>
+<p class="note"><b>注意</b>技术梗多，非相关行业的人娱乐性会掉一档。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>New Girl / How I Met Your Mother</h4><span class="rec-cn">杰茜驾到 / 老爸老妈浪漫史</span></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>合租、约会、换工作、朋友聚会——最标准的都市日常英语，句式活、俚语新，是《老友记》之后的自然接续。集数多，够你泡很久。</p>
+<p class="note"><b>注意</b>HIMYM 的叙述结构在时间线上跳跃，需要跟上旁白。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Suits</h4><span class="rec-cn">金装律师</span></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>真正值得学的不是法律术语，而是<b>「怎么把话说得有分量」</b>：掌控对话、施压、拒绝、谈判、临场反击。句子干净漂亮，气场表达极多，很适合想改掉「英语一开口就软」的人。</p>
+<p class="note"><b>注意</b>法律程序词汇可以整块跳过，不要浪费时间背。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Sex Education / Derry Girls</h4><span class="rec-cn">性教育 / 德里女孩</span></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>英式和北爱口音的入口。如果你在英国、爱尔兰或欧洲生活工作，这类材料的迁移价值远高于美剧。青少年日常对话，语速快但话题简单。</p>
+<p class="note"><b>注意</b>Derry Girls 的北爱口音相当重，务必开英文字幕，别当第一部英式剧。</p>
+</article>
+</div></div>
+<div class="stack">
+<div class="col"><div class="sub">高阶档 · L4–L5 —— 值得，但别当入门</div></div>
+<div class="grid">
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Better Call Saul</h4><span class="rec-cn">风骚律师</span></div><span class="lvl">L4</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p><b>说服性英语的最佳教材。</b>Saul 每一次辩解、推销、临场编故事，都是一套完整的说服结构：铺垫、类比、情绪拉扯、收口。语速正常但信息密度高，适合已经能看懂大部分日常剧的人拿来「学怎么把话说服人」。</p>
+<p class="note"><b>注意</b>节奏慢、留白多，单位时间的语言量低于情景喜剧。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Succession</h4><span class="rec-cn">继承之战</span></div><span class="lvl">L4</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p><b>最接近真实对话节奏的剧</b>：抢话、说半句被打断、含糊其辞、话中带刺。教材里的对话是排练过的，这部里的对话是真实的样子。想练「听得懂真人怎么说话」，它是首选。</p>
+<p class="note"><b>注意</b>脏话极多，商业措辞含糊，L4 以下会觉得每句都听不完整。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>The West Wing</h4><span class="rec-cn">白宫风云</span></div><span class="lvl">L5</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div>
+<p>公认最难的美剧之一：边走边说、语速极快、政策词汇密集。但它的句子结构堪称范本，是练<b>正式表达和演讲感</b>的顶级材料。做学术汇报、写正式邮件的人，从这里学到的句式能直接用。</p>
+<p class="note"><b>注意</b>绝对不要拿它当入门剧，挫败感会劝退你。等到能不看字幕跟上《办公室》再来。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>House M.D. / Grey's Anatomy / The Newsroom</h4><span class="rec-cn">豪斯医生 / 实习医生格蕾 / 新闻编辑室</span></div><span class="lvl">L4</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+<p>专业向剧集。<b>只在你就是这个行业时才推荐</b>——医学生看豪斯、新闻从业者看新闻编辑室，学习性拉满；否则大量术语的现实迁移率极低。</p>
+<p class="note"><b>注意</b>非本行业的话，术语占比会拖低有效输入的比例。</p>
+</article>
+</div></div>
+<div class="stack">
+<div class="col"><div class="sub">不建议当英语教材的（当娱乐随便看）</div></div>
+<div class="grid">
+<article class="rec warn">
+<header class="rec-h"><div class="rec-name"><h4>Game of Thrones / The Witcher</h4><span class="rec-cn">权力的游戏 / 猎魔人</span></div><span class="lvl">—</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 2/5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></div></div>
+<p>拟古措辞加上大量生造的专有名词，日常复用率接近零。你会学会 sword、oath、bannerman，然后发现一辈子用不上。</p>
+<p class="note"><b>注意</b>想看就看，只是别记在「今天学了英语」那一栏里。</p>
+</article>
+<article class="rec warn">
+<header class="rec-h"><div class="rec-name"><h4>Peaky Blinders / The Wire</h4><span class="rec-cn">浴血黑帮 / 火线</span></div><span class="lvl">—</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 2/5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></div></div>
+<p>伯明翰口音和巴尔的摩街头俚语，母语者都需要字幕。除非你专门要练那个口音，否则投入产出比极低。</p>
+<p class="note"><b>注意</b>口音训练是高阶专项，不是打基础的手段。</p>
+</article>
+<article class="rec warn">
+<header class="rec-h"><div class="rec-name"><h4>Stranger Things / 悬疑动作类</h4><span class="rec-cn">怪奇物语等</span></div><span class="lvl">—</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 2/5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></div></div>
+<p>对白稀疏，大段紧张画面里几乎没有语言。单位时间的语言输入量太低，作为学习材料效率很差。</p>
+<p class="note"><b>注意</b>真正的问题不是剧不好，是「剧好」和「材料好」根本是两件事。</p>
+</article>
+</div></div>
+  </div>
+</div></div></section>
+
+<section class="sec" id="audio"><div class="wrap"><div class="stack-lg">
+  <div class="col sec-head">
+    <div class="eyebrow">Medium 02 · 音频</div>
+    <h2>听播客：唯一能白捡时间的方式</h2>
+    <p>播客的独特之处不在于内容更好，而在于它能占用一段你原本什么也做不了的时间——通勤、走路、做饭、洗碗、健身。这是整套方案里唯一「不跟别的事抢时间」的一块。</p>
+  </div>
+
+  <div class="col pc">
+    <div class="pro">
+      <h4>它真正的优势</h4>
+      <ul class="tight">
+        <li><b>纯语音通道，没有画面拐杖。</b>这是它相对美剧最大的价值：逼大脑真的去处理声音，而不是靠画面猜。</li>
+        <li><b>占用手眼被占、脑子空闲的时间。</b>几乎是白捡的，不需要你从别处挤。</li>
+        <li><b>难度可选。</b>从六分钟的学习者节目到三小时的深度访谈，任何水平都能找到对应档位。</li>
+        <li><b>多数节目有文本。</b>随时可以从泛听切换成精听材料，不用额外找资源。</li>
+        <li><b>内容是成人的。</b>话题、词汇、句式比教材更接近你真正需要的那种英语。</li>
+      </ul>
+    </div>
+    <div class="con">
+      <h4>它的代价</h4>
+      <ul class="tight">
+        <li><b>实际难度高于美剧。</b>没有画面补偿，同样的语速会难一档，新手容易受挫。</li>
+        <li><b>极易走神。</b>「听完四十分钟不知道听了什么」是最常见的失败模式。</li>
+        <li><b>缺乏场景，抽象内容多。</b>不像剧里的对话那样有情境锚点，记忆留存率更低。</li>
+        <li><b>容易选错难度。</b>「我要听 BBC 新闻」是最典型的死法——三天后就放弃了。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col stack">
+    <div class="sub">怎么听 · 三种模式，比例约 7 : 2 : 1</div>
+    <ul class="tight">
+      <li><b>泛听（约 70%）</b>——通勤、走路、做饭时。<b>不要求听懂，允许走神。</b>练的是耳朵对英语语流的耐受度。听不懂的时候不要停下来倒回去，那会毁掉这件事的低摩擦属性。</li>
+      <li><b>精听（约 20%）</b>——坐下来，选一段 5–10 分钟、有文本的内容：盲听 → 看文本 → <b>再盲听一遍</b>。最后那一遍最容易被跳过，但真正的提升就发生在那里。</li>
+      <li><b>复听（约 10%）</b>——已经听过的内容，在做家务、走路时重放。熟悉材料抗干扰能力强，你会听清第一遍完全漏掉的细节。</li>
+    </ul>
+  </div>
+
+  <div class="col stack">
+    <div class="sub">三个具体技巧</div>
+    <ul class="tight">
+      <li><b>治走神：每 5 分钟暂停一次，用英语说一句总结。</b>“He's saying that…” 就够。这一下同时做了两件事——逼大脑保持在线，顺手练了输出。</li>
+      <li><b>节目时长要匹配场景。</b>通勤 20 分钟就选 20 分钟的节目。选一档两小时的，你永远听不完，然后放弃。</li>
+      <li><b>不要长期用 1.5 倍速练听力。</b>加速会牺牲细节处理——连读、弱读、词尾都被压掉了。复听旧内容可以加速，练新材料别加。</li>
+    </ul>
+  </div>
+
+  <div class="col plate">
+    <div class="en">Zoning out is allowed. Quitting is not.</div>
+    <div class="zh">泛听时走神是被允许的，它练的本来就不是理解率。因为走神而自责、最后干脆不听了，才是真正的损失。</div>
+  </div>
+
+  <div class="stack-lg">
+<div class="stack">
+<div class="col"><div class="sub">学习者向 · 有文本、有讲解</div></div>
+<div class="grid">
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>6 Minute English</h4><span class="rec-cn">BBC Learning English</span></div><span class="lvl">L2</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div>
+<p><b>碎片时间的最优解。</b>六分钟、两人对话、每期讲透 5–6 个词汇，官网提供完整文本和词汇表。短到你几乎找不出借口不听——等地铁、等水开、走去便利店的路上都能听完一期。</p>
+<p class="note"><b>注意</b>语速经过放慢，别把它当真实语速的标尺。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>The English We Speak</h4><span class="rec-cn">BBC</span></div><span class="lvl">L1</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>三分钟讲一个习语或俚语，给出场景和例句。适合塞进任何三分钟的缝隙里，也适合当每天的第一口输入——启动成本几乎为零。</p>
+<p class="note"><b>注意</b>单期信息量很小，需要靠数量堆积。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>All Ears English</h4></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>两位美国老师聊日常表达和文化差异，语速接近真实但发音清晰。它的核心主张 “connection not perfection” 对中国学习者尤其对症——专治「怕说错所以不开口」。</p>
+<p class="note"><b>注意</b>偶尔有课程推广段落，跳过即可。</p>
+</article>
+</div></div>
+<div class="stack">
+<div class="col"><div class="sub">母语者节目 · 内容好到你忘了在学英语</div></div>
+<div class="grid">
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Planet Money</h4><span class="rec-cn">NPR</span></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p><b>音频类的第一推荐。</b>20–30 分钟，用讲故事的方式讲经济现象，制作精良、节奏轻快、旁白和采访交替。它是典型的「内容有趣到你会忘记这是英语材料」——而这恰恰是最理想的泛听状态。</p>
+<p class="note"><b>注意</b>有采访录音段落，现场音质和口音变化会略微增加难度。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>TED Talks Daily</h4></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div>
+<p>单人演讲，结构极清晰：观点 → 例证 → 结论，10–18 分钟，官网有逐句文本。附赠一个大多数人忽略的收益：<b>你会顺便学会怎么把一个观点讲清楚</b>——需要做汇报、答辩、presentation 的人必听。</p>
+<p class="note"><b>注意</b>不同讲者的口音和语速差异极大，挑着听，别硬啃。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>The Daily</h4><span class="rec-cn">纽约时报</span></div><span class="lvl">L4</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div>
+<p>25 分钟的新闻深度报道，标准播音腔与真实采访录音混合，练正式听力和时事词汇。有完整文本。放在早上听，正好用最清醒的状态处理最规整的英语。</p>
+<p class="note"><b>注意</b>话题偏重美国政治，对背景不熟时理解成本会上升。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Hidden Brain</h4></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>心理学与行为科学，主持人语速慢、声音沉稳，是少见的「越听越放松」的英语节目。特别适合散步和睡前——不需要高认知资源就能跟上。</p>
+<p class="note"><b>注意</b>抽象概念多，缺少画面辅助，走神了就顺其自然。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Stuff You Should Know</h4></div><span class="lvl">L4</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+<p>两个人漫谈科普，上千期节目库随便挑。它最大的价值是<b>最像「两个美国人真的在聊天」</b>：跑题、插话、自我修正、开玩笑——这才是英语实际的样子。</p>
+<p class="note"><b>注意</b>语速偏快、口语化重、经常跑题，不适合当精听材料。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Conan O'Brien Needs a Friend</h4></div><span class="lvl">L5</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+<p>纯脱口秀式闲聊，梗多、抢话多、难度高。<b>建议当「体检」用</b>：如果你能笑出来，说明你的听力真的到位了；笑不出来也没关系，过两个月再来测一次。</p>
+<p class="note"><b>注意</b>文化梗密集，学习性不高，但它是最好的进度指示器。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>本领域的学术播客</h4><span class="rec-cn">Nature Podcast、Science、领域会议 keynote</span></div><span class="lvl">L4</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div>
+<p>如果你要写论文、做汇报、参加国际会议，<b>本领域内容的听力回报率远高于泛泛的英语新闻</b>：术语你本来就懂，句式又正好是你要用的那套。这是最容易被忽略的高效路径。</p>
+<p class="note"><b>注意</b>仅在你有明确学术或职业场景时才排到高优先级。</p>
+</article>
+</div></div>
+<div class="stack">
+<div class="col"><div class="sub">YouTube · 综合性价比最高的一类</div></div>
+<div class="grid">
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Kurzgesagt</h4></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>配音清晰、语速稳定、动画把抽象概念可视化，官方字幕质量高。有画面兜底，理解压力比纯音频小一档，是从「看剧」过渡到「听播客」的最佳桥梁。</p>
+<p class="note"><b>注意</b>单期 8–12 分钟，需要靠频率累积。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Veritasium / Vox / Johnny Harris</h4></div><span class="lvl">L4</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>解释类长视频，最大的学习价值在于<b>逻辑连接词密度极高</b>——which means、the reason is、turns out、here's the thing。这些正是中国学习者写作和口语里最缺的粘合剂。</p>
+<p class="note"><b>注意</b>信息密度高，不适合当背景音，要专门坐下来看。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Hot Ones / WIRED Autocomplete</h4><span class="rec-cn">访谈类</span></div><span class="lvl">L4</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>真实、不加修饰的口语：填充词、自我修正、临时改口、玩笑。剧本里的对话是写出来的，这里的对话是说出来的——想练真实听力，这类比任何剧都直接。</p>
+<p class="note"><b>注意</b>名人梗和行业内幕多，听不懂人名和典故属正常。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Rachel's English / Speak English With Vanessa</h4><span class="rec-cn">发音与表达专项</span></div><span class="lvl">L2</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 2/5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div>
+<p>口型、连读、弱读、失爆的专项训练。<b>只在你要专门修发音的那几周用</b>，不要当日常泛听——它娱乐性低，长期听会消耗你的意志力预算。</p>
+<p class="note"><b>注意</b>属于「精」的范畴，每次 10 分钟足够，贵在配合跟读。</p>
+</article>
+</div></div>
+  </div>
+</div></div></section>
+
+<section class="sec" id="games"><div class="wrap"><div class="stack-lg">
+  <div class="col sec-head">
+    <div class="eyebrow">Medium 03 · 游戏</div>
+    <h2>玩英文游戏：理解压力最真实的一种</h2>
+    <p>游戏是唯一一种「不懂就过不去」的娱乐——这种强制理解带来的记忆深度，看剧和听播客都给不了。但它也是三种方式里语言质量差异最大、最容易骗自己的一种。</p>
+  </div>
+
+  <div class="col pc">
+    <div class="pro">
+      <h4>它真正的优势</h4>
+      <ul class="tight">
+        <li><b>语言和行动绑定。</b>听懂才能过关，这是「做中学」，记忆锚点比任何一种被动输入都深。</li>
+        <li><b>沉浸时长惊人。</b>几十小时的接触时间，而且你不会觉得累——这个时长任何学习材料都做不到。</li>
+        <li><b>节奏自己控制。</b>文字类游戏可以想读多慢读多慢，比看剧友好得多。</li>
+        <li><b>联机语音是唯一强迫你实时输出的娱乐形式。</b>没有第二种娱乐能做到这点。</li>
+      </ul>
+    </div>
+    <div class="con">
+      <h4>它的代价</h4>
+      <ul class="tight">
+        <li><b>语言密度差异巨大。</b>有的游戏一百万字，有的全程只有 attack、go、left。选错游戏等于零收益。</li>
+        <li><b>词汇领域特殊。</b>奇幻术语、装备属性、技能说明，现实迁移率很低。</li>
+        <li><b>时间黑洞风险最高。</b>也最容易自我欺骗——「我在学英语」是打游戏最好用的借口。</li>
+        <li><b>联机语音里的英语质量堪忧。</b>缩写和脏话居多，练的是应急沟通，不是好英语。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col stack">
+    <div class="sub">怎么玩</div>
+    <ul class="tight">
+      <li><b>界面、字幕、语音全设英文，并且关掉中文</b>——留一个中文选项，你一定会在卡住时切回去。查攻略也用英文 wiki。</li>
+      <li><b>叙事类游戏开字幕，当成「可交互的美剧」处理</b>：同样适用一集两吃法，打完一段回头精听一小节对话。</li>
+      <li><b>每次玩完记 2 个表达就够，别把游戏变成作业。</b>一旦它带上任务感，你会同时失去娱乐和学习。</li>
+      <li><b>想练输出，就进英语学习向的 Discord 组队服务器</b>，那里的人有耐心，比野队环境好得多。</li>
+    </ul>
+  </div>
+
+  <div class="stack-lg">
+<div class="stack">
+<div class="col"><div class="sub">叙事类 · 本质上是「可交互的美剧」</div></div>
+<div class="grid">
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Firewatch</h4><span class="rec-cn">看火人</span></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div>
+<p><b>游戏类第一推荐。</b>全程两个人用对讲机聊天，日常口语、语气自然、大量玩笑和情绪表达；4–5 小时通关，有完整英文字幕。它几乎就是一部你能参与的有声剧，而且长度短到能一口气打完。</p>
+<p class="note"><b>注意</b>以对话为主，动作元素少，追求刺激的人可能觉得平淡。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Her Story</h4><span class="rec-cn">她的故事</span></div><span class="lvl">L4</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div>
+<p>玩法就是搜关键词、看真人录像口供、听懂它——<b>这游戏本身就是一场听力考试</b>，而且因为剧情驱动，你会主动反复重听同一段。没有任何学习材料能让人如此心甘情愿地精听。</p>
+<p class="note"><b>注意</b>全靠听和读推进，听力太弱会卡住；建议 L4 以上再玩。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Oxenfree</h4></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>对话可重叠、可打断，刻意模拟真实青少年闲聊的节奏。你会学到「英语里怎么插话、怎么接话、怎么把话题岔开」——这是教材永远教不了的部分。</p>
+<p class="note"><b>注意</b>重叠对话对听力是额外负担，字幕务必开着。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Life is Strange</h4><span class="rec-cn">奇异人生</span></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>日常对话加选择分支，语速适中、字幕齐全、情绪充沛。选择会影响剧情，逼你必须真的看懂每个选项的措辞差别——这是很好的精读训练。</p>
+<p class="note"><b>注意</b>美国青少年俚语较多，部分表达偏年轻化。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>What Remains of Edith Finch</h4><span class="rec-cn">艾迪芬奇的记忆</span></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div>
+<p>旁白清晰、文本带文学性、两小时通关。适合当「一个周末晚上的英语活动」，看完还能顺手写三句英文感想——输入输出一次做完。</p>
+<p class="note"><b>注意</b>文本偏诗意，个别句子结构复杂。</p>
+</article>
+</div></div>
+<div class="stack">
+<div class="col"><div class="sub">低压力接触 · 长时间泡在英语里</div></div>
+<div class="grid">
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Portal 2</h4><span class="rec-cn">传送门 2</span></div><span class="lvl">L3</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+<p>幽默旁白密度极高，词汇不难、配音极清晰。你在解谜，同时被单口喜剧持续轰炸。娱乐性满分，学习性中等——它的价值是让你「愿意在英语环境里待四个小时」。</p>
+<p class="note"><b>注意</b>语言以独白为主，缺少对话互动的句型。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Stardew Valley / Animal Crossing</h4><span class="rec-cn">星露谷物语 / 动物森友会</span></div><span class="lvl">L1</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+<p>纯文本、节奏自己控制，词汇全是生活场景：作物、烹饪、节日、送礼、邻里寒暄。适合零压力的挂机式接触，也适合英语基础还不稳的人建立信心。</p>
+<p class="note"><b>注意</b>文本简单、重复度高，进步天花板低，别当主力材料。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>Disco Elysium</h4><span class="rec-cn">极乐迪斯科</span></div><span class="lvl">L5</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div>
+<p>约一百万字，文学级英文，词汇量和句子复杂度直逼严肃小说。<b>如果你的阅读能力够，它是英文文本量最大的娱乐产品之一</b>——一周目下来的阅读量抵得上几本书。</p>
+<p class="note"><b>注意</b>难度极高、生僻词密集，绝不适合入门。准备好词典，并接受查词会打断沉浸。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>把你已经在玩的游戏切成英文</h4><span class="rec-cn">Minecraft、任何 3A、手游</span></div><span class="lvl">L1</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 2/5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></div></div>
+<p>真正的零成本方案：系统语言、游戏界面、攻略 wiki、教程视频，全换成英文。学习强度低，但它覆盖的时间长、摩擦为零——<b>属于「不做白不做」的一档</b>。</p>
+<p class="note"><b>注意</b>被动接触为主，不会带来突破，只负责维持接触面。</p>
+</article>
+<article class="rec">
+<header class="rec-h"><div class="rec-name"><h4>联机语音 · Phasmophobia / Among Us / Overwatch</h4></div><span class="lvl">L4</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 5/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 3/5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+<p><b>唯一能强迫你实时输出英语的娱乐形式。</b>Phasmophobia 尤其特别——它的机制要求你对着麦克风说英语。压力大，但一次真实沟通的收益抵得上十次跟读。</p>
+<p class="note"><b>注意</b>野队环境语言质量差，多是缩写和脏话，练的是应急沟通不是好英语。建议进英语学习向的 Discord 组队。</p>
+</article>
+<article class="rec warn">
+<header class="rec-h"><div class="rec-name"><h4>不推荐：模拟人生 / 多数手游 / 竞技 MOBA</h4></div><span class="lvl">—</span></header>
+<div class="meters"><div class="meter" data-kind="fun"><span class="m-lab">娱乐</span><span class="bars" role="img" aria-label="娱乐 4/5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><div class="meter" data-kind="learn"><span class="m-lab">学习</span><span class="bars" role="img" aria-label="学习 1/5"><i class="on"></i><i></i><i></i><i></i><i></i></span></div></div>
+<p>《模拟人生》说的 Simlish 根本不是英语；多数手游文本量小且机翻痕迹重；纯竞技 MOBA 的交流只剩战术缩写。这几类娱乐性可能很高，但语言收益基本为零。</p>
+<p class="note"><b>注意</b>同样的原则：想玩就玩，别把它算进学习时间。</p>
+</article>
+</div></div>
+  </div>
+</div></div></section>
+
+<section class="sec" id="timing"><div class="wrap"><div class="stack-lg">
+  <div class="col sec-head">
+    <div class="eyebrow">Timing · 时机</div>
+    <h2>什么时候做什么，比做什么更重要</h2>
+    <p>同一件事放在不同时段，效果能差出好几倍。核心原则只有一条：<b>按当下的认知资源分配活动，而不是按计划表硬撑。</b>把最费力的任务放在意志力最多的时候，把娱乐性最高的放在意志力见底的时候。</p>
+  </div>
+
+  <div class="col stack">
+    <div class="sub">三种认知状态</div>
+    <ul class="tight">
+      <li><b>高认知</b>（清醒、能专注、有整块时间）→ 精学：精听、跟读、写作、输出。</li>
+      <li><b>低认知 + 手眼空闲</b>（累了但能看屏幕）→ 娱乐主导：看剧、玩游戏。</li>
+      <li><b>低认知 + 手眼被占</b>（通勤、做饭、走路、健身）→ 泛听：允许听不懂、允许走神。</li>
+    </ul>
+  </div>
+
+  <div class="col stack">
+    <div class="sub">一天的时间轴</div>
+    <ol class="tl">
+      <li>
+        <div class="tl-time">起床后<br>第 1 小时</div>
+        <div><div class="tl-h"><h4>黄金精学时段</h4><span class="tag tag-learn">精学</span></div>
+        <p>大脑最清醒、干扰最少、意志力满格。把最费力的东西放这里：<b>10 分钟影子跟读 + 5 分钟复习昨天记的表达</b>。哪怕只有 15 分钟，也别把它浪费在刷手机上——这是一天里唯一不需要跟疲劳对抗的窗口。</p></div>
+      </li>
+      <li>
+        <div class="tl-time">通勤<br>走路 / 骑车</div>
+        <div><div class="tl-h"><h4>纯增量时间</h4><span class="tag tag-flat">泛听</span></div>
+        <p>整套方案里<b>投入产出比最高的一块</b>：它不占用你任何别的时间。选和通勤时长匹配的节目——20 分钟的路就选 20 分钟的节目。不要求听懂，走神就走神。</p></div>
+      </li>
+      <li>
+        <div class="tl-time">上午<br>工作 / 学习</div>
+        <div><div class="tl-h"><h4>把工作本身英语化</h4><span class="tag tag-flat">零额外成本</span></div>
+        <p>用英文搜索、读英文文档、用英文记笔记。这一档不额外花时间，但能把你每天的英语接触面扩大好几倍。做研究的话，本领域英文材料的回报率远高于泛泛的「英语新闻」。</p></div>
+      </li>
+      <li>
+        <div class="tl-time">午饭<br>一个人吃</div>
+        <div><div class="tl-h"><h4>短视频档</h4><span class="tag tag-fun">娱乐</span></div>
+        <p>10–15 分钟的 YouTube 解释类视频正合适：有画面兜底，不需要高专注，长度刚好卡住一顿饭。别在这时候开剧——你会看不完。</p></div>
+      </li>
+      <li>
+        <div class="tl-time">13:00<br>15:00</div>
+        <div><div class="tl-h"><h4>餐后低谷，不要安排精学</h4><span class="tag tag-fun">娱乐</span></div>
+        <p>这个时段硬做精听只会带来挫败感。适合看剧或玩游戏——剧情和画面的牵引力足以扛住困倦。<b>承认低谷的存在，比跟它对抗划算。</b></p></div>
+      </li>
+      <li>
+        <div class="tl-time">傍晚<br>运动 / 健身</div>
+        <div><div class="tl-h"><h4>只听娱乐向</h4><span class="tag tag-flat">泛听</span></div>
+        <p>运动时理解力会明显下降，别听需要动脑的内容。选聊天类、脱口秀类，听个热闹就够——这个时段的目标是保持接触，不是提升。</p></div>
+      </li>
+      <li>
+        <div class="tl-time">做饭<br>洗碗 / 打扫</div>
+        <div><div class="tl-h"><h4>复听时段</h4><span class="tag tag-flat">复听</span></div>
+        <p>环境有噪音、注意力被切碎，<b>唯一有效的做法是重听已经听过的内容</b>。熟悉的材料抗干扰能力强，你甚至会听清第一遍完全没注意到的细节。放新内容在这里，等于白放。</p></div>
+      </li>
+      <li>
+        <div class="tl-time">晚上<br>下班后</div>
+        <div><div class="tl-h"><h4>意志力已见底，只安排娱乐主导</h4><span class="tag tag-fun">娱乐</span></div>
+        <p>这时候逼自己「精听半小时」，通常的结局是刷手机半小时然后自责。<b>正确做法是安排一集剧或一段英文游戏，让学习顺带发生。</b>如果当天状态好，再从这一集里切 15 分钟做精听——但那是奖励，不是义务。</p></div>
+      </li>
+      <li>
+        <div class="tl-time">睡前<br>20–30 分钟</div>
+        <div><div class="tl-h"><h4>低强度、不看屏幕</h4><span class="tag tag-learn">轻精学</span></div>
+        <p>朗读几句今天记的表达，或听一段熟悉的音频。<b>睡眠会巩固白天的语言记忆，睡前接触过的内容第二天保留率更高。</b>但别为了追剧牺牲睡眠——睡眠不足会直接抵消一整天的学习。</p></div>
+      </li>
+      <li>
+        <div class="tl-time">周末<br>60–90 分钟</div>
+        <div><div class="tl-h"><h4>输出日</h4><span class="tag tag-learn">输出</span></div>
+        <p>写一段、录一段、找人说 30 分钟、复盘这一周的记录。<b>平时攒的输入需要一个集中的出口</b>，否则它们会一直停在「认识但不会用」的状态。</p></div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="stack">
+    <div class="col"><div class="sub">状态 → 活动对照表</div>
+    <p style="color:var(--ink-2);font-size:.94rem">卡在「今天该学什么」的时候，不要翻计划表，先问自己现在是什么状态。</p></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>你现在的状态</th><th>该做什么</th><th>别做什么</th></tr></thead>
+        <tbody>
+          <tr><td>清醒 + 有 30 分钟</td><td>精听一个片段，或影子跟读</td><td>别开剧——你会一路看到深夜</td></tr>
+          <tr><td>清醒 + 只有 5 分钟</td><td>复习昨天的 3 个表达，或听一期 6 Minute English</td><td>别开新剧新播客，启动成本比收益高</td></tr>
+          <tr><td>疲惫 + 有大块时间</td><td>英文字幕看剧，或玩英文叙事游戏</td><td>别安排精听，你会做不下去然后自责</td></tr>
+          <tr><td>疲惫 + 碎片时间</td><td>泛听，允许全程走神</td><td>别要求自己听懂，别为走神内耗</td></tr>
+          <tr><td>手上在忙（做饭、通勤）</td><td>复听熟悉的内容</td><td>别放没听过的难材料</td></tr>
+          <tr><td>完全不想学</td><td>把手机切成英文，看一个 5 分钟喜欢的 YouTuber</td><td>别想着「今天算了明天补两倍」——补不回来</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col stack">
+    <div class="sub">另一个时机维度：间隔</div>
+    <p style="color:var(--ink-2)">新学的表达，<b>24 小时内复习一次、第 3 天一次、第 7 天一次</b>，基本就固化了。落到日程上只有两个动作：早上 5 分钟看昨天的记录，周日 15 分钟看这一周的。用 Anki 也行，用手机备忘录也行——工具不重要，这两个时间点才重要。</p>
+  </div>
+
+  <div class="col plate">
+    <div class="en">Match the task to the energy you actually have.</div>
+    <div class="zh">按你真实的精力状态选任务，而不是按计划表逼自己。这是能不能坚持一年的分水岭。</div>
+  </div>
+</div></div></section>
+
+<section class="sec" id="output"><div class="wrap"><div class="col stack-lg">
+  <div class="sec-head">
+    <div class="eyebrow">Output · 输出</div>
+    <h2>输出闭环：把「听得懂」变成「说得出」</h2>
+    <p>这是绝大多数人缺的一环，也是投入最少、效果最明显的一环。每天十分钟就够，但必须每天有。</p>
+  </div>
+  <ol class="steps">
+    <li><b>影子跟读，每天 5–10 分钟。</b>落后音频 1–2 秒跟着说，重点模仿<b>语调、连读、节奏</b>，不是背单词。素材就用你昨天精听过的那 3 分钟——已经听熟的内容，跟读效果最好。这是把「能听懂」变成「能说出」最便宜的桥。</li>
+    <li><b>自言自语，利用走路的时间。</b>用英语描述你正在做什么、待会要做什么。<b>卡住的地方就是你真实的短板</b>——记下来，回去查。这比做一百道题更能定位问题。</li>
+    <li><b>每天写 3 句。</b>用今天学的表达，造 3 个和你自己生活有关的句子。不是抄例句，是换成你的内容。<b>这一步比记 30 个单词有用得多</b>，因为它强迫大脑做「调用」而不是「识别」。</li>
+    <li><b>每周找真人说一次。</b>语伴 App（HelloTalk、Tandem）、italki 付费外教、英语学习 Discord 社群都可以，一周一次 45 分钟即可。想降低心理门槛，可以先跟 AI 语音对话练——现在这是成本最低、也最不怕丢脸的口语陪练。</li>
+  </ol>
+  <div class="plate">
+    <div class="en">If you can't name the situation, don't save the phrase.</div>
+    <div class="zh">记录的唯一标准：说不清这句话用在什么场合、对谁说，就不要记它。</div>
+  </div>
+</div></div></section>
+
+<section class="sec" id="plans"><div class="wrap"><div class="stack-lg">
+  <div class="col sec-head">
+    <div class="eyebrow">Plans · 日程</div>
+    <h2>三档日程，按你实际能投入的时间选</h2>
+    <p>不要挑最狠的那档。<b>挑你在最忙的那一周也能做到的那档</b>——因为决定成败的从来不是你状态最好时的强度，而是状态最差时的下限。</p>
+  </div>
+  <div class="plans">
+    <div class="plan">
+      <div><div class="plan-t">保底档</div><div class="plan-n">20<span>分钟 / 天</span></div></div>
+      <ul>
+        <li>通勤泛听 15 分钟，不要求听懂</li>
+        <li>睡前 5 分钟复习昨天的 3 个表达</li>
+        <li>周末看一集剧，英文字幕，纯娱乐</li>
+      </ul>
+      <div class="out">预期：维持语感、不倒退，一年后听力有明显改善。适合工作强度大或正处于忙季的人——<b>目标是不掉线</b>。</div>
+    </div>
+    <div class="plan pick">
+      <div><div class="plan-t">标准档 · 推荐</div><div class="plan-n">45–60<span>分钟 / 天</span></div></div>
+      <ul>
+        <li>早上 15 分钟：影子跟读（用昨天精听的片段）</li>
+        <li>通勤 20–30 分钟：泛听播客</li>
+        <li>晚上 30–45 分钟：看一集剧（英文字幕）+ 切 5 分钟精听 + 记 3–5 个表达</li>
+        <li>周末 60 分钟：写 + 说 + 复盘本周记录</li>
+      </ul>
+      <div class="out">预期：3 个月听力明显提升，6 个月口语开始跟上。<b>多数人的最优解</b>——强度够产生变化，又不至于消耗掉全部意志力。</div>
+    </div>
+    <div class="plan">
+      <div><div class="plan-t">强化档</div><div class="plan-n">90+<span>分钟 / 天</span></div></div>
+      <ul>
+        <li>标准档的全部内容</li>
+        <li>每天 20 分钟本领域内容：学术播客、行业视频、英文论文朗读</li>
+        <li>每周 1 次真人对话 45 分钟</li>
+        <li>每周 1 篇 200 词写作，找老师或 AI 改</li>
+      </ul>
+      <div class="out">预期：半年内可以用英语开会、做汇报。<b>只在你有明确的考试、工作或出国目标时才选这档</b>，否则很容易两个月就烧完。</div>
+    </div>
+  </div>
+</div></div></section>
+
+<section class="sec" id="check"><div class="wrap"><div class="col stack-lg">
+  <div class="sec-head">
+    <div class="eyebrow">Feedback · 反馈</div>
+    <h2>怎么确认自己真的在进步</h2>
+    <p>语言进步是缓慢且不易察觉的，所以人特别容易在两个方向上骗自己：一是明明没进步却觉得在学，二是明明进步了却觉得没用。<b>需要客观的存档。</b></p>
+  </div>
+  <ul class="tight">
+    <li><b>每月录一段音。</b>每月最后一天，用手机录 2 分钟「这个月我做了什么」，存起来别听。三个月后回听，比任何打卡记录都有说服力——你会清楚听到语速、停顿和用词的变化。</li>
+    <li><b>同题重测。</b>挑一集剧里固定的 5 分钟，每两个月无字幕听一次，记下能听懂的大致比例。同一份材料，才能反映真实变化。</li>
+    <li><b>换掉指标。</b>别用「学了多少小时」衡量，用「现在能做什么」衡量：能不能不暂停看完一集？能不能听完一期播客说出三个要点？能不能在需要的时候直接开口？</li>
+  </ul>
+</div></div></section>
+
+<section class="sec" id="traps"><div class="wrap"><div class="col stack-lg">
+  <div class="sec-head">
+    <div class="eyebrow">Pitfalls · 陷阱</div>
+    <h2>十个几乎人人踩过的坑</h2>
+    <p>下面这些不是「做得不够好」，而是「做了等于没做」。避开它们本身就是巨大的收益。</p>
+  </div>
+  <ol class="traps">
+    <li><div><b>开着中文字幕看剧，并称之为学英语</b><span>大脑一旦有母语捷径，语音通道基本就关闭了。要么开英文字幕，要么就坦然承认这次是娱乐——两种都合法，但别骗自己。</span></div></li>
+    <li><div><b>素材选得太难</b><span>「我要听 BBC 新闻」是最常见的死法。选你能听懂七八成的材料，那才是有效输入。难度带来的成就感是假的，坚持下来才是真的。</span></div></li>
+    <li><div><b>收藏了 20 个资源，一个没用完</b><span>资源不等于进度。把一部剧看完一季，收益远大于开十部剧的第一集。选定就别换。</span></div></li>
+    <li><div><b>只输入不输出</b><span>结果是长期停在「听得懂、说不出」。每天哪怕只造 3 句自己的话，闭环就成立了。</span></div></li>
+    <li><div><b>追求 100% 听懂</b><span>母语者听母语也做不到。目标是「听懂到足以继续往下走」，不是逐字复原。</span></div></li>
+    <li><div><b>记生僻词</b><span>记「这个词好高级」没用，记「我明天就能用」才有用。判断标准永远是能否说出使用场景。</span></div></li>
+    <li><div><b>泛听时因为走神而自责</b><span>泛听本来就允许走神，它练的是耳朵的耐受度而不是理解率。分清模式，就不会内耗。</span></div></li>
+    <li><div><b>把精听和娱乐混在一起</b><span>一边看剧一边查词，结果剧没看爽、词也没记住。明确分开：这一小时是娱乐，那十五分钟是学习。</span></div></li>
+    <li><div><b>断了三天就彻底放弃</b><span>设一个「最低限度日」：再忙也听 3 分钟。链条不断比强度更重要，断了之后能马上接上，比从不间断更现实。</span></div></li>
+    <li><div><b>长期开 1.5 倍速练听力</b><span>加速会牺牲对连读、弱读、词尾的处理。复听旧内容可以加速，练新材料别加。</span></div></li>
+  </ol>
+</div></div></section>
+
+<section class="sec" id="week1"><div class="wrap"><div class="col stack-lg">
+  <div class="sec-head">
+    <div class="eyebrow">Start · 启动</div>
+    <h2>第一周，具体做这七件事</h2>
+    <p>读完一份指南最常见的结局是什么都没变。所以这里给出七个具体到不需要做任何决定的动作。</p>
+  </div>
+  <ol class="week">
+    <li><span class="d">Day 1</span><span>把手机、电脑、常玩的游戏，系统语言全部改成英文。<b>5 分钟，一次性，之后终身生效。</b></span></li>
+    <li><span class="d">Day 2</span><span>选定一部剧（建议 <b>Modern Family</b> 或 <b>The Good Place</b>），开英文字幕看第一集，什么练习都别做，就是看。</span></li>
+    <li><span class="d">Day 3</span><span>订阅两档播客：一档学习者向（<b>6 Minute English</b>），一档兴趣向（<b>Planet Money</b> 或你所在领域的节目）。今天通勤时听第一期。</span></li>
+    <li><span class="d">Day 4</span><span>第一次精听：从 Day 2 那一集里挑 5 分钟，走完「盲听 → 看字幕 → 跟读」三步。</span></li>
+    <li><span class="d">Day 5</span><span>建一个表达笔记（备忘录、Notion、Anki 都行），记下前 3 个「我下次能说出口」的句子，每句写清使用场景。</span></li>
+    <li><span class="d">Day 6</span><span>通勤全程泛听，允许走神，不做任何要求。今天的目标只是<b>体验一次「不带负担的英语时间」</b>。</span></li>
+    <li><span class="d">Day 7</span><span>用这周记的表达写 5 个自己的句子，读出来录一段音存好。<b>这是你的起点样本</b>，三个月后回来听。</span></li>
+  </ol>
+  <div class="plate">
+    <div class="en">Pick one show, two podcasts, and start tonight.</div>
+    <div class="zh">选一部剧、两档播客，今晚就开始。再完美的计划，也比不上一个已经跑起来的粗糙版本。</div>
+  </div>
+</div></div></section>
+
+</main>
+
+<footer><div class="wrap"><div class="col">
+  <p>难度标记 L1–L5 指的是听懂它所需要的英语水平，不是内容深度。娱乐性和学习性两条刻度都是相对同类材料的判断，用来帮你在「今天想放松」和「今天想提升」之间快速选材，不必当成精确评分。</p>
+</div></div></footer>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+  var secs = links.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); });
+  if (!('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ seen[e.target.id] = e.isIntersecting ? e.intersectionRatio : 0; });
+    var best = null, bestVal = 0;
+    secs.forEach(function(s){ if (s && seen[s.id] > bestVal){ bestVal = seen[s.id]; best = s.id; } });
+    links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + best); });
+  }, { rootMargin: '-15% 0px -55% 0px', threshold: [0, .25, .5, 1] });
+  secs.forEach(function(s){ if (s) io.observe(s); });
+})();
+</script>
+</body>
+</html>
