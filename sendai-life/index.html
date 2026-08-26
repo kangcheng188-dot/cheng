@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="面向东北大学博士生的仙台日常生活与省钱指南：购物、饮食、交通与生活杂事的决策规则和年度省钱清单。">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}</style>
+<title>仙台读博生活账本</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+
+<style>
+:root{
+  --paper:#F4F2F5; --surface:#FFFFFF; --surface2:#EBE7EF;
+  --ink:#221C29; --ink2:#574E63; --ink3:#867C93;
+  --rule:#DED7E4; --rule2:#C9BFD3;
+  --plum:#8A3A6B; --plum-soft:#F4E3EE; --plum-line:#D8AEC8;
+  --leaf:#3D6B4D; --leaf-soft:#E1EEE5; --leaf-line:#A9CDB4;
+  --amber:#A05517; --amber-soft:#F7E8D8; --amber-line:#DFB588;
+  --shadow:0 1px 2px rgba(34,28,41,.05), 0 8px 24px -16px rgba(34,28,41,.30);
+
+  --f-display:"Noto Serif SC","Hiragino Mincho ProN","Yu Mincho","Songti SC","SimSun",Georgia,serif;
+  --f-body:"Noto Sans SC","PingFang SC","Hiragino Sans","Hiragino Sans GB","Yu Gothic","Meiryo","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,"Hiragino Sans","Yu Gothic",monospace;
+
+  --col:940px; --gut:clamp(18px,4vw,40px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#16121B; --surface:#1F1926; --surface2:#2A2333;
+    --ink:#EFE9F3; --ink2:#BCB2C7; --ink3:#8D8399;
+    --rule:#362E40; --rule2:#493F55;
+    --plum:#E489B8; --plum-soft:#38213090; --plum-line:#6E4059;
+    --leaf:#8AC69B; --leaf-soft:#1D3125A0; --leaf-line:#3F6349;
+    --amber:#E5A46B; --amber-soft:#37251590; --amber-line:#6B4B2B;
+    --shadow:0 1px 2px rgba(0,0,0,.30), 0 10px 30px -18px rgba(0,0,0,.75);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#16121B; --surface:#1F1926; --surface2:#2A2333;
+  --ink:#EFE9F3; --ink2:#BCB2C7; --ink3:#8D8399;
+  --rule:#362E40; --rule2:#493F55;
+  --plum:#E489B8; --plum-soft:#38213090; --plum-line:#6E4059;
+  --leaf:#8AC69B; --leaf-soft:#1D3125A0; --leaf-line:#3F6349;
+  --amber:#E5A46B; --amber-soft:#37251590; --amber-line:#6B4B2B;
+  --shadow:0 1px 2px rgba(0,0,0,.30), 0 10px 30px -18px rgba(0,0,0,.75);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--f-body); font-size:16px; line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--plum); outline-offset:3px; border-radius:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{max-width:var(--col); margin:0 auto; padding:0 var(--gut)}
+.prose{max-width:66ch}
+p{margin:0 0 .9em}
+a{color:var(--plum); text-underline-offset:3px; text-decoration-thickness:1px}
+strong{font-weight:700}
+h1,h2,h3,h4{font-family:var(--f-display); font-weight:700; text-wrap:balance; margin:0}
+
+/* ---------- 抬头 ---------- */
+.masthead{padding:clamp(48px,9vw,88px) 0 34px; border-bottom:1px solid var(--rule)}
+.eyebrow{
+  font-family:var(--f-mono); font-size:11.5px; font-weight:500;
+  letter-spacing:.20em; text-transform:uppercase; color:var(--plum);
+}
+.masthead h1{
+  font-size:clamp(34px,6.4vw,56px); line-height:1.18; letter-spacing:-.01em;
+  margin:.5rem 0 .7rem;
+}
+.masthead .dek{font-size:clamp(15px,2.3vw,17.5px); color:var(--ink2); max-width:60ch; margin:0}
+.stamp{
+  display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:24px;
+  font-family:var(--f-mono); font-size:11.5px; color:var(--ink3);
+}
+.stamp span{border:1px solid var(--rule2); border-radius:999px; padding:3px 11px}
+
+/* ---------- 导航 ---------- */
+.nav{
+  position:sticky; top:0; z-index:20; background:var(--paper);
+  border-bottom:1px solid var(--rule); backdrop-filter:saturate(140%) blur(6px);
+}
+.nav-in{display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; max-width:var(--col); margin:0 auto; padding:0 var(--gut)}
+.nav-in::-webkit-scrollbar{display:none}
+.nav a{
+  flex:0 0 auto; font-family:var(--f-mono); font-size:12px; letter-spacing:.04em;
+  color:var(--ink2); text-decoration:none; padding:12px 12px; white-space:nowrap;
+  border-bottom:2px solid transparent;
+}
+.nav a:hover{color:var(--plum); border-bottom-color:var(--plum-line)}
+
+/* ---------- 章节 ---------- */
+section{padding:clamp(46px,7vw,76px) 0; border-bottom:1px solid var(--rule)}
+.sec-head{margin-bottom:30px}
+.sec-head .kicker{
+  display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+  font-family:var(--f-mono); font-size:11.5px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink3); margin-bottom:10px;
+}
+.sec-head .kicker b{color:var(--plum); font-weight:600; letter-spacing:.16em}
+.sec-head h2{font-size:clamp(25px,4.2vw,34px); line-height:1.3}
+.sec-head .lede{color:var(--ink2); margin:.7rem 0 0; max-width:62ch; font-size:15.5px}
+
+h3{font-size:clamp(18px,2.8vw,21px); margin:34px 0 12px; line-height:1.45}
+h3:first-of-type{margin-top:6px}
+h4{font-size:15px; margin:0 0 8px; font-family:var(--f-body); font-weight:700}
+
+/* ---------- 决策规则链 ---------- */
+.rule-chain{
+  display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px;
+  font-family:var(--f-mono); font-size:13px; margin:14px 0 18px;
+}
+.rule-chain i{font-style:normal; color:var(--ink3)}
+.rule-chain b{
+  font-weight:500; background:var(--surface); border:1px solid var(--rule2);
+  border-radius:4px; padding:4px 10px;
+}
+.rule-chain b.best{border-color:var(--leaf-line); background:var(--leaf-soft); color:var(--leaf); font-weight:600}
+.rule-chain b.worst{border-color:var(--amber-line); background:var(--amber-soft); color:var(--amber)}
+
+/* ---------- 卡片 ---------- */
+.grid{display:grid; gap:14px; margin:18px 0}
+.g2{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.card{
+  background:var(--surface); border:1px solid var(--rule); border-radius:7px;
+  padding:16px 17px 17px; box-shadow:var(--shadow);
+}
+.card .tag{
+  font-family:var(--f-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink3); display:block; margin-bottom:9px;
+  padding-bottom:8px; border-bottom:1px solid var(--rule);
+}
+.card p{font-size:14.5px; color:var(--ink2); margin:0 0 .6em; line-height:1.7}
+.card p:last-child{margin-bottom:0}
+.card ul{margin:0; padding-left:1.1em; font-size:14.5px; color:var(--ink2); line-height:1.7}
+.card li{margin-bottom:.3em}
+
+/* ---------- 表格 ---------- */
+.tscroll{overflow-x:auto; margin:18px 0; border:1px solid var(--rule); border-radius:7px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:660px; font-size:14px}
+th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--rule); vertical-align:top}
+thead th{
+  font-family:var(--f-mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--ink3); font-weight:500; background:var(--surface2); white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+tbody td:first-child{font-weight:500; color:var(--ink)}
+td .num{font-family:var(--f-mono); font-variant-numeric:tabular-nums}
+.pick{color:var(--leaf); font-weight:600}
+.avoid{color:var(--amber)}
+
+/* ---------- 提示块 ---------- */
+.note{
+  border-left:3px solid var(--plum-line); background:var(--plum-soft);
+  padding:13px 16px; border-radius:0 6px 6px 0; margin:18px 0; font-size:14.5px; color:var(--ink2);
+}
+.note.warn{border-left-color:var(--amber-line); background:var(--amber-soft)}
+.note.win{border-left-color:var(--leaf-line); background:var(--leaf-soft)}
+.note b{color:var(--ink)}
+.note .lbl{
+  font-family:var(--f-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  display:block; margin-bottom:5px; color:var(--plum);
+}
+.note.warn .lbl{color:var(--amber)}
+.note.win .lbl{color:var(--leaf)}
+.note p{margin:0 0 .5em}
+.note p:last-child{margin-bottom:0}
+
+/* ---------- 开局清单 ---------- */
+.todo{list-style:none; margin:18px 0 0; padding:0; display:grid; gap:10px}
+.todo li{
+  background:var(--surface); border:1px solid var(--rule); border-radius:7px;
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.todo label{display:flex; gap:13px; padding:15px 17px; cursor:pointer; align-items:flex-start}
+.todo input{
+  appearance:none; -webkit-appearance:none; flex:0 0 auto; margin:4px 0 0;
+  width:17px; height:17px; border:1.5px solid var(--rule2); border-radius:3px;
+  background:var(--paper); cursor:pointer; transition:.15s;
+}
+.todo input:checked{background:var(--leaf); border-color:var(--leaf)}
+.todo input:checked::after{
+  content:"✓"; display:block; color:var(--surface); font-size:12px;
+  line-height:14px; text-align:center; font-weight:700;
+}
+.todo .body{flex:1; min-width:0}
+.todo .t{font-weight:700; display:flex; flex-wrap:wrap; gap:8px; align-items:baseline; line-height:1.5}
+.todo .d{font-size:14px; color:var(--ink2); margin-top:3px; line-height:1.65}
+.todo input:checked ~ .body .t,
+.todo input:checked ~ .body .d{opacity:.45; text-decoration:line-through; text-decoration-thickness:1px}
+.save{
+  font-family:var(--f-mono); font-size:11px; font-variant-numeric:tabular-nums;
+  color:var(--leaf); background:var(--leaf-soft); border:1px solid var(--leaf-line);
+  border-radius:999px; padding:1px 9px; white-space:nowrap; font-weight:600;
+}
+.save.once{color:var(--plum); background:var(--plum-soft); border-color:var(--plum-line)}
+.todo-foot{
+  font-family:var(--f-mono); font-size:11.5px; color:var(--ink3);
+  margin-top:12px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+}
+.todo-foot button{
+  font-family:var(--f-mono); font-size:11px; color:var(--ink3); background:none;
+  border:1px solid var(--rule2); border-radius:999px; padding:2px 11px; cursor:pointer;
+}
+.todo-foot button:hover{color:var(--plum); border-color:var(--plum-line)}
+
+/* ---------- 时机日历 ---------- */
+.cal{display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); margin:18px 0}
+.cal div{
+  background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:12px 13px;
+}
+.cal .d{
+  font-family:var(--f-mono); font-size:12px; font-weight:600; color:var(--plum);
+  font-variant-numeric:tabular-nums; display:block; margin-bottom:4px;
+}
+.cal .w{font-size:13.5px; color:var(--ink2); line-height:1.6}
+
+/* ---------- 对账单 ---------- */
+.ledger{
+  background:var(--surface); border:1px solid var(--rule2); border-radius:7px;
+  padding:20px clamp(16px,3vw,26px); box-shadow:var(--shadow); margin:22px 0 0;
+}
+.led-title{
+  font-family:var(--f-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ink3); padding-bottom:12px; margin-bottom:6px;
+  border-bottom:1.5px solid var(--ink); display:flex; justify-content:space-between; gap:12px;
+}
+.led-row{display:flex; align-items:baseline; gap:9px; padding:7px 0; font-size:14.5px}
+.led-row .n{color:var(--ink2); flex:0 1 auto}
+.led-row .dots{flex:1 1 auto; border-bottom:1px dotted var(--rule2); min-width:18px; transform:translateY(-4px)}
+.led-row .v{
+  font-family:var(--f-mono); font-variant-numeric:tabular-nums; font-size:13.5px;
+  color:var(--ink); white-space:nowrap; font-weight:500;
+}
+.led-row.sub .n{padding-left:0; color:var(--ink3); font-size:13.5px}
+.led-total{
+  display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+  margin-top:14px; padding-top:14px; border-top:1.5px solid var(--ink); flex-wrap:wrap;
+}
+.led-total .n{font-family:var(--f-display); font-weight:700; font-size:17px}
+.led-total .v{
+  font-family:var(--f-mono); font-variant-numeric:tabular-nums; font-weight:600;
+  font-size:clamp(20px,3.6vw,27px); color:var(--plum);
+}
+.led-note{font-size:13px; color:var(--ink3); margin:12px 0 0; line-height:1.65}
+
+/* ---------- 页脚 ---------- */
+footer{padding:40px 0 64px; color:var(--ink3); font-size:13.5px; line-height:1.75}
+footer p{max-width:66ch}
+footer b{color:var(--ink2)}
+
+.jp{font-family:var(--f-mono); font-size:.92em; color:var(--ink2)}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Sendai · Tohoku University · 博士在学</div>
+    <h1>仙台读博生活账本</h1>
+    <p class="dek">一份为东北大学博士生写的日常生活手册：钱花在哪里值、哪里是白扔的，以及在仙台这座城市里怎么把"过得好"和"花得少"同时办到。</p>
+    <div class="stamp">
+      <span>购物 · 饮食 · 交通 · 生活</span>
+      <span>青葉山 / 川内 / 片平 / 星陵</span>
+      <span>价格为参考区间，以官方公告为准</span>
+    </div>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a href="#start">开局清单</a>
+    <a href="#shop">购物</a>
+    <a href="#food">吃饭</a>
+    <a href="#move">出行</a>
+    <a href="#life">生活杂事</a>
+    <a href="#when">时机日历</a>
+    <a href="#total">对账单</a>
+  </div>
+</nav>
+
+<!-- ============ 开局清单 ============ -->
+<section id="start">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker"><b>最高杠杆</b><span>一次办完，之后每年自动生效</span></div>
+      <h2>先把这七件事办掉</h2>
+      <p class="lede">下面这些的省钱量级，比你在超市里比价一整年都大。它们的共同点是：<strong>有申请窗口，过期不补办</strong>。其余章节都可以慢慢看，这一节请这周就动手。</p>
+    </div>
+
+    <ul class="todo" id="todo">
+      <li><label><input type="checkbox" data-k="t1"><span class="body">
+        <span class="t">授業料免除の申請<span class="save">最多 53.6 万/年</span></span>
+        <span class="d">国立大学标准学费约 <span class="num">535,800</span> 日元/年（部分学校已上调，以本校公告为准）。东北大学每学期（前期／後期）各受理一次，博士生获全免或半免的比例并不低。<b>逾期一律不受理</b>，把两个申请季设成手机日历重复提醒。入学时的 <span class="jp">入学料免除</span>（约 <span class="num">282,000</span> 日元）也是同理。</span>
+      </span></label></li>
+
+      <li><label><input type="checkbox" data-k="t2"><span class="body">
+        <span class="t">国民年金「学生納付特例」<span class="save">约 21 万/年</span></span>
+        <span class="d">满 20 岁的在留者都有国民年金义务，保险费每月约 1.7–1.8 万日元。在学期间可申请缓缴，<b>缓缴期间照算年金加入期</b>。去区役所年金窗口办，带在留卡＋学生证。注意是<b>每年度 4 月要重新申请</b>，不会自动续。</span>
+      </span></label></li>
+
+      <li><label><input type="checkbox" data-k="t3"><span class="body">
+        <span class="t">住民税申告 → 国保料の軽減<span class="save">3–8 万/年</span></span>
+        <span class="d">这条最容易漏。国民健康保险费的 7 割／5 割／2 割軽減是按<b>上一年度收入</b>自动判定的，但前提是你申报过——<b>哪怕收入为零，也要去区役所做「住民税申告（0 申告）」</b>。没申报＝系统里"收入不明"＝軽減不适用，会按高档收账单。刚来日本、上一年在国内无日本收入的人尤其要办。</span>
+      </span></label></li>
+
+      <li><label><input type="checkbox" data-k="t4"><span class="body">
+        <span class="t">租税条約に関する届出書<span class="save">2–5 万/年</span></span>
+        <span class="d">中国等与日本签有租税条约的国家，留学生为<b>维持生计与接受教育</b>而取得的所得可申请免征所得税（日中租税条约第 21 条）。做 TA／RA／打工前，通过雇主（学校事务）提交 <span class="jp">租税条約に関する届出書</span>，工资就不再被预扣所得税。已经被扣的可以次年 2–3 月<span class="jp">確定申告</span>退回来。</span>
+      </span></label></li>
+
+      <li><label><input type="checkbox" data-k="t5"><span class="body">
+        <span class="t">通学定期券（不是通勤定期）<span class="save">3–5 万/年</span></span>
+        <span class="d">拿学生证去地铁站窗口办 <span class="jp">通学定期</span>，比 <span class="jp">通勤定期</span> 还便宜一档。<b>6 个月 &gt; 3 个月 &gt; 1 个月</b>，单月成本递减，能一次买 6 个月就别买 1 个月。仙台地铁／巴士的定期挂在 <span class="jp">icsca</span> 上；若通勤跨 JR，去窗口问能否办<span class="jp">連絡定期券</span>。</span>
+      </span></label></li>
+
+      <li><label><input type="checkbox" data-k="t6"><span class="body">
+        <span class="t">Amazon Prime Student<span class="save">约 3,000/年</span></span>
+        <span class="d">用你的 <span class="jp">@dc.tohoku.ac.jp</span> 邮箱注册即可，<b>6 个月免费</b>，之后是普通 Prime 的一半价（约 <span class="num">300</span> 日元/月或 <span class="num">2,950</span> 日元/年）。买书有 10% 积分返还，配合<span class="jp">定期おトク便</span>处理日用品。价格以官网为准。</span>
+      </span></label></li>
+
+      <li><label><input type="checkbox" data-k="t7"><span class="body">
+        <span class="t">申请校内 fellowship / 学振 DC<span class="save once">量级最大</span></span>
+        <span class="d">严格说这不是"省钱"而是"挣钱"，但它是所有条目里金额最大的一项：学振 DC1／DC2 的研究奨励金、JST 次世代研究者挑戦的研究プログラム（SPRING）、卓越大学院、各类民间财团奖学金（吉田育英会、平和中岛、ロータリー米山等）。<b>申请截止都集中在春季</b>，导师和学院事务是第一信息源。注意学振 DC 的研究奨励金属<span class="jp">雑所得</span>、要交税，也就意味着你能用<span class="jp">ふるさと納税</span>（见"生活杂事"）。</span>
+      </span></label></li>
+    </ul>
+    <div class="todo-foot">
+      <span id="todo-count">勾选状态保存在本机浏览器</span>
+      <button type="button" id="todo-reset">清空勾选</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 购物 ============ -->
+<section id="shop">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker"><b>购物消费</b><span>药妆店 / 超市 / 便利店 / 网购</span></div>
+      <h2>同一瓶洗发水，差价可以到两倍</h2>
+      <p class="lede">日用品在日本的价格结构非常清晰：<strong>药妆店打折日 &lt; 网购定期便 &lt; 超市 &lt; 便利店</strong>。你需要做的不是每次比价，而是把"在哪买"变成不用想的默认动作。</p>
+    </div>
+
+    <h3>一条默认路径</h3>
+    <div class="rule-chain">
+      <b class="best">药妆店特价日</b><i>→</i><b>Amazon 定期便</b><i>→</i><b>超市</b><i>→</i><b>百元店（仅限杂货）</b><i>→</i><b class="worst">便利店 · 仅限应急</b>
+    </div>
+    <div class="prose">
+      <p>便利店同款商品普遍比药妆店贵 <strong>20–40%</strong>，它卖的是"此刻就在楼下"。把便利店当成 24 小时应急柜台，而不是采购渠道，一年的差价就是几万日元。</p>
+    </div>
+
+    <h3>去哪买：品类对照表</h3>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>品类</th><th>首选</th><th>次选</th><th>别在这买</th><th>关键动作</th></tr></thead>
+        <tbody>
+          <tr><td>洗发水 / 沐浴露 / 洗衣液</td><td class="pick">药妆店特价日</td><td>Amazon 定期おトク便</td><td class="avoid">便利店</td><td>只买 <span class="jp">詰替</span>（补充装），单价低三成；打折时囤 2–3 袋</td></tr>
+          <tr><td>洁面 / 护肤 / 面膜</td><td class="pick">ウエルシア 每月 20 日</td><td>楽天 お買い物マラソン</td><td class="avoid">机场免税店</td><td>积分平时攒着，集中在 20 日花掉</td></tr>
+          <tr><td>纸巾 / 卫生纸</td><td class="pick">药妆店・超市特价（常为限购品）</td><td>業務スーパー</td><td class="avoid">网购</td><td>体积大、网购运费吃掉差价；顺路扛回家</td></tr>
+          <tr><td>常备药 / 维生素</td><td class="pick">药妆店 PB 自有品牌</td><td>Amazon</td><td class="avoid">便利店</td><td>同成分认准 PB 版，价差常近半</td></tr>
+          <tr><td>厨房小物 / 收纳 / 文具</td><td class="pick">ダイソー・セリア</td><td>ニトリ</td><td>—</td><td>电池、保鲜膜、洗洁精在药妆店反而更便宜</td></tr>
+          <tr><td>大米 / 油 / 调味料</td><td class="pick">ふるさと納税（若有课税所得）</td><td>業務スーパー・生协</td><td class="avoid">便利店</td><td>米价近年波动大，5kg 参考 3,000–4,500 日元</td></tr>
+          <tr><td>生鲜蔬果</td><td class="pick">ヨークベニマル・みやぎ生協</td><td>仙台朝市・イオン 20/30 日</td><td class="avoid">便利店</td><td>傍晚看 <span class="jp">見切り品</span> 和半额贴</td></tr>
+          <tr><td>肉类</td><td class="pick">業務スーパー 冷冻大包</td><td>超市特价日</td><td>—</td><td>买回来当天分装冷冻，别整包塞冰箱</td></tr>
+          <tr><td>电器 / 电子产品</td><td class="pick">ヨドバシ・ビックカメラ</td><td>Amazon タイムセール</td><td>—</td><td>比"扣掉 10% 积分后的净价"，不是标价</td></tr>
+          <tr><td>家具 / 小家电</td><td class="pick">ジモティー・メルカリ</td><td>ハードオフ・2nd STREET</td><td class="avoid">全新</td><td>2–3 月、9 月毕业搬家季，白菜价甚至免费自取</td></tr>
+          <tr><td>学术书 / 教材</td><td class="pick">大学图书馆（先查有没有）</td><td>生协书籍部 9 折</td><td class="avoid">原价新书</td><td>没有的可申请 ILL 校际调阅或荐购</td></tr>
+          <tr><td>衣服</td><td class="pick">ユニクロ / GU 限期特价</td><td>しまむら・2nd STREET 古着</td><td>—</td><td>反季买：冬装在 1–2 月清仓</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>药妆店：记住三个日子就够</h3>
+    <div class="grid g3">
+      <div class="card">
+        <span class="tag">每月 20 日</span>
+        <h4>ウエルシア「ウエル活」</h4>
+        <p>V 积分（原 T 积分）在每月 20 日<b>按 1.5 倍抵扣</b>，200 分起用。也就是 10,000 分能买 15,000 日元的东西。日常把积分往 V 积分归集，20 日一次性花掉——这是日本最有名的省钱操作，没有之一。</p>
+      </div>
+      <div class="card">
+        <span class="tag">每月 5 / 15 / 25 日</span>
+        <h4>ツルハドラッグ 感謝デー</h4>
+        <p>出示会员卡或 App，全场约 <b>95 折</b>。ツルハ 在东北密度极高，适合把囤货日固定在这三天。同类还有 <span class="jp">薬王堂</span>（东北本地连锁，日用品定价本身就低）。</p>
+      </div>
+      <div class="card">
+        <span class="tag">每月 20 / 30 日</span>
+        <h4>イオン お客さま感謝デー</h4>
+        <p>用 AEON 卡或 WAON 结账全场 <b>95 折</b>，含食品。适合和 20 日的ウエル活凑成"每月一次大采购日"。</p>
+      </div>
+    </div>
+    <div class="note">
+      <span class="lbl">校准</span>
+      <p>各家的活动日和折扣规则每年会调整，第一次去时看一眼店内海报或官方 App 确认。上面三条是长期稳定的框架，细则以当日公告为准。</p>
+    </div>
+
+    <h3>网购：什么时候比线下值</h3>
+    <div class="grid g2">
+      <div class="card">
+        <span class="tag">Amazon</span>
+        <ul>
+          <li><b>定期おトク便</b>：同一批次凑 3 件以上，最高约 9 折，适合洗衣液、猫砂式的固定消耗品</li>
+          <li>Prime Student 免运费＋书籍 10% 返点</li>
+          <li>11 月 <span class="jp">ブラックフライデー</span>、7 月 <span class="jp">プライムデー</span> 是全年低点</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">楽天市場</span>
+        <ul>
+          <li><b>お買い物マラソン</b>：店铺数越多倍率越高，把想买的东西攒到活动期一起下单</li>
+          <li>叠加"<b>5 和 0 结尾的日子</b>"＋楽天卡（需事前 <span class="jp">エントリー</span>）</li>
+          <li>注意：返的是积分不是现金，只有你确实会花掉才算省</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">ヨドバシ.com</span>
+        <ul>
+          <li><b>不设门槛全场免运费</b>，仙台市内常常次日达</li>
+          <li>约 10% 积分，日用品线也齐，是"懒人默认渠道"</li>
+          <li>急用的小东西这里下单，往往比跑一趟还便宜</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">二手 / 本地</span>
+        <ul>
+          <li><b>ジモティー</b>：本地免费或极低价转让，家具家电主力</li>
+          <li><b>メルカリ</b>：搬家前把用不上的卖掉，回血可观</li>
+          <li>毕业季（2–3 月）留学生群、研究室群里的转让信息最肥</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>衣服：仙台的冬天要单独预算</h3>
+    <div class="prose">
+      <p>仙台冬天不算暴雪区，但湿冷、有风，路面 12–3 月会结冰。一次性配齐这几样比每年临时买划算得多：</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <span class="tag">保暖底层</span>
+        <p>ユニクロ <span class="jp">ヒートテック</span> 极暖版 2–3 件轮换。11–12 月的 <span class="jp">感謝祭</span> 是最低价。</p>
+      </div>
+      <div class="card">
+        <span class="tag">外套</span>
+        <p>防风比蓬松更重要。<span class="jp">ワークマン</span> 的防寒服性价比极高，两三千日元档就很能打；ユニクロ 羽绒服在 1 月清仓。</p>
+      </div>
+      <div class="card">
+        <span class="tag">鞋</span>
+        <p><b>认准防滑（<span class="jp">防滑ソール</span>）底</b>。ワークマン 的 <span class="jp">ケベック</span> 系防寒靴两千日元上下，冬天走青葉山的坡道时你会感谢自己。</p>
+      </div>
+    </div>
+    <div class="note warn">
+      <span class="lbl">别踩</span>
+      <p>你持在留卡是<b>日本居住者</b>，在免税店买东西<b>不能免税</b>。看到"免税"招牌不必进去比价，那是给短期游客的。</p>
+    </div>
+
+    <h3>支付层：同一笔钱返三次</h3>
+    <div class="prose">
+      <p>结账方式本身就是折扣。基本盘是<strong>信用卡 → 扫码支付 → 积分卡</strong>三层叠加：</p>
+    </div>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>工具</th><th>为什么办</th><th>备注</th></tr></thead>
+        <tbody>
+          <tr><td>楽天カード</td><td>留学生较易通过、免年费，1% 返点，是楽天生态的入口</td><td>配合楽天ペイ 可再叠一层</td></tr>
+          <tr><td>エポスカード</td><td>免年费、审核友好，丸井系折扣多</td><td>常见的"第一张日本信用卡"</td></tr>
+          <tr><td>三井住友カード（NL）</td><td>在便利店、麦当劳等用手机 <span class="jp">タッチ決済</span> 返点很高</td><td>需用非接触方式，插卡不算</td></tr>
+          <tr><td>PayPay / 楽天ペイ / d払い</td><td>日常小额；<b>宫城县和仙台市会不定期做 20–30% 返还活动</b></td><td>关注自治体公告，活动期集中消费</td></tr>
+          <tr><td>マネーフォワード ME</td><td>绑定银行和卡，自动记账，每月看一次固定费</td><td>省钱的前提是知道钱去哪了</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 吃饭 ============ -->
+<section id="food">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker"><b>餐饮饮食</b><span>学食 / 自炊 / 外食</span></div>
+      <h2>把伙食费压到一半，而不是把生活压到一半</h2>
+      <p class="lede">全外食一天约 2,000 日元，一年就是 70 万以上。目标不是天天做饭——博士生没这个时间——而是<strong>让默认选项变便宜</strong>：午饭学食、晚饭吃周末批量做好的存货、外食留给想吃的时候。</p>
+    </div>
+
+    <h3>三餐的默认结构</h3>
+    <div class="grid g3">
+      <div class="card">
+        <span class="tag">早 · 约 100–200 日元</span>
+        <h4>在家解决</h4>
+        <p>燕麦、面包、鸡蛋、香蕉。不少大学生协有低价早餐（<span class="jp">100 円朝食</span>类）企划，开学时去食堂看一眼公告有没有。</p>
+      </div>
+      <div class="card">
+        <span class="tag">午 · 约 400–700 日元</span>
+        <h4>学食（生协食堂）</h4>
+        <p>川内、青葉山、片平、星陵各校区都有。价格是同等分量外食的一半，而且标注热量和营养均衡度。<b>加入东北大生协</b>：出资金在毕业时退还，书籍常年 9 折，食堂和购买部还有电子钱包返点。</p>
+      </div>
+      <div class="card">
+        <span class="tag">晚 · 约 200–400 日元</span>
+        <h4>周末批量做好的存货</h4>
+        <p><span class="jp">作り置き</span>：周日煮一锅咖喱／番茄肉酱／炖菜，分装冷冻。工作日只需微波＋煮点米饭或冷冻乌冬。</p>
+      </div>
+    </div>
+
+    <h3>自炊：四个真正省钱的动作</h3>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>动作</th><th>怎么做</th><th>省下</th></tr></thead>
+        <tbody>
+          <tr><td>盯半额贴</td><td>超市熟食、刺身、便当在关门前 1–2 小时贴 3 折／5 折标（多在 19:00–20:30）。面包店闭店前同理。<b>把回家路线设计成经过一家超市</b>。</td><td><span class="num">3–6 万/年</span></td></tr>
+          <tr><td>用業務スーパー打底</td><td>冷冻西兰花、鸡胸肉大包、意面 1kg、冷冻乌冬 5 食装——这些是单价洼地。回家先分装。</td><td><span class="num">4–8 万/年</span></td></tr>
+          <tr><td>调味料一次配齐</td><td>酱油、味醂、料理酒、味噌、<span class="jp">だしの素</span>、鸡精、蚝油。有了这七样，绝大多数家常菜和日式菜都能做，就不会因为"缺料"而叫外卖。</td><td>间接但显著</td></tr>
+          <tr><td>自带水壶和咖啡</td><td>便利店咖啡约 120 日元，自己冲挂耳约 30 日元。一天两杯，一年就是 6 万以上的差额。</td><td><span class="num">4–6 万/年</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note win">
+      <span class="lbl">仙台在地</span>
+      <p><b>仙台朝市</b>（仙台站西口步行约 5 分钟）蔬菜水果比超市便宜，量大、适合两三个人拼；<b>みやぎ生協</b> 的配送（<span class="jp">宅配</span>）对没时间买菜的人很实用，入会有出资金、退会时退还。中国食材在市内几家华人食材店、カルディ 和業務スーパー 都能凑齐大半（花椒、豆瓣酱、老干妈之类）。</p>
+    </div>
+
+    <h3>外食：怎么吃得开心又不心疼</h3>
+    <div class="grid g2">
+      <div class="card">
+        <span class="tag">价格锚点</span>
+        <ul>
+          <li>牛丼三家（すき家・吉野家・松屋）：500 日元以内吃饱，松屋还送味噌汤</li>
+          <li><span class="jp">幸楽苑</span>：福岛起家、东北门店密，中华面价格友好</li>
+          <li><span class="jp">サイゼリヤ</span>：想坐下来慢慢吃、还想喝点东西时的最优解</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">规律</span>
+        <ul>
+          <li><b>同一家店午市比晚市便宜 3–4 成</b>。想试的餐厅就中午去</li>
+          <li>连锁店官方 App 和 LINE 几乎都有优惠券，点单前扫一眼</li>
+          <li>请人吃饭也可以约学食——校外人员价仍然便宜，而且有话题</li>
+          <li>剩食 App（TABETE 等）若在仙台有加盟店，可以捡漏面包和熟食</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">
+      <span class="lbl">ふるさと納税</span>
+      <p>如果你有课税所得（学振 DC 的研究奨励金属<span class="jp">雑所得</span>、TA／RA 工资、SPRING 类奖励金等），可以用<span class="jp">ふるさと納税</span>把本来要交的住民税换成大米和肉——<b>自付额只有 2,000 日元</b>。先在楽天ふるさと納税或ふるさとチョイス 上用收入试算上限，别超额。注意：若已通过租税条约免除所得税、且住民税也非课税，那就没有可抵扣的税，这条不适用——先确认自己的纳税状态。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 出行 ============ -->
+<section id="move">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker"><b>交通出行</b><span>通勤 / 市内 / 远行</span></div>
+      <h2>仙台是少数"不用买车"的日本城市</h2>
+      <p class="lede">地铁东西线直达青葉山，市中心步行尺度友好，共享单车覆盖核心区。真正需要花心思的是<strong>去外地的那几趟</strong>——那里的价差是几千到上万日元一次。</p>
+    </div>
+
+    <h3>校区与地铁</h3>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>校区</th><th>最近车站</th><th>线路</th><th>备注</th></tr></thead>
+        <tbody>
+          <tr><td>青葉山（理・工・农等）</td><td>青葉山</td><td>东西线</td><td>站口直连校区。山上坡陡，冬天别骑车</td></tr>
+          <tr><td>川内（文科・全学教育）</td><td>川内</td><td>东西线</td><td>与青葉山相邻一站</td></tr>
+          <tr><td>片平（各研究所）</td><td>五橋 / 青葉通一番町</td><td>南北线 / 东西线</td><td>离市中心最近，步行可达一番町商圈</td></tr>
+          <tr><td>星陵（医・齿）</td><td>北四番丁</td><td>南北线</td><td>步行十几分钟，或转巴士</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>市内日常</h3>
+    <div class="grid g2">
+      <div class="card">
+        <span class="tag">IC 卡</span>
+        <h4>icsca 还是 Suica</h4>
+        <p><b>地铁和市巴士：办 icsca</b>——本地卡有乘车积分返还，还有地铁⇄巴士的换乘折扣，通学定期也挂在它上面。Suica 也能刷仙台地铁，但拿不到 icsca 的积分。</p>
+        <p><b>JR（仙石线、仙山线、机场线）：用 Suica</b>，icsca 在 JR 上不能用。两张卡各司其职是常态。</p>
+      </div>
+      <div class="card">
+        <span class="tag">自行车</span>
+        <h4>办登记，别乱停</h4>
+        <p><b>防犯登録必办</b>（约 600 日元），二手车过户也要重登记。车站前和校内停车场买月票很便宜，而<b>乱停被拖走的取回费是几千日元</b>，一次就亏回来。</p>
+        <p>另外一定要买<b>自行车赔偿责任险</b>——通常能以每月几百日元作为火灾保险或共济的特约附加，撞到人时是救命的。</p>
+      </div>
+      <div class="card">
+        <span class="tag">共享单车</span>
+        <h4>DATE BIKE（ダテバイク）</h4>
+        <p>仙台的共享单车，市中心站点密。有<b>月套餐</b>（两千日元出头），30 分钟内不限次数，适合片平／一番町一带活动多的人。单次也可按 30 分钟计费。</p>
+      </div>
+      <div class="card">
+        <span class="tag">最大的一笔</span>
+        <h4>住哪 ＞ 怎么走</h4>
+        <p>比较时别只看房租，要算<b>房租＋定期券＋通勤时间</b>的总成本。住得远省下的房租，经常被定期券和每天多花的一小时吃掉。青葉山／川内 步行圈值得多花一点。</p>
+      </div>
+    </div>
+
+    <h3>出远门：先比这两个价，再买票</h3>
+    <div class="prose">
+      <p>去东京这类长距离行程，有两条独立的省钱路径，<strong>不能叠加，只能取更低者</strong>：</p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <span class="tag">路径 A · 学割</span>
+        <h4>学生・生徒旅客運賃割引証</h4>
+        <p>从教务系统申请（通称<span class="jp">学割証</span>）。JR <b>单程 101km 以上，运赁打 8 折</b>；特急券不打折。仙台⇄东京（约 352km）适用，单程约省 <b>1,200 日元</b>。优点是随时能用、不限座位。</p>
+      </div>
+      <div class="card">
+        <span class="tag">路径 B · 早订</span>
+        <h4>えきねっと「お先にトクだ値」</h4>
+        <p>JR 东日本的线上早鸟票，<b>乘车 13 天前截止、座位数有限</b>，折扣常在 3–5 成，单程能省 <b>3,000–5,000 日元</b>。行程定得早就走这条，通常明显优于学割。</p>
+      </div>
+    </div>
+
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>目的地</th><th>最省</th><th>最快</th><th>参考</th></tr></thead>
+        <tbody>
+          <tr><td>东京</td><td class="pick">夜行高速巴士（约 3,000–9,000 日元，5–6 小时，省一晚住宿）</td><td>新干线（约 1.5 小时）</td><td>新干线原价约 1.1 万；提前订トクだ値可砍到六七千</td></tr>
+          <tr><td>山形</td><td class="pick">高速巴士（约 1,000 日元出头，约 1 小时，班次密）</td><td>同上</td><td>比 JR 仙山线更便宜也更快，回数券更划算</td></tr>
+          <tr><td>松岛</td><td class="pick">JR 仙石线（约 400 日元出头，约 40 分钟）</td><td>同上</td><td>半日游首选，Suica 直接刷</td></tr>
+          <tr><td>山寺</td><td class="pick">JR 仙山线（约 1,000 日元，约 1 小时）</td><td>同上</td><td>可与山形连成一天</td></tr>
+          <tr><td>札幌 / 大阪 / 福冈</td><td class="pick">仙台机场 + 廉航（提前订常低于新干线）</td><td>飞机</td><td>仙台站到机场：<span class="jp">仙台空港アクセス線</span> 约 25 分钟、660 日元上下</td></tr>
+          <tr><td>蔵王 / 鸣子 / 秋保</td><td class="pick">共享汽车（タイムズカー 等）几人分摊</td><td>同上</td><td>公共交通薄弱，人多时租车最合算</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <span class="tag">季节限定</span>
+        <h4>青春 18 きっぷ</h4>
+        <p>春、夏、冬发售，普通列车不限次。<b>2024 年冬起改为"连续日期"使用</b>（3 日 / 5 日两种），且可走自动检票口。用时间换钱，适合假期慢慢逛东北。</p>
+      </div>
+      <div class="card">
+        <span class="tag">季节限定</span>
+        <h4>JR 东日本的周游券</h4>
+        <p>JR 东会不定期推出面向所有人（不限国籍）的限时周游票，比如包含新干线的数日不限次券。<b>规划东北环游前先查一次官网</b>，有活动时能省一半。</p>
+      </div>
+      <div class="card">
+        <span class="tag">年龄限制</span>
+        <h4>航空学割</h4>
+        <p>JAL <span class="jp">スカイメイト</span> 和 ANA <span class="jp">スマート U25</span> 只到 25 岁。<b>26 岁以上就走早鸟</b>（ANA <span class="jp">スーパーバリュー</span>、JAL <span class="jp">先得</span>），提前订同样便宜。</p>
+      </div>
+      <div class="card">
+        <span class="tag">重要提醒</span>
+        <h4>中国驾照在日本不能开车</h4>
+        <p>中国不是日内瓦公约缔约国，<b>国际驾照在日本无效</b>。想租车需要办<span class="jp">外免切替</span>（凭 JAF 或使领馆的翻译文，到免许中心考知识和技能确认），或直接在日本考本。别听信"带国际驾照就行"。</p>
+      </div>
+    </div>
+    <div class="note">
+      <span class="lbl">出差</span>
+      <p>去开学会：先确认学院／课题组的<span class="jp">旅費規程</span>和能否垫付报销，再订票——有些经费不认某些购票渠道的凭证。学会本身也几乎都有学生会员费和学生参会费，早鸟注册再省一档。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 生活杂事 ============ -->
+<section id="life">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker"><b>其他生活</b><span>住 / 钱 / 网 / 健康 / 身份福利</span></div>
+      <h2>固定费才是复利，别在变动费上耗神</h2>
+      <p class="lede">省钱的优先级永远是 <strong>房租 &gt; 通信 &gt; 保险与订阅 &gt; 日常消费</strong>。前三项各调整一次，效果超过一整年的精打细算，而且只花你一个下午。</p>
+    </div>
+
+    <h3>住</h3>
+    <div class="grid g2">
+      <div class="card">
+        <span class="tag">首选</span>
+        <h4>大学宿舍</h4>
+        <p>ユニバーシティ・ハウス（三条・片平・青葉山 等）比民间租房便宜一大截，租金加管理费大致落在<b>每月两三万日元</b>的区间（房型和年度不同）。缺点是<b>有入住年限</b>、申请有固定窗口。留学生名额通常单列，务必在录取阶段就去问。</p>
+      </div>
+      <div class="card">
+        <span class="tag">民间租房</span>
+        <h4>初期费用才是大头</h4>
+        <p>敷金・礼金・中介费・火灾保险・保证公司加起来，常常等于 4–5 个月房租。<b>UR 赁贷没有礼金、中介费、续约费和保证人</b>，仙台有房源，值得优先看。学校的留学生住房支援和生协的住房介绍也能省掉中介费。</p>
+      </div>
+      <div class="card">
+        <span class="tag">冬季</span>
+        <h4>暖气是最大的变动费</h4>
+        <p>外气温低时空调制热效率下降。真正见效的是<b>窗户贴保温膜</b>（几百到一千日元，回本极快）、电热毯和被炉——把"暖人"而不是"暖房间"当目标。煤油暖风机在仙台也很普遍，但要算上初期投入和通风。</p>
+      </div>
+      <div class="card">
+        <span class="tag">垃圾</span>
+        <h4>仙台的袋子要花钱</h4>
+        <p>仙台市的<b>家庭垃圾和塑料容器包装必须用指定袋</b>（收费），而纸类、瓶罐、PET 的资源回收是免费的。<b>认真分类＝直接省钱</b>。粗大垃圾要付费预约，与其花钱扔，不如挂 ジモティー 送人。</p>
+      </div>
+    </div>
+
+    <h3>钱与账户</h3>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>项目</th><th>建议</th></tr></thead>
+        <tbody>
+          <tr><td>银行账户</td><td><b>ゆうちょ銀行</b>（ATM 网点最广）＋ <b>七十七銀行</b>（宫城主力地银，奖学金和工资常指定）。再加一个网络银行（住信 SBI、楽天銀行）用来吃免手续费转账额度。</td></tr>
+          <tr><td>国际汇款</td><td>Wise 等汇款服务在费率和汇率上通常优于银行电汇，金额大时差别明显。第一次汇之前用同一笔金额在两边各试算一次。</td></tr>
+          <tr><td>确定申告</td><td>每年 <b>2/16–3/15</b>。可退回被多扣的所得税、补上漏掉的租税条约适用、以及医疗费超过 10 万日元的扣除。用 e-Tax 在家就能办。</td></tr>
+          <tr><td>订阅盘点</td><td>每年设一次提醒，把所有自动续费（流媒体、健身房、保险、云存储）列出来，砍掉三个月没用过的。这一步平均能挖出一两万日元。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>通信</h3>
+    <div class="prose">
+      <p>校内有 TU-Wireless 和 eduroam，研究室泡一天基本不耗流量——<strong>你几乎不需要大流量套餐</strong>。三大运营商每月八九千日元的方案换成廉价 SIM，一年省 6–9 万日元，这是单项性价比最高的调整之一。</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <span class="tag">流量用得少</span>
+        <h4>povo2.0</h4>
+        <p>基础月费 0 日元，按需买流量包。<b>注意：180 天内必须购买过一次付费包，否则会被停用。</b></p>
+      </div>
+      <div class="card">
+        <span class="tag">用量不稳定</span>
+        <h4>楽天モバイル</h4>
+        <p>按用量自动分档（3GB 约 1,078 日元起，不限量约 3,278 日元）。用得少就自动便宜，不用自己算。</p>
+      </div>
+      <div class="card">
+        <span class="tag">要稳定</span>
+        <h4>ahamo / IIJmio / mineo</h4>
+        <p>ahamo 约 2,970 日元含大流量、支持海外漫游；IIJmio、mineo 更便宜但网速高峰期会打折扣。</p>
+      </div>
+    </div>
+
+    <h3>健康与行政</h3>
+    <div class="grid g2">
+      <div class="card">
+        <span class="tag">医疗</span>
+        <ul>
+          <li>国民健康保险自付 <b>3 割</b>；看病一定带保険証</li>
+          <li>开药时说"要 <span class="jp">ジェネリック</span>（仿制药）"，同成分便宜不少；带上 <span class="jp">お薬手帳</span></li>
+          <li><b>每年的定期健康诊断免费且必须做</b>——很多证明和申请要用它出具的健康证明</li>
+          <li>牙科自费部分很痛，靠<b>保险内的定期洁牙</b>预防远比补救便宜</li>
+          <li>大学保健管理中心有免费或低价的心理咨询，别硬扛</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">手续</span>
+        <ul>
+          <li>搬家后 <b>14 天内</b>办转出／转入，并更新在留卡背面地址</li>
+          <li>マイナンバーカード 办下来，网上办事和 e-Tax 都方便</li>
+          <li>在留期间更新、资格外活动许可（打工许可）别拖到最后一周</li>
+          <li>仙台国际交流协会（SenTIA）有免费或低价日语教室和生活咨询</li>
+          <li>宫城地震多：<b>把常吃的食品和水多买一点、循环消耗</b>，防灾和省钱同一件事</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>学生身份的隐藏福利</h3>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>类别</th><th>能拿到什么</th></tr></thead>
+        <tbody>
+          <tr><td>软件</td><td>学校通常有 Microsoft 365、MATLAB、杀毒软件的<b>全校授权</b>——<b>买之前先查信息部门的页面</b>，很多人白花了钱。</td></tr>
+          <tr><td>开发 / 科研</td><td>GitHub Student Developer Pack（一大包免费额度）、JetBrains 全家桶学生免费、Overleaf、Zotero、Notion Education、Figma Education。</td></tr>
+          <tr><td>文献</td><td>图书馆的电子期刊和数据库；没有的可申请 <b>ILL 校际调阅</b>或荐购。买论文和买书之前先走这一步。</td></tr>
+          <tr><td>生协</td><td>书籍常年 9 折，另有旅行、搬家、驾校的会员折扣。出资金毕业时退还。</td></tr>
+          <tr><td>娱乐</td><td>电影学生票（约 1,500 日元），叠加每月 1 日的<span class="jp">映画の日</span>和晚场更便宜；仙台市博物馆、宫城县美术馆等学生票；Spotify、YouTube Premium、Adobe、Apple 都有学生价。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note warn">
+      <span class="lbl">防坑</span>
+      <p>区役所、税务署、大学<b>不会打电话让你转账或索要银行密码</b>。收到"未缴费用""包裹异常""在留资格有问题"之类的短信和电话一律不点链接、不回拨，直接去官网或窗口核实。也别在陌生人劝说下办手机合约或签名。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 时机日历 ============ -->
+<section id="when">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker"><b>时机</b><span>什么时候买 · 什么时候办</span></div>
+      <h2>把日历排好，就不用记省钱技巧</h2>
+      <p class="lede">日本的折扣高度规律。把下面这些设成手机日历的重复事件，剩下的时间就可以完全不想钱的事。</p>
+    </div>
+
+    <h4>每月固定</h4>
+    <div class="cal">
+      <div><span class="d">1 日</span><span class="w">映画の日 — 看电影最便宜的一天</span></div>
+      <div><span class="d">5 · 15 · 25 日</span><span class="w">ツルハ 感謝デー 95 折 — 日用品囤货</span></div>
+      <div><span class="d">5 和 0 结尾的日子</span><span class="w">楽天 / Yahoo 积分加倍（需事前 entry）</span></div>
+      <div><span class="d">20 日</span><span class="w">ウエル活 — V 积分 1.5 倍抵扣，全月的积分在这天花</span></div>
+      <div><span class="d">20 · 30 日</span><span class="w">イオン お客さま感謝デー 95 折 — 含食品</span></div>
+      <div><span class="d">每天 19:00 后</span><span class="w">超市半额贴 — 回家路上顺一趟</span></div>
+    </div>
+
+    <h4>全年节奏</h4>
+    <div class="cal">
+      <div><span class="d">1–2 月</span><span class="w">冬装清仓最低点；家电决算前促销开始</span></div>
+      <div><span class="d">2/16–3/15</span><span class="w">確定申告 — 退税、补租税条约</span></div>
+      <div><span class="d">2–3 月</span><span class="w">决算大促 ＋ <b>毕业搬家季</b>：二手家具家电的年度最低点</span></div>
+      <div><span class="d">4 月</span><span class="w">国民年金学生納付特例<b>重新申请</b>；新学期各类申请开放</span></div>
+      <div><span class="d">6–7 月</span><span class="w">夏装促销；Amazon プライムデー</span></div>
+      <div><span class="d">9 月</span><span class="w">中期决算促销；秋季毕业搬家，二手再来一波</span></div>
+      <div><span class="d">11 月</span><span class="w">ブラックフライデー — 电子产品和大件的全年低点</span></div>
+      <div><span class="d">每学期</span><span class="w">授業料免除 申請 — 前期与後期各一次，<b>过期不补</b></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 对账单 ============ -->
+<section id="total">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker"><b>合计</b><span>年度可省估算</span></div>
+      <h2>这份手册值多少钱</h2>
+      <p class="lede">下面是把全部建议执行到位后，相对"什么都不做"的年度差额估算。金额取决于你的起点——已经在做的项目自然不产生新的节省。</p>
+    </div>
+
+    <div class="ledger">
+      <div class="led-title"><span>项目</span><span>年度节省（日元）</span></div>
+
+      <div class="led-row"><span class="n">授業料免除（按全免计）</span><span class="dots"></span><span class="v">535,800</span></div>
+      <div class="led-row"><span class="n">国民年金 学生納付特例</span><span class="dots"></span><span class="v">≈ 210,000</span></div>
+      <div class="led-row"><span class="n">学食＋自炊 替代全外食</span><span class="dots"></span><span class="v">150,000 – 250,000</span></div>
+      <div class="led-row"><span class="n">廉价 SIM 替代三大运营商</span><span class="dots"></span><span class="v">60,000 – 90,000</span></div>
+      <div class="led-row"><span class="n">住民税申告 → 国保料軽減</span><span class="dots"></span><span class="v">30,000 – 80,000</span></div>
+      <div class="led-row"><span class="n">通学定期（6 个月）替代单次购票</span><span class="dots"></span><span class="v">30,000 – 50,000</span></div>
+      <div class="led-row"><span class="n">租税条約による所得税免除</span><span class="dots"></span><span class="v">20,000 – 50,000</span></div>
+      <div class="led-row"><span class="n">药妆特价日＋网购定期便</span><span class="dots"></span><span class="v">20,000 – 40,000</span></div>
+      <div class="led-row"><span class="n">远行改用早鸟票／高速巴士（按年 4 趟计）</span><span class="dots"></span><span class="v">20,000 – 40,000</span></div>
+      <div class="led-row"><span class="n">自带水壶与咖啡</span><span class="dots"></span><span class="v">40,000 – 60,000</span></div>
+      <div class="led-row"><span class="n">订阅盘点＋学生价</span><span class="dots"></span><span class="v">10,000 – 30,000</span></div>
+      <div class="led-row sub"><span class="n">＋ 一次性：二手家具家电替代全新</span><span class="dots"></span><span class="v">50,000 – 150,000</span></div>
+
+      <div class="led-total"><span class="n">合计（每年）</span><span class="v">约 90 万 – 140 万</span></div>
+      <p class="led-note">按 2026 年前后的物价水平粗略估算，未计入奖学金和 fellowship 的收入侧。学费免除若为半免则减半；已在执行的项目请自行扣除。这份表的用途不是精确核算，而是让你知道<b>哪一栏值得先动手</b>——从上往下就是优先级。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>关于数字。</b>本文中的价格、折扣日和制度细则是写作时（2026 年）的参考区间，商家活动规则每年调整，学费、保险费、年金保险费按年度改定，各类申请窗口以东北大学和仙台市各区役所的官方公告为准。遇到金额较大的决定（学费免除、年金、保险、租税条约），请以窗口答复为准，不要以本文为准。</p>
+    <p><b>关于取舍。</b>省钱的目的是把钱和注意力留给真正重要的事——你的研究、健康和几趟走得远一点的旅行。凡是需要你每天费神比价的技巧，本文都没有收录；留下的都是<b>设置一次、长期生效</b>的那种。</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var K='sendai-guide-todo';
+  var boxes=document.querySelectorAll('#todo input[type=checkbox]');
+  var count=document.getElementById('todo-count');
+  var reset=document.getElementById('todo-reset');
+  function load(){try{return JSON.parse(localStorage.getItem(K)||'{}')||{}}catch(e){return{}}}
+  function save(s){try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}}
+  function render(){
+    var done=0;
+    boxes.forEach(function(b){if(b.checked)done++});
+    count.textContent = done ? ('已完成 '+done+' / '+boxes.length+' · 勾选保存在本机浏览器')
+                             : '勾选状态保存在本机浏览器';
+  }
+  var state=load();
+  boxes.forEach(function(b){
+    if(state[b.dataset.k])b.checked=true;
+    b.addEventListener('change',function(){
+      var s=load(); s[b.dataset.k]=b.checked; save(s); render();
+    });
+  });
+  reset.addEventListener('click',function(){
+    boxes.forEach(function(b){b.checked=false});
+    save({}); render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>
