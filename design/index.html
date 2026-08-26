@@ -1,0 +1,2479 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080D13">
+<meta name="description" content="十三件可交互的展品——眼睛、星轨、DNA、熵与常数——一份关于设计论的观测记录。">
+<!--ARTIFACT-START-->
+<title>造物的指纹</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,300&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;500&family=Noto+Serif+SC:wght@700&display=swap">
+<style>
+/* ============ 令牌 ============ */
+:root{
+  --ground:#080D13; --ground-2:#0B1219; --surface:#0F1922; --surface-2:#142230;
+  --rule:#1E2E3C; --rule-soft:#152230; --rule-bright:#2C4356;
+  --ink:#E8EFF5; --dim:#93A7B5; --faint:#5D707E;
+  --gold:#D8A34A; --gold-2:#F2D49A; --gold-dim:#7E6027;
+  --verd:#6FA894; --rust:#C0573B; --star:#CBE0EF;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --lat:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --rail:96px;
+  --pad:clamp(18px,4vw,40px);
+  --maxw:1320px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-weight:300; line-height:1.85;
+  font-size:clamp(15px,0.42vw + 14px,17px);
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+::selection{background:rgba(216,163,74,.28); color:#fff}
+img{max-width:100%}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:700; line-height:1.28; text-wrap:balance; margin:0}
+p{margin:0}
+a{color:var(--gold-2); text-decoration:none; border-bottom:1px solid rgba(216,163,74,.35)}
+a:hover{border-bottom-color:var(--gold)}
+button{font:inherit; color:inherit; background:none; border:none; cursor:pointer}
+:focus-visible{outline:2px solid var(--gold); outline-offset:3px; border-radius:2px}
+
+/* ============ 背景星野 ============ */
+#skyfield{position:fixed; inset:0; width:100%; height:100%; z-index:0; opacity:.55; pointer-events:none}
+.vignette{position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(120% 80% at 50% 0%,rgba(20,40,60,.30),transparent 55%),
+             radial-gradient(100% 60% at 50% 100%,rgba(216,163,74,.06),transparent 60%);}
+.grain{position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.035;
+  background-image:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 3px);}
+
+/* ============ 侧栏索引 ============ */
+.rail{position:fixed; left:0; top:0; bottom:0; width:var(--rail); z-index:40;
+  display:none; flex-direction:column; align-items:center; padding:26px 0 22px;
+  border-right:1px solid var(--rule-soft); background:linear-gradient(180deg,rgba(8,13,19,.94),rgba(8,13,19,.72));
+  backdrop-filter:blur(6px);}
+.rail__mark{font-family:var(--lat); font-size:22px; letter-spacing:.14em; color:var(--gold); writing-mode:vertical-rl; margin-bottom:20px}
+.rail__line{flex:1; width:1px; background:linear-gradient(180deg,transparent,var(--rule-bright) 12%,var(--rule-bright) 88%,transparent); position:relative; display:flex; flex-direction:column; justify-content:space-between; align-items:center; padding:6px 0}
+.rail__dot{position:relative; width:26px; height:26px; display:grid; place-items:center; border-radius:50%; color:var(--faint);
+  font-family:var(--lat); font-size:15px; letter-spacing:.02em; background:var(--ground); transition:color .3s,transform .3s}
+.rail__dot::after{content:""; position:absolute; inset:0; border-radius:50%; border:1px solid transparent; transition:border-color .3s}
+.rail__dot:hover{color:var(--dim)}
+.rail__dot[aria-current="true"]{color:var(--gold-2); transform:scale(1.18)}
+.rail__dot[aria-current="true"]::after{border-color:var(--gold)}
+.rail__foot{font-family:var(--mono); font-size:10px; letter-spacing:.22em; color:var(--faint); writing-mode:vertical-rl; margin-top:18px}
+@media (min-width:1180px){ .rail{display:flex} body{padding-left:var(--rail)} }
+
+/* ============ 移动端进度与索引 ============ */
+.mbar{position:fixed; top:0; left:0; right:0; z-index:45; height:44px; display:flex; align-items:center; gap:12px;
+  padding:0 14px; background:linear-gradient(180deg,rgba(8,13,19,.95),rgba(8,13,19,.72)); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule-soft)}
+.mbar__title{font-family:var(--lat); font-size:16px; letter-spacing:.16em; color:var(--gold); flex:none}
+.mbar__now{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; color:var(--dim); flex:1; overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
+.mbar__btn{font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; color:var(--gold-2); border:1px solid var(--rule-bright); padding:5px 9px; border-radius:2px}
+.mbar__prog{position:absolute; left:0; bottom:-1px; height:1px; background:var(--gold); width:0}
+@media (min-width:1180px){ .mbar{display:none} }
+@media (max-width:1179px){ body{padding-top:44px} }
+
+.sheet{position:fixed; inset:0; z-index:60; background:rgba(4,7,11,.92); backdrop-filter:blur(10px);
+  padding:64px 20px 32px; overflow-y:auto; display:none}
+.sheet[data-open="true"]{display:block}
+.sheet__close{position:absolute; top:12px; right:14px; font-family:var(--mono); font-size:11px; letter-spacing:.16em; color:var(--dim); border:1px solid var(--rule); padding:7px 11px}
+.sheet__group{font-family:var(--mono); font-size:10px; letter-spacing:.24em; color:var(--gold-dim); margin:22px 0 8px; text-transform:uppercase}
+.sheet a{display:flex; gap:12px; align-items:baseline; padding:9px 0; border-bottom:1px solid var(--rule-soft); color:var(--ink)}
+.sheet a span{font-family:var(--lat); color:var(--gold); font-size:15px; min-width:26px}
+
+/* ============ 通用容器 ============ */
+.shell{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 var(--pad)}
+.eyebrow{font-family:var(--mono); font-size:10.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--gold-dim)}
+.lede{color:var(--dim); font-size:1.02em}
+hr.rule{border:0; border-top:1px solid var(--rule-soft); margin:0}
+
+/* ============ 首屏 ============ */
+.hero{position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:center; padding:80px 0 56px}
+#heroCanvas{position:absolute; inset:0; width:100%; height:100%; z-index:0}
+.hero__inner{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); width:100%}
+.hero__kicker{display:flex; align-items:center; gap:14px; margin-bottom:26px}
+.hero__kicker i{display:block; width:clamp(32px,7vw,84px); height:1px; background:var(--gold-dim); flex:none}
+.hero h1{font-size:clamp(46px,12.5vw,142px); letter-spacing:.06em; line-height:.98; margin:0 0 4px;
+  background:linear-gradient(174deg,#FFF6E4 6%,var(--gold-2) 42%,#A87B2E 108%); -webkit-background-clip:text; background-clip:text; color:transparent}
+.hero__lat{font-family:var(--lat); font-style:italic; font-weight:300; font-size:clamp(15px,2.6vw,25px); color:var(--faint); letter-spacing:.1em; margin-bottom:34px}
+.hero__claim{font-family:var(--serif); font-weight:700; font-size:clamp(19px,3.4vw,32px); line-height:1.6; max-width:13em; margin-bottom:22px}
+.hero__claim em{font-style:normal; color:var(--gold-2); white-space:nowrap}
+.hero__sub{max-width:44ch; color:var(--dim); margin-bottom:36px}
+.hero__cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+.btn{display:inline-flex; align-items:center; gap:10px; font-family:var(--mono); font-size:12px; letter-spacing:.18em;
+  padding:14px 22px; border:1px solid var(--gold-dim); color:var(--gold-2); background:rgba(216,163,74,.05); transition:.28s}
+.btn:hover{background:rgba(216,163,74,.14); border-color:var(--gold); transform:translateY(-1px)}
+.btn--ghost{border-color:var(--rule-bright); color:var(--dim); background:none}
+.btn--ghost:hover{color:var(--ink); border-color:var(--dim); background:rgba(255,255,255,.03)}
+.hero__meta{position:absolute; left:var(--pad); right:var(--pad); bottom:20px; z-index:2; display:flex; justify-content:space-between;
+  font-family:var(--mono); font-size:10px; letter-spacing:.2em; color:var(--faint); border-top:1px solid var(--rule-soft); padding-top:12px}
+@media (max-width:640px){ .hero__meta span:nth-child(2){display:none} }
+
+/* ============ 幕间标题 ============ */
+.act{position:relative; z-index:2; padding:clamp(56px,9vw,110px) 0 clamp(20px,3vw,34px)}
+.act__inner{max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); display:flex; align-items:flex-end; gap:clamp(14px,3vw,30px); border-bottom:1px solid var(--rule-soft); padding-bottom:20px}
+.act__num{font-family:var(--lat); font-size:clamp(44px,9vw,96px); font-weight:300; color:var(--gold-dim); line-height:.8; flex:none}
+.act__txt h2{font-size:clamp(22px,4.4vw,40px); letter-spacing:.03em}
+.act__txt p{color:var(--faint); font-size:.92em; margin-top:6px; max-width:52ch}
+
+/* ============ 展品 ============ */
+.chapter{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:clamp(42px,7vw,84px) var(--pad) clamp(48px,8vw,96px);
+  display:grid; row-gap:24px; column-gap:clamp(26px,4vw,52px); grid-template-columns:1fr;
+  grid-template-areas:"top" "instr" "body"; align-items:start}
+.ch__top{grid-area:top; display:flex; flex-direction:column; gap:12px}
+.ch{grid-area:body}
+.instr{grid-area:instr}
+@media (min-width:980px){ .chapter{grid-template-columns:minmax(0,1fr) minmax(0,1.06fr); grid-template-areas:"top instr" "body instr"} }
+.chapter + .chapter{border-top:1px solid var(--rule-soft)}
+
+.ch__head{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap}
+.ch__num{font-family:var(--lat); font-size:clamp(30px,5vw,46px); font-weight:300; color:var(--gold); line-height:1}
+.ch__tag{font-family:var(--mono); font-size:10px; letter-spacing:.2em; color:var(--faint); border:1px solid var(--rule); padding:3px 8px}
+.ch__top h3{font-size:clamp(25px,4.6vw,40px); letter-spacing:.02em}
+.ch__lat{font-family:var(--lat); font-style:italic; color:var(--faint); font-size:15px; letter-spacing:.06em; margin:0}
+.ch__body{display:flex; flex-direction:column; gap:16px; max-width:60ch}
+.ch__body p strong{font-weight:500; color:var(--gold-2)}
+.ch__body p b{font-weight:500; color:var(--ink)}
+
+/* 数据条 */
+.figs{display:grid; grid-template-columns:repeat(auto-fit,minmax(146px,1fr)); gap:1px; background:var(--rule-soft); border:1px solid var(--rule-soft); margin:6px 0}
+.fig{background:var(--ground-2); padding:13px 14px}
+.fig b{display:block; font-family:var(--lat); font-size:clamp(19px,2.6vw,26px); font-weight:500; color:var(--gold-2); line-height:1.1; letter-spacing:.01em; font-variant-numeric:tabular-nums}
+.fig span{display:block; font-family:var(--mono); font-size:10px; letter-spacing:.1em; color:var(--faint); margin-top:6px; line-height:1.5}
+
+/* 推演块 */
+.logic{border:1px solid var(--rule); background:linear-gradient(180deg,rgba(20,34,48,.5),rgba(15,25,34,.2)); padding:18px 20px; display:flex; flex-direction:column; gap:12px}
+.logic__t{font-family:var(--mono); font-size:10px; letter-spacing:.24em; color:var(--gold-dim)}
+.logic ol{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:11px; counter-reset:s}
+.logic li{position:relative; padding-left:32px; font-size:.96em}
+.logic li::before{counter-increment:s; content:counter(s); position:absolute; left:0; top:3px; font-family:var(--lat); font-size:14px; color:var(--gold);
+  width:20px; height:20px; display:grid; place-items:center; border:1px solid var(--gold-dim); border-radius:50%}
+.logic li:last-child{color:var(--gold-2); font-family:var(--serif); font-weight:700; line-height:1.7}
+.logic li:last-child::before{background:rgba(216,163,74,.14)}
+
+/* 质疑与回应 */
+.rebut{border-left:2px solid var(--rule-bright); padding:2px 0 2px 16px; display:flex; flex-direction:column; gap:9px}
+.rebut dt{font-family:var(--mono); font-size:10px; letter-spacing:.18em; color:var(--rust)}
+.rebut dd{margin:0; color:var(--dim); font-size:.94em}
+.rebut dd + dt{margin-top:6px}
+.rebut .ans{font-family:var(--mono); font-size:10px; letter-spacing:.18em; color:var(--verd)}
+
+/* ============ 仪器面板 ============ */
+.instr{position:relative; border:1px solid var(--rule); background:
+  linear-gradient(180deg,rgba(15,25,34,.86),rgba(8,13,19,.86));
+  padding:12px; display:flex; flex-direction:column; gap:10px}
+@media (min-width:980px){ .instr{position:sticky; top:24px} }
+.instr::before,.instr::after{content:""; position:absolute; width:9px; height:9px; border:1px solid var(--gold-dim); pointer-events:none}
+.instr::before{top:-1px; left:-1px; border-right:0; border-bottom:0}
+.instr::after{bottom:-1px; right:-1px; border-left:0; border-top:0}
+.instr__bar{display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; color:var(--faint); text-transform:uppercase}
+.instr__bar b{color:var(--gold-dim); font-weight:400}
+.instr__stage{position:relative; width:100%; aspect-ratio:4/3; max-height:62vh; background:radial-gradient(120% 110% at 50% 42%,#0D1620,#05090D 78%); border:1px solid var(--rule-soft); overflow:hidden; touch-action:manipulation}
+.instr__stage canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
+.instr__hint{margin:0; font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; color:var(--faint); padding:1px 2px; line-height:1.6}
+.instr__read{position:absolute; right:8px; top:8px; text-align:right; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--dim); pointer-events:none; line-height:1.65; font-variant-numeric:tabular-nums;
+  background:rgba(5,9,13,.62); border:1px solid rgba(30,46,60,.75); padding:5px 8px}
+.instr__read:empty{display:none}
+.instr__read b{color:var(--gold-2); font-weight:500}
+.instr__verdict{font-family:var(--serif); font-weight:700; font-size:.98em; line-height:1.6; min-height:3.2em; color:var(--ink); padding:2px 2px 0}
+.instr__verdict small{display:block; font-family:var(--sans); font-weight:300; font-size:.85em; color:var(--dim); margin-top:4px; line-height:1.65}
+
+/* 控件 */
+.ctrls{display:flex; flex-direction:column; gap:9px}
+.seg{display:flex; flex-wrap:wrap; gap:6px}
+.seg button{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; padding:7px 11px; border:1px solid var(--rule); color:var(--dim); background:rgba(255,255,255,.015); transition:.2s; flex:1 1 auto; min-width:fit-content}
+.seg button:hover{border-color:var(--rule-bright); color:var(--ink)}
+.seg button[aria-pressed="true"]{border-color:var(--gold-dim); color:var(--gold-2); background:rgba(216,163,74,.12)}
+.seg button[data-danger][aria-pressed="true"]{border-color:var(--rust); color:#F0A48D; background:rgba(192,87,59,.16)}
+.knob{display:grid; grid-template-columns:1fr auto; gap:4px 10px; align-items:center}
+.knob label{font-family:var(--mono); font-size:10px; letter-spacing:.12em; color:var(--dim)}
+.knob output{font-family:var(--mono); font-size:10.5px; color:var(--gold-2); font-variant-numeric:tabular-nums}
+.knob input{grid-column:1/-1}
+input[type=range]{-webkit-appearance:none; appearance:none; width:100%; height:20px; background:none; cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:1px; background:var(--rule-bright)}
+input[type=range]::-moz-range-track{height:1px; background:var(--rule-bright)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:13px; height:13px; margin-top:-6px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px rgba(216,163,74,.16)}
+input[type=range]::-moz-range-thumb{width:13px; height:13px; border:0; border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px rgba(216,163,74,.16)}
+input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px rgba(216,163,74,.4)}
+
+/* ============ 结语 ============ */
+.finale{position:relative; z-index:2; padding:clamp(60px,10vw,120px) 0 0; border-top:1px solid var(--rule-soft)}
+.finale__grid{display:grid; gap:clamp(24px,4vw,48px); grid-template-columns:1fr}
+@media (min-width:980px){ .finale__grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)} }
+.tally{border:1px solid var(--rule); background:rgba(15,25,34,.6); padding:14px}
+.tally__row{display:grid; grid-template-columns:26px 1fr auto; gap:10px; align-items:center; padding:7px 4px; border-bottom:1px solid var(--rule-soft); font-size:.9em}
+.tally__row:last-child{border-bottom:0}
+.tally__row i{font-family:var(--lat); font-style:normal; color:var(--gold-dim); font-size:13px}
+.tally__row b{font-family:var(--mono); font-size:10.5px; font-weight:400; color:var(--dim); letter-spacing:.06em; font-variant-numeric:tabular-nums}
+.tally__bar{height:2px; background:var(--rule); position:relative; grid-column:1/-1; margin-top:2px}
+.more{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:clamp(46px,7vw,84px) var(--pad) 0}
+.more__grid{display:grid; gap:1px; background:var(--rule-soft); border:1px solid var(--rule-soft);
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); margin-top:26px}
+.card{background:var(--ground-2); padding:16px 16px 18px; display:flex; flex-direction:column; gap:7px; transition:background .35s}
+.card:hover{background:var(--surface)}
+.card span{font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; color:var(--gold-dim)}
+.card h4{font-size:1.04em; letter-spacing:.01em}
+.card p{color:var(--dim); font-size:.88em; line-height:1.78}
+.card b{margin-top:auto; padding-top:6px; font-family:var(--lat); font-weight:500; font-size:20px; color:var(--gold-2); letter-spacing:.02em; font-variant-numeric:tabular-nums}
+.closing{max-width:62ch; display:flex; flex-direction:column; gap:18px}
+.closing p{font-size:1.04em}
+.pull{font-family:var(--serif); font-weight:700; font-size:clamp(21px,3.6vw,33px); line-height:1.55; color:var(--gold-2); text-wrap:balance}
+.honest{border:1px solid var(--rule); border-left:2px solid var(--gold-dim); padding:16px 18px; color:var(--dim); font-size:.94em; background:rgba(15,25,34,.4)}
+.site-foot{position:relative; z-index:2; margin-top:clamp(50px,8vw,90px); border-top:1px solid var(--rule-soft); padding:22px var(--pad) 40px;
+  max-width:var(--maxw); margin-left:auto; margin-right:auto; display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between;
+  font-family:var(--mono); font-size:10px; letter-spacing:.16em; color:var(--faint)}
+
+/* ============ 入场动画 ============ */
+.rise{opacity:0; transform:translateY(18px); transition:opacity .9s cubic-bezier(.2,.7,.3,1),transform .9s cubic-bezier(.2,.7,.3,1)}
+.rise.in{opacity:1; transform:none}
+@media (prefers-reduced-motion:reduce){ .rise{opacity:1; transform:none; transition:none} }
+</style>
+</head>
+<body>
+<!-- ============================ 页面 ============================ -->
+<canvas id="skyfield" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="rail" aria-label="展品索引">
+  <div class="rail__mark">FINGERPRINTS</div>
+  <div class="rail__line" id="railDots"></div>
+  <div class="rail__foot">十三件展品</div>
+</nav>
+
+<div class="mbar">
+  <span class="mbar__title">造物的指纹</span>
+  <span class="mbar__now" id="mNow">序 · 一份观测记录</span>
+  <button class="mbar__btn" id="mOpen" aria-haspopup="dialog">索引</button>
+  <i class="mbar__prog" id="mProg"></i>
+</div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="展品索引">
+  <button class="sheet__close" id="mClose">关闭 ✕</button>
+  <div id="sheetList"></div>
+</div>
+
+<!-- ==================== 序 ==================== -->
+<header class="hero" id="top">
+  <canvas id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero__inner">
+    <div class="hero__kicker"><i></i><span class="eyebrow">一份观测记录 · 十三件展品</span></div>
+    <h1>造物的指纹</h1>
+    <p class="hero__lat">Vestigia Creatoris — the traces left in the work</p>
+    <p class="hero__claim">当一块表被拆开，<em>没有人</em>会说齿轮是风吹进去的。</p>
+    <p class="hero__sub">可是每一个早晨，你都用一台一亿两千万像素、能响应单个光子的活体相机，
+      去看一颗把角动量守恒执行了四十六亿年的行星上的日出。<br>这里有十三件展品，都可以亲手摆弄。看完再决定。</p>
+    <div class="hero__cta">
+      <a class="btn" href="#act-1">进入观测台 <span aria-hidden="true">↓</span></a>
+      <button class="btn btn--ghost" id="randomBtn">随机取一件展品</button>
+    </div>
+  </div>
+  <div class="hero__meta">
+    <span>设计论 · ARGUMENT FROM DESIGN</span>
+    <span>可交互 · 手机与电脑</span>
+    <span id="clockRead">—</span>
+  </div>
+</header>
+
+<!-- ==================== 第一幕 ==================== -->
+<section class="act rise" id="act-1">
+  <div class="act__inner">
+    <div class="act__num">I</div>
+    <div class="act__txt">
+      <h2>眼前之物 · 身体里的工程</h2>
+      <p>不必望向星空。你此刻用来阅读这行字的装置，本身就是第一件证物。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 01 眼睛 -->
+<article class="chapter rise" id="ch-1" data-title="01 · 眼睛，光的接收器">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">01</span><span class="ch__tag">解剖学 / 光学</span></div>
+    <h3>眼睛：一台不能少一个零件的相机</h3>
+    <p class="ch__lat">"To suppose that the eye… could have been formed by natural selection, seems, I freely confess, absurd in the highest possible degree." — C. Darwin, 1859</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>达尔文自己写下了上面这句话。他随后给出了一个渐变的设想，但一个半世纪过去，眼睛依然是这场辩论最锋利的展品——因为它不是"复杂"，而是<strong>各部分互相依赖的复杂</strong>。</p>
+      <p>角膜与泪膜构成第一个光学面，占全部屈光力的三分之二；虹膜在 0.3 秒内把进光量调节一千倍；晶状体靠睫状肌改变曲率对焦；房水与玻璃体必须精确透明；视网膜把光子变成电信号；视神经把信号送走。<b>拆掉其中任何一个，剩下的部分不是"看得差一点"，而是完全无用。</b></p>
+      <p>更深一层：一个视杆细胞可以响应<strong>单个光子</strong>。光子打中视紫红质，让一个分子扭转形状，触发一串放大约十万倍的酶联反应——这是一条被精确配平的化学流水线，它的每一环都需要另外几环已经就位才有意义。</p>
+      <div class="figs">
+        <div class="fig"><b>1.26 亿</b><span>感光细胞 / 单眼</span></div>
+        <div class="fig"><b>10<sup>10</sup>:1</b><span>动态范围 星光→正午</span></div>
+        <div class="fig"><b>1 个</b><span>可被察觉的光子</span></div>
+        <div class="fig"><b>≈10<sup>5</sup></b><span>单光子信号放大倍率</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 不可化约的复杂性</p>
+        <ol>
+          <li>眼睛由多个部件组成，且每个部件单独存在时不产生任何视觉功能。</li>
+          <li>渐变式的自然过程只能保留"当下就有用"的中间形态。</li>
+          <li>但"半个眼睛"——有视网膜而无透明介质、有晶状体而无神经——在选择上不占优势，反而是代谢负担。</li>
+          <li>因此这套系统更像是被<b>整体规划</b>后一次装配的，而非逐件累积的。</li>
+          <li>结论：眼睛指向一位先有目的、后有部件的设计者。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>眼睛有演化序列：眼点 → 杯状眼 → 针孔眼 → 有晶状体的眼，软体动物身上全都能找到。</dd>
+        <dt class="ans">回应</dt><dd>这条序列展示的是"存在多种可用的眼"，不是"后者能由前者无目的地跨越"。每一次跨越都要求新的蛋白质、新的神经接线、新的胚胎发育程序同时到位。把汽车按大小排成一排，并不说明摩托车能自己长成轿车。真正需要解释的，是每一步之间的<b>协调</b>。</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="eye">
+    <div class="instr__bar"><span>展品 01 · 眼球剖面</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">点选下方部件，看它被拆掉后世界变成什么样</p>
+    <div class="ctrls">
+      <div class="seg" data-group="view">
+        <button data-v="0" aria-pressed="true">整体剖面</button>
+        <button data-v="1" aria-pressed="false">视网膜分层</button>
+        <button data-v="2" aria-pressed="false">光化学级联</button>
+      </div>
+      <div class="seg" data-group="break">
+        <button data-b="none" aria-pressed="true">完好</button>
+        <button data-b="tear" data-danger aria-pressed="false">拆掉泪膜</button>
+        <button data-b="lens" data-danger aria-pressed="false">拆掉晶状体</button>
+        <button data-b="iris" data-danger aria-pressed="false">拆掉虹膜</button>
+        <button data-b="retina" data-danger aria-pressed="false">拆掉视网膜</button>
+        <button data-b="nerve" data-danger aria-pressed="false">切断视神经</button>
+      </div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- 02 分子机器 -->
+<article class="chapter rise" id="ch-2" data-title="02 · 分子机器，细胞里的马达">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">02</span><span class="ch__tag">生物化学 / 纳米机械</span></div>
+    <h3>分子机器：细胞里真的装着马达</h3>
+    <p class="ch__lat">Rotary engines, 8 nanometres wide, running in every cell of your body.</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>这不是比喻。ATP 合酶是一台<strong>真正的旋转马达</strong>：有定子、有转子、有传动轴、有三个轮流工作的催化头。质子顺着膜两侧的电化学梯度冲过转子，推着它转；转轴的凸轮依次挤压三个催化位点，把 ADP 和磷酸压合成 ATP。</p>
+      <p>它的转速约每秒 130 转，每转产出 3 个 ATP，能量转换效率接近 <b>100%</b>——人类造过的任何一台发动机都望尘莫及。你今天会合成大约与自己体重相当的 ATP，然后在几十秒内用光，再合成。</p>
+      <p>细菌鞭毛马达更像一台舷外机：约 40 种不同蛋白质组成的定子、转子、轴承、万向节、驱动轴与螺旋桨，转速可达每分钟十万转，并能在<strong>四分之一圈内完成反转</strong>。少掉任何一个零件，它既不能推进，也不能被自然选择"部分保留"。</p>
+      <div class="figs">
+        <div class="fig"><b>≈100%</b><span>ATP 合酶能量效率</span></div>
+        <div class="fig"><b>130 r/s</b><span>转轴转速</span></div>
+        <div class="fig"><b>40 种</b><span>鞭毛马达所需蛋白</span></div>
+        <div class="fig"><b>~60 kg</b><span>你今天要合成的 ATP</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 由机器推及机器制造者</p>
+        <ol>
+          <li>我们在细胞内发现的，是符合机械工程定义的装置：轴、轴承、定子、转子、齿比、离合。</li>
+          <li>在人类经验中，凡具备此类<b>功能性配合</b>的结构，无一例外由智能设计产生。</li>
+          <li>纳米尺度并不降低要求，反而提高：零件必须由氨基酸序列自动折叠出精确形状并自动组装。</li>
+          <li>因此对这些机器最自然的解释，与我们对任何机器的解释相同。</li>
+          <li>结论：细胞里的马达在指认一位工程师。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>鞭毛的部分零件可以另作他用（如Ⅲ型分泌系统），所以可以逐步拼装。</dd>
+        <dt class="ans">回应</dt><dd>零件能挪用，不等于装配能自发。把喷油嘴从赛车挪到割草机上仍需要有人去装。共用组件恰恰说明存在一套<b>通用的模块化设计</b>——这是工程的特征，不是偶然的特征。</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="motor">
+    <div class="instr__bar"><span>展品 02 · 纳米马达</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">拖动滑块加大质子梯度</p>
+    <div class="ctrls">
+      <div class="seg" data-group="which">
+        <button data-m="atp" aria-pressed="true">ATP 合酶</button>
+        <button data-m="flag" aria-pressed="false">细菌鞭毛马达</button>
+      </div>
+      <div class="knob">
+        <label for="k-motor">质子梯度 / 燃料</label><output id="o-motor">62%</output>
+        <input id="k-motor" type="range" min="0" max="100" value="62">
+      </div>
+      <div class="seg" data-group="strip">
+        <button data-s="0" aria-pressed="true">零件齐全</button>
+        <button data-s="1" data-danger aria-pressed="false">抽掉一个零件</button>
+      </div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- 03 DNA -->
+<article class="chapter rise" id="ch-3" data-title="03 · DNA，四个字母的语言">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">03</span><span class="ch__tag">分子生物学 / 信息论</span></div>
+    <h3>DNA：一种用四个字母写成的语言</h3>
+    <p class="ch__lat">"DNA is like a computer program, but far, far more advanced than any software ever created." — Bill Gates</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>这是设计论最难被绕开的一件展品。因为 DNA 里装的不是"复杂的化学"，而是<strong>语义</strong>：一段 A/T/C/G 序列本身没有化学必然性去对应某个氨基酸，是一套<b>约定</b>把它们联系起来——三个碱基一组，六十四种组合，对应二十种氨基酸加起止信号。</p>
+      <p>关键在于：<strong>密码与被编码物之间的关系是任意的</strong>，就像"红灯停"不是红光的物理属性。任意的对应关系必须被<b>规定</b>。而这套规定还带着优化的痕迹：常见突变往往落在同义密码子上，即使出错也不改变蛋白——它内建了纠错冗余。</p>
+      <p>然后是储存。三十亿碱基对，展开约两米长，被折叠进直径六微米的细胞核；复制时每秒推进约五十个碱基，靠校对与错配修复把错误率压到十亿分之一。DNA 的信息密度约为每立方厘米 10<sup>19</sup> 比特——人类全部数据可以装进一克。</p>
+      <div class="figs">
+        <div class="fig"><b>3.2 GB</b><span>人类基因组信息量</span></div>
+        <div class="fig"><b>2 m</b><span>折进 6 微米细胞核</span></div>
+        <div class="fig"><b>10<sup>-9</sup></b><span>复制错误率（带校对）</span></div>
+        <div class="fig"><b>64 → 20</b><span>密码表：一套约定</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 信息只有一个已知来源</p>
+        <ol>
+          <li>DNA 携带的是<b>指定性信息</b>——既复杂（不可压缩）又特定（符合独立给出的功能标准）。</li>
+          <li>物理与化学定律能产生秩序（晶体）或随机（噪声），但两者都不产生指定性信息。</li>
+          <li>在一切可追溯来源的案例中，指定性信息——文字、代码、乐谱、蓝图——都来自心智。</li>
+          <li>生命的信息在最早的细胞里就已完备，先于任何"自然选择"（选择需要先有可复制的系统）。</li>
+          <li>结论：生命的源头处站着一位作者。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>"信息"只是我们贴上去的比喻，碱基配对不过是氢键。</dd>
+        <dt class="ans">回应</dt><dd>若只是氢键，那么任意序列在化学上应当同样"合法"——事实正是如此，这恰恰说明序列不由化学决定。可它偏偏不是任意的：它可读、可翻译、有语法、有起止符、有纠错码。化学提供了纸和墨，没提供文字。</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="dna">
+    <div class="instr__bar"><span>展品 03 · 双螺旋</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">左右拖动可旋转螺旋</p>
+    <div class="ctrls">
+      <div class="seg" data-group="mode">
+        <button data-d="helix" aria-pressed="true">双螺旋</button>
+        <button data-d="unzip" aria-pressed="false">解链复制</button>
+        <button data-d="trans" aria-pressed="false">转录翻译</button>
+      </div>
+      <div class="knob">
+        <label for="k-dna">转速</label><output id="o-dna">1.0×</output>
+        <input id="k-dna" type="range" min="0" max="220" value="100">
+      </div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- 04 蛋白质序列空间 -->
+<article class="chapter rise" id="ch-4" data-title="04 · 序列空间，随机搜索的荒漠">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">04</span><span class="ch__tag">概率 / 蛋白质化学</span></div>
+    <h3>序列空间：一片随机永远走不出的荒漠</h3>
+    <p class="ch__lat">A modest protein: 150 residues, 20 choices each. The room has 10<sup>195</sup> doors.</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>把上面那件展品换成算术。一个中等大小的蛋白质有 150 个氨基酸位点，每个位点 20 种选择，可能的序列数是 20<sup>150</sup> ≈ <strong>10<sup>195</sup></strong>。</p>
+      <p>这个数字需要一点参照：可观测宇宙的原子总数约 10<sup>80</sup>；宇宙诞生至今约 10<sup>17</sup> 秒；即使让每个原子每一个普朗克时间都试一次，试到今天也不超过 10<sup>139</sup> 次。<b>整个宇宙从头到尾全力抽奖，连这一个蛋白质的序列空间都抽不到零头。</b></p>
+      <p>有人会说：功能序列不止一条。对。但估计出的功能序列比例极低——一项常被引用的实验估计约为 <strong>10<sup>77</sup> 分之一</strong>，即便这个数字被高估了五十个数量级，剩下的仍然是宇宙抽不出来的。而一个最简单的自主生命，需要的不是一个蛋白，是<b>四百多个</b>，还要同时有能读它们的密码系统。</p>
+      <div class="figs">
+        <div class="fig"><b>10<sup>195</sup></b><span>150 位序列空间</span></div>
+        <div class="fig"><b>10<sup>80</sup></b><span>宇宙原子总数</span></div>
+        <div class="fig"><b>10<sup>139</sup></b><span>宇宙一生的事件上限</span></div>
+        <div class="fig"><b>438</b><span>最小自主基因组的基因数</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 概率资源的破产</p>
+        <ol>
+          <li>宇宙拥有的"抽奖次数"有上限，这个上限是 10<sup>139</sup> 量级。</li>
+          <li>随机搜索命中一个功能蛋白所需的次数，远远超过这个上限。</li>
+          <li>自然选择无法在此处帮忙——选择以自我复制为前提，而自我复制本身就需要这些蛋白。</li>
+          <li>因此第一个细胞的出现不能归给"时间加运气"，时间与运气的账面已经透支。</li>
+          <li>结论：生命的起点需要一个能<b>直接指定</b>序列的原因。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>10<sup>77</sup> 这个比例被同行质疑，其他估计宽松得多；而且最早的生命可能不用蛋白，是 RNA 世界。</dd>
+        <dt class="ans">回应</dt><dd>数字确实有争议，所以右侧的仪器让你自己调——把功能序列的比例一路放宽，看看要宽到什么程度宇宙才抽得中。至于 RNA 世界：它把问题从"蛋白从哪来"换成"能自我复制的核酶从哪来"，而核酶同样需要指定的序列，且 RNA 在原始环境中的化学稳定性更差。搬家不等于解决。</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="seq">
+    <div class="instr__bar"><span>展品 04 · 随机搜索模拟</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">开始后，抽奖速度设为每秒一万亿次</p>
+    <div class="ctrls">
+      <div class="seg" data-group="run">
+        <button data-r="go" aria-pressed="false">开始随机搜索</button>
+        <button data-r="reset" aria-pressed="false">归零</button>
+      </div>
+      <div class="knob">
+        <label for="k-len">蛋白质长度（氨基酸）</label><output id="o-len">150</output>
+        <input id="k-len" type="range" min="20" max="300" value="150" step="5">
+      </div>
+      <div class="knob">
+        <label for="k-fun">功能序列比例 1 / 10^N（放宽假设）</label><output id="o-fun">77</output>
+        <input id="k-fun" type="range" min="5" max="90" value="77">
+      </div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- ==================== 第二幕 ==================== -->
+<section class="act rise" id="act-2">
+  <div class="act__inner">
+    <div class="act__num">II</div>
+    <div class="act__txt">
+      <h2>头顶星空 · 被调准的宇宙</h2>
+      <p>从身体抬起头。同一种精确出现在完全不同的尺度上——而那里没有生物学可以借力。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 轨道 -->
+<article class="chapter rise" id="ch-5" data-title="05 · 轨道，引力的精确算术">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">05</span><span class="ch__tag">天体力学</span></div>
+    <h3>轨道：一场跑了四十六亿年而不出错的舞蹈</h3>
+    <p class="ch__lat">"The heavens declare… night unto night sheweth knowledge." — Ps. 19</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>行星并非"被拴着转"，而是一直在<strong>自由下落</strong>——它向前冲的速度与向内拉的引力恰好抵消。这个平衡极其挑剔：右边的仪器里，把地球的公转速度改动百分之十，它要么甩向深空，要么螺旋撞日。</p>
+      <p>更惊人的是引力定律里的那个指数。引力与距离的平方成反比——不是 2.01，也不是 1.99。数学早已证明：<b>只有在严格的平方反比下，轨道才会闭合而稳定</b>；指数稍有偏离，行星轨道就会不断进动、能量泄漏，最终解体。宇宙用的正是那个唯一可行的指数。</p>
+      <p>然后是开普勒第二定律：行星与太阳的连线在相等时间内扫过相等面积。这条规律不是被规定的，是从更深的对称性（角动量守恒）里掉出来的。<strong>宇宙的规律层层嵌套，且都可以用简洁的数学写下来</strong>——这件事本身并不是必然的。</p>
+      <div class="figs">
+        <div class="fig"><b>r<sup>-2.000</sup></b><span>唯一使轨道稳定的指数</span></div>
+        <div class="fig"><b>±10%</b><span>速度扰动即毁掉轨道</span></div>
+        <div class="fig"><b>0.0167</b><span>地球离心率：近乎正圆</span></div>
+        <div class="fig"><b>46 亿年</b><span>连续运行未失步</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 从规律到立法者</p>
+        <ol>
+          <li>宇宙的运行遵循少数几条可用简洁数学表述的普遍定律。</li>
+          <li>这些定律的形式高度特定：可行的参数区间极窄，偏离即导致系统崩溃。</li>
+          <li>"定律"本身不解释自己——它不是逻辑必然，它可以是别的样子，却偏偏是这个样子。</li>
+          <li>一套普遍、精确、可理解且恰好允许稳定结构存在的规则，是"被制定"的典型特征。</li>
+          <li>结论：有规律，就有立法者。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>平方反比只是三维空间的几何后果，不需要谁去挑。</dd>
+        <dt class="ans">回应</dt><dd>说得对，它是三维空间的后果——那么问题只是往后退了一步：<b>为什么空间恰好是三维</b>？在四维或更高维空间中，稳定轨道与稳定原子都不存在；在二维中，复杂的神经网络无法布线而不交叉。维数本身也落在那个极窄的可行区间里。</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="orbit">
+    <div class="instr__bar"><span>展品 05 · 轨道实验台</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">拖动行星可直接改变它的位置与速度</p>
+    <div class="ctrls">
+      <div class="knob">
+        <label for="k-vel">初速度（相对于圆轨道）</label><output id="o-vel">1.00×</output>
+        <input id="k-vel" type="range" min="30" max="175" value="100">
+      </div>
+      <div class="knob">
+        <label for="k-exp">引力指数 r<sup>-n</sup></label><output id="o-exp">2.000</output>
+        <input id="k-exp" type="range" min="1500" max="2500" value="2000">
+      </div>
+      <div class="seg" data-group="orb">
+        <button data-o="area" aria-pressed="true">显示等面积扫描</button>
+        <button data-o="reset" aria-pressed="false">重置</button>
+      </div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- 06 常数 -->
+<article class="chapter rise" id="ch-6" data-title="06 · 常数，宇宙的调音台">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">06</span><span class="ch__tag">宇宙学 / 精细调节</span></div>
+    <h3>常数：一台没有余量的调音台</h3>
+    <p class="ch__lat">"A common sense interpretation of the facts suggests that a superintellect has monkeyed with physics." — F. Hoyle</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>物理学有一批数字，理论本身并不预言它们的取值——它们只能被测量。引力强度、电磁力强度、强核力强度、质子与中子的质量差、宇宙学常数……它们像一排旋钮，而我们发现，<strong>几乎每一个旋钮都停在极窄的可行区间里</strong>。</p>
+      <p>最极端的是宇宙学常数：理论估算值与实测值相差约 <b>10<sup>120</sup></b> 倍，而实测值若再大一点点，宇宙就会在星系形成之前被撕开。这是物理学中最精确、也最令人不安的一次"恰好"。</p>
+      <p>强核力若强 2%，氢会全部烧成氦，宇宙里没有水；若弱 5%，恒星无法点火。电子与质子的电荷若不精确相等（它们相差不超过 10<sup>-21</sup>），原子将带电，行星与人体会被静电撕碎。霍伊尔预言的碳-12 共振能级，若偏移不到 1%，宇宙里就没有碳，也就没有你。</p>
+      <div class="figs">
+        <div class="fig"><b>10<sup>120</sup></b><span>宇宙学常数的精调程度</span></div>
+        <div class="fig"><b>±2%</b><span>强核力的容错窗口</span></div>
+        <div class="fig"><b>10<sup>-21</sup></b><span>电荷平衡的偏差上限</span></div>
+        <div class="fig"><b>10<sup>10¹²³</sup></b><span>初始低熵态的精度（彭罗斯）</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 三选一</p>
+        <ol>
+          <li>宇宙允许生命存在，依赖于一组极其精确的常数取值。</li>
+          <li>这只可能出于三种原因：物理必然、偶然巧合、或有意设定。</li>
+          <li>必然被排除——理论允许这些常数取任意值，它们不是被推导出来的。</li>
+          <li>偶然被概率排除——所需精度动辄超过 10<sup>50</sup> 分之一，远低于任何理性接受的门槛。</li>
+          <li>结论：剩下的那一项，是设定。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>存在无穷多个平行宇宙，我们必然身处那个碰巧合适的宇宙里（人择原理）。</dd>
+        <dt class="ans">回应</dt><dd>这是最认真的回应，但它付出的代价极大：为了避免一位设计者，需要假设无限多个<b>原则上不可观测</b>的宇宙，外加一台能生成它们、本身也需要精调的"宇宙生成机"。用一个更庞大、更无法检验的假设去替换一个更简单的假设，这在方法论上是倒退。而且多重宇宙并不消解问题：<b>能生成宇宙的那套机制，本身从哪来</b>？</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="tune">
+    <div class="instr__bar"><span>展品 06 · 宇宙调音台</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">动一动任何一个旋钮，看这个宇宙变成什么</p>
+    <div class="ctrls">
+      <div class="knob"><label for="k-strong">强核力强度</label><output id="o-strong">100.0%</output><input id="k-strong" type="range" min="80" max="120" value="100" step="0.5"></div>
+      <div class="knob"><label for="k-em">电磁力强度</label><output id="o-em">100.0%</output><input id="k-em" type="range" min="80" max="120" value="100" step="0.5"></div>
+      <div class="knob"><label for="k-grav">引力强度</label><output id="o-grav">100.0%</output><input id="k-grav" type="range" min="80" max="120" value="100" step="0.5"></div>
+      <div class="knob"><label for="k-lambda">宇宙学常数 Λ</label><output id="o-lambda">100.0%</output><input id="k-lambda" type="range" min="80" max="120" value="100" step="0.5"></div>
+      <div class="seg" data-group="tuneR"><button data-t="reset" aria-pressed="false">调回本宇宙</button><button data-t="random" aria-pressed="false">随机抽一个宇宙</button></div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- 07 地球 -->
+<article class="chapter rise" id="ch-7" data-title="07 · 地球，一连串巧合的居所">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">07</span><span class="ch__tag">行星科学</span></div>
+    <h3>地球：一串必须同时成立的巧合</h3>
+    <p class="ch__lat">A planet is not merely "in the habitable zone." It is in a dozen of them at once.</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>宜居带只是清单上的第一项。恒星必须是稳定的中等质量星；轨道必须近圆，否则冷热剧变；行星必须够大以留住大气，又不能大到变成气态巨星；必须有<strong>板块运动</strong>来循环碳，否则温室气候失控；必须有液态铁核产生<b>磁场</b>，否则太阳风在几亿年内剥光大气与海洋（火星就是这样死的）。</p>
+      <p>还必须有一颗异常巨大的<strong>月球</strong>——它把地轴倾角锁定在 23.5° 附近，误差不超过一度多；没有它，地轴会在 0° 到 85° 之间混沌摆动，季节将变成灾难。木星必须待在正确的位置当引力吸尘器，替内行星挡下彗星。太阳系还得处在银河的宜居环带上：太近银心辐射太强，太远重元素不足。</p>
+      <p>把这些条件各自的概率乘起来——它们大体互相独立——常见的估算落在 <b>10<sup>-15</sup></b> 到 10<sup>-24</sup> 之间。右侧的仪器让你逐条关掉，看地球怎么死。</p>
+      <div class="figs">
+        <div class="fig"><b>23.5°±1°</b><span>被月球锁定的地轴</span></div>
+        <div class="fig"><b>1/10<sup>15</sup></b><span>各条件同时成立的保守估计</span></div>
+        <div class="fig"><b>×81</b><span>月球质量之大：极端罕见</span></div>
+        <div class="fig"><b>0.5 亿年</b><span>无磁场则大气流失殆尽</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 独立条件的合取</p>
+        <ol>
+          <li>地球的宜居性依赖数十项彼此独立的物理条件同时满足。</li>
+          <li>独立条件的联合概率是各项概率之积，随条件数指数下降。</li>
+          <li>其中多项（如超大卫星、恰当的木星、板块运动）在已观测的数千颗系外行星中极为罕见。</li>
+          <li>并且这些条件不仅让生命<b>存活</b>，还恰好让生命能够<b>观测</b>宇宙——透明大气、恰好完美的日全食、可见的星空。</li>
+          <li>结论：这更像一处被预备好的居所，而不是一次侥幸。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>宇宙有 10<sup>22</sup> 颗行星，再罕见的组合也会出现，我们只是中奖的那颗。</dd>
+        <dt class="ans">回应</dt><dd>这只在概率不低于 10<sup>-22</sup> 时成立。而当条件数继续增加，乘积会迅速跌破这个数。更关键的是：这条辩护解释不了<b>可观测性</b>——生存并不要求大气透明、也不要求月轮与日轮在天上恰好等大。宇宙不只是允许我们活着，它还允许我们看懂它。</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="earth">
+    <div class="instr__bar"><span>展品 07 · 宜居条件清单</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">关掉任意一项，看地球会怎样</p>
+    <div class="ctrls">
+      <div class="seg" data-group="cond">
+        <button data-c="moon" aria-pressed="true">月球</button>
+        <button data-c="field" aria-pressed="true">磁场</button>
+        <button data-c="jupiter" aria-pressed="true">木星</button>
+        <button data-c="tilt" aria-pressed="true">近圆轨道</button>
+        <button data-c="plate" aria-pressed="true">板块运动</button>
+        <button data-c="atmo" aria-pressed="true">大气配比</button>
+      </div>
+      <div class="seg" data-group="earthR"><button data-e="all" aria-pressed="false">全部恢复</button></div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- 08 起点 -->
+<article class="chapter rise" id="ch-8" data-title="08 · 起点，时间也有生日">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">08</span><span class="ch__tag">宇宙学 / 形而上学</span></div>
+    <h3>起点：连时间本身都有生日</h3>
+    <p class="ch__lat">"The creation of the universe… seems to require a supernatural cause." — A. Vilenkin (on BGV)</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>二十世纪最大的转折，是宇宙<strong>不是永恒的</strong>。星系退行、微波背景辐射、轻元素丰度，三条独立证据把时间指回同一个起点：约 138 亿年前，物质、能量、空间与<b>时间本身</b>一起开始。</p>
+      <p>2003 年的 Borde–Guth–Vilenkin 定理进一步收紧了这一点：任何平均而言在膨胀的时空，无论是否有暴涨、是否嵌在多重宇宙里，其过去<strong>都必然是不完备的</strong>——都必须有一个开端。永恒宇宙这条退路被数学关上了。</p>
+      <p>于是那个古老的三段论重新变得锋利：凡开始存在的，必有其存在的原因；宇宙开始存在；所以宇宙有原因。而这个原因必须在时空之外——它<b>无始、非物质、无空间限制、且拥有意志</b>（因为一个永恒的、非人格的充分条件只会产生一个永恒的结果，除非它能自由地"开始"）。</p>
+      <div class="figs">
+        <div class="fig"><b>138 亿年</b><span>时间的年龄</span></div>
+        <div class="fig"><b>2.725 K</b><span>宇宙微波背景温度</span></div>
+        <div class="fig"><b>BGV 2003</b><span>过去必然不完备</span></div>
+        <div class="fig"><b>t = 0</b><span>因果链的边界</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 卡拉姆宇宙论论证</p>
+        <ol>
+          <li>凡开始存在的事物，都有其存在的原因。</li>
+          <li>宇宙（含时间与空间）开始存在。</li>
+          <li>所以宇宙有一个存在的原因。</li>
+          <li>该原因不能是时空中的任何事物，故必为无始的、非物质的、超越时空的。</li>
+          <li>结论：这正是"造物主"一词所指的那一位。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>量子涨落可以让宇宙"从无中"自发出现，不需要原因。</dd>
+        <dt class="ans">回应</dt><dd>量子涨落发生在量子真空里，而量子真空是一种<b>有结构、有能量、受定律支配的东西</b>，不是"无"。哲学上的"无"没有性质，也就没有涨落的能力。把真空叫作"无"，是换了词，没有换掉问题：那套定律和那个真空，又是从哪里来的？</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="origin">
+    <div class="instr__bar"><span>展品 08 · 时间回溯</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">拖动滑块把宇宙倒放回起点</p>
+    <div class="ctrls">
+      <div class="knob">
+        <label for="k-time">宇宙年龄</label><output id="o-time">138 亿年</output>
+        <input id="k-time" type="range" min="0" max="1000" value="1000">
+      </div>
+      <div class="seg" data-group="rew"><button data-w="play" aria-pressed="false">自动倒带</button></div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- ==================== 第三幕 ==================== -->
+<section class="act rise" id="act-3">
+  <div class="act__inner">
+    <div class="act__num">III</div>
+    <div class="act__txt">
+      <h2>规律的裂缝 · 逆流而上的东西</h2>
+      <p>宇宙整体在往下坡走。可有些东西，偏偏在往上走——而且走了三十八亿年。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 09 熵 -->
+<article class="chapter rise" id="ch-9" data-title="09 · 熵，下坡路上的逆行者">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">09</span><span class="ch__tag">热力学</span></div>
+    <h3>熵：在一条只通向混乱的路上，有人在往回走</h3>
+    <p class="ch__lat">"The law that entropy always increases holds… the supreme position among the laws of Nature." — A. Eddington</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>热力学第二定律是物理学中最没有例外的一条：孤立系统的熵只增不减。墨水滴进水里会散开，永不会自己聚回；房间会变乱，永不会自己变整齐；恒星会烧尽，宇宙走向热寂。<strong>时间的箭头就是熵的箭头。</strong></p>
+      <p>而生命做的事情，从外表看正相反。一个受精卵从一团分子出发，在九个月里造出三十七万亿个细胞、二百零六块骨头、一套能自我调试的神经网络，全程<b>误差极小</b>。它不是"变得更有序一点"，而是把原子排成了宇宙中已知最有序的构型。</p>
+      <p>严格地说，生命并不违反第二定律：它是开放系统，通过向环境排放更多的熵来维持自身低熵。但这正是关键所在——<strong>能量输入本身从不产生秩序，反而加速破坏</strong>。阳光晒不出一台发动机，只会把它晒褪色。要把能量转成有序结构，必须先有一台<b>能量转换机器</b>（叶绿体、线粒体、核糖体），而这些机器本身就是高度指定的信息结构。</p>
+      <p>于是第二定律没有被违反，它只是把问题指向了别处：<b>那台把混乱变成秩序的机器，最初是从哪里来的？</b></p>
+      <div class="figs">
+        <div class="fig"><b>ΔS ≥ 0</b><span>孤立系统，无一例外</span></div>
+        <div class="fig"><b>37 万亿</b><span>由一个细胞装配而成</span></div>
+        <div class="fig"><b>2<sup>-N</sup></b><span>自发回到有序的概率</span></div>
+        <div class="fig"><b>38 亿年</b><span>逆流从未中断</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 秩序的来源</p>
+        <ol>
+          <li>宇宙的普遍趋势是熵增：结构自发瓦解，信息自发丢失。</li>
+          <li>生命是持续的、可遗传的、自我修复的局部熵减，且已延续三十八亿年。</li>
+          <li>它靠"开放系统 + 能量输入"维持——但能量输入只有在被<b>预先存在的转换机制</b>捕获时才产生秩序。</li>
+          <li>该转换机制（光合系统、ATP 合酶、核糖体）本身是极高指定度的结构，不能由熵增过程产生。</li>
+          <li>结论：秩序的源头不在系统之内，而在系统之外。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>地球是开放系统，太阳能进来就够了——雪花、飓风、晶体都是自发形成的有序结构。</dd>
+        <dt class="ans">回应</dt><dd>要区分两种"有序"。雪花是<b>重复的秩序</b>（低信息量，由化学键角强制生成，可用一句话描述）；DNA 是<b>指定的复杂性</b>（高信息量，不可压缩，且对应独立的功能要求）。前者是熵增过程的副产品，后者从不是。用雪花解释细胞，等于用"墨水会在纸上晕开"来解释一本书。</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="entropy">
+    <div class="instr__bar"><span>展品 09 · 熵箱对照实验</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">左：无人照管的盒子　右：活着的细胞</p>
+    <div class="ctrls">
+      <div class="seg" data-group="ent">
+        <button data-x="shake" aria-pressed="false">摇匀（加能量）</button>
+        <button data-x="order" aria-pressed="false">等它自己变回有序</button>
+        <button data-x="kill" data-danger aria-pressed="false">让右边停止代谢</button>
+        <button data-x="reset" aria-pressed="false">重置</button>
+      </div>
+      <div class="knob">
+        <label for="k-part">粒子数</label><output id="o-part">240</output>
+        <input id="k-part" type="range" min="60" max="480" value="240" step="20">
+      </div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- 10 水 -->
+<article class="chapter rise" id="ch-10" data-title="10 · 水，一个必要的反常">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">10</span><span class="ch__tag">物理化学</span></div>
+    <h3>水：一处被特意留下的例外</h3>
+    <p class="ch__lat">"Fitness of the environment" — L. J. Henderson, 1913</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>几乎所有物质都是冷则收缩、固态比液态重。水不是。水在 <strong>4°C 时密度最大</strong>，再冷反而膨胀，所以冰会浮。</p>
+      <p>如果没有这个反常：湖泊与海洋会<b>从底部开始结冰</b>，一层层冻实，夏天的阳光只能融化表层。经过几个冰期，地球的水体将成为永久冰块，水生生命从未有机会出现。<strong>整条生命链条挂在一个化学上的"例外"上。</strong></p>
+      <p>水的反常还不止一处：它的比热容异常高（稳定气候与体温）、汽化热异常大（出汗才能降温）、表面张力异常强（毛细作用把水送上百米高的树冠）、它是几乎万能的溶剂、且在可见光波段透明——恰好是光合作用需要的那一段。<b>这些性质彼此独立，却全都指向同一个方向：让生命成为可能。</b></p>
+      <div class="figs">
+        <div class="fig"><b>4 °C</b><span>密度极大值：反常</span></div>
+        <div class="fig"><b>4.18 J/g·K</b><span>异常高的比热容</span></div>
+        <div class="fig"><b>72 mN/m</b><span>表面张力：树的输水泵</span></div>
+        <div class="fig"><b>+9%</b><span>结冰时的体积膨胀</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 环境的适配</p>
+        <ol>
+          <li>水的多项物理性质相对同类分子均属反常。</li>
+          <li>每一项反常都恰好是复杂生命所必需的。</li>
+          <li>这些性质源于氢键的几何——即源于更底层的物理常数取值。</li>
+          <li>"环境恰好适合生命"与"生命适应了环境"不同：生命无法适应一个从底部冻实的海洋。</li>
+          <li>结论：这不是适应，是预备。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>幸存者偏差——我们出现在水的世界里，当然觉得水恰到好处。</dd>
+        <dt class="ans">回应</dt><dd>幸存者偏差能解释"我们为何在这里观测"，不能解释"这里为何可被观测"。若水像其它液体一样正常，那么<b>任何</b>基于液态介质的生命都不会出现在这颗行星上，不只是我们这一种。这不是我们碰巧适合水，而是水的性质在生命出现之前就已经就位。</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="water">
+    <div class="instr__bar"><span>展品 10 · 两种湖</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">调低气温，看两个湖分别发生什么</p>
+    <div class="ctrls">
+      <div class="knob">
+        <label for="k-temp">气温</label><output id="o-temp">18 °C</output>
+        <input id="k-temp" type="range" min="-25" max="30" value="18">
+      </div>
+      <div class="seg" data-group="wat">
+        <button data-w2="real" aria-pressed="true">真实的水（冰浮）</button>
+        <button data-w2="fake" data-danger aria-pressed="false">假想的水（冰沉）</button>
+      </div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- 11 寒武纪 -->
+<article class="chapter rise" id="ch-11" data-title="11 · 寒武纪，突然出现的蓝图">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">11</span><span class="ch__tag">古生物学</span></div>
+    <h3>寒武纪：化石记录里的那一次爆炸</h3>
+    <p class="ch__lat">"The Cambrian explosion… animal body plans appear without ancestors." — the record itself</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>地球有生命的历史约三十八亿年，其中三十二亿年只有单细胞。然后在距今约五亿三千八百万年前的一个短窗口里——地质学上不到<strong>两千万年</strong>，相当于地球生命史的百分之零点五——今天几乎所有动物<b>门</b>（body plan）几乎同时出现在化石里：节肢动物、脊索动物、软体动物、棘皮动物……</p>
+      <p>达尔文本人称之为对他理论的严重反对意见，他寄望于"化石记录不完整"。一百六十多年过去，澄江与布尔吉斯页岩提供了保存精细到眼睛与神经的软体化石，前寒武纪地层也被反复筛查——<strong>祖先形态依然缺席</strong>。</p>
+      <p>更根本的问题不在化石，而在信息：一个新的门意味着一套新的<b>发育程序</b>。而调控早期身体布局的基因（体轴、分节、器官定位）恰恰是最不能被改动的——改动它们的实验结果几乎总是致死或畸形。<strong>大改必须发生在最不能大改的地方。</strong></p>
+      <div class="figs">
+        <div class="fig"><b>538 Ma</b><span>爆发起点</span></div>
+        <div class="fig"><b>&lt;2000 万年</b><span>门类涌现的时间窗</span></div>
+        <div class="fig"><b>0.5%</b><span>占生命史的比例</span></div>
+        <div class="fig"><b>~20 门</b><span>几乎同时登场</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 自上而下的次序</p>
+        <ol>
+          <li>渐变理论预测化石记录呈树状：先有微小分歧，后有大类分化（自下而上）。</li>
+          <li>实际记录呈倒置的次序：门一级的差异最先出现，随后才是纲、目、属（自上而下）。</li>
+          <li>新门类需要新的发育调控程序，而这类程序的突变几乎总是致死的。</li>
+          <li>短窗口内产生多套全新且互相独立的身体蓝图，超出随机变异的产能。</li>
+          <li>结论：这更像一批被<b>投放</b>的蓝图，而非一棵长出来的树。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>分子钟显示动物分化远早于寒武纪，只是软体动物没能留下化石；此外氧气上升与眼睛出现可解释这次爆发。</dd>
+        <dt class="ans">回应</dt><dd>分子钟的读数彼此差异极大（从 6 亿到 12 亿年不等），且它以"演化确实发生了"为前提来推年代，不能拿来证明这一前提。而氧气与捕食压力属于<b>生态条件</b>——它们能解释"为什么此时可以出现新身体"，不能解释"新身体的装配指令从哪来"。给了砖和天气，还是没给图纸。</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="cambrian">
+    <div class="instr__bar"><span>展品 11 · 地质时间轴</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">拖动时间轴，或点"播放"</p>
+    <div class="ctrls">
+      <div class="knob">
+        <label for="k-geo">距今（百万年）</label><output id="o-geo">3800</output>
+        <input id="k-geo" type="range" min="0" max="3800" value="3800">
+      </div>
+      <div class="seg" data-group="geo"><button data-g="play" aria-pressed="false">播放 38 亿年</button><button data-g="jump" aria-pressed="false">跳到爆发点</button></div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- ==================== 第四幕 ==================== -->
+<section class="act rise" id="act-4">
+  <div class="act__inner">
+    <div class="act__num">IV</div>
+    <div class="act__txt">
+      <h2>心里的律 · 无法称量之物</h2>
+      <p>最后两件展品既不在显微镜下，也不在望远镜里。它们在观察者这一侧。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 意识 -->
+<article class="chapter rise" id="ch-12" data-title="12 · 意识，无法被称量的“我”">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">12</span><span class="ch__tag">心灵哲学 / 神经科学</span></div>
+    <h3>意识：一台机器为什么会觉得"疼"</h3>
+    <p class="ch__lat">"How does the water of the brain turn into the wine of consciousness?" — C. McGinn</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>科学可以完整描述当你看见红色时发生的一切：700 纳米的光、视锥细胞的响应、V4 区的放电模式、神经递质的浓度。这份描述可以精确到每一个突触。<strong>但在整份描述里，找不到"红"这个体验本身。</strong></p>
+      <p>这被称为"意识的困难问题"。假设有一位色彩神经学家玛丽，一生住在黑白房间里，通过黑白屏幕学完了关于颜色视觉的全部物理知识。某天她走出房门，第一次看见红苹果——<b>她学到新东西了吗？</b>直觉几乎一致：是的。但如果物理描述已经穷尽了一切，她就不该学到任何新东西。</p>
+      <p>此外还有意向性（一堆分子怎么会"关于"某件事）、自由意志（若你只是化学，"你"没做任何选择，只是发生了反应）、以及道德实在感（"虐待儿童是错的"如果只是猴群里流行的情绪，那么谴责它就与谴责别人不爱吃香菜同级）。<strong>唯物主义要么否认这些，要么无法解释它们。</strong></p>
+      <div class="figs">
+        <div class="fig"><b>860 亿</b><span>神经元</span></div>
+        <div class="fig"><b>0</b><span>其中含有"红"的克数</span></div>
+        <div class="fig"><b>第一人称</b><span>科学唯一无法进入的视角</span></div>
+        <div class="fig"><b>~10<sup>15</sup></b><span>突触连接数</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 从心智到心智</p>
+        <ol>
+          <li>主观体验（感受、意义、"我"）是真实存在的——它是我们唯一直接知道的东西。</li>
+          <li>纯粹的物理描述在原则上只能给出结构与功能，无法给出体验。</li>
+          <li>因此意识不可能仅仅是物质的重排；它是新的一类实在。</li>
+          <li>而人所具有的理性、道德感与人格，若来自一个无理性、无道德、非人格的源头，则是无中生有。</li>
+          <li>结论：心智出自心智——我们是照着一位有位格者的样式被造的。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>意识是大脑复杂度到达某个阈值后的"涌现"属性，就像湿性从水分子涌现。</dd>
+        <dt class="ans">回应</dt><dd>湿性是可以从分子间作用力<b>推导</b>出来的结构属性——原则上，你能从方程算出它。主观体验不是：无论把神经网络的方程算到多精细，都推不出"疼起来是什么感觉"。称之为"涌现"是给这道鸿沟起了个名字，不是跨过它。</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="mind">
+    <div class="instr__bar"><span>展品 12 · 玛丽的房间</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">读完全部物理数据，再推开那扇门</p>
+    <div class="ctrls">
+      <div class="seg" data-group="mary">
+        <button data-y="scan" aria-pressed="false">调取全部物理数据</button>
+        <button data-y="open" aria-pressed="false">推开门</button>
+        <button data-y="reset" aria-pressed="false">重来</button>
+      </div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- 13 数学 -->
+<article class="chapter rise" id="ch-13" data-title="13 · 数学，不合理的有效性">
+  <div class="ch__top">
+    <div class="ch__head"><span class="ch__num">13</span><span class="ch__tag">数学 / 美学</span></div>
+    <h3>数学：宇宙为什么听得懂我们的语言</h3>
+    <p class="ch__lat">"The unreasonable effectiveness of mathematics in the natural sciences." — E. Wigner, 1960</p>
+  </div>
+  <div class="ch">
+    <div class="ch__body">
+      <p>数学家在纸上玩弄纯粹抽象的结构，几十年后物理学家发现宇宙正好在用它。黎曼在 1854 年出于好奇构造的弯曲几何，六十年后成了广义相对论；群论、复数、希尔伯特空间，都是先在纯思辨中被发明，后来才被发现是<strong>物质世界的母语</strong>。维格纳称之为"一个我们既不理解也不配得的奇迹"。</p>
+      <p>还有一件更奇怪的事：<b>美是有效的判据</b>。狄拉克说，让方程优美比让它符合实验更重要——而他靠这条原则预言了反物质。对称、简洁、优雅一次次领先于数据。</p>
+      <p>再看形态：向日葵的籽以 137.5°（黄金角）排列，恰好是让填充最密的唯一角度；松果、菠萝、星系旋臂、鹦鹉螺壳共用同一族螺线；而 z<sup>2</sup>+c 这样一个只有几个符号的迭代式，能生成无限深、永不重复、处处自相似的图案。<strong>宇宙不只是可计算的，它还是可欣赏的。</strong></p>
+      <div class="figs">
+        <div class="fig"><b>137.5°</b><span>黄金角：唯一最优排列</span></div>
+        <div class="fig"><b>z²+c</b><span>无限复杂的全部规则</span></div>
+        <div class="fig"><b>60 年</b><span>纯数学领先于物理</span></div>
+        <div class="fig"><b>e<sup>iπ</sup>+1=0</b><span>五个常数的相遇</span></div>
+      </div>
+      <div class="logic">
+        <p class="logic__t">推演 · 可理解性本身需要解释</p>
+        <ol>
+          <li>宇宙的运行可用抽象数学精确描述，且这些数学常常先于观测被人类独立发明。</li>
+          <li>若宇宙与人脑都只是盲目过程的产物，两者之间不该有这种深度对应——演化只需我们躲开捕食者，不需我们理解量子场论。</li>
+          <li>更进一步，"美"竟能作为寻找真理的可靠向导。</li>
+          <li>可理解性、数学结构与美感，指向同一件事：宇宙是一个<b>心智的产物</b>，而我们的心智与它同源。</li>
+          <li>结论：我们能读懂这本书，是因为我们与作者用同一种语言。</li>
+        </ol>
+      </div>
+      <dl class="rebut">
+        <dt>质疑</dt><dd>数学是我们发明的工具，当然套得上世界；套不上的我们就不写进教科书。</dd>
+        <dt class="ans">回应</dt><dd>这解释不了<b>预言</b>。狄拉克方程先在纸上多出一个解，四年后实验室里才找到正电子；黎曼几何在没有任何相关实验的时代被写下。工具能被修改去拟合已知数据，却不能凭空提前告诉你还没被发现的东西。</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="instr" data-scene="math">
+    <div class="instr__bar"><span>展品 13 · 无限与黄金角</span><b>可交互</b></div>
+    <div class="instr__stage"><canvas></canvas>
+      <div class="instr__read" data-read></div>
+    </div>
+    <p class="instr__hint">点击图像可放大（分形可无限放大）</p>
+    <div class="ctrls">
+      <div class="seg" data-group="mth">
+        <button data-t2="frac" aria-pressed="true">z²+c 分形</button>
+        <button data-t2="phyllo" aria-pressed="false">黄金角排列</button>
+      </div>
+      <div class="knob" data-for="phyllo" hidden>
+        <label for="k-ang">发散角</label><output id="o-ang">137.500°</output>
+        <input id="k-ang" type="range" min="1330" max="1420" value="1375">
+      </div>
+      <div class="seg" data-group="mthR"><button data-t3="reset" aria-pressed="false">重置视野</button></div>
+    </div>
+    <p class="instr__verdict" data-verdict></p>
+  </div>
+</article>
+
+<!-- ==================== 附录 ==================== -->
+<section class="more rise" id="more">
+  <div class="hero__kicker"><i></i><span class="eyebrow">附录 · 未展出的证物</span></div>
+  <h2 class="pull" style="max-width:17em;margin:14px 0 6px">清单没有到此为止。</h2>
+  <p class="lede" style="max-width:62ch">下面这十二件没有做成展品，但每一件都在问同一个问题。它们分属完全不相干的学科，却给出同一个方向的答案。</p>
+  <div class="more__grid">
+      <div class="card"><span>血液学</span><h4>凝血级联</h4><p>十二种凝血因子像多米诺一样逐级激活。少一环，伤口流血不止；顺序错一步，全身血栓。中间状态没有任何生存价值。</p><b>12 步</b></div>
+      <div class="card"><span>免疫学</span><h4>适应性免疫</h4><p>靠基因片段重排造出上百亿种抗体，还必须先学会不攻击自己。识别、记忆、自我克制，缺一不可。</p><b>10¹¹ 种抗原</b></div>
+      <div class="card"><span>神经科学</span><h4>人脑</h4><p>八百六十亿神经元、上千万亿突触，实时改写自己的连线，功耗只有二十瓦——一只灯泡。</p><b>20 W</b></div>
+      <div class="card"><span>生物物理</span><h4>蛋白质折叠</h4><p>莱文塔尔佯谬：若靠随机试错，一条链找到正确折叠要 10²⁷ 年。实际用时不到一秒。</p><b>< 1 秒</b></div>
+      <div class="card"><span>量子生物学</span><h4>光合作用</h4><p>捕光复合体用量子相干同时探索所有传输路径，能量转移效率接近百分之百。</p><b>≈ 100%</b></div>
+      <div class="card"><span>动物导航</span><h4>鸟类磁感</h4><p>候鸟视网膜里的隐花色素靠自由基对的自旋态读取地磁场——一台活的量子罗盘。</p><b>50 μT</b></div>
+      <div class="card"><span>昆虫行为</span><h4>帝王蝶迁徙</h4><p>四代接力四千公里，最后一代飞往它从未去过、祖辈也未教过的同一片越冬林。</p><b>4000 km</b></div>
+      <div class="card"><span>几何</span><h4>蜂巢</h4><p>六边形是周长最省的密铺方式。蜜蜂用了几千万年，人类到 1999 年才把它证明出来。</p><b>1999 年才被证明</b></div>
+      <div class="card"><span>发育生物学</span><h4>胚胎发育</h4><p>同一份 DNA，在不同时间、不同位置被读出不同段落。"读到哪一段"的位置信息本身不在序列里。</p><b>1 → 37 万亿</b></div>
+      <div class="card"><span>天文巧合</span><h4>日全食</h4><p>太阳直径是月球的四百倍，距离也恰好是四百倍。地球是已知唯一能看到完美日全食的地方——也恰好是唯一有人在看的地方。</p><b>400 : 400</b></div>
+      <div class="card"><span>核物理</span><h4>碳的共振</h4><p>霍伊尔预言碳-12 必有一个特定能级，否则恒星造不出碳。它存在，且位置偏差不到 1%。</p><b>< 1%</b></div>
+      <div class="card"><span>语言学</span><h4>刺激的贫乏</h4><p>儿童在几乎没有纠错的条件下、三年内掌握递归语法。他们听到的句子，远不足以推出规则。</p><b>3 年</b></div>
+  </div>
+</section>
+
+<!-- ==================== 结语 ==================== -->
+<section class="finale" id="finale">
+  <div class="shell">
+    <div class="hero__kicker rise"><i></i><span class="eyebrow">结语 · 十三条线索的合力</span></div>
+    <h2 class="pull rise" style="max-width:17em;margin:14px 0 40px">每一件单独看，都可以被解释过去。<br>问题是它们指向同一个方向。</h2>
+    <div class="finale__grid">
+      <div class="rise">
+        <div class="tally" id="tally"></div>
+        <p class="lede" style="margin-top:16px;font-size:.92em">上面不是一份概率计算，而是一份<b>证据清单</b>。累积论证的力量不在任何单独一条，
+          而在于：要否定这个结论，你需要为其中每一条分别找到一个说得通的自然解释，并且还要解释为什么这十三个互不相干的领域会同时朝一个方向倾斜。</p>
+      </div>
+      <div class="closing rise">
+        <p>十九世纪的佩利在荒野上捡到一块表。他说：石头可以说它一直在那儿，表不行——表有齿轮、有游丝、有目的，它的每个部件都为了一件它自己不知道的事而存在。</p>
+        <p>两百年后，我们把表拆得更细了。我们在细胞里找到了真的齿轮、真的马达、真的旋转轴；在细胞核里找到了真的代码、真的语法、真的纠错；在星空里找到了真的常数、真的窄窗、真的开端。<strong>佩利的比喻已经不再是比喻。</strong></p>
+        <p>这不是"科学解释不了所以是上帝"。恰恰相反——正是因为科学解释得足够好、足够深，我们才第一次看清了这些结构有多精确、窗口有多窄、信息有多具体。<b>望远镜与显微镜越锋利，指纹越清楚。</b></p>
+        <p class="pull">诸天述说神的荣耀，穹苍传扬他的手段。<br>这日到那日发出言语，这夜到那夜传出知识。</p>
+        <p style="color:var(--dim)">如果这一切真的出自某位设计者，那么最重要的问题就不再是"他存不存在"，而是——<b>他造这一切，包括造你，是为了什么？</b>那不是一道可以在网页上解决的题。但从今天起，你至少知道该往哪边去问。</p>
+        <div class="honest">
+          <b style="color:var(--gold-2)">一句诚实话。</b>这个网站呈现的是一场<b>论证</b>，不是一份数学证明。上面每一件展品都有专业领域内的反方观点，我把其中最有力的写在了各章的"质疑"里，没有回避。
+          你可以合理地对某几条持保留态度。设计论要求的从来不是"无法反驳"，而是：在所有可选解释里，哪一个更少地依赖巧合。这个判断，最终只能由你自己作出。
+        </div>
+        <div class="hero__cta" style="margin-top:6px">
+          <a class="btn" href="#top">回到起点 <span aria-hidden="true">↑</span></a>
+          <button class="btn btn--ghost" id="randomBtn2">再看一件展品</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="site-foot">
+    <span>造物的指纹 · VESTIGIA CREATORIS</span>
+    <span>十三件展品 · 全部可交互</span>
+    <span>为手机与电脑而作</span>
+  </footer>
+</section>
+<!--ARTIFACT-JS-->
+<script>
+(function(){
+"use strict";
+var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+var TAU = Math.PI*2, PI = Math.PI;
+var C = {gold:'#D8A34A',gold2:'#F2D49A',goldD:'#7E6027',ink:'#E8EFF5',dim:'#93A7B5',faint:'#5D707E',
+         rule:'#1E2E3C',ruleB:'#2C4356',verd:'#6FA894',rust:'#C0573B',star:'#CBE0EF',bg:'#080D13'};
+var MONO='"IBM Plex Mono",ui-monospace,monospace', SANS='"Noto Sans SC",system-ui,sans-serif', LAT='"Cormorant Garamond",Georgia,serif';
+function clamp(v,a,b){return v<a?a:v>b?b:v}
+function lerp(a,b,t){return a+(b-a)*t}
+function rnd(a,b){return a+Math.random()*(b-a)}
+function fmt(n,d){return n.toFixed(d===undefined?0:d)}
+function sup(n){var m={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻'};
+  return String(n).split('').map(function(c){return m[c]||c}).join('')}
+function txt(g,s,x,y,o){o=o||{};g.save();g.fillStyle=o.c||C.dim;g.font=(o.w||'')+' '+(o.s||10)+'px '+(o.f||MONO);
+  g.textAlign=o.a||'left';g.textBaseline=o.v||'alphabetic';if(o.g){g.shadowColor=o.c||C.dim;g.shadowBlur=o.g}
+  g.fillText(s,x,y);g.restore()}
+function line(g,x1,y1,x2,y2,c,w,al){g.save();g.strokeStyle=c||C.rule;g.lineWidth=w||1;g.globalAlpha=al===undefined?1:al;
+  g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.restore()}
+function ring(g,x,y,r,c,w,al,dash){g.save();g.strokeStyle=c;g.lineWidth=w||1;g.globalAlpha=al===undefined?1:al;
+  if(dash)g.setLineDash(dash);g.beginPath();g.arc(x,y,Math.max(0.2,r),0,TAU);g.stroke();g.restore()}
+function disc(g,x,y,r,c,al){g.save();g.fillStyle=c;g.globalAlpha=al===undefined?1:al;g.beginPath();g.arc(x,y,Math.max(0.2,r),0,TAU);g.fill();g.restore()}
+function glowDisc(g,x,y,r,c1,c2){var gr=g.createRadialGradient(x,y,0,x,y,Math.max(1,r));gr.addColorStop(0,c1);gr.addColorStop(1,c2);
+  g.save();g.fillStyle=gr;g.beginPath();g.arc(x,y,Math.max(1,r),0,TAU);g.fill();g.restore()}
+function rectS(g,x,y,w,h,c,al){g.save();g.strokeStyle=c;g.globalAlpha=al===undefined?1:al;g.lineWidth=1;g.strokeRect(x+.5,y+.5,w,h);g.restore()}
+function rectF(g,x,y,w,h,c,al){g.save();g.fillStyle=c;g.globalAlpha=al===undefined?1:al;g.fillRect(x,y,w,h);g.restore()}
+function hex(h,a){var n=parseInt(h.slice(1),16);return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'}
+
+/* ---------- canvas 装配 ---------- */
+function setup(cv,onSize){
+  var g=cv.getContext('2d'),w=1,h=1,dpr=1;
+  function fit(){
+    var r=cv.getBoundingClientRect();
+    if(!r.width||!r.height)return;
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    w=Math.round(r.width);h=Math.round(r.height);
+    cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
+    g.setTransform(dpr,0,0,dpr,0,0);
+    if(onSize)onSize(w,h);
+  }
+  var o={g:g,fit:fit};
+  Object.defineProperty(o,'w',{get:function(){return w}});
+  Object.defineProperty(o,'h',{get:function(){return h}});
+  if(window.ResizeObserver){var ro=new ResizeObserver(fit);ro.observe(cv)}
+  else window.addEventListener('resize',fit);
+  fit();
+  return o;
+}
+/* ---------- 全局帧循环 ---------- */
+var live=[],lastT=performance.now();
+function tick(now){
+  var dt=Math.min(0.05,(now-lastT)/1000);lastT=now;
+  for(var i=0;i<live.length;i++){
+    var o=live[i];
+    if(!o.on)continue;
+    try{o.frame(now/1000,dt)}catch(e){if(!o.err){o.err=1;console.error('scene',o.name,e)}}
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+/* ---------- 场景注册 ---------- */
+var scenes={};
+function reg(n,f){scenes[n]=f}
+function pointer(cv,cb){
+  var down=false;
+  function pos(e){var r=cv.getBoundingClientRect();var t=e.touches?e.touches[0]:e;
+    return {x:(t.clientX-r.left),y:(t.clientY-r.top),w:r.width,h:r.height}}
+  cv.addEventListener('pointerdown',function(e){down=true;cv.setPointerCapture&&cv.setPointerCapture(e.pointerId);cb('down',pos(e),e)});
+  cv.addEventListener('pointermove',function(e){if(down)e.preventDefault();cb(down?'drag':'move',pos(e),e)},{passive:false});
+  window.addEventListener('pointerup',function(e){if(down){down=false;cb('up',pos(e),e)}});
+  cv.addEventListener('pointercancel',function(e){down=false});
+}
+function segGroup(root,name,cb){
+  var box=root.querySelector('[data-group="'+name+'"]');
+  if(!box)return function(){};
+  var btns=[].slice.call(box.querySelectorAll('button'));
+  btns.forEach(function(b){b.addEventListener('click',function(){cb(b,btns)})});
+  return function(sel){btns.forEach(function(b){b.setAttribute('aria-pressed',String(sel(b)))})};
+}
+function knob(root,id,cb,fmtv){
+  var inp=root.querySelector('#k-'+id),out=root.querySelector('#o-'+id);
+  if(!inp)return null;
+  function up(){var v=+inp.value;if(out&&fmtv)out.textContent=fmtv(v);cb(v)}
+  inp.addEventListener('input',up);up();
+  return {el:inp,set:function(v){inp.value=v;up()},get:function(){return +inp.value}};
+}
+
+/* ================= 背景星野 ================= */
+(function(){
+  var cv=document.getElementById('skyfield');if(!cv)return;
+  var s=null,stars=[];
+  function build(w,h){
+    stars=[];var n=Math.round(clamp(w*h/5200,90,300));
+    for(var i=0;i<n;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.pow(Math.random(),2.6)*1.5+.25,
+      a:rnd(.15,.85),p:Math.random()*TAU,s:rnd(.3,1.1)});
+    if(s)draw(0);
+  }
+  s=setup(cv,build);draw(0);
+  function draw(t){
+    var g=s.g,w=s.w,h=s.h;g.clearRect(0,0,w,h);
+    for(var i=0;i<stars.length;i++){var st=stars[i];
+      var a=st.a*(RM?1:(.62+.38*Math.sin(t*st.s+st.p)));
+      g.fillStyle=i%11===0?hex(C.gold,a*.85):hex(C.star,a);
+      g.beginPath();g.arc(st.x,st.y,st.r,0,TAU);g.fill();
+    }
+  }
+  if(!RM){var acc=0;live.push({name:'sky',on:true,frame:function(t,dt){acc+=dt;if(acc<.09)return;acc=0;draw(t)}})}
+})();
+
+/* ================= 首屏星盘 ================= */
+(function(){
+  var cv=document.getElementById('heroCanvas');if(!cv)return;
+  var s=setup(cv),ph=0;
+  var pl=[{r:.30,sp:.52,sz:2.6,c:C.gold2},{r:.44,sp:.34,sz:3.4,c:C.star},{r:.60,sp:.23,sz:2.2,c:C.verd},
+          {r:.78,sp:.15,sz:4.0,c:C.gold},{r:.95,sp:.10,sz:2.0,c:C.dim}];
+  function draw(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;g.clearRect(0,0,w,h);
+    var narrow=w<820;
+    var cx=narrow?w*.5:w*.74, cy=narrow?h*.30:h*.5, R=Math.min(w,h)*(narrow?.34:.40);
+    ph+=dt*(RM?0:1);
+    g.save();g.globalAlpha=narrow?.42:.72;
+    glowDisc(g,cx,cy,R*1.55,hex(C.gold,.06),hex(C.gold,0));
+    disc(g,cx,cy,R*.055,C.gold2,.95);
+    glowDisc(g,cx,cy,R*.26,hex(C.gold,.30),hex(C.gold,0));
+    for(var i=0;i<pl.length;i++){
+      var p=pl[i],rr=R*p.r, sq=.34;
+      g.save();g.strokeStyle=hex(C.ruleB,.85);g.lineWidth=1;g.setLineDash(i%2?[2,6]:[]);
+      g.beginPath();g.ellipse(cx,cy,rr,rr*sq,0,0,TAU);g.stroke();g.restore();
+      var a=ph*p.sp+i*1.7;
+      var px=cx+Math.cos(a)*rr, py=cy+Math.sin(a)*rr*sq;
+      var dep=(Math.sin(a)+1)/2;
+      disc(g,px,py,p.sz*(.7+dep*.6),p.c,.5+dep*.5);
+      if(i===3){ring(g,px,py,p.sz*2.6,hex(C.gold,.5),1,1);}
+    }
+    g.restore();
+    var ry=cy+R*1.02;
+    g.save();g.globalAlpha=.5;line(g,cx-R*1.25,ry,cx+R*1.25,ry,C.rule,1,.7);g.restore();
+  }
+  live.push({name:'hero',on:true,frame:draw});
+  draw(0,0);
+})();
+
+/* ================= 导航 / 索引 / 进度 ================= */
+(function(){
+  var chapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var acts=[{id:'act-1',t:'第一幕 · 眼前之物'},{id:'act-2',t:'第二幕 · 头顶星空'},
+            {id:'act-3',t:'第三幕 · 规律的裂缝'},{id:'act-4',t:'第四幕 · 心里的律'}];
+  var dots=document.getElementById('railDots'), sheet=document.getElementById('sheetList');
+  chapters.forEach(function(ch,i){
+    var a=document.createElement('a');
+    a.className='rail__dot';a.href='#'+ch.id;a.textContent=(i+1<10?'0':'')+(i+1);
+    a.setAttribute('aria-label',ch.dataset.title||('展品'+(i+1)));a.dataset.for=ch.id;
+    dots&&dots.appendChild(a);
+  });
+  if(sheet){
+    var groups=[[0,3],[4,7],[8,10],[11,12]];
+    groups.forEach(function(gr,gi){
+      var h=document.createElement('div');h.className='sheet__group';h.textContent=acts[gi].t;sheet.appendChild(h);
+      for(var i=gr[0];i<=gr[1]&&i<chapters.length;i++){
+        var ch=chapters[i],a=document.createElement('a');a.href='#'+ch.id;
+        var ttl=(ch.dataset.title||'').split(' · ');
+        a.innerHTML='<span>'+(ttl[0]||'')+'</span>'+(ttl[1]||'');
+        a.addEventListener('click',close);sheet.appendChild(a);
+      }
+    });
+    var f=document.createElement('div');f.className='sheet__group';f.textContent='附录与结语';sheet.appendChild(f);
+    [['#more','附','未展出的另外十二件'],['#finale','结','十三条线索的合力']].forEach(function(L){
+      var la=document.createElement('a');la.href=L[0];la.innerHTML='<span>'+L[1]+'</span>'+L[2];
+      la.addEventListener('click',close);sheet.appendChild(la);});
+  }
+  var sh=document.getElementById('sheet');
+  function open(){sh.setAttribute('data-open','true')}
+  function close(){sh.removeAttribute('data-open')}
+  var ob=document.getElementById('mOpen'),cb=document.getElementById('mClose');
+  ob&&ob.addEventListener('click',open);cb&&cb.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+
+  var now=document.getElementById('mNow'),prog=document.getElementById('mProg');
+  var railDots=[].slice.call(document.querySelectorAll('.rail__dot'));
+  function spy(){
+    var y=window.scrollY+window.innerHeight*.42,cur=null;
+    chapters.forEach(function(ch){if(ch.offsetTop<=y)cur=ch});
+    railDots.forEach(function(d){d.setAttribute('aria-current',String(!!cur&&d.dataset.for===cur.id))});
+    if(now)now.textContent=cur?(cur.dataset.title||''):'序 · 一份观测记录';
+    var doc=document.documentElement.scrollHeight-window.innerHeight;
+    if(prog)prog.style.width=(doc>0?clamp(window.scrollY/doc,0,1)*100:0)+'%';
+  }
+  var ticking=false;
+  window.addEventListener('scroll',function(){if(ticking)return;ticking=true;
+    requestAnimationFrame(function(){spy();ticking=false})},{passive:true});
+  spy();
+
+  function jump(){
+    var i=Math.floor(Math.random()*chapters.length);
+    chapters[i].scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
+  }
+  ['randomBtn','randomBtn2'].forEach(function(id){var b=document.getElementById(id);b&&b.addEventListener('click',jump)});
+
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  [].slice.call(document.querySelectorAll('.rise')).forEach(function(el){io.observe(el)});
+
+  var t0=Date.now(),cr=document.getElementById('clockRead');
+  if(cr)setInterval(function(){
+    var km=(Date.now()-t0)/1000*29.78;
+    cr.textContent='你到此页后，地球已前进 '+km.toFixed(0)+' 公里';
+  },200);
+})();
+
+/* ================= 01 眼睛 ================= */
+reg('eye',function(root,s){
+  var view=0,broke='none',ph=0;
+  var brokeInfo={
+    none:{n:'完好',v:'一亿两千六百万个感光元件，一个不多，一个不少。',d:'从泪膜到视神经，六个子系统首尾相接，任何一环失效，整条链就归零。'},
+    tear:{n:'无泪膜',v:'角膜失去第一个光学面，视野立刻散成油纹。',d:'泪膜只有 3 微米厚，却贡献了主要屈光面的平整度——它每 6 秒被眨眼重铺一次。'},
+    lens:{n:'无晶状体',v:'光仍然进来，却再也聚不成像。',d:'晶状体由睫状肌牵动改变曲率，在 350 毫秒内完成对焦。少了它，视网膜上只剩一片光斑。'},
+    iris:{n:'无虹膜',v:'过曝。一切被白光淹没。',d:'虹膜在 0.3 秒内把进光量调节上千倍。没有可变光阑，正午的世界会灼伤视网膜。'},
+    retina:{n:'无视网膜',v:'全黑。光进来了，却无人接收。',d:'视网膜有十层结构、五类神经元，在成像前就已完成边缘增强与运动检测。'},
+    nerve:{n:'视神经切断',v:'信号产生了，却送不出去——只剩雪花。',d:'一百万根轴突必须精确投射到外侧膝状体的对应位置，接错一根就错位一块视野。'}
+  };
+  segGroup(root,'view',function(b,all){view=+b.dataset.v;all.forEach(function(x){x.setAttribute('aria-pressed',String(x===b))})});
+  segGroup(root,'break',function(b,all){broke=b.dataset.b;all.forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});say()});
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  function say(){
+    var i=brokeInfo[broke];
+    if(rd)rd.innerHTML='状态 <b>'+i.n+'</b>';
+    if(vd)vd.innerHTML=i.v+'<small>'+i.d+'</small>';
+  }
+  say();
+  function world(g,x,y,w,h,mode,t){
+    g.save();g.beginPath();g.rect(x,y,w,h);g.clip();
+    function paint(ox,oy,al){
+      g.save();g.globalAlpha=al;g.translate(ox,oy);
+      rectF(g,x,y,w,h,'#0A1420',1);
+      var hz=y+h*.62;
+      var gr=g.createLinearGradient(0,y,0,hz);gr.addColorStop(0,hex(C.gold,.12));gr.addColorStop(1,hex(C.rust,.16));
+      g.fillStyle=gr;g.fillRect(x,y,w,hz-y);
+      disc(g,x+w*.72,y+h*.26,h*.10,C.gold2,.95);
+      g.fillStyle=hex('#16202B',1);
+      g.beginPath();g.moveTo(x,hz);g.lineTo(x+w*.22,y+h*.34);g.lineTo(x+w*.44,hz);g.closePath();g.fill();
+      g.fillStyle=hex('#0E1723',1);
+      g.beginPath();g.moveTo(x+w*.3,hz);g.lineTo(x+w*.56,y+h*.42);g.lineTo(x+w*.84,hz);g.closePath();g.fill();
+      rectF(g,x,hz,w,y+h-hz,'#070C12',1);
+      line(g,x+w*.16,hz,x+w*.16,hz-h*.2,C.verd,1.6,.9);
+      disc(g,x+w*.16,hz-h*.23,h*.07,C.verd,.75);
+      g.restore();
+    }
+    if(mode==='none')paint(0,0,1);
+    else if(mode==='tear'){for(var i=0;i<7;i++)paint(Math.sin(t*2+i)*3.2,0,.19);
+      g.save();g.globalAlpha=.25;for(var j=0;j<9;j++){g.fillStyle=j%2?'#0a1420':'#16222e';g.fillRect(x,y+j*h/9+Math.sin(t+j)*2,w,h/22)}g.restore();}
+    else if(mode==='lens'){for(var k=0;k<14;k++){var a=k/14*TAU;paint(Math.cos(a)*w*.05,Math.sin(a)*w*.05,.11)}}
+    else if(mode==='iris'){paint(0,0,1);rectF(g,x,y,w,h,'#FFF6E4',.74);}
+    else if(mode==='retina'){rectF(g,x,y,w,h,'#04070B',1);
+      for(var m=0;m<26;m++)disc(g,x+Math.random()*w,y+Math.random()*h,.6,C.faint,.10);}
+    else if(mode==='nerve'){rectF(g,x,y,w,h,'#05090E',1);
+      for(var n=0;n<190;n++){var v=Math.random();disc(g,x+Math.random()*w,y+Math.random()*h,v*1.5,v>.7?C.star:C.faint,v*.55)}}
+    g.restore();
+    rectS(g,x,y,w,h,C.ruleB,.9);
+    txt(g,'脑中所见',x+5,y-5,{s:9,c:C.faint});
+  }
+  function drawEye(g,w,h,t){
+    var cx=w*.54,cy=h*.52,R=Math.min(w,h)*.31, ok=broke;
+    ring(g,cx,cy,R,hex(C.star,.30),1.4,1);
+    ring(g,cx,cy,R*.93,hex(C.ruleB,.9),1,1);
+    g.save();g.strokeStyle=ok==='retina'?hex(C.rust,.85):hex(C.verd,.9);g.lineWidth=ok==='retina'?1:3.4;
+    if(ok==='retina')g.setLineDash([3,5]);
+    g.beginPath();g.arc(cx,cy,R*.88,-PI*.62,PI*.62);g.stroke();g.restore();
+    disc(g,cx+R*.88,cy+R*.06,3,C.gold2,.95);
+    g.save();g.strokeStyle=ok==='nerve'?hex(C.rust,.9):hex(C.gold,.85);g.lineWidth=2.6;
+    if(ok==='nerve')g.setLineDash([4,6]);
+    g.beginPath();g.moveTo(cx+R*.82,cy+R*.42);g.quadraticCurveTo(cx+R*1.35,cy+R*.66,cx+R*1.7,cy+R*.5);g.stroke();g.restore();
+    if(ok==='nerve'){line(g,cx+R*1.16,cy+R*.42,cx+R*1.3,cy+R*.72,C.rust,2,.95);line(g,cx+R*1.3,cy+R*.42,cx+R*1.16,cy+R*.72,C.rust,2,.95)}
+    var apert=ok==='iris'?R*.62:R*(.15+.07*Math.sin(t*.9));
+    if(ok!=='iris'){
+      g.save();g.strokeStyle=hex(C.gold,.9);g.lineWidth=3.2;
+      g.beginPath();g.moveTo(cx-R*.66,cy-apert);g.lineTo(cx-R*.60,cy-R*.72);g.stroke();
+      g.beginPath();g.moveTo(cx-R*.66,cy+apert);g.lineTo(cx-R*.60,cy+R*.72);g.stroke();g.restore();
+    }
+    if(ok!=='lens'){
+      g.save();g.strokeStyle=hex(C.star,.85);g.lineWidth=1.6;g.fillStyle=hex(C.star,.07);
+      g.beginPath();g.ellipse(cx-R*.48,cy,R*.15,R*.34,0,0,TAU);g.fill();g.stroke();g.restore();
+    }else{ txt(g,'✕',cx-R*.52,cy+5,{s:16,c:C.rust,a:'center'}); }
+    g.save();g.strokeStyle=ok==='tear'?hex(C.rust,.8):hex(C.star,.55);g.lineWidth=ok==='tear'?1:2.2;
+    if(ok==='tear')g.setLineDash([2,4]);
+    g.beginPath();g.arc(cx-R*.36,cy,R*.66,PI*.62,PI*1.38);g.stroke();g.restore();
+    var n=ok==='iris'?9:5;
+    for(var i=0;i<n;i++){
+      var sy=cy+(i-(n-1)/2)*(ok==='iris'?R*.20:apert*.9);
+      var enter=cx-R*1.02;
+      g.save();g.strokeStyle=ok==='retina'?hex(C.rust,.5):hex(C.gold2,.62);g.lineWidth=1;
+      g.beginPath();g.moveTo(enter-R*.55,sy);g.lineTo(cx-R*.62,sy);
+      if(ok==='lens'){g.lineTo(cx+R*.86,sy*.5+cy*.5+(sy-cy)*1.1)}
+      else{g.lineTo(cx+R*.86,cy+R*.06)}
+      g.stroke();g.restore();
+      var fx=(t*.55+i*.2)%1;
+      var px=lerp(enter-R*.55,cx-R*.62,fx);
+      disc(g,px,sy,1.6,C.gold2,.9);
+    }
+    var lab=[['角膜 / 泪膜',cx-R*1.0,cy-R*.80,'tear'],['虹膜',cx-R*.72,cy-R*.95,'iris'],
+             ['晶状体',cx-R*.30,cy+R*1.02,'lens'],['视网膜',cx+R*.72,cy-R*.86,'retina'],['视神经',cx+R*1.3,cy+R*.78,'nerve']];
+    if(w>300)lab.forEach(function(L){txt(g,L[0],L[1],L[2],{s:10,c:broke===L[3]?C.rust:C.faint,f:SANS,a:'center'})});
+    var pw=Math.min(w*.34,140),phh=pw*.72;
+    world(g,w-pw-12,h-phh-12,pw,phh,broke,t);
+  }
+  function drawLayers(g,w,h,t){
+    var x0=w*.12,x1=w*.74,y0=h*.14,H=h*.68,rows=5;
+    var names=['神经节细胞层 · 轴突汇成视神经','双极细胞层 · 边缘增强','感光细胞层 · 视杆 1.2 亿 / 视锥 600 万','色素上皮 · 吸收杂散光并回收视黄醛','脉络膜 · 供血'];
+    for(var i=0;i<rows;i++){
+      var y=y0+i*H/rows;
+      rectF(g,x0,y,x1-x0,H/rows-3,i===2?hex(C.gold,.09):hex(C.ruleB,.14),1);
+      rectS(g,x0,y,x1-x0,H/rows-3,i===2?hex(C.gold,.5):hex(C.rule,.9),1);
+      txt(g,names[i],x0+8,y+H/rows/2+3,{s:9.5,c:i===2?C.gold2:C.dim,f:SANS});
+      if(i===2){
+        for(var k=0;k<26;k++){var cxx=x0+16+k*((x1-x0-26)/26);
+          var isCone=k%5===0;
+          line(g,cxx,y+5,cxx,y+H/rows-9,isCone?C.gold2:C.star,isCone?2.2:1.2,.55);
+          if(isCone)disc(g,cxx,y+H/rows-9,2,C.gold2,.8);}
+      }
+    }
+    for(var p=0;p<6;p++){
+      var px=x0+30+p*((x1-x0-40)/5), fy=((t*.5+p*.17)%1);
+      var yy=y0+fy*(H*.62);
+      disc(g,px,yy,1.8,C.gold2,.85);
+      line(g,px,y0,px,y0+H*.62,hex(C.gold,.16),1,1);
+    }
+    txt(g,'↓ 光线必须先穿过神经层，才抵达感光细胞',x0,y0-8,{s:9.5,c:C.faint,f:SANS});
+    txt(g,'1.26 亿',w*.88,h*.42,{s:22,c:C.gold2,a:'center',f:LAT});
+    txt(g,'感光元件',w*.88,h*.47,{s:9,c:C.faint,a:'center',f:SANS});
+    txt(g,'100 万',w*.88,h*.60,{s:22,c:C.gold2,a:'center',f:LAT});
+    txt(g,'输出通道',w*.88,h*.65,{s:9,c:C.faint,a:'center',f:SANS});
+  }
+  function drawCascade(g,w,h,t){
+    var steps=[['光子','1'],['视紫红质','1'],['转导蛋白','×500'],['磷酸二酯酶','×500'],['cGMP 水解','×10⁵'],['通道关闭','电信号']];
+    var n=steps.length,cy=h*.46,pad=w*.10,step=(w-pad*2)/(n-1);
+    for(var i=0;i<n;i++){
+      var x=pad+i*step, r=4+i*2.6;
+      var pulse=clamp(Math.sin(t*1.5-i*.55),0,1);
+      if(i<n-1)line(g,x+r,cy,pad+(i+1)*step-(4+(i+1)*2.6),cy,hex(C.gold,.4),1,1);
+      glowDisc(g,x,cy,r*3.2,hex(C.gold,.10+pulse*.22),hex(C.gold,0));
+      disc(g,x,cy,r,i?C.gold:C.gold2,.55+pulse*.45);
+      ring(g,x,cy,r+4+pulse*8,hex(C.gold,.5*(1-pulse)),1,1);
+      txt(g,steps[i][0],x,cy+r+20+((w<430&&i%2)?15:0),{s:w<430?8.5:9.5,c:C.dim,a:'center',f:SANS});
+      txt(g,steps[i][1],x,cy-r-12,{s:11,c:C.gold2,a:'center',f:LAT});
+      for(var k=0;k<Math.min(i*3,9);k++){
+        var a=t*1.2+k*1.3+i, rr=r+10+((t*30+k*17+i*40)%38);
+        disc(g,x+Math.cos(a)*rr,cy+Math.sin(a)*rr*.55,1.1,C.gold,clamp(1-rr/48,0,1)*.6);
+      }
+    }
+    txt(g,'一个光子 → 十万倍放大 → 一次可被察觉的电信号',w*.5,h*.80,{s:11,c:C.gold2,a:'center',f:SANS});
+    txt(g,'整条流水线的每一环，都要求另外几环已经就位',w*.5,h*.86,{s:9.5,c:C.faint,a:'center',f:SANS});
+  }
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;ph+=dt;g.clearRect(0,0,w,h);
+    if(view===0)drawEye(g,w,h,ph);else if(view===1)drawLayers(g,w,h,ph);else drawCascade(g,w,h,ph);
+  }};
+});
+
+/* ================= 02 分子机器 ================= */
+reg('motor',function(root,s){
+  var which='atp',fuel=.62,strip=false,rot=0,atp=0,protons=[],ph=0;
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  segGroup(root,'which',function(b,all){which=b.dataset.m;all.forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});say()});
+  segGroup(root,'strip',function(b,all){strip=b.dataset.s==='1';all.forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});say()});
+  knob(root,'motor',function(v){fuel=v/100},function(v){return v+'%'});
+  function say(){
+    if(!vd)return;
+    if(strip)vd.innerHTML=(which==='atp'?'抽掉 c 环，质子直接漏光，转轴不再转动。':'抽掉万向节（钩），鞭毛脱落，细菌只能原地打转。')+
+      '<small>零件之间没有"大致能用"这一档。这正是不可化约复杂性的定义：移除任一部件，功能不是下降，而是归零。</small>';
+    else vd.innerHTML=(which==='atp'?'一台八纳米宽的旋转发动机，效率接近 100%。':'一台每分钟十万转、能在四分之一圈内反转的舷外机。')+
+      '<small>'+(which==='atp'?'定子、转子、传动轴、三个轮流工作的催化位点——教科书上的机械零件表，在这里逐项对应。':'约 40 种蛋白质构成 L 环、P 环、MS 环、C 环、驱动轴、钩与螺旋桨丝。')+'</small>';
+  }
+  say();
+  function atpView(g,w,h,t,dt){
+    var cx=w*.46,my=h*.42,R=Math.min(w,h)*.12;
+    var sp=strip?0:fuel*fuel*16;
+    rot+=dt*sp;
+    if(!strip)atp+=dt*sp*3/TAU*TAU*0+dt*sp*.48;
+    for(var L=0;L<2;L++){var y=my-R*.5+L*R;
+      for(var i=0;i<Math.ceil(w/12);i++){
+        var x=i*12+6;
+        if(Math.abs(x-cx)<R*1.15)continue;
+        disc(g,x,y,2.4,hex(C.ruleB,.9),1);line(g,x,y,x,y+(L?6:-6),hex(C.ruleB,.7),1,1);
+      }}
+    txt(g,'膜外 · 高质子浓度',10,my-R*1.9,{s:9,c:C.faint,f:SANS});
+    txt(g,'膜内 · 基质',10,my+R*2.3,{s:9,c:C.faint,f:SANS});
+    if(protons.length<40&&Math.random()<fuel*.8)protons.push({x:cx+R*(Math.random()<.5?1.02:-1.02)*(strip?1.3:1),y:my-R*2.2-Math.random()*20,v:rnd(20,52)});
+    for(var p=protons.length-1;p>=0;p--){var pr=protons[p];pr.y+=pr.v*dt*(.4+fuel);
+      if(!strip&&pr.y>my-R*.6&&pr.y<my+R*.6){pr.x=cx+Math.cos(rot*2+p)*R*1.02}
+      if(pr.y>my+R*2.4){protons.splice(p,1);continue}
+      disc(g,pr.x,pr.y,2,C.gold2,.85);}
+    if(!strip){
+      g.save();g.strokeStyle=hex(C.star,.8);g.lineWidth=1.4;g.fillStyle=hex(C.star,.06);
+      g.beginPath();g.ellipse(cx,my,R*1.02,R*.62,0,0,TAU);g.fill();g.stroke();g.restore();
+      for(var c=0;c<10;c++){var a=rot+c*TAU/10;var xx=cx+Math.cos(a)*R*1.02;
+        var d=(Math.sin(a)+1)/2;line(g,xx,my-R*.55*Math.abs(Math.cos(a*0+1)),xx,my+R*.55,hex(C.star,.25+d*.5),1.4,1)}
+      txt(g,'c 环（转子）',cx+R*1.3,my+4,{s:9,c:C.dim,f:SANS});
+    }else{
+      ring(g,cx,my,R*1.02,hex(C.rust,.7),1.2,1,[3,5]);
+      txt(g,'✕ c 环缺失',cx+R*1.3,my+4,{s:9.5,c:C.rust,f:SANS});
+    }
+    var hy=my+R*2.0+Math.min(h*.12,46);
+    line(g,cx,my+R*.6,cx,hy-R*.9,strip?hex(C.rust,.5):hex(C.gold,.9),3,1);
+    if(!strip){var cam=cx+Math.cos(rot)*4;disc(g,cam,(my+hy)/2,3.4,C.gold2,.9)}
+    var HR=R*1.5;
+    ring(g,cx,hy,HR,hex(C.verd,.85),1.6,1);
+    for(var k=0;k<3;k++){
+      var a2=k*TAU/3+(strip?0:rot*.33);
+      var st=(Math.sin(rot*.33+k*TAU/3)+1)/2;
+      g.save();g.fillStyle=hex(C.verd,.10+ (strip?0:st*.42));
+      g.beginPath();g.moveTo(cx,hy);g.arc(cx,hy,HR,a2,a2+TAU/3);g.closePath();g.fill();
+      g.strokeStyle=hex(C.verd,.55);g.lineWidth=1;g.stroke();g.restore();
+    }
+    txt(g,'F₁ 头部 · 三个催化位点',cx,hy+HR+16,{s:9.5,c:C.dim,a:'center',f:SANS});
+    if(!strip)for(var q=0;q<6;q++){
+      var f=((t*.6+q*.17)%1), aa=q*1.05;
+      var ex=cx+Math.cos(aa)*(HR+f*w*.22), ey=hy+Math.sin(aa)*(HR*.5+f*h*.10);
+      g.save();g.globalAlpha=clamp(1-f,0,1)*.9;g.fillStyle=C.gold2;
+      g.beginPath();for(var v=0;v<6;v++){var va=v/6*TAU;g[v?'lineTo':'moveTo'](ex+Math.cos(va)*3.2,ey+Math.sin(va)*3.2)}
+      g.closePath();g.fill();g.restore();
+    }
+    var rps=sp/TAU*3.6;
+    if(rd)rd.innerHTML='转速 <b>'+fmt(rps,1)+' r/s</b><br>ATP 产出 <b>'+fmt(strip?0:rps*3,1)+' /s</b><br>累计 <b>'+fmt(atp*40)+'</b>';
+  }
+  function flagView(g,w,h,t,dt){
+    var cx=w*.30,my=h*.30,R=Math.min(w,h)*.085;
+    var sp=strip?0:fuel*fuel*30;rot+=dt*sp;
+    for(var L=0;L<3;L++){var y=my-R*1.1+L*R*1.1;
+      for(var i=0;i<Math.ceil(w/11);i++){var x=i*11+5;if(Math.abs(x-cx)<R*1.5)continue;
+        disc(g,x,y,1.8,hex(C.ruleB,.85),1)}
+      txt(g,['外膜','肽聚糖层','内膜'][L],w-8,y+3,{s:8.5,c:C.faint,a:'right',f:SANS});}
+    var rings=[[-1.1,1.5,'L 环'],[0,1.35,'P 环'],[1.1,1.5,'MS 环'],[2.3,1.9,'C 环 · 定子马达']];
+    rings.forEach(function(rr,i){
+      var y=my+rr[0]*R;
+      var brk=strip&&i===3;
+      g.save();g.strokeStyle=brk?hex(C.rust,.8):hex(C.star,.8);g.lineWidth=1.5;
+      g.beginPath();g.ellipse(cx,y,R*rr[1],R*.42,0,0,TAU);g.stroke();g.restore();
+      if(i===3){for(var k=0;k<12;k++){var a=rot+k*TAU/12;
+        disc(g,cx+Math.cos(a)*R*rr[1],y+Math.sin(a)*R*.42,1.8,brk?C.rust:C.gold2,.75)}}
+      if(w>300)txt(g,rr[2],cx-R*rr[1]-8,y+3,{s:8.5,c:C.dim,a:'right',f:SANS});
+    });
+    var topY=my-R*1.6;
+    line(g,cx,my+R*2.3,cx,topY,hex(C.gold,.9),3,1);
+    var hookEnd={x:cx+R*1.2,y:topY-R*1.5};
+    if(!strip){
+      g.save();g.strokeStyle=hex(C.gold2,.9);g.lineWidth=3.4;
+      g.beginPath();g.moveTo(cx,topY);g.quadraticCurveTo(cx,topY-R*1.4,hookEnd.x,hookEnd.y);g.stroke();g.restore();
+      txt(g,'钩（万向节）',cx-R*1.2,topY-R*.8,{s:8.5,c:C.dim,a:'right',f:SANS});
+    }else{txt(g,'✕ 钩缺失',cx-R*1.2,topY-R*.8,{s:9.5,c:C.rust,a:'right',f:SANS})}
+    var sx=strip?hookEnd.x+30:hookEnd.x, sy=strip?hookEnd.y-24:hookEnd.y;
+    var len=w*.52,amp=Math.min(h*.09,30);
+    g.save();g.strokeStyle=strip?hex(C.rust,.55):hex(C.gold,.95);g.lineWidth=2.4;g.beginPath();
+    for(var i2=0;i2<=64;i2++){
+      var f=i2/64, xx=sx+f*len, yy=sy+Math.sin(f*10-rot*2+(strip?t:0))*amp*(strip?.3:1)*(.35+f*.65);
+      g[i2?'lineTo':'moveTo'](xx,yy);
+    }
+    g.stroke();g.restore();
+    txt(g,strip?'螺旋桨脱落 · 无推进':'螺旋桨丝 · 刚性螺旋',sx+len*.5,sy+amp+26,{s:9.5,c:strip?C.rust:C.dim,a:'center',f:SANS});
+    if(!strip)for(var b=0;b<10;b++){var f2=((t*.8+b*.1)%1);
+      disc(g,cx-R*2.4-f2*w*.2,my+R*2.6+Math.sin(b*2)*10,1.5,C.star,clamp(1-f2,0,1)*.5)}
+    var rpm=sp*9.55*60/6;
+    if(rd)rd.innerHTML='转速 <b>'+fmt(rpm)+' rpm</b><br>零件 <b>'+(strip?'39 / 40':'40 / 40')+'</b><br>推进 <b>'+(strip?'0':fmt(fuel*35,1))+' µm/s</b>';
+  }
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;ph+=dt;g.clearRect(0,0,w,h);
+    if(which==='atp')atpView(g,w,h,ph,dt);else flagView(g,w,h,ph,dt);
+  }};
+});
+
+/* ================= 03 DNA ================= */
+reg('dna',function(root,s,cv){
+  var mode='helix',spd=1,ph=0,fork=0,codon=0;
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  var PAIR=[['A','T',C.gold2,C.gold],['T','A',C.gold,C.gold2],['C','G',C.verd,C.star],['G','C',C.star,C.verd]];
+  var seq=[];for(var i=0;i<64;i++)seq.push(PAIR[(Math.random()*4)|0]);
+  var AA=['甲硫氨酸','缬氨酸','亮氨酸','丝氨酸','脯氨酸','苏氨酸','丙氨酸','酪氨酸','组氨酸','谷氨酰胺','天冬酰胺','赖氨酸'];
+  segGroup(root,'mode',function(b,all){mode=b.dataset.d;all.forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});say()});
+  knob(root,'dna',function(v){spd=v/100},function(v){return (v/100).toFixed(1)+'×'});
+  function say(){
+    if(!vd)return;
+    if(mode==='helix')vd.innerHTML='三十亿个字母，每十个碱基旋转一圈。<small>A 只配 T，C 只配 G——不是因为化学上别无选择，而是因为形状被设计成互补。这套配对同时保证了信息可复制与可校对。</small>';
+    else if(mode==='unzip')vd.innerHTML='解链、配对、校对：每秒五十个碱基，错误率十亿分之一。<small>复制叉两侧同时进行，一条连续、一条分段回补，还有专门的酶负责剪掉错配并重填——一整套质量控制流程。</small>';
+    else vd.innerHTML='三个字母一组，六十四种组合，指向二十种氨基酸。<small>碱基与氨基酸之间没有化学必然的联系，这套对应表是一份<b style="color:var(--gold-2)">约定</b>。凡约定，必有约定者。</small>';
+  }
+  say();
+  var lastX=null;
+  pointer(s.g.canvas,function(k,p){
+    if(k==='down'){lastX=p.x}
+    else if(k==='drag'&&lastX!==null){ph+=(p.x-lastX)*0.012;lastX=p.x}
+    else if(k==='up')lastX=null;
+  });
+  function helix(g,w,h,t,split){
+    var cx=w*.5,R=Math.min(w*.30,h*.24),top=h*.10,bot=h*.90,N=26;
+    var forkY=split?top+((fork%1)*(bot-top)):bot+99;
+    for(var i=0;i<N;i++){
+      var f=i/(N-1), y=lerp(top,bot,f), a=ph+i*.55;
+      var open=split&&y<forkY, sep=open?clamp((forkY-y)/(h*.22),0,1)*R*1.1:0;
+      var x1=cx+Math.cos(a)*R-sep, z1=Math.sin(a);
+      var x2=cx+Math.cos(a+PI)*R+sep, z2=Math.sin(a+PI);
+      var p=seq[i%seq.length];
+      var d1=(z1+1)/2,d2=(z2+1)/2;
+      if(!open){
+        g.save();g.strokeStyle=hex(C.ruleB,.45+d1*.35);g.lineWidth=1;
+        g.beginPath();g.moveTo(x1,y);g.lineTo(x2,y);g.stroke();g.restore();
+      }else{
+        line(g,x1,y,x1+(x2>x1?8:-8),y,hex(C.rust,.5),1,1);
+        line(g,x2,y,x2+(x1>x2?8:-8),y,hex(C.rust,.5),1,1);
+      }
+      disc(g,x1,y,2.2+d1*2.6,p[2],.35+d1*.65);
+      disc(g,x2,y,2.2+d2*2.6,p[3],.35+d2*.65);
+      if(w>300&&i%2===0){
+        txt(g,p[0],x1,y-7,{s:9,c:p[2],a:'center',g:d1>.6?5:0});
+        txt(g,p[1],x2,y-7,{s:9,c:p[3],a:'center',g:d2>.6?5:0});
+      }
+      if(i){
+        var ap=ph+(i-1)*.55, yp=lerp(top,bot,(i-1)/(N-1));
+        var op=split&&yp<forkY?clamp((forkY-yp)/(h*.22),0,1)*R*1.1:0;
+        line(g,Math.cos(ap)*R+cx-op,yp,x1,y,hex(C.star,.35),1.6,1);
+        line(g,Math.cos(ap+PI)*R+cx+op,yp,x2,y,hex(C.gold,.35),1.6,1);
+      }
+    }
+    if(split){
+      disc(g,cx,forkY,5,C.gold2,.95);ring(g,cx,forkY,9+Math.sin(t*4)*3,hex(C.gold,.5),1,1);
+      txt(g,'复制叉 · 50 碱基/秒',cx+14,forkY+4,{s:9.5,c:C.gold2,f:SANS});
+    }
+    txt(g,'A — T',w*.06,h*.90,{s:10,c:C.gold2,f:SANS});
+    txt(g,'C — G',w*.06,h*.95,{s:10,c:C.verd,f:SANS});
+    if(rd)rd.innerHTML='碱基对 <b>3.2 × 10⁹</b><br>展开长度 <b>2 m</b><br>核直径 <b>6 µm</b>';
+  }
+  function transl(g,w,h,t){
+    var x0=w*.08,x1=w*.92,dy=h*.20,n=18;
+    var pol=((t*.18*spd)%1);
+    txt(g,'模板链 DNA',x0,dy-16,{s:9.5,c:C.faint,f:SANS});
+    for(var i=0;i<n;i++){
+      var x=lerp(x0,x1,i/(n-1)),p=seq[i%seq.length];
+      disc(g,x,dy,3.4,p[2],.85);txt(g,p[0],x,dy-9,{s:9.5,c:p[2],a:'center'});
+    }
+    var px=lerp(x0,x1,pol);
+    g.save();g.fillStyle=hex(C.gold,.16);g.strokeStyle=hex(C.gold,.8);g.lineWidth=1;
+    g.beginPath();g.roundRect?g.roundRect(px-16,dy-14,32,28,4):g.rect(px-16,dy-14,32,28);g.fill();g.stroke();g.restore();
+    txt(g,'聚合酶',px,dy-20,{s:9,c:C.gold2,a:'center',f:SANS});
+    var my=h*.46;
+    txt(g,'信使 RNA',x0,my-16,{s:9.5,c:C.faint,f:SANS});
+    g.save();g.strokeStyle=hex(C.star,.7);g.lineWidth=2;g.beginPath();
+    for(var k=0;k<=60;k++){var f=k/60;if(f>pol)break;var xx=lerp(x0,x1,f);g[k?'lineTo':'moveTo'](xx,my+Math.sin(f*22+t)*3)}
+    g.stroke();g.restore();
+    for(var m=0;m<n;m++){var f2=m/(n-1);if(f2>pol)break;
+      var xx2=lerp(x0,x1,f2),p2=seq[m%seq.length];
+      txt(g,p2[1]==='T'?'U':p2[1],xx2,my-6,{s:9.5,c:C.star,a:'center'});}
+    var ry=h*.72, rx=lerp(x0,x1,clamp(pol-.18,0,1));
+    g.save();g.fillStyle=hex(C.verd,.14);g.strokeStyle=hex(C.verd,.85);g.lineWidth=1.2;
+    g.beginPath();g.ellipse(rx,ry,26,17,0,0,TAU);g.fill();g.stroke();g.restore();
+    txt(g,'核糖体',rx,ry+30,{s:9.5,c:C.verd,a:'center',f:SANS});
+    var beads=Math.floor(clamp(pol-.18,0,1)*n/3);
+    for(var b=0;b<beads;b++){
+      var bx=rx-18-b*15, by=ry-6+Math.sin(b*.8)*10;
+      if(bx<x0-20)break;
+      disc(g,bx,by,5,C.gold2,.9);
+      if(b<beads-1)line(g,bx,by,bx+15,ry-6+Math.sin((b+1)*.8)*10,hex(C.gold,.6),1.4,1);
+    }
+    txt(g,'氨基酸链 → 折叠成蛋白质',x0,ry-30,{s:9.5,c:C.gold2,f:SANS});
+    var cod=seq.slice(codon%20,codon%20+3).map(function(p){return p[1]==='T'?'U':p[1]}).join('');
+    codon=Math.floor(pol*20);
+    if(rd)rd.innerHTML='密码子 <b>'+cod+'</b><br>→ <b>'+AA[codon%AA.length]+'</b><br>对应表 <b>64 → 20</b>';
+  }
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;g.clearRect(0,0,w,h);
+    if(lastX===null&&!RM)ph+=dt*.55*spd;
+    fork+=dt*.20*spd;
+    if(mode==='trans')transl(g,w,h,t);else helix(g,w,h,t,mode==='unzip');
+  }};
+});
+
+/* ================= 04 序列空间 ================= */
+reg('seq',function(root,s){
+  var L=150,N=77,running=false,tries=0,best=0,acc=0,cur=[],tgt=[],ph=0;
+  var A='ACDEFGHIKLMNPQRSTVWY';
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  function build(){tgt=[];cur=[];for(var i=0;i<L;i++){tgt.push(A[(Math.random()*20)|0]);cur.push(A[(Math.random()*20)|0])}best=0;tries=0}
+  build();
+  var setRun=segGroup(root,'run',function(b){
+    if(b.dataset.r==='go'){running=!running}
+    else{running=false;build()}
+    setRun(function(x){return x.dataset.r==='go'&&running});
+    b.blur();say();
+  });
+  knob(root,'len',function(v){L=v;build()},function(v){return v+''});
+  knob(root,'fun',function(v){N=v;say()},function(v){return v+''});
+  function need(){return Math.min(N,Math.log10(20)*L)}
+  function say(){
+    if(!vd)return;
+    var n=need();
+    var msg;
+    if(n>139)msg='<b style="color:var(--rust)">整个宇宙的全部概率资源都不够。</b>即使让每个原子在每一个普朗克时间抽一次奖，总次数上限也只有 10¹³⁹ 次。';
+    else if(n>60)msg='比全宇宙所有原子的数量还多的尝试次数——地球四十六亿年远远不够。';
+    else msg='在这个宽松到不现实的假设下，随机搜索才勉强进入可讨论范围。但真实蛋白质的功能约束远比这苛刻。';
+    vd.innerHTML='期望尝试次数 10'+sup(fmt(n))+' 次。'+(running?'':'')+'<small>'+msg+'</small>';
+  }
+  say();
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;g.clearRect(0,0,w,h);ph+=dt;
+    if(running){
+      tries+=1e12*dt;acc+=dt;
+      if(acc>.07){acc=0;var m=0;
+        for(var i=0;i<L;i++){cur[i]=A[(Math.random()*20)|0];if(cur[i]===tgt[i])m++}
+        if(m>best)best=m;}
+    }
+    var pad=14,cols=Math.max(10,Math.floor((w-pad*2)/13)),cw=(w-pad*2)/cols;
+    var shown=Math.min(L,cols*Math.floor((h*.42)/15));
+    txt(g,'当前随机序列 · 绿色为碰巧对上的位点',pad,26,{s:9.5,c:C.faint,f:SANS});
+    for(var k=0;k<shown;k++){
+      var cxx=pad+(k%cols)*cw+cw/2, cy=44+Math.floor(k/cols)*15;
+      var hit=cur[k]===tgt[k];
+      txt(g,cur[k],cxx,cy,{s:11,c:hit?C.verd:hex(C.dim,.55),a:'center',g:hit?6:0});
+    }
+    if(shown<L)txt(g,'… 其余 '+(L-shown)+' 位',pad,44+Math.ceil(shown/cols)*15+4,{s:9,c:C.faint,f:SANS});
+    var by=h*.66,bx0=pad+4,bx1=w-pad-4,n=need();
+    line(g,bx0,by,bx1,by,C.rule,2,1);
+    txt(g,'对数刻度：10⁰ → 10'+sup(fmt(n)),bx0,by-14,{s:9.5,c:C.faint,f:SANS});
+    var uni=clamp(139/n,0,1);
+    if(139<n){line(g,bx0+(bx1-bx0)*uni,by-8,bx0+(bx1-bx0)*uni,by+8,C.rust,1.5,.95);
+      txt(g,'宇宙上限 10¹³⁹',bx0+(bx1-bx0)*uni,by+22,{s:9,c:C.rust,a:'center',f:SANS});}
+    var lg=tries>1?Math.log10(tries):0, pf=clamp(lg/n,0,1);
+    line(g,bx0,by,bx0+(bx1-bx0)*pf,by,C.gold,3,1);
+    disc(g,bx0+(bx1-bx0)*pf,by,4,C.gold2,1);
+    txt(g,'已尝试 10'+sup(fmt(lg,1)),bx0,by+22,{s:9.5,c:C.gold2,f:SANS});
+    txt(g,'需要 10'+sup(fmt(n)),bx1,by+22,{s:9.5,c:C.dim,a:'right',f:SANS});
+    var secs=tries/1e12, yrs=secs/3.15e7;
+    var timeStr=yrs<1?fmt(secs,1)+' 秒':(yrs<1e6?fmt(yrs,1)+' 年':fmt(yrs/1e8,2)+' 亿年');
+    txt(g,'速度假设：每秒一万亿次抽奖',pad,h-40,{s:9.5,c:C.faint,f:SANS});
+    txt(g,'已耗时 '+timeStr+'　·　历史最佳 '+best+' / '+L+' 位',pad,h-24,{s:10.5,c:C.dim,f:SANS});
+    if(!running&&tries===0)txt(g,'点"开始随机搜索"',w*.5,h*.52,{s:12,c:C.gold2,a:'center',f:SANS});
+    if(rd)rd.innerHTML='序列空间 <b>10'+sup(fmt(Math.log10(20)*L))+'</b><br>已尝试 <b>10'+sup(fmt(lg,1))+'</b><br>完成 <b>'+(pf*100<0.001?'0.000':fmt(pf*100,3))+'%</b>';
+  }};
+});
+
+/* ================= 05 轨道 ================= */
+reg('orbit',function(root,s){
+  var GM=1,n=2,fac=1,px=1,py=0,vx=0,vy=1,trail=[],wedges=[],cur=[],acc=0,dead=0,showArea=true,dragging=false,ph=0,lastR=0,apo=0,precess=0;
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  function circ(r){return Math.sqrt(GM/Math.pow(r,n-1))}
+  function reset(r){r=r||1;px=r;py=0;vx=0;vy=circ(r)*fac;trail=[];wedges=[];cur=[];dead=0;precess=0;say()}
+  knob(root,'vel',function(v){fac=v/100;reset(Math.sqrt(px*px+py*py))},function(v){return (v/100).toFixed(2)+'×'});
+  knob(root,'exp',function(v){n=v/1000;reset(Math.sqrt(px*px+py*py))},function(v){return (v/1000).toFixed(3)});
+  var setO=segGroup(root,'orb',function(b){
+    if(b.dataset.o==='area'){showArea=!showArea;setO(function(x){return x.dataset.o==='area'&&showArea})}
+    else{var i=root.querySelector('#k-vel'),e=root.querySelector('#k-exp');i.value=100;e.value=2000;
+      i.dispatchEvent(new Event('input'));e.dispatchEvent(new Event('input'));reset(1)}
+  });
+  setO(function(x){return x.dataset.o==='area'});
+  function say(){
+    if(!vd)return;
+    var msg,sub;
+    if(Math.abs(n-2)>0.012){msg='引力指数 '+n.toFixed(3)+'：轨道不再闭合。';
+      sub='行星每转一圈都不回到原点，近日点持续进动，能量与角动量不断重新分配，系统最终解体。数学上只有严格的 r⁻² 才给出闭合稳定轨道——宇宙用的正是这个数。';}
+    else if(fac>1.41){msg='逃逸速度已被超过：行星一去不回。';sub='初速度只要达到圆轨道速度的 √2 倍，轨道就从椭圆变成双曲线。这道门槛只有 41% 的余量。';}
+    else if(fac<.72){msg='速度不足：行星正在螺旋坠向太阳。';sub='慢下来的行星会掉进更低的轨道，越掉越快，直到被恒星吞没。';}
+    else if(fac>1.12||fac<.88){msg='轨道被拉成椭圆：冷热将走向极端。';sub='地球的实际离心率只有 0.0167，近乎正圆。若像水星那样是 0.21，赤道会在一年内经历数十度的温差摆动。';}
+    else{msg='稳定闭合轨道：这正是我们所在的那一档。';sub='行星并不是被拴着转，而是一直在自由下落——向前的速度与向内的引力恰好抵消。这个平衡已经维持了四十六亿年。';}
+    vd.innerHTML=msg+'<small>'+sub+'</small>';
+  }
+  reset(1);
+  var cvEl=s.g.canvas,scale=1,cx=0,cy=0;
+  pointer(cvEl,function(k,p){
+    var sx=(p.x-cx)/scale, sy=(p.y-cy)/scale;
+    if(k==='down'){var d=Math.hypot(sx-px,sy-py);if(d<.35||Math.hypot(sx,sy)>.2){dragging=true;px=sx;py=sy;trail=[];wedges=[];cur=[];dead=0}}
+    else if(k==='drag'&&dragging){px=sx;py=sy}
+    else if(k==='up'&&dragging){dragging=false;var r=Math.max(.12,Math.hypot(px,py)),c=circ(r)*fac;
+      vx=-py/r*c;vy=px/r*c;trail=[];wedges=[];cur=[];say()}
+  });
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;g.clearRect(0,0,w,h);ph+=dt;
+    cx=w*.5;cy=h*.5;scale=Math.min(w,h)*.30;
+    if(!dragging&&!dead){
+      var sub=6,sdt=Math.min(dt,.033)*1.1/sub;
+      for(var i=0;i<sub;i++){
+        var r=Math.hypot(px,py);if(r<1e-4)r=1e-4;
+        var a=-GM/Math.pow(r,n)/r;
+        vx+=a*px*sdt;vy+=a*py*sdt;px+=vx*sdt;py+=vy*sdt;
+        var rn=Math.hypot(px,py);
+        if(rn>lastR&&apo<0){var ang=Math.atan2(py,px);precess=ang}
+        apo=rn-lastR;lastR=rn;
+        if(rn<.085){dead=1}if(rn>3.4){dead=2}
+      }
+      trail.push([px,py]);if(trail.length>620)trail.shift();
+      cur.push([px,py]);acc+=dt;
+      if(acc>.42){acc=0;wedges.push(cur.slice());cur=[];if(wedges.length>7)wedges.shift()}
+    }
+    ring(g,cx,cy,scale,hex(C.rule,.8),1,1,[2,7]);
+    if(showArea)wedges.forEach(function(wd,i){
+      if(wd.length<2)return;
+      g.save();g.fillStyle=hex(C.gold,.05+i*.022);g.strokeStyle=hex(C.gold,.30);g.lineWidth=1;
+      g.beginPath();g.moveTo(cx,cy);
+      wd.forEach(function(pt){g.lineTo(cx+pt[0]*scale,cy+pt[1]*scale)});
+      g.closePath();g.fill();g.stroke();g.restore();
+    });
+    g.save();g.strokeStyle=hex(C.star,.55);g.lineWidth=1.2;g.beginPath();
+    trail.forEach(function(pt,i){g[i?'lineTo':'moveTo'](cx+pt[0]*scale,cy+pt[1]*scale)});g.stroke();g.restore();
+    glowDisc(g,cx,cy,scale*.34,hex(C.gold,.30),hex(C.gold,0));
+    disc(g,cx,cy,Math.max(5,scale*.075),C.gold2,1);
+    var ex=cx+px*scale, ey=cy+py*scale;
+    glowDisc(g,ex,ey,16,hex(C.star,.35),hex(C.star,0));
+    disc(g,ex,ey,5,dead?C.rust:C.star,1);
+    if(dragging){ring(g,ex,ey,14,hex(C.gold,.8),1,1);txt(g,'松手后按当前设定入轨',ex+18,ey+4,{s:9.5,c:C.gold2,f:SANS})}
+    if(dead){
+      txt(g,dead===1?'坠入恒星':'逃逸出系统',w*.5,h*.5-scale*.5,{s:15,c:C.rust,a:'center',f:SANS,g:8});
+      if(!dragging&&Math.floor(ph*2)%2===0)txt(g,'拖动行星或点"重置"重新开始',w*.5,h*.5-scale*.5+20,{s:9.5,c:C.dim,a:'center',f:SANS});
+    }
+    if(showArea)txt(g,'金色扇形 = 相等时间内扫过的面积（开普勒第二定律）',12,h-14,{s:9.5,c:C.faint,f:SANS});
+    var rr=Math.hypot(px,py),vv=Math.hypot(vx,vy);
+    if(rd)rd.innerHTML='半径 <b>'+fmt(rr,3)+' AU</b><br>速度 <b>'+fmt(vv,3)+'</b><br>指数 <b>r'+sup(fmt(-n,3))+'</b><br>状态 <b style="color:'+(dead?C.rust:(Math.abs(n-2)>.012?C.rust:C.verd))+'">'+
+      (dead?(dead===1?'坠毁':'逃逸'):(Math.abs(n-2)>.012?'不闭合':'稳定'))+'</b>';
+  }};
+});
+
+/* ================= 06 常数调音台 ================= */
+reg('tune',function(root,s){
+  var K={strong:100,em:100,grav:100,lambda:100},ph=0,parts=[];
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  var WIN={strong:2,em:3,grav:4,lambda:1};
+  var NAME={strong:'强核力',em:'电磁力',grav:'引力',lambda:'Λ'};
+  segGroup(root,'tuneR',function(b){
+    ['strong','em','grav','lambda'].forEach(function(k){
+      var el=root.querySelector('#k-'+k);
+      el.value=b.dataset.t==='reset'?100:(80+Math.random()*40).toFixed(1);
+      el.dispatchEvent(new Event('input'));
+    });
+    parts=[];
+  });
+  function state(){
+    var d={};['strong','em','grav','lambda'].forEach(function(k){d[k]=K[k]-100});
+    if(Math.abs(d.lambda)>WIN.lambda)return d.lambda>0?'rip':'crunch';
+    if(d.strong>WIN.strong)return 'helium';
+    if(d.strong<-WIN.strong)return 'nofuse';
+    if(Math.abs(d.em)>WIN.em)return 'nochem';
+    if(Math.abs(d.grav)>WIN.grav)return d.grav>0?'burnout':'nostars';
+    return 'life';
+  }
+  var TXT={
+    life:['可孕育生命的宇宙','恒星点火、碳氧生成、化学键稳定、时间充裕——四个旋钮都停在窄缝里。'],
+    rip:['大撕裂：星系来不及形成','宇宙学常数稍大一点，空间的膨胀就压过引力，物质永远无法聚成星系。实测值与理论估计相差 10¹²⁰ 倍——这是物理学中最精确的一次"恰好"。'],
+    crunch:['大坍缩：宇宙在生命出现前闭合','Λ 稍偏负，宇宙就在几百万年内塌回一个点。'],
+    helium:['没有氢，也就没有水','强核力强 2%，双质子可以成键，恒星会把氢一次烧光。没有氢，就没有水，没有有机化学，没有你。'],
+    nofuse:['恒星无法点火','强核力弱 5%，氘不稳定，聚变链断裂，宇宙里只剩一团冷氢。'],
+    nochem:['化学键失效','电磁力偏离几个百分点，电子轨道与化学键的能量尺度全部错位，复杂分子无法稳定存在。'],
+    burnout:['恒星寿命太短','引力更强，恒星燃烧更烈，寿命缩短到远不足以演化出复杂生命，行星轨道也变得拥挤混乱。'],
+    nostars:['物质永远散着','引力更弱，气体云无法坍缩点火，宇宙是一片没有恒星的稀薄雾。']
+  };
+  function say(){
+    var st=state(),T=TXT[st];
+    if(vd)vd.innerHTML='<b style="color:'+(st==='life'?C.verd:C.rust)+'">'+T[0]+'</b><small>'+T[1]+'</small>';
+  }
+  ['strong','em','grav','lambda'].forEach(function(k){
+    knob(root,k,function(v){K[k]=v;say()},function(v){return v.toFixed(1)+'%'});
+  });
+  say();
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;g.clearRect(0,0,w,h);ph+=dt;
+    var st=state(),alive=st==='life';
+    var cx=w*.5,cy=h*.44,R=Math.min(w,h)*.30;
+    if(parts.length<130)for(var i=parts.length;i<130;i++)
+      parts.push({a:Math.random()*TAU,r:Math.random(),sp:rnd(.2,1),sz:rnd(.6,2.1),c:Math.random()<.12?C.gold2:C.star});
+    ring(g,cx,cy,R,hex(C.rule,.8),1,1,[2,8]);
+    parts.forEach(function(p,i){
+      if(st==='rip')p.r+=dt*.22*p.sp;
+      else if(st==='crunch')p.r-=dt*.30*p.sp;
+      else if(alive)p.a+=dt*.09*p.sp/(p.r+.2);
+      else p.r+=Math.sin(ph*.3+i)*dt*.02;
+      if(p.r>1.35){p.r=Math.random()*.2}
+      if(p.r<.02){p.r=Math.random()*.1+.02}
+      var x=cx+Math.cos(p.a)*p.r*R, y=cy+Math.sin(p.a)*p.r*R*.72;
+      var col=st==='crunch'?C.rust:(st==='nostars'||st==='nofuse'?C.faint:p.c);
+      var al=st==='rip'?clamp(1.35-p.r,0,1)*.7:(st==='nostars'||st==='nofuse'?.28:.75);
+      disc(g,x,y,p.sz*(alive?1:.8),col,al);
+    });
+    if(alive){
+      glowDisc(g,cx,cy,R*.5,hex(C.gold,.14),hex(C.gold,0));
+      disc(g,cx,cy,4,C.gold2,1);
+      var a2=ph*.5;
+      var ex=cx+Math.cos(a2)*R*.42, ey=cy+Math.sin(a2)*R*.42*.72;
+      disc(g,ex,ey,5,C.verd,1);ring(g,ex,ey,9,hex(C.verd,.6),1,1);
+      txt(g,'生命',ex+13,ey+4,{s:10,c:C.verd,f:SANS});
+    }else if(st==='crunch'){glowDisc(g,cx,cy,R*.8,hex(C.rust,.30),hex(C.rust,0))}
+    var gw=w-32,gx=16,gy=h-70,cell=gw/4;
+    ['strong','em','grav','lambda'].forEach(function(k,i){
+      var x=gx+i*cell+cell*.5, bw=cell*.62;
+      rectF(g,x-bw/2,gy,bw,10,hex(C.ruleB,.35),1);
+      var wpx=bw*(WIN[k]/20);
+      rectF(g,x-wpx/2,gy,wpx,10,hex(C.verd,.55),1);
+      var d=(K[k]-100)/20;
+      var mx=x+clamp(d,-1,1)*bw/2;
+      var okk=Math.abs(K[k]-100)<=WIN[k];
+      line(g,mx,gy-4,mx,gy+14,okk?C.gold2:C.rust,2,1);
+      txt(g,NAME[k],x,gy-10,{s:9.5,c:okk?C.dim:C.rust,a:'center',f:SANS});
+      txt(g,'±'+WIN[k]+'%',x,gy+26,{s:9,c:C.faint,a:'center'});
+    });
+    txt(g,'绿色 = 允许生命存在的窗口（已放宽以便操作，真实窗口更窄）',gx,h-12,{s:9,c:C.faint,f:SANS});
+    if(rd)rd.innerHTML='宇宙状态<br><b style="color:'+(alive?C.verd:C.rust)+'">'+TXT[st][0].split('：')[0]+'</b>';
+  }};
+});
+
+/* ================= 07 地球 ================= */
+reg('earth',function(root,s){
+  var on={moon:1,field:1,jupiter:1,tilt:1,plate:1,atmo:1},atmoL=1,tiltA=23.5,wobble=0,wind=[],comets=[],flash=0,ph=0,moonA=0;
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  var FAIL={
+    moon:['地轴失去锚定','没有那颗异常巨大的月球，地轴会在 0° 到 85° 之间混沌摆动。极地与赤道互换，季节变成灾难，任何复杂生态都来不及建立。'],
+    field:['大气被太阳风剥离','液态铁核产生的磁场是唯一的防线。火星就是这样死的——磁场停摆后，几亿年内大气与海洋被吹散殆尽。'],
+    jupiter:['彗星长驱直入','木星以三百倍地球质量在外围充当引力吸尘器。没有它，撞击频率将高出千倍，生命反复被清零。'],
+    tilt:['轨道被拉长，冷热失控','地球离心率仅 0.0167，近乎正圆。一旦拉长，一年之内会经历几十度的温差摆动。'],
+    plate:['碳循环停止，温室失控','板块运动把碳酸盐带回地幔又送回大气，是地球的恒温器。停下来，地球会走向金星的结局。'],
+    atmo:['大气配比失衡','78% 氮、21% 氧、微量二氧化碳——氧再高一点，森林会被闪电一次烧光；再低一点，大型动物无法供能。']
+  };
+  var setC=segGroup(root,'cond',function(b){on[b.dataset.c]=on[b.dataset.c]?0:1;sync();say()});
+  segGroup(root,'earthR',function(){Object.keys(on).forEach(function(k){on[k]=1});atmoL=1;comets=[];sync();say()});
+  function sync(){setC(function(x){return !!on[x.dataset.c]})}
+  function say(){
+    if(!vd)return;
+    var off=Object.keys(on).filter(function(k){return !on[k]});
+    if(!off.length)vd.innerHTML='<b style="color:'+C.verd+'">六项条件同时成立。</b><small>这只是清单的开头。完整清单有数十项——恒星类型、银河位置、行星质量、水量、月地距离、木星轨道……每一项都必须同时成立，而它们彼此独立。</small>';
+    else{var f=FAIL[off[0]];vd.innerHTML='<b style="color:'+C.rust+'">'+f[0]+'</b><small>'+f[1]+(off.length>1?'（另有 '+(off.length-1)+' 项条件也已关闭）':'')+'</small>'}
+  }
+  sync();say();
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;g.clearRect(0,0,w,h);ph+=dt;moonA+=dt*.55;
+    var cx=w*.44,cy=h*.50,R=Math.min(w,h)*.135;
+    atmoL=clamp(atmoL+(on.field?dt*.25:-dt*.16),0,1);
+    if(!on.moon)wobble+=dt*.6; else wobble*=Math.max(0,1-dt*1.2);
+    tiltA=23.5+(on.moon?Math.sin(ph*.4)*1.0:Math.sin(wobble)*Math.sin(wobble*.37)*61);
+    glowDisc(g,-w*.05,cy,w*.30,hex(C.gold,.16),hex(C.gold,0));
+    disc(g,-w*.04,cy,w*.10,C.gold2,.9);
+    txt(g,'太阳',w*.055,cy+w*.115,{s:9.5,c:C.faint,f:SANS});
+    if(wind.length<70)wind.push({x:w*.06,y:rnd(h*.1,h*.9),v:rnd(40,95),d:0});
+    for(var i=wind.length-1;i>=0;i--){var p=wind[i];
+      var bow=cx-R*2.0;
+      if(on.field&&p.x>bow-14&&Math.abs(p.y-cy)<R*3.1){p.d=1;p.y+=(p.y<cy?-1:1)*dt*70;p.x+=p.v*dt*.55}
+      else p.x+=p.v*dt;
+      if(!on.field&&Math.hypot(p.x-cx,p.y-cy)<R*1.18){wind.splice(i,1);atmoL=clamp(atmoL-.004,0,1);continue}
+      if(p.x>w+10){wind.splice(i,1);continue}
+      disc(g,p.x,p.y,1.4,p.d?C.verd:C.gold2,.55);
+    }
+    if(on.field){
+      g.save();g.strokeStyle=hex(C.verd,.45);g.lineWidth=1;
+      for(var k=1;k<=3;k++){var rr=R*(1.5+k*.55);
+        g.beginPath();g.ellipse(cx+R*.35*k,cy,rr,rr*1.02,0,PI*.42,PI*1.58);g.stroke();}
+      g.beginPath();g.moveTo(cx-R*2.0,cy-R*2.7);g.quadraticCurveTo(cx-R*3.1,cy,cx-R*2.0,cy+R*2.7);g.stroke();g.restore();
+      txt(g,'磁层',cx-R*2.9,cy-R*2.3,{s:9.5,c:C.verd,a:'center',f:SANS});
+    }
+    if(atmoL>.02){ring(g,cx,cy,R*1.13,hex(C.star,.30*atmoL),R*.16*atmoL+1,1)}
+    var surf=!on.plate?'#8A4A32':(!on.atmo?'#3A2A22':'#16405A');
+    disc(g,cx,cy,R,surf,1);
+    g.save();g.beginPath();g.arc(cx,cy,R,0,TAU);g.clip();
+    g.fillStyle=!on.plate?hex(C.rust,.5):hex(C.verd,.55);
+    for(var m=0;m<5;m++){g.beginPath();
+      g.ellipse(cx-R*.5+m*R*.32,cy-R*.5+((m*37)%70)/70*R,R*.28,R*.17,m,0,TAU);g.fill()}
+    if(!on.atmo){rectF(g,cx-R,cy-R,R*2,R*2,hex(C.rust,.30),1)}
+    g.restore();
+    ring(g,cx,cy,R,hex(C.star,.5),1,1);
+    g.save();g.translate(cx,cy);g.rotate(tiltA*PI/180);
+    line(g,0,-R*1.55,0,R*1.55,Math.abs(tiltA-23.5)>8?C.rust:hex(C.gold,.8),1.4,1);
+    g.restore();
+    if(on.moon){var mx=cx+Math.cos(moonA)*R*2.5,my=cy+Math.sin(moonA)*R*2.5*.42;
+      disc(g,mx,my,R*.26,C.dim,.95);txt(g,'月球',mx,my-R*.45,{s:9,c:C.faint,a:'center',f:SANS})}
+    else txt(g,'✕ 无月球',cx+R*2.2,cy-R*1.4,{s:10,c:C.rust,f:SANS});
+    var jx=w*.90,jy=h*.78,JR=Math.min(w,h)*.075;
+    if(on.jupiter){disc(g,jx,jy,JR,'#B98B4E',.9);
+      g.save();g.beginPath();g.arc(jx,jy,JR,0,TAU);g.clip();
+      for(var b=0;b<4;b++)rectF(g,jx-JR,jy-JR+b*JR*.5,JR*2,JR*.2,hex(C.rust,.35),1);g.restore();
+      txt(g,'木星',jx,jy+JR+13,{s:9.5,c:C.faint,a:'center',f:SANS});}
+    if(Math.random()<(on.jupiter?.006:.05))comets.push({x:w+10,y:rnd(h*.1,h*.9),d:0});
+    for(var c=comets.length-1;c>=0;c--){var co=comets[c];
+      var dx=cx-co.x,dy=cy-co.y,dd=Math.hypot(dx,dy);
+      if(on.jupiter&&Math.hypot(co.x-jx,co.y-jy)<JR*3.4){co.vy=(co.y-jy)*.02;co.d=1}
+      co.x-=dt*140;co.y+=(co.d?(co.y<jy?-60:60):dy/dd*40)*dt;
+      line(g,co.x,co.y,co.x+16,co.y-3,hex(C.star,.6),1.4,1);disc(g,co.x,co.y,2,C.gold2,.95);
+      if(dd<R*1.05){comets.splice(c,1);flash=1;continue}
+      if(co.x<-20||co.y<-20||co.y>h+20)comets.splice(c,1);
+    }
+    if(flash>0){flash=Math.max(0,flash-dt*1.8);glowDisc(g,cx,cy,R*(1+ (1-flash)*2.2),hex(C.rust,flash*.5),hex(C.rust,0))}
+    var cnt=Object.keys(on).filter(function(k){return on[k]}).length;
+    if(rd)rd.innerHTML='条件 <b style="color:'+(cnt===6?C.verd:C.rust)+'">'+cnt+' / 6</b><br>大气 <b>'+fmt(atmoL*100)+'%</b><br>轴倾角 <b>'+fmt(tiltA,1)+'°</b>';
+    txt(g,'联合概率（保守估计）≈ 10⁻¹⁵',12,h-12,{s:9.5,c:C.faint,f:SANS});
+  }};
+});
+
+/* ================= 08 起点 ================= */
+reg('origin',function(root,s){
+  var u=1,playing=false,gal=[],ph=0;
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  for(var i=0;i<170;i++){var a=Math.random()*TAU,r=Math.sqrt(Math.random());
+    gal.push({x:Math.cos(a)*r,y:Math.sin(a)*r*.8,s:rnd(.7,2.4),t:Math.random()<.2})}
+  function ageStr(A){var y=A*1e9;
+    return y<1?'t → 0':(y<1e4?fmt(y)+' 年':(y<1e8?fmt(y/1e4,1)+' 万年':fmt(y/1e8,2)+' 亿年'))}
+  var K=knob(root,'time',function(v){u=v/1000;say()},function(v){return ageStr(13.8*Math.pow(v/1000,2.5))});
+  var setP=segGroup(root,'rew',function(b){playing=!playing;setP(function(){return playing});b.blur()});
+  function age(){return 13.8*Math.pow(u,2.5)}
+  function say(){
+    if(!vd)return;
+    var y=age()*1e9,m;
+    if(y<=1)m=['<b style="color:'+C.gold2+'">t = 0：连时间本身都从这里开始。</b>','在这一点之前没有"之前"。因果链在这里到达边界——而边界的另一侧，只能是某种非时间、非空间、非物质的原因。'];
+    else if(y<3.8e5)m=['复合之前 · 宇宙不透明','光子被自由电子不断散射，宇宙是一团发光的雾。三十八万年后它才第一次变得透明——那道光今天还在，就是微波背景辐射。'];
+    else if(y<2e8)m=['黑暗时期 · 一颗恒星也没有','中性氢弥漫全宇宙，微波背景已经上路，但还没有任何一处被点亮。'];
+    else if(y<2e9)m=['第一代恒星正在点亮','重元素第一次被锻造出来——你身体里的碳与铁，都在这个阶段被制造。'];
+    else m=['星系成形，时间继续','膨胀仍在加速。而无论怎样向前推演，向后回溯的路都只有有限长。'];
+    vd.innerHTML=m[0]+'<small>'+m[1]+'</small>';
+  }
+  say();
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;g.clearRect(0,0,w,h);ph+=dt;
+    if(playing){var nv=clamp(+K.el.value-dt*260,0,1000);K.set(fmt(nv,0));if(nv<=0){playing=false;setP(function(){return false})}}
+    var cx=w*.5,cy=h*.46,S=Math.min(w,h)*.40;
+    var a=Math.max(1e-6,Math.pow(u,1.7)), A=age();
+    var T=2.725/Math.max(a,1e-9);
+    var hot=clamp((Math.log10(T)-0.4)/4.2,0,1);
+    if(hot>.25){glowDisc(g,cx,cy,S*(1.6-hot*.6),hex(hot>.7?'#FFF0D0':C.gold,hot*.55),hex(C.gold,0))}
+    gal.forEach(function(p,i){
+      var x=cx+p.x*S*a, y=cy+p.y*S*a;
+      var col=hot>.6?'#FFF3DC':(hot>.3?C.gold2:(p.t?C.gold:C.star));
+      disc(g,x,y,p.s*(1-hot*.4)+.3,col,clamp(.35+a*.8,0,1)*(1-hot*.5)+hot*.4);
+    });
+    if(a<.02){glowDisc(g,cx,cy,S*.5*(a/.02+.15),hex('#FFF6E4',.85),hex(C.gold,0))}
+    if(age()*1e9<=1){
+      disc(g,cx,cy,3,'#FFF6E4',1);ring(g,cx,cy,10+Math.sin(ph*3)*4,hex(C.gold,.7),1.4,1);
+      txt(g,'t = 0',cx,cy-24,{s:16,c:C.gold2,a:'center',f:LAT});
+      txt(g,'时间的边界',cx,cy+34,{s:11,c:C.gold2,a:'center',f:SANS});
+    }
+    var by=h-46,bx0=16,bx1=w-16;
+    line(g,bx0,by,bx1,by,C.rule,1,1);
+    [[0,'t=0'],[.155,'首批恒星'],[.83,'太阳系'],[1,'今天']].forEach(function(m){
+      var x=lerp(bx0,bx1,m[0]);line(g,x,by-4,x,by+4,C.ruleB,1,1);
+      txt(g,m[1],x,by+17,{s:8.5,c:C.faint,a:'center',f:SANS});});
+    var mx=lerp(bx0,bx1,Math.pow(u,1.1));
+    disc(g,mx,by,4,C.gold2,1);
+    var Te=Math.floor(Math.log10(Math.max(T,1e-9)));
+    if(rd)rd.innerHTML='年龄 <b>'+ageStr(A)+'</b><br>温度 <b>'+
+      (T>1e6?fmt(T/Math.pow(10,Te),1)+'×10'+sup(Te)+' K':fmt(T,1)+' K')+'</b><br>尺度 <b>'+(a<.001?a.toExponential(1):fmt(a,3))+'</b>';
+  }};
+});
+
+/* ================= 09 熵 ================= */
+reg('entropy',function(root,s){
+  var N=240,L=[],Rp=[],alive=true,watching=false,checks=0,hl=[],hr=[],acc=0,ph=0,geo=null;
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  function box(w,h){var pad=10,bw=(w-pad*3)/2,bh=h*.50,y=h*.09;
+    return {lx:pad,rx:pad*2+bw,y:y,w:bw,h:bh}}
+  function build(w,h){
+    geo=box(w,h);L=[];Rp=[];hl=[];hr=[];checks=0;
+    var cols=Math.ceil(Math.sqrt(N)),rows=Math.ceil(N/cols),i;
+    for(i=0;i<N;i++){
+      L.push({x:geo.lx+6+(i%cols)*((geo.w*.18)/cols),y:geo.y+geo.h*.28+Math.floor(i/cols)*((geo.h*.44)/rows),
+        vx:rnd(-18,18),vy:rnd(-18,18)});
+    }
+    var cx=geo.rx+geo.w/2,cy=geo.y+geo.h/2,rr=Math.min(geo.w,geo.h)*.34;
+    for(i=0;i<64;i++){var a=i/64*TAU;Rp.push({tx:cx+Math.cos(a)*rr,ty:cy+Math.sin(a)*rr,x:cx+Math.cos(a)*rr,y:cy+Math.sin(a)*rr,vx:0,vy:0,k:0})}
+    for(i=0;i<22;i++){var a2=i/22*TAU;Rp.push({tx:cx+Math.cos(a2)*rr*.30,ty:cy+Math.sin(a2)*rr*.30,x:cx+Math.cos(a2)*rr*.3,y:cy+Math.sin(a2)*rr*.3,vx:0,vy:0,k:1})}
+    [[.55,-.45],[-.55,.42],[.1,.62]].forEach(function(o){
+      for(var j=0;j<12;j++){var a3=j/12*TAU;
+        Rp.push({tx:cx+o[0]*rr+Math.cos(a3)*rr*.16,ty:cy+o[1]*rr+Math.sin(a3)*rr*.16,
+          x:cx+o[0]*rr+Math.cos(a3)*rr*.16,y:cy+o[1]*rr+Math.sin(a3)*rr*.16,vx:0,vy:0,k:2})}
+    });
+  }
+  function ent(arr,x,y,w,h){
+    var GX=10,GY=6,cells=new Array(GX*GY).fill(0),n=arr.length;
+    arr.forEach(function(p){var i=clamp(Math.floor((p.x-x)/w*GX),0,GX-1),j=clamp(Math.floor((p.y-y)/h*GY),0,GY-1);cells[j*GX+i]++});
+    var S=0;cells.forEach(function(c){if(c){var p=c/n;S-=p*Math.log(p)}});
+    return S/Math.log(GX*GY);
+  }
+  function dev(arr,scale){var d=0;arr.forEach(function(p){d+=Math.hypot(p.x-p.tx,p.y-p.ty)});
+    return clamp(d/arr.length/scale,0,1)}
+  var setX=segGroup(root,'ent',function(b){
+    var k=b.dataset.x;
+    if(k==='shake'){L.forEach(function(p){p.vx+=rnd(-90,90);p.vy+=rnd(-90,90)})}
+    else if(k==='order'){watching=!watching;checks=0}
+    else if(k==='kill'){alive=!alive}
+    else{alive=true;watching=false;build(s.w,s.h)}
+    setX(function(x){return (x.dataset.x==='order'&&watching)||(x.dataset.x==='kill'&&!alive)});
+    say();b.blur();
+  });
+  knob(root,'part',function(v){N=v;if(geo)build(s.w,s.h)},function(v){return v+''});
+  function say(){
+    if(!vd)return;
+    if(!alive)vd.innerHTML='<b style="color:'+C.rust+'">代谢停止：结构开始瓦解，且永不回头。</b><small>活着的细胞每秒都在花费能量维持自身的低熵。一旦停止，同样的分子、同样的定律，几分钟内就把三十八亿年的秩序拆干净。</small>';
+    else if(watching)vd.innerHTML='正在等待左边的盒子自己变回有序……<small>它不会。'+N+' 个粒子自发全部回到左侧的概率是 2⁻'+N+'——比宇宙中原子数的倒数还小得多。第二定律不是"通常如此"，而是"从未例外"。</small>';
+    else vd.innerHTML='左边无人照管，右边活着——同样的分子，同样的定律。<small>右边不违反第二定律：它把熵排到环境里。但注意它靠什么做到——一整套预先存在的能量转换机器。<b style="color:var(--gold-2)">能量本身从不产生秩序，只有被机器捕获的能量才行。</b>而那台机器从哪来？</small>';
+  }
+  say();
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;g.clearRect(0,0,w,h);ph+=dt;
+    if(!geo||Math.abs(geo.w-(w-30)/2)>2)build(w,h);
+    var G=geo;
+    rectS(g,G.lx,G.y,G.w,G.h,C.rule,1);rectS(g,G.rx,G.y,G.w,G.h,C.rule,1);
+    txt(g,'无人照管的盒子',G.lx,G.y-8,{s:9.5,c:C.dim,f:SANS});
+    txt(g,'一个活着的细胞',G.rx,G.y-8,{s:9.5,c:alive?C.verd:C.rust,f:SANS});
+    L.forEach(function(p){
+      p.x+=p.vx*dt;p.y+=p.vy*dt;
+      if(p.x<G.lx+2){p.x=G.lx+2;p.vx=Math.abs(p.vx)}if(p.x>G.lx+G.w-2){p.x=G.lx+G.w-2;p.vx=-Math.abs(p.vx)}
+      if(p.y<G.y+2){p.y=G.y+2;p.vy=Math.abs(p.vy)}if(p.y>G.y+G.h-2){p.y=G.y+G.h-2;p.vy=-Math.abs(p.vy)}
+      var sp=Math.hypot(p.vx,p.vy);if(sp>150){p.vx*=.97;p.vy*=.97}
+      disc(g,p.x,p.y,1.5,C.star,.6);
+    });
+    line(g,G.lx+G.w*.333,G.y,G.lx+G.w*.333,G.y+G.h,hex(C.gold,.35),1,1);
+    Rp.forEach(function(p,i){
+      if(alive){p.vx+=(p.tx-p.x)*22*dt+rnd(-30,30)*dt;p.vy+=(p.ty-p.y)*22*dt+rnd(-30,30)*dt;p.vx*=.90;p.vy*=.90}
+      else{p.vx+=rnd(-70,70)*dt;p.vy+=rnd(-70,70)*dt;p.vx*=.995;p.vy*=.995}
+      p.x+=p.vx*dt;p.y+=p.vy*dt;
+      if(p.x<G.rx+2){p.x=G.rx+2;p.vx=Math.abs(p.vx)}if(p.x>G.rx+G.w-2){p.x=G.rx+G.w-2;p.vx=-Math.abs(p.vx)}
+      if(p.y<G.y+2){p.y=G.y+2;p.vy=Math.abs(p.vy)}if(p.y>G.y+G.h-2){p.y=G.y+G.h-2;p.vy=-Math.abs(p.vy)}
+      disc(g,p.x,p.y,p.k===1?2.0:1.6,alive?(p.k===1?C.gold2:C.verd):C.rust,alive?.85:.55);
+    });
+    if(alive){
+      for(var q=0;q<5;q++){var f=((ph*.5+q*.2)%1);
+        disc(g,G.rx+G.w-8-q*3,G.y+G.h*.2+f*G.h*.6,1.4,C.gold,clamp(1-f,0,1)*.5)}
+      txt(g,'↳ 熵排往环境',G.rx+G.w-8,G.y+G.h+14,{s:9,c:C.faint,a:'right',f:SANS});
+    }
+    acc+=dt;
+    var sl=ent(L,G.lx,G.y,G.w,G.h), sr=dev(Rp,Math.min(G.w,G.h)*.34);
+    if(acc>.12){acc=0;hl.push(sl);hr.push(sr);if(hl.length>170){hl.shift();hr.shift()}}
+    var py=G.y+G.h+34,phh=h-py-26;
+    rectS(g,10,py,w-20,phh,hex(C.rule,.8),1);
+    txt(g,'无序度随时间　—— 左：粗粒化熵　右：结构偏离度',14,py-6,{s:9,c:C.faint,f:SANS});
+    [[hl,C.star],[hr,alive?C.verd:C.rust]].forEach(function(H){
+      g.save();g.strokeStyle=H[1];g.lineWidth=1.6;g.beginPath();
+      H[0].forEach(function(v,i){var x=10+i/169*(w-20),y=py+phh-v*phh;g[i?'lineTo':'moveTo'](x,y)});
+      g.stroke();g.restore();
+    });
+    line(g,10,py+2,w-10,py+2,hex(C.gold,.3),1,1);
+    txt(g,'完全无序',w-14,py+12,{s:8.5,c:C.faint,a:'right',f:SANS});
+    if(watching){
+      checks++;
+      var inLeft=0;L.forEach(function(p){if(p.x<G.lx+G.w*.333)inLeft++});
+      txt(g,'已检查 '+checks.toLocaleString('en-US')+' 次构型 · 自发回到有序：0 次　（当前左三分之一：'+inLeft+'/'+N+'）',14,h-10,{s:9.5,c:C.gold2,f:SANS});
+    }else txt(g,'左：熵一路爬到最大并停在那里　右：熵被主动压低，直到代谢停止',14,h-10,{s:9.5,c:C.faint,f:SANS});
+    if(rd)rd.innerHTML='盒子无序 <b>'+fmt(sl*100)+'%</b><br>细胞无序 <b style="color:'+(alive?C.verd:C.rust)+'">'+fmt(sr*100)+'%</b><br>自发复原 <b>2'+sup('-'+N)+'</b>';
+  }};
+});
+
+/* ================= 10 水 ================= */
+reg('water',function(root,s){
+  var temp=18,focus='real',iceR=0,iceF=0,ph=0,fish=[];
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  for(var i=0;i<7;i++)fish.push({x:Math.random(),y:rnd(.25,.9),sp:rnd(.1,.3)*(Math.random()<.5?-1:1),ph:Math.random()*TAU});
+  knob(root,'temp',function(v){temp=v;say()},function(v){return v+' °C'});
+  var setW=segGroup(root,'wat',function(b){focus=b.dataset.w2;setW(function(x){return x.dataset.w2===focus});say()});
+  setW(function(x){return x.dataset.w2==='real'});
+  function say(){
+    if(!vd)return;
+    if(temp>4)vd.innerHTML='水面之下，一切正常。<small>把温度往下拖，两个湖会分道扬镳——左边是真实的水，右边是"正常"的液体。</small>';
+    else if(focus==='real')vd.innerHTML='<b style="color:'+C.verd+'">冰浮在上面，成了一层被子。</b><small>水在 4°C 密度最大，再冷反而膨胀。于是冰浮起来，隔绝寒气，湖底始终保持 4°C 的液态——水生生命因此熬过了每一个冰期。</small>';
+    else vd.innerHTML='<b style="color:'+C.rust+'">冰沉到底，湖从底部冻实。</b><small>如果水像其它液体一样"正常"，湖泊与海洋会自下而上冻成实心，夏天只能化开表层。几个冰期之后，地球的水体将成为永久冰块——水生生命从未有过机会。</small>';
+  }
+  say();
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;g.clearRect(0,0,w,h);ph+=dt;
+    var pad=10,bw=(w-pad*3)/2,by=h*.12,bh=h*.52;
+    var freeze=temp<0?(-temp)/25:0;
+    iceR=clamp(iceR+(temp<0?dt*.10*freeze:-dt*.22),0,.34);
+    iceF=clamp(iceF+(temp<0?dt*.14*freeze:-dt*.22),0,1);
+    [['real',pad],['fake',pad*2+bw]].forEach(function(M){
+      var kind=M[0],x=M[1],isF=kind==='fake',sel=focus===kind;
+      var deep=temp<0?4:temp, top=temp;
+      rectF(g,x,by,bw,bh,'#08131C',1);
+      var gr=g.createLinearGradient(0,by,0,by+bh);
+      gr.addColorStop(0,hex('#1B4A63',.85));gr.addColorStop(1,hex('#0C2534',.95));
+      g.save();g.fillStyle=gr;g.fillRect(x,by,bw,bh);g.restore();
+      var ice=isF?iceF:iceR;
+      if(ice>0.002){
+        var ih=bh*ice;
+        var iy=isF?by+bh-ih:by;
+        g.save();g.fillStyle=hex('#CFE3F0',.72);g.fillRect(x,iy,bw,ih);
+        g.strokeStyle=hex('#FFFFFF',.35);g.lineWidth=1;
+        for(var k=0;k<6;k++){var yy=iy+ih*(k/6);line(g,x,yy,x+bw,yy,'#FFFFFF',1,.10)}
+        g.restore();
+        txt(g,'冰 '+fmt(ice*100)+'%',x+bw-6,iy+(isF?-6:ih+12),{s:9,c:'#CFE3F0',a:'right',f:SANS});
+      }
+      fish.forEach(function(f,i){
+        f.x+=f.sp*dt*.18;if(f.x>1.05)f.x=-.05;if(f.x<-.05)f.x=1.05;
+        var fy=by+bh*(isF?clamp(f.y,.1,1-ice-.06):clamp(f.y,ice+.08,.95));
+        var dead=isF&&iceF>.72;
+        var fx=x+bw*f.x;
+        g.save();g.translate(fx,fy+Math.sin(ph*2+f.ph)*3);g.scale(f.sp<0?-1:1,dead?-1:1);
+        g.fillStyle=dead?hex(C.rust,.6):hex(C.verd,.9);
+        g.beginPath();g.ellipse(0,0,7,3.4,0,0,TAU);g.fill();
+        g.beginPath();g.moveTo(-7,0);g.lineTo(-12,-4);g.lineTo(-12,4);g.closePath();g.fill();g.restore();
+      });
+      rectS(g,x,by,bw,bh,sel?hex(C.gold,.9):hex(C.rule,.9),1);
+      txt(g,isF?'假想的水 · 冰比水重':'真实的水 · 冰比水轻',x,by-8,{s:9.5,c:sel?C.gold2:C.dim,f:SANS});
+      txt(g,'湖底 '+(isF?(iceF>.72?'冻实':fmt(top,0)+'°C'):(temp<0?'4°C 液态':fmt(temp,0)+'°C')),x+4,by+bh+14,{s:9.5,c:isF&&iceF>.72?C.rust:C.verd,f:SANS});
+    });
+    var cy=h*.80,cx0=pad+10,cx1=w-pad-10,cw=cx1-cx0,chh=h*.13;
+    line(g,cx0,cy+chh,cx1,cy+chh,C.rule,1,1);
+    txt(g,'密度 — 温度曲线',cx0,cy-6,{s:9.5,c:C.faint,f:SANS});
+    function dens(T,fake){return fake?clamp((30-T)/55,0,1):(1-Math.pow((T-4)/26,2)*.55)}
+    [[false,C.gold2],[true,hex(C.rust,.8)]].forEach(function(M){
+      g.save();g.strokeStyle=M[1];g.lineWidth=1.8;g.beginPath();
+      for(var T=-25;T<=30;T+=1){var x=cx0+(T+25)/55*cw,y=cy+chh-dens(T,M[0])*chh;
+        g[T===-25?'moveTo':'lineTo'](x,y)}
+      g.stroke();g.restore();
+    });
+    var mx=cx0+(temp+25)/55*cw;
+    line(g,mx,cy-2,mx,cy+chh,hex(C.star,.7),1,1);
+    var m4=cx0+(4+25)/55*cw;
+    line(g,m4,cy+chh-4,m4,cy+chh+4,C.gold,1.5,1);
+    txt(g,'4°C 密度最大',m4,cy+chh+18,{s:9,c:C.gold2,a:'center',f:SANS});
+    txt(g,fmt(temp)+'°C',mx,cy-8,{s:9.5,c:C.star,a:'center'});
+    if(rd)rd.innerHTML='气温 <b>'+fmt(temp)+' °C</b><br>真实湖 <b style="color:'+C.verd+'">鱼存活</b><br>假想湖 <b style="color:'+(iceF>.72?C.rust:C.dim)+'">'+(iceF>.72?'全部死亡':'尚存')+'</b>';
+  }};
+});
+
+/* ================= 11 寒武纪 ================= */
+reg('cambrian',function(root,s){
+  var ma=3800,playing=false,ph=0;
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  var EV=[[3800,'最早的生命痕迹','单细胞。此后三十二亿年，几乎什么也没发生。'],
+          [2400,'大氧化事件','蓝细菌把氧气排进大气，为后来的复杂代谢铺路。'],
+          [1800,'真核细胞出现','细胞里第一次有了细胞核与细胞器——一次结构上的巨大跃迁。'],
+          [635,'埃迪卡拉生物群','一些扁平、柔软、没有器官的怪异生物，与后来的动物门类难以对应。'],
+          [538,'寒武纪大爆发','几乎所有动物门在两千万年内同时登场：眼睛、附肢、神经索、外骨骼、体腔。'],
+          [250,'二叠纪大灭绝','96% 的海洋物种消失，但门一级的蓝图几乎没有新增。'],
+          [66,'白垩纪末灭绝','恐龙退场，哺乳类扩张——仍然没有新的门。'],
+          [0,'今天','五亿年过去，动物的基本蓝图再没有增加过一个。']];
+  var K=knob(root,'geo',function(v){ma=+v;say()},function(v){return (+v>=1000?fmt(v/1000,2)+' 十亿年前':fmt(v)+' 百万年前')});
+  var setG=segGroup(root,'geo',function(b){
+    if(b.dataset.g==='play'){playing=!playing;if(playing&&ma<10)K.set(3800);setG(function(x){return x.dataset.g==='play'&&playing})}
+    else{playing=false;K.set(560);setG(function(){return false})}
+    b.blur();
+  });
+  function phyla(m){
+    if(m>580)return 0;
+    if(m>545)return lerp(0,3,(580-m)/35);
+    if(m>518)return lerp(3,21,Math.pow((545-m)/27,.6));
+    return 21;
+  }
+  function ev(m){var r=EV[0];EV.forEach(function(e){if(m<=e[0])r=e});return r}
+  function say(){var e=ev(ma);if(vd)vd.innerHTML='<b>'+e[1]+'</b><small>'+e[2]+'</small>'}
+  say();
+  function creature(g,x,y,r,kind,al){
+    g.save();g.globalAlpha=al;g.strokeStyle=C.gold2;g.fillStyle=hex(C.gold,.16);g.lineWidth=1.2;
+    if(kind===0){for(var i=0;i<4;i++){g.beginPath();g.ellipse(x-r*.5+i*r*.35,y+((i*13)%9)-4,r*.18,r*.07,.4,0,TAU);g.fill();g.stroke()}}
+    else if(kind===1){g.beginPath();g.arc(x,y+r*.5,r*.7,PI,0);g.fill();g.stroke();
+      for(var k=1;k<4;k++){g.beginPath();g.arc(x,y+r*.5,r*.7*k/4,PI,0);g.stroke()}}
+    else if(kind===2){g.beginPath();g.ellipse(x,y,r*.55,r*.45,0,0,TAU);g.fill();g.stroke();
+      g.beginPath();g.arc(x+r*.1,y,r*.16,0,TAU);g.stroke()}
+    else if(kind===3){g.beginPath();g.moveTo(x,y+r*.7);g.quadraticCurveTo(x-r*.5,y,x,y-r*.75);
+      g.quadraticCurveTo(x+r*.5,y,x,y+r*.7);g.fill();g.stroke();line(g,x,y-r*.7,x,y+r*.7,C.gold2,1,.6)}
+    else if(kind===4){g.beginPath();g.ellipse(x,y,r*.42,r*.72,0,0,TAU);g.fill();g.stroke();
+      for(var s2=-2;s2<=2;s2++)line(g,x-r*.40,y+s2*r*.2,x+r*.40,y+s2*r*.2,C.gold2,1,.7);
+      disc(g,x-r*.16,y-r*.52,1.8,C.gold2,.9);disc(g,x+r*.16,y-r*.52,1.8,C.gold2,.9)}
+    else{g.beginPath();g.ellipse(x,y,r*.75,r*.3,0,0,TAU);g.fill();g.stroke();
+      g.beginPath();g.moveTo(x-r*.7,y);g.lineTo(x-r*1.05,y-r*.28);g.lineTo(x-r*1.05,y+r*.28);g.closePath();g.fill();g.stroke();
+      disc(g,x+r*.42,y-r*.06,1.7,C.gold2,.95)}
+    g.restore();
+  }
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;g.clearRect(0,0,w,h);ph+=dt;
+    if(playing){var nv=+K.el.value-dt*(ma>700?520:70);if(nv<=0){nv=0;playing=false;setG(function(){return false})}K.set(fmt(nv))}
+    var x0=w*.09,x1=w*.95,ay=h*.72,cy0=h*.20;
+    function X(m){return lerp(x1,x0,m/3800)}
+    g.save();g.strokeStyle=hex(C.gold,.85);g.lineWidth=2;g.beginPath();
+    for(var m=3800;m>=0;m-=6){var y=ay-phyla(m)/21*(ay-cy0);g[m===3800?'moveTo':'lineTo'](X(m),y)}
+    g.stroke();g.restore();
+    g.save();g.fillStyle=hex(C.gold,.10);g.beginPath();g.moveTo(X(3800),ay);
+    for(var m2=3800;m2>=0;m2-=6)g.lineTo(X(m2),ay-phyla(m2)/21*(ay-cy0));
+    g.lineTo(X(0),ay);g.closePath();g.fill();g.restore();
+    line(g,x0,ay,x1,ay,C.rule,1,1);
+    txt(g,'动物门类数',x0,cy0-8,{s:9.5,c:C.gold2,f:SANS});
+    txt(g,'21',x0-6,cy0+4,{s:10,c:C.gold2,a:'right'});
+    txt(g,'0',x0-6,ay+4,{s:10,c:C.faint,a:'right'});
+    EV.forEach(function(e){
+      var x=X(e[0]);
+      line(g,x,ay-3,x,ay+5,e[0]===538?C.gold:C.ruleB,e[0]===538?1.6:1,1);
+      if([3800,2400,1800,538,0].indexOf(e[0])>=0)
+        txt(g,e[0]===0?'今天':e[0]+'',x,ay+17,{s:8.5,c:e[0]===538?C.gold2:C.faint,a:'center'});
+    });
+    var bx0=X(560),bx1=X(510);
+    rectF(g,bx0,cy0-4,bx1-bx0,ay-cy0+4,hex(C.gold,.10),1);
+    rectS(g,bx0,cy0-4,bx1-bx0,ay-cy0+4,hex(C.gold,.5),1);
+    line(g,bx0-46,cy0+34,bx0-4,cy0+34,hex(C.gold,.6),1,1);
+    txt(g,'寒武纪大爆发',bx0-50,cy0+38,{s:10,c:C.gold2,a:'right',f:SANS});
+    var mx=X(ma);
+    line(g,mx,cy0-18,mx,ay+24,hex(C.star,.85),1.4,1);
+    disc(g,mx,ay,4,C.star,1);
+    var kinds=[[3800,0],[2900,1],[1800,2],[600,3],[521,4],[518,5]];
+    var shown=kinds.filter(function(k){return ma<=k[0]});
+    shown.forEach(function(k,i){
+      var cxx=x0+30+i*((w-x0-50)/6), cyy=h*.845, al=clamp((k[0]-ma)/60,0,1);
+      creature(g,cxx,cyy,Math.min(w,h)*.05,k[1],al*.95);
+    });
+    txt(g,'32 亿年几乎是一条平线，然后是一堵墙',x0,h-8,{s:9.5,c:C.faint,f:SANS});
+    if(rd)rd.innerHTML='距今 <b>'+fmt(ma)+' Ma</b><br>动物门 <b>'+fmt(phyla(ma))+'</b><br>'+(ma<=560&&ma>=510?'<b style="color:'+C.gold2+'">爆发中</b>':'');
+  }};
+});
+
+/* ================= 12 意识 ================= */
+reg('mind',function(root,s){
+  var data=0,opened=0,scan=false,ph=0,lines=[],t0=0;
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  var D=['λ = 700 nm','L 视锥响应 0.94','M 视锥响应 0.31','V1 放电 42 Hz','V4 群集编码 #a7','多巴胺 +0.8 nM','视网膜照度 340 td','对比度 0.72','色相角 12°','LGN 延迟 28 ms','视蛋白构象 11-顺→全反','钙离子内流 0.6 pA'];
+  segGroup(root,'mary',function(b,all){
+    var k=b.dataset.y;
+    if(k==='scan'){scan=true}
+    else if(k==='open'){if(data>=1)opened=1}
+    else{data=0;opened=0;scan=false;lines=[];t0=0}
+    all.forEach(function(x){x.setAttribute('aria-pressed',String(x===b&&k!=='reset'))});
+    say();b.blur();
+  });
+  function say(){
+    if(!vd)return;
+    if(opened)vd.innerHTML='<b style="color:#FF4D3D">她刚刚学到了一件事——而它不在任何一份数据里。</b><small>如果物理描述已经穷尽了一切，玛丽走出房门时就不该学到任何新东西。可我们都知道她学到了。<b style="color:var(--gold-2)">那么，世界上就有某种东西不是物理事实。</b></small>';
+    else if(data>=1)vd.innerHTML='全部物理数据已就位：100%。<small>关于红色的一切——波长、视锥响应、神经放电、递质浓度——她全都知道了。现在推开那扇门。</small>';
+    else if(scan)vd.innerHTML='正在载入关于红色的全部物理事实……<small>玛丽是一位色彩神经学家，一生住在黑白房间里，从黑白屏幕上学完了关于颜色视觉的所有知识。</small>';
+    else vd.innerHTML='玛丽知道关于红色的一切物理事实——但她从未见过红色。<small>先调取全部数据，再推开门。看看会发生什么。</small>';
+  }
+  say();
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;g.clearRect(0,0,w,h);ph+=dt;
+    var pad=14,roomW=w*.60,ry=h*.13,rh=h*.60,rows=Math.max(5,Math.floor(rh/17)-1);
+    if(scan&&data<1){data=clamp(data+dt*.42,0,1);if(data>=1)say()}
+    var want=Math.round(data*rows);
+    while(lines.length<want)lines.push(D[lines.length%D.length]);
+    while(lines.length>want)lines.pop();
+    rectF(g,0,0,w,h,'#0A0E12',1);
+    rectS(g,pad,ry,roomW-pad,rh,'#3D4750',1);
+    txt(g,'玛丽的房间 · 只有黑白灰',pad+2,ry-9,{s:9.5,c:'#6E7A85',f:SANS});
+    for(var i=0;i<lines.length;i++)
+      txt(g,lines[i],pad+12,ry+21+i*17,{s:9.5,c:hex('#98A5AF',.42+.42*Math.sin(ph*1.3+i*.7)),f:MONO});
+    var fx=roomW-44,fy=ry+rh-26,fr=Math.min(w,h)*.05;
+    g.save();g.strokeStyle='#9EAAB3';g.lineWidth=1.5;
+    g.beginPath();g.arc(fx,fy-fr*1.6,fr*.5,0,TAU);g.stroke();
+    g.beginPath();g.moveTo(fx-fr*.8,fy+fr*.5);g.quadraticCurveTo(fx,fy-fr*1.2,fx+fr*.8,fy+fr*.5);g.stroke();g.restore();
+    var bw=roomW-pad-2;
+    txt(g,'物理数据 '+fmt(data*100)+'%',pad,h-42,{s:9.5,c:'#C9D4DC',f:SANS});
+    rectS(g,pad,h-34,bw,9,'#5A656E',1);
+    rectF(g,pad+1,h-33,(bw-2)*data,7,'#C9D4DC',.9);
+    txt(g,'主观体验 '+(opened?'+1（无法用数据表示）':'0%'),pad,h-12,{s:9.5,c:opened?'#FF6A55':'#8A97A2',f:SANS});
+    var dx=w*.70,dw=w*.26,dy=ry,dh=rh;
+    if(opened){
+      if(!t0)t0=ph;
+      var e=clamp((ph-t0)*1.2,0,1);
+      g.save();var gr=g.createLinearGradient(dx+dw,0,0,0);
+      gr.addColorStop(0,'rgba(255,42,20,'+(.92*e)+')');gr.addColorStop(.5,'rgba(255,42,20,'+(.30*e)+')');gr.addColorStop(1,'rgba(255,42,20,0)');
+      g.fillStyle=gr;g.fillRect(0,0,w,h);g.restore();
+      rectF(g,dx,dy,dw,dh,'#FF2A14',1);
+      glowDisc(g,dx+dw*.5,dy+dh*.5,w*.42*e,'rgba(255,70,40,'+(.45*e)+')','rgba(255,70,40,0)');
+      txt(g,'红',dx+dw*.5,dy+dh*.40,{s:Math.min(w,h)*.15,c:'#FFFFFF',a:'center',v:'middle',f:SANS,w:'700'});
+      txt(g,'这一项，不在任何数据里。',dx+dw*.5,dy+dh*.74,{s:11,c:'#FFE2DA',a:'center',f:SANS});
+    }else{
+      rectF(g,dx,dy,dw,dh,'#12181E',1);rectS(g,dx,dy,dw,dh,'#7C8792',1);
+      disc(g,dx+dw*.14,dy+dh*.52,3.4,'#B9C4CC',.9);
+      txt(g,'门',dx+dw*.5,dy+dh*.5,{s:14,c:'#7C8792',a:'center',v:'middle',f:SANS});
+    }
+    if(rd)rd.innerHTML='物理事实 <b>'+fmt(data*100)+'%</b><br>体验 <b style="color:'+(opened?'#FF6A55':'#8A97A2')+'">'+(opened?'已获得':'不可得')+'</b>';
+  }};
+});
+
+/* ================= 13 数学 ================= */
+reg('math',function(root,s){
+  var mode='frac',ang=137.5,ph=0,dirty=true;
+  var ccx=-0.62,ccy=0,half=1.45;
+  var off=document.createElement('canvas'),octx=off.getContext('2d');
+  var rd=root.querySelector('[data-read]'),vd=root.querySelector('[data-verdict]');
+  var angKnob=root.querySelector('[data-for="phyllo"]');
+  segGroup(root,'mth',function(b,all){mode=b.dataset.t2;all.forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});
+    if(angKnob){if(mode==='phyllo')angKnob.removeAttribute('hidden');else angKnob.setAttribute('hidden','')}
+    dirty=true;say()});
+  segGroup(root,'mthR',function(b){ccx=-0.62;ccy=0;half=1.45;dirty=true;b.blur();say()});
+  knob(root,'ang',function(v){ang=v/10;say()},function(v){return (v/10).toFixed(3)+'°'});
+  if(angKnob)angKnob.setAttribute('hidden','');
+  function say(){
+    if(!vd)return;
+    if(mode==='frac')vd.innerHTML='z ← z² + c　——全部规则就这一行。<small>放大 '+fmt(1.45/half,1)+' 倍，结构依然没有尽头。一个只有三个符号的式子，藏着无限深、永不重复、处处自相似的世界。这不是被画出来的，是被<b style="color:var(--gold-2)">发现</b>的。</small>';
+    else{
+      var d=Math.abs(ang-137.508);
+      if(d<0.02)vd.innerHTML='<b style="color:'+C.verd+'">137.508°：唯一让填充无缝的角度。</b><small>黄金角来自 φ = (1+√5)/2 的无理性——它是"最不像分数"的数，因此排列永远不重复、永不留缝。向日葵、松果、菠萝、多肉植物全都用它。</small>';
+      else vd.innerHTML='偏离 '+fmt(d,3)+'°：辐条状的空隙出现了。<small>只要偏离一点点，种子就排成有限条辐射线，中间空出大片浪费的面积。植物找到的是那个唯一最优解。</small>';
+    }
+  }
+  say();
+  pointer(s.g.canvas,function(k,p){
+    if(k!=='down'||mode!=='frac')return;
+    var w=s.w,h=s.h,asp=w/h;
+    ccx=ccx+((p.x/w)*2-1)*half*asp;ccy=ccy+((p.y/h)*2-1)*half;
+    half*=0.46;dirty=true;say();
+  });
+  function render(w,h){
+    var bw=Math.min(300,Math.max(120,Math.round(w/2.2))),bh=Math.max(80,Math.round(bw*h/w));
+    off.width=bw;off.height=bh;
+    var img=octx.createImageData(bw,bh),d=img.data;
+    var it=Math.round(80+Math.log2(1.45/half)*52),asp=w/h;
+    for(var j=0;j<bh;j++)for(var i=0;i<bw;i++){
+      var x0=ccx+((i/bw)*2-1)*half*asp, y0=ccy+((j/bh)*2-1)*half;
+      var x=0,y=0,n=0,x2=0,y2=0;
+      while(x2+y2<=4&&n<it){y=2*x*y+y0;x=x2-y2+x0;x2=x*x;y2=y*y;n++}
+      var o=(j*bw+i)*4;
+      if(n>=it){d[o]=8;d[o+1]=13;d[o+2]=19;d[o+3]=255}
+      else{
+        var sm=n+1-Math.log(Math.log(Math.sqrt(x2+y2)||2))/Math.LN2;
+        var f=clamp(Math.pow(sm/it,.42),0,1);
+        d[o]=Math.round(lerp(11,242,f));d[o+1]=Math.round(lerp(24,212,Math.pow(f,1.25)));
+        d[o+2]=Math.round(lerp(38,154,Math.pow(f,1.9)));d[o+3]=255;
+      }
+    }
+    octx.putImageData(img,0,0);dirty=false;
+  }
+  return {frame:function(t,dt){
+    var g=s.g,w=s.w,h=s.h;if(!w)return;ph+=dt;g.clearRect(0,0,w,h);
+    if(mode==='frac'){
+      if(dirty||off.width<10)render(w,h);
+      g.save();g.imageSmoothingEnabled=true;g.drawImage(off,0,0,w,h);g.restore();
+      txt(g,'z ← z² + c',14,26,{s:14,c:'#FFF2D8',f:LAT,g:6});
+      txt(g,'点击画面继续放大 · 放大 '+fmt(1.45/half,1)+'×',14,h-14,{s:9.5,c:'#FFE9C8',f:SANS,g:4});
+      if(rd)rd.innerHTML='放大 <b>'+fmt(1.45/half,1)+'×</b><br>迭代 <b>'+Math.round(80+Math.log2(1.45/half)*52)+'</b>';
+    }else{
+      var cx=w*.5,cy=h*.48,R=Math.min(w,h)*.42,n=520;
+      var grow=RM?1:clamp(ph*.28,0,1);
+      for(var i=0;i<n*grow;i++){
+        var a=i*ang*PI/180, r=R*Math.sqrt(i/n);
+        var x=cx+Math.cos(a)*r, y=cy+Math.sin(a)*r;
+        var sz=1.2+3.2*(i/n);
+        disc(g,x,y,sz,i%2?C.gold:C.gold2,.55+.4*(i/n));
+      }
+      ring(g,cx,cy,R+6,hex(C.rule,.8),1,1);
+      txt(g,'发散角 '+ang.toFixed(3)+'°',14,26,{s:12,c:C.gold2,f:SANS});
+      txt(g,Math.abs(ang-137.508)<0.02?'无缝填充':'出现辐条状空隙',14,44,{s:10,c:Math.abs(ang-137.508)<0.02?C.verd:C.rust,f:SANS});
+      if(rd)rd.innerHTML='角度 <b>'+ang.toFixed(3)+'°</b><br>φ <b>1.618…</b><br>种子 <b>'+Math.round(n*grow)+'</b>';
+    }
+  }};
+});
+
+/* ================= 结语清单 ================= */
+(function(){
+  var box=document.getElementById('tally');if(!box)return;
+  var rows=[['01','眼睛','各部件互相依赖，缺一即归零',.60,'不可化约'],
+    ['02','分子机器','约 40 种蛋白必须同时到位',.66,'40 种'],
+    ['03','DNA','3.2 GB 指定性信息，外加一套约定密码',.84,'3.2 GB'],
+    ['04','序列空间','随机命中一个功能蛋白',1,'10⁻¹⁹⁵'],
+    ['05','轨道','引力指数必须精确等于 2',.54,'r⁻²·⁰⁰⁰'],
+    ['06','常数','宇宙学常数的精调程度',.94,'10⁻¹²⁰'],
+    ['07','地球','数十项独立条件同时成立',.72,'10⁻¹⁵'],
+    ['08','起点','时间本身必须被开启',.56,'t = 0'],
+    ['09','熵','三十八亿年不间断的局部熵减',.64,'ΔS < 0'],
+    ['10','水','四项反常性质全部利于生命',.50,'4 °C'],
+    ['11','寒武纪','约 20 个门出现在 0.5% 的时间里',.70,'< 2000 万年'],
+    ['12','意识','第一人称经验无法被物理还原',.58,'不可还原'],
+    ['13','数学','抽象数学总是先于观测猜中宇宙',.52,'先于观测']];
+  rows.forEach(function(r){
+    var d=document.createElement('div');d.className='tally__row';
+    d.innerHTML='<i>'+r[0]+'</i><span>'+r[1]+' · '+r[2]+'</span><b>'+r[4]+'</b>';
+    var bar=document.createElement('span');bar.className='tally__bar';
+    var fill=document.createElement('span');
+    fill.style.cssText='position:absolute;left:0;top:0;height:100%;width:0;background:var(--gold);transition:width 1.3s cubic-bezier(.2,.7,.3,1)';
+    bar.style.position='relative';bar.appendChild(fill);d.appendChild(bar);box.appendChild(d);
+    d._fill=fill;d._w=r[3];
+  });
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(!e.isIntersecting)return;
+    [].slice.call(box.children).forEach(function(row,i){
+      setTimeout(function(){if(row._fill)row._fill.style.width=(row._w*100)+'%'},i*70);
+    });io.disconnect();
+  })},{threshold:.15});
+  io.observe(box);
+})();
+
+/* ================= 启动 ================= */
+(function(){
+  var setups=[];
+  [].slice.call(document.querySelectorAll('[data-scene]')).forEach(function(root){
+    var name=root.dataset.scene, cv=root.querySelector('canvas');
+    if(!cv||!scenes[name])return;
+    var st=setup(cv);setups.push(st);
+    var inst;
+    try{inst=scenes[name](root,st)}catch(e){console.error('init '+name,e);return}
+    var o={name:name,on:false,frame:inst.frame};
+    live.push(o);
+    if(window.IntersectionObserver){
+      new IntersectionObserver(function(es){o.on=es[0].isIntersecting},{rootMargin:'200px'}).observe(root);
+    }else o.on=true;
+  });
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){setups.forEach(function(s){s.fit()})});
+  window.addEventListener('orientationchange',function(){setTimeout(function(){setups.forEach(function(s){s.fit()})},220)});
+})();
+})();
+</script>
+<!--ARTIFACT-END-->
+</body>
+</html>
