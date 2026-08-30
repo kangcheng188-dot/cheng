@@ -1,0 +1,2112 @@
+<title>颌面病谱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+SC:wght@500;700&display=swap">
+<style>
+:root{
+  --bg:#E8EAED; --panel:#FCFCFD; --panel-2:#F1F2F5; --sunk:#E1E4E9;
+  --film:#171B20; --film-2:#0E1114; --film-ink:#C9D2DA;
+  --ink:#111820; --ink-2:#4C5763; --ink-3:#7E8894; --line:#D3D8DE; --hair:#E4E7EB;
+  --accent:#A8325A; --accent-2:#8A2649; --accent-soft:#F6E2E9;
+  --n1:#4A6FA5; --n2:#2E7C93; --n3:#6B4E9B; --n4:#37806E; --n5:#4F7A2F;
+  --n6:#87801F; --n7:#B07214; --n8:#A8325A; --n9:#6E6257;
+  --shadow:0 1px 2px rgba(17,24,32,.06),0 8px 24px rgba(17,24,32,.07);
+  --shadow-lg:0 2px 6px rgba(17,24,32,.10),0 24px 60px rgba(17,24,32,.18);
+  --serif:"Noto Serif SC","Songti SC","STSong",SimSun,Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101418; --panel:#181D23; --panel-2:#1F252C; --sunk:#0C1014;
+    --film:#0B0E11; --film-2:#050709; --film-ink:#B9C4CE;
+    --ink:#E7EBEF; --ink-2:#A6B0BB; --ink-3:#75808C; --line:#2C333B; --hair:#242A31;
+    --accent:#E88AA8; --accent-2:#F3A6BD; --accent-soft:#3A2029;
+    --n1:#8FB0E0; --n2:#6FBBD2; --n3:#AE94DE; --n4:#6FC0AA; --n5:#96C46A;
+    --n6:#C9C255; --n7:#E0A63F; --n8:#E88AA8; --n9:#B0A395;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    --shadow-lg:0 2px 6px rgba(0,0,0,.5),0 24px 60px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101418; --panel:#181D23; --panel-2:#1F252C; --sunk:#0C1014;
+  --film:#0B0E11; --film-2:#050709; --film-ink:#B9C4CE;
+  --ink:#E7EBEF; --ink-2:#A6B0BB; --ink-3:#75808C; --line:#2C333B; --hair:#242A31;
+  --accent:#E88AA8; --accent-2:#F3A6BD; --accent-soft:#3A2029;
+  --n1:#8FB0E0; --n2:#6FBBD2; --n3:#AE94DE; --n4:#6FC0AA; --n5:#96C46A;
+  --n6:#C9C255; --n7:#E0A63F; --n8:#E88AA8; --n9:#B0A395;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  --shadow-lg:0 2px 6px rgba(0,0,0,.5),0 24px 60px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.72;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:700;text-wrap:balance;margin:0;line-height:1.32}
+p{margin:0}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.wrap{max-width:1260px;margin:0 auto;padding:0 24px}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--line);background:var(--panel);position:relative}
+.mast-in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;padding:38px 0 26px}
+.mast h1{font-size:clamp(34px,5.4vw,54px);letter-spacing:.04em}
+.mast .sub{margin-top:12px;max-width:60ch;color:var(--ink-2);font-size:15px}
+.mast .rule{height:2px;background:var(--ink);width:46px;margin:14px 0 0}
+.tally{display:flex;gap:22px;font-family:var(--mono);text-align:right}
+.tally div{line-height:1.3}
+.tally b{display:block;font-size:26px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.tally span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.themebtn{position:absolute;top:14px;right:24px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);padding:4px 10px;border-radius:2px}
+.themebtn:hover{color:var(--ink);border-color:var(--ink-3)}
+.caution{background:var(--sunk);border-bottom:1px solid var(--line);font-size:12.5px;color:var(--ink-2)}
+.caution .wrap{padding-top:9px;padding-bottom:9px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.caution b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  border:1px solid var(--accent);padding:1px 6px;border-radius:2px;white-space:nowrap}
+
+/* ---------- section frame ---------- */
+section{padding:44px 0}
+.shead{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.shead h2{font-size:23px;letter-spacing:.02em}
+.shead .note{color:var(--ink-3);font-size:13px}
+.sline{height:1px;background:var(--line);margin:16px 0 26px}
+
+/* ---------- instruments ---------- */
+.instruments{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.instr{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:18px 18px 14px;box-shadow:var(--shadow)}
+.instr-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:2px}
+.instr-h h3{font-size:15px;font-family:var(--sans);font-weight:700;letter-spacing:.02em}
+.instr-h .hint{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.maps{display:grid;grid-template-columns:1.05fr .95fr;gap:6px;align-items:center}
+.maps svg{width:100%;height:auto;display:block;overflow:visible}
+.rg{cursor:pointer;transition:opacity .16s ease}
+.rg .rg-shape{stroke:var(--panel);stroke-width:1.25;transition:fill .18s ease,stroke .18s ease}
+.rg:hover .rg-shape{stroke:var(--ink);stroke-width:1.6}
+.rg.on .rg-shape{stroke:var(--ink);stroke-width:2}
+.rg text{font-family:var(--sans);font-size:9.5px;fill:var(--ink);pointer-events:none;text-anchor:middle;
+  dominant-baseline:middle;font-weight:600}
+.rg .lead{stroke:var(--ink-3);stroke-width:.75;fill:none}
+.map-cap{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);text-align:center;margin-top:2px}
+
+/* film tiles */
+.films{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.film-t{background:var(--film);border:1px solid var(--line);border-radius:2px;padding:6px 6px 5px;cursor:pointer;
+  transition:border-color .16s ease,transform .16s ease}
+.film-t:hover{border-color:var(--ink-3);transform:translateY(-1px)}
+.film-t.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.film-t svg{width:100%;height:auto;display:block}
+.film-t .lbl{display:flex;justify-content:space-between;align-items:baseline;gap:4px;margin-top:5px}
+.film-t .lbl span{font-size:11px;color:var(--film-ink);line-height:1.3}
+.film-t .lbl i{font-family:var(--mono);font-style:normal;font-size:10px;color:#6E7A85;font-variant-numeric:tabular-nums}
+
+/* nature chips */
+.chiprow{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--panel-2);
+  border-radius:2px;padding:4px 9px;font-size:12.5px;color:var(--ink-2);transition:.16s ease}
+.chip .sw{width:9px;height:9px;border-radius:1px;flex:none}
+.chip i{font-family:var(--mono);font-style:normal;font-size:10.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+.chip.on{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.chip.on i{color:var(--panel-2)}
+
+/* search + toolbar */
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.search{flex:1 1 260px;display:flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line);
+  border-radius:3px;padding:9px 13px;box-shadow:var(--shadow)}
+.search input{flex:1;border:none;background:none;font:inherit;color:var(--ink);outline:none;min-width:0}
+.search input::placeholder{color:var(--ink-3)}
+.search svg{flex:none;stroke:var(--ink-3)}
+.active-strip{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:26px;margin-bottom:16px}
+.active-strip .lead{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.tag{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--panel);border-radius:2px;
+  padding:3px 8px;font-size:12px}
+.tag b{font-weight:400;opacity:.65}
+.clear{font-family:var(--mono);font-size:11px;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.count{font-family:var(--mono);font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- catalogue ---------- */
+.group{margin-bottom:30px}
+.group-h{display:flex;align-items:baseline;gap:10px;padding-bottom:7px;border-bottom:1px solid var(--ink);margin-bottom:14px}
+.group-h h3{font-size:17px;letter-spacing:.03em}
+.group-h .en{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);
+  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.group-h .n{font-family:var(--mono);font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(252px,1fr));gap:10px}
+.card{position:relative;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:3px;
+  padding:13px 14px 12px;display:flex;flex-direction:column;gap:6px;width:100%;min-width:0;overflow:hidden;
+  transition:border-color .16s ease,transform .16s ease,box-shadow .16s ease}
+.card:hover{border-color:var(--ink-3);transform:translateY(-2px);box-shadow:var(--shadow)}
+.card.picked{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.card>*{min-width:0;max-width:100%}
+.card .nm{display:flex;align-items:center;gap:8px}
+.card .nm strong{overflow-wrap:anywhere}
+.card .sw{width:9px;height:9px;border-radius:1px;flex:none}
+.card .nm strong{font-family:var(--serif);font-size:16.5px;font-weight:700;letter-spacing:.02em;line-height:1.3}
+.card .en{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);line-height:1.45;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card .gist{font-size:13px;color:var(--ink-2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;
+  -webkit-box-orient:vertical;overflow:hidden}
+.card .meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:4px}
+.mchip{font-size:10.5px;padding:1px 6px;border-radius:2px;border:1px solid var(--hair);background:var(--panel-2);color:var(--ink-3)}
+.pick{position:absolute;top:8px;right:8px;width:22px;height:22px;border:1px solid var(--line);border-radius:2px;
+  display:grid;place-items:center;font-family:var(--mono);font-size:13px;color:var(--ink-3);opacity:0;transition:.14s}
+.card:hover .pick,.card.picked .pick{opacity:1}
+.pick:hover{border-color:var(--accent);color:var(--accent)}
+.card.picked .pick{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.empty{padding:48px 0;text-align:center;color:var(--ink-3)}
+.empty b{display:block;font-family:var(--serif);font-size:19px;color:var(--ink-2);margin-bottom:6px}
+@media (prefers-reduced-motion:no-preference){
+  .grid .card{animation:pop .28s cubic-bezier(.2,.7,.3,1) backwards}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}}
+}
+
+/* ---------- record drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(12,16,20,.42);opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:40}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100dvh;width:min(482px,100%);background:var(--panel);
+  border-left:1px solid var(--line);box-shadow:var(--shadow-lg);z-index:41;display:flex;flex-direction:column;
+  transform:translateX(101%);transition:transform .28s cubic-bezier(.3,.8,.3,1)}
+.drawer.on{transform:none}
+@media (prefers-reduced-motion:reduce){.drawer{transition:none}}
+.dr-top{padding:20px 24px 16px;border-bottom:1px solid var(--line);background:var(--panel-2)}
+.dr-close{position:absolute;top:14px;right:16px;width:30px;height:30px;border:1px solid var(--line);border-radius:2px;
+  display:grid;place-items:center;font-size:17px;color:var(--ink-2);background:var(--panel)}
+.dr-close:hover{border-color:var(--ink);color:var(--ink)}
+.dr-top .kicker{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.dr-top h2{font-size:26px;letter-spacing:.03em;padding-right:36px}
+.dr-top .en{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);margin-top:5px;line-height:1.5}
+.dr-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.dchip{font-size:11.5px;padding:2px 8px;border-radius:2px;border:1px solid currentColor;line-height:1.5}
+.dchip.solid{color:var(--panel);border-color:transparent}
+.dr-body{overflow-y:auto;padding:20px 24px 40px;flex:1}
+.figbox{background:var(--film);border:1px solid var(--line);border-radius:3px;padding:12px;margin-bottom:20px}
+.figbox svg{width:100%;height:auto;display:block}
+.figcap{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#6E7A85;margin-top:8px;line-height:1.6}
+.rec{display:grid;grid-template-columns:62px 1fr;gap:9px 16px;align-items:baseline}
+.rec dt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  padding-top:5px;border-top:1px solid var(--hair)}
+.rec dd{margin:0;padding-top:5px;border-top:1px solid var(--hair);font-size:14px;color:var(--ink);line-height:1.75}
+.rec dd em{font-style:normal;color:var(--accent);font-weight:600}
+.dr-foot{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);border-radius:2px;padding:6px 12px;font-size:12.5px;color:var(--ink-2);background:var(--panel)}
+.btn:hover{border-color:var(--ink);color:var(--ink)}
+.btn.pri{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.btn.pri:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ---------- compare tray ---------- */
+.tray{position:fixed;left:0;right:0;bottom:0;z-index:35;background:var(--panel);border-top:1px solid var(--ink);
+  box-shadow:0 -8px 30px rgba(17,24,32,.12);transform:translateY(101%);transition:transform .26s cubic-bezier(.3,.8,.3,1)}
+.tray.on{transform:none}
+.tray .wrap{display:flex;align-items:center;gap:12px;padding-top:11px;padding-bottom:11px;flex-wrap:wrap}
+.tray .ttl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.tray .picks{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0}
+.ptag{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:2px;padding:3px 8px;font-size:12.5px}
+.ptag button{color:var(--ink-3);font-size:13px;line-height:1}
+.ptag button:hover{color:var(--accent)}
+.cmp-wrap{position:fixed;inset:0;z-index:42;display:none;padding:5vh 20px;overflow:auto}
+.cmp-wrap.on{display:block}
+.cmp{max-width:1080px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:3px;
+  box-shadow:var(--shadow-lg);padding:22px 24px 26px;position:relative}
+.cmp h3{font-size:20px;margin-bottom:4px}
+.cmp .scroller{overflow-x:auto;margin-top:16px}
+table.ct{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+table.ct th,table.ct td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--hair);line-height:1.7}
+table.ct thead th{border-bottom:1px solid var(--ink);font-family:var(--serif);font-size:16px;letter-spacing:.02em}
+table.ct tbody th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  width:62px;font-weight:400;white-space:nowrap}
+table.ct td{color:var(--ink-2)}
+
+/* ---------- reference figures ---------- */
+.figrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.plate{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:16px 18px 14px;box-shadow:var(--shadow)}
+.plate h4{font-size:15px;font-family:var(--sans);font-weight:700;margin-bottom:3px}
+.plate p{font-size:12.5px;color:var(--ink-2);line-height:1.7}
+.plate .stage{background:var(--film);border-radius:2px;margin:12px 0 10px;padding:12px}
+.plate .stage svg{width:100%;height:auto;display:block}
+.plate .stage.pale{background:var(--panel-2);border:1px solid var(--hair)}
+.redflags{background:var(--panel);border:1px solid var(--accent);border-radius:3px;padding:20px 22px}
+.redflags h3{font-size:17px;color:var(--accent);margin-bottom:4px}
+.redflags ol{margin:12px 0 0;padding-left:20px;display:grid;gap:8px;font-size:14px;color:var(--ink-2)}
+.redflags ol strong{color:var(--ink)}
+.notes{font-size:13px;color:var(--ink-3);line-height:1.8;max-width:78ch;display:grid;gap:10px}
+.notes b{color:var(--ink-2)}
+footer{border-top:1px solid var(--line);background:var(--panel);margin-top:20px}
+footer .wrap{padding:26px 24px 40px}
+
+@media (max-width:900px){
+  .instruments{grid-template-columns:1fr}
+  .mast-in{grid-template-columns:1fr;align-items:start;gap:20px}
+  .tally{text-align:left}
+  .films{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  body{font-size:14.5px}
+  .maps{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+  .drawer{width:100%}
+  .dr-body{padding:16px 18px 40px}
+  .rec{grid-template-columns:1fr;gap:2px 0}
+  .rec dt{border-top:1px solid var(--hair);padding-top:8px}
+  .rec dd{border-top:none;padding-top:0;padding-bottom:6px}
+}
+</style>
+
+<header class="mast">
+  <button class="themebtn" id="themebtn" aria-label="切换明暗主题">明 / 暗</button>
+  <div class="wrap mast-in">
+    <div>
+      <div class="eyebrow">Oral &amp; Maxillofacial Disease Atlas</div>
+      <h1>颌面病谱</h1>
+      <div class="rule"></div>
+      <p class="sub">从口腔黏膜到颌骨、涎腺与颞下颌关节，把这一区域的病变按<b>发生部位</b>、<b>病变性质</b>与<b>影像形态</b>三条线索排成一张可检索的图谱。每一条记录都写明成因、好发人群、临床与影像特征、处理原则，以及最容易与它混淆的邻居。</p>
+    </div>
+    <div class="tally">
+      <div><b id="t-dis">—</b><span>病种</span></div>
+      <div><b id="t-cat">—</b><span>类别</span></div>
+      <div><b id="t-site">—</b><span>解剖分区</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="caution"><div class="wrap">
+  <b>使用说明</b>
+  <span>本页面为医学教育与知识整理用途，示意图为示意性绘制、非临床照片，不能替代口腔颌面外科或口腔黏膜科的面诊、影像与病理检查。任何口腔内两周以上不愈的溃疡、肿块或不明原因麻木，都应尽早就医活检。</span>
+</div></div>
+
+<main class="wrap">
+
+<section id="find">
+  <div class="shead">
+    <h2>检索台</h2>
+    <span class="note">点击分区图、性质色标或 X 线形态格进行筛选，可多选叠加</span>
+  </div>
+  <div class="sline"></div>
+
+  <div class="instruments">
+    <div class="instr">
+      <div class="instr-h"><h3>按解剖分区</h3><span class="hint">Site</span></div>
+      <div class="maps">
+        <div><div id="map-intra"></div><div class="map-cap">口内观 · Intraoral</div></div>
+        <div><div id="map-lat"></div><div class="map-cap">侧面观 · Lateral</div></div>
+      </div>
+    </div>
+
+    <div class="instr">
+      <div class="instr-h"><h3>按颌骨 X 线形态</h3><span class="hint">Radiographic pattern</span></div>
+      <div class="films" id="films"></div>
+      <div class="instr-h" style="margin-top:18px"><h3>按病变性质</h3><span class="hint">Nature</span></div>
+      <div class="chiprow" id="natures"></div>
+    </div>
+  </div>
+</section>
+
+<section id="list" style="padding-top:8px">
+  <div class="toolbar">
+    <label class="search">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="M10.8 10.8 14 14"/></svg>
+      <input id="q" type="search" placeholder="搜索病名、英文名、症状或关键词，如「多房」「无痛性溃疡」「ameloblastoma」" autocomplete="off">
+    </label>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="active-strip" id="active"></div>
+  <div id="results"></div>
+</section>
+
+<section id="plates">
+  <div class="shead">
+    <h2>读图基础</h2>
+    <span class="note">几张贯穿全表的示意图：颌骨病变的生长方式、下颌骨骨折好发线、Le Fort 分型</span>
+  </div>
+  <div class="sline"></div>
+  <div class="figrow">
+    <div class="plate">
+      <h4>囊肿 / 良性肿瘤 / 恶性肿瘤的生长方式</h4>
+      <p>三者在影像上的分界线质量截然不同，这是判读颌骨病变的第一道分水岭。</p>
+      <div class="stage" id="fig-growth"></div>
+      <p><b>囊肿</b>膨胀性生长、边缘有致密白线（骨白线）；<b>良性肿瘤</b>可推压吸收牙根、皮质变薄但仍连续；<b>恶性</b>虫蚀状破坏、皮质中断、无骨反应边界。</p>
+    </div>
+    <div class="plate">
+      <h4>下颌骨骨折好发部位</h4>
+      <p>下颌骨呈弓形，力从一点传导至全弓，因此常出现「一处直接、一处间接」的双发骨折。</p>
+      <div class="stage pale" id="fig-mand"></div>
+      <p>髁突约占 30%，其次为体部、角部（第三磨牙区骨质薄弱）与正中联合。颏部受击须常规检查双侧髁突。</p>
+    </div>
+    <div class="plate">
+      <h4>上颌骨 Le Fort 骨折分型</h4>
+      <p>René Le Fort 1901 年据尸体实验归纳的三条薄弱线，至今仍是上颌骨骨折的通用语言。</p>
+      <div class="stage pale" id="fig-lefort"></div>
+      <p><b>Ⅰ 型</b>牙槽突上方水平断裂（浮动上颌）；<b>Ⅱ 型</b>锥形，经眶下缘、鼻额缝；<b>Ⅲ 型</b>颅面分离，经颧额缝与眶壁。</p>
+    </div>
+  </div>
+</section>
+
+<section id="flags" style="padding-top:8px">
+  <div class="redflags">
+    <h3>需要立刻转诊的红旗征</h3>
+    <p style="font-size:13.5px;color:var(--ink-2)">口腔癌五年生存率与分期高度相关，早期（Ⅰ/Ⅱ 期）可达 70%–90%，出现颈淋巴结转移后大幅下降。以下任何一条出现，都不应「再观察一个月」。</p>
+    <ol>
+      <li><strong>超过 2 周不愈合的溃疡</strong>，尤其位于舌侧缘、口底、磨牙后区，基底发硬、边缘隆起。</li>
+      <li><strong>无痛性肿块或黏膜增厚</strong>——早期口腔癌常不痛，疼痛往往意味着已侵犯神经或深部肌肉。</li>
+      <li><strong>颏神经分布区麻木（numb chin sign）</strong>，无明确外伤或治疗史，提示下颌骨内浸润或转移。</li>
+      <li><strong>牙齿无明显牙周病却松动、拔牙创长期不愈</strong>，警惕牙龈癌、骨内癌与颌骨坏死。</li>
+      <li><strong>红斑或红白相间的斑块</strong>——红斑的恶变率远高于白斑，须优先活检。</li>
+      <li><strong>颈部无痛性进行性增大的肿块</strong>持续 3 周以上，成人须先排除转移癌。</li>
+      <li><strong>持续张口受限（牙关紧闭）</strong>伴疼痛，可能为深部间隙感染或翼颌间隙肿瘤浸润。</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <div class="eyebrow" style="margin-bottom:10px">About this atlas</div>
+  <div class="notes">
+    <p><b>分类依据。</b>牙源性肿瘤与囊肿的归类参照 WHO《头颈部肿瘤分类》第 5 版（2022）的框架：牙源性角化囊肿（OKC）与牙源性钙化囊肿在该版中被列为囊肿而非肿瘤；成釉细胞瘤的亚型简化为常规型、单囊型与骨外/周边型。其余分类按临床科室常用的病因—部位—性质三维习惯整理。</p>
+    <p><b>关于图像。</b>页面内所有图形均为按病变影像学特征绘制的<b>示意图</b>（SVG 矢量），用于建立形态直觉，不是真实的 X 线片、CT 或临床照片。真实病例影像涉及患者隐私与版权，请查阅所在机构的教学片库、放射科 PACS 或权威图谱。</p>
+    <p><b>使用边界。</b>本页可用作复习框架与鉴别诊断的检索索引，不构成诊疗建议。任何治疗方案的选择都依赖病理诊断、影像分期与患者全身状况；条目中的「处理」一栏只写到原则层面。</p>
+  </div>
+</div></footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dr-name" tabindex="-1"></aside>
+
+<div class="tray" id="tray"><div class="wrap">
+  <span class="ttl">鉴别对比</span>
+  <div class="picks" id="picks"></div>
+  <button class="btn pri" id="cmp-open">并排对比</button>
+  <button class="btn" id="cmp-clear">清空</button>
+</div></div>
+
+<div class="cmp-wrap" id="cmp-wrap"><div class="cmp" id="cmp"></div></div>
+
+<script>
+const CATS=[
+ {id:"dev",  n:"发育与先天异常", e:"Developmental & congenital"},
+ {id:"dental",n:"牙体牙髓与牙周", e:"Dental, pulpal & periodontal"},
+ {id:"infect",n:"感染与颌骨坏死", e:"Infection & osteonecrosis"},
+ {id:"mucosa",n:"口腔黏膜病",     e:"Oral mucosal disease"},
+ {id:"cyst",  n:"囊肿与囊肿样病变", e:"Cysts & cyst-like lesions"},
+ {id:"odtu",  n:"牙源性肿瘤",     e:"Odontogenic tumours"},
+ {id:"bone",  n:"颌骨骨病与骨肿瘤", e:"Bone lesions & bone tumours"},
+ {id:"soft",  n:"软组织良性肿瘤与瘤样病变", e:"Benign soft tissue lesions"},
+ {id:"malig", n:"口腔颌面部恶性肿瘤", e:"Malignant neoplasms"},
+ {id:"sal",   n:"涎腺疾病",       e:"Salivary gland disease"},
+ {id:"tmj",   n:"颞下颌关节疾病",  e:"Temporomandibular disorders"},
+ {id:"nerve", n:"神经与颌面疼痛",  e:"Neural disorders & orofacial pain"},
+ {id:"trauma",n:"颌面创伤",       e:"Maxillofacial trauma"},
+ {id:"sys",   n:"全身疾病的口腔表现", e:"Oral signs of systemic disease"}
+];
+const NAT=[
+ {id:1,n:"发育性",     v:"--n1"},
+ {id:2,n:"炎症·免疫",  v:"--n2"},
+ {id:3,n:"感染性",     v:"--n3"},
+ {id:4,n:"囊肿性",     v:"--n4"},
+ {id:5,n:"良性肿瘤",   v:"--n5"},
+ {id:6,n:"局部侵袭性", v:"--n6"},
+ {id:7,n:"潜在恶性",   v:"--n7"},
+ {id:8,n:"恶性",       v:"--n8"},
+ {id:9,n:"功能·退行·创伤",v:"--n9"}
+];
+const SITES=[
+ {id:"lip",n:"唇"},{id:"buc",n:"颊"},{id:"tng",n:"舌"},{id:"fom",n:"口底"},
+ {id:"gin",n:"牙龈·牙槽"},{id:"hp",n:"硬腭"},{id:"sp",n:"软腭·口咽"},{id:"rmt",n:"磨牙后区"},
+ {id:"tooth",n:"牙体·牙髓"},{id:"mx",n:"上颌骨"},{id:"md",n:"下颌骨"},
+ {id:"tmj",n:"颞下颌关节"},{id:"sal",n:"涎腺"},{id:"skin",n:"面部软组织"},{id:"neck",n:"颈部"}
+];
+const PATS=[
+ {id:"uni",   n:"单房透射",     e:"Unilocular radiolucency"},
+ {id:"multi", n:"多房·皂泡状",  e:"Multilocular"},
+ {id:"mixed", n:"混合密度",     e:"Mixed density"},
+ {id:"opaque",n:"高密度阻射",   e:"Radiopaque"},
+ {id:"ground",n:"磨玻璃样",     e:"Ground-glass"},
+ {id:"moth",  n:"虫蚀状·界不清", e:"Moth-eaten"},
+ {id:"sun",   n:"日光放射状",   e:"Sunburst periosteal"}
+];
+
+const D=[
+/* ===== 发育与先天异常 ===== */
+{n:"唇裂",e:"Cleft lip",c:"dev",t:1,s:["lip","skin"],p:"",a:"出生即有，男性略多，亚洲人群发病率约 1/500–1/700",
+ u:"胚胎第 4–7 周上颌突与内侧鼻突未能融合。多基因遗传（IRF6、MSX1 等）叠加环境因素：孕早期叶酸缺乏、吸烟饮酒、抗癫痫药、糖尿病。",
+ f:"单侧或双侧上唇裂开，可只累及红唇（不完全）或直通鼻底（完全）；伴鼻小柱偏斜、鼻翼塌陷、患侧牙槽突裂。影响吸吮与后续发音。",
+ i:"临床诊断为主；产前超声 18–22 周多可发现。需评估是否为综合征型（如 Van der Woude 综合征伴下唇瘘）。",
+ x:"序列治疗：3–6 月龄唇裂修复（Millard 旋转推进法等），术前可用鼻牙槽塑形（NAM）；9–18 月龄修复腭裂；学龄期语音治疗、牙槽突裂植骨（9–11 岁，尖牙萌出前）；成年后正颌与鼻畸形二期整复。",
+ k:"是终身的序列治疗而非一次手术。牙槽突裂植骨时机以尖牙牙根形成 1/2–2/3 为准，过早过晚都影响尖牙萌出。"},
+
+{n:"腭裂",e:"Cleft palate",c:"dev",t:1,s:["hp","sp"],p:"",a:"出生即有，女性略多；可单独发生或与唇裂并发",
+ u:"胚胎第 7–12 周左右腭突未在中线融合。可孤立发生，也见于 Pierre Robin 序列征、22q11.2 缺失综合征等。",
+ f:"硬腭、软腭中线裂开，口鼻腔相通。表现为吸吮无力、乳汁鼻腔反流、中耳积液与反复中耳炎、腭咽闭合不全导致的开放性鼻音。黏膜下裂（悬雍垂分叉+硬腭后缘切迹+软腭中线透明带）易被漏诊。",
+ i:"直视与触诊硬腭后缘；鼻咽内镜与鼻音计评估腭咽功能。",
+ x:"9–18 月龄行腭成形术（如 Furlow 双反向 Z 成形、两瓣法）以争取语音发育窗口；持续听力监测与鼓膜置管；语音治疗；腭咽闭合不全者行咽后壁瓣或括约肌腭咽成形。",
+ k:"手术时机是「语音」与「上颌发育」的权衡：过早修复利于语音，但可能抑制上颌生长导致反𬌗。黏膜下腭裂是最常被延误的类型。"},
+
+{n:"骨性Ⅲ类·下颌前突",e:"Skeletal Class III / mandibular prognathism",c:"dev",t:1,s:["md","mx"],p:"",a:"青春期显现并随生长加重，东亚人群比例高，有家族聚集",
+ u:"下颌骨过度生长和/或上颌发育不足，遗传因素显著（哈布斯堡下颌为经典例证）；亦可继发于肢端肥大症、单侧髁突增生。",
+ f:"前牙反𬌗（地包天）、下颌前突面型、面下 1/3 过长、上唇后缩；常伴咀嚼效率下降、颞下颌关节负荷异常与心理社会困扰。",
+ i:"头影测量：ANB 角减小甚至为负、Wits 值为负；判断是上颌后缩还是下颌前突需分别看 SNA/SNB。生长期需系列 X 线判断是否已停止生长。",
+ x:"生长期（8–12 岁）可用前方牵引 + 上颌快速扩弓引导；成年骨性畸形须正畸—正颌联合治疗：术前排齐去代偿，行下颌升支矢状劈开后退（BSSRO）和/或 Le Fort Ⅰ 型上颌前徙。",
+ k:"手术须待下颌生长停止（女约 16–18 岁、男 18–21 岁，可用手腕骨片或连续头影测量判断），否则复发率高。"},
+
+{n:"骨性Ⅱ类·下颌后缩",e:"Skeletal Class II / mandibular retrognathism",c:"dev",t:1,s:["md"],p:"",a:"混合牙列期即可识别；与口呼吸、不良习惯相关",
+ u:"下颌骨发育不足或位置后退，可为原发性遗传性，也可继发于幼年髁突损伤、幼年特发性关节炎导致的髁突生长中心破坏。",
+ f:"下颌后缩、颏部后退「鸟嘴」面型、深覆盖深覆𬌗、开唇露齿；重度者舌根后坠，是阻塞性睡眠呼吸暂停的重要颅面因素。",
+ i:"头影测量 SNB 减小、ANB 增大；气道分析可见后气道间隙狭窄。",
+ x:"生长期用功能矫治器（Twin-block、Herbst）引导下颌前导；成年需正颌手术（BSSRO 前徙），合并 OSA 者可行上下颌同期前徙（MMA），是外科治疗 OSA 有效率最高的术式之一。",
+ k:"儿童期一侧髁突骨折若未获良好功能康复，可造成同侧下颌发育不足与面部不对称，属可预防的继发畸形。"},
+
+{n:"半侧颜面短小",e:"Hemifacial microsomia / craniofacial microsomia",c:"dev",t:1,s:["md","tmj","skin"],p:"",a:"发生率仅次于唇腭裂的颅面畸形，约 1/5600 活产",
+ u:"第一、二鳃弓发育异常，主流学说为胚胎期镫骨动脉区域出血、血供障碍。Goldenhar 综合征在此基础上加眼球皮样囊肿与脊柱异常。",
+ f:"单侧下颌升支与髁突发育不足或缺如、口角歪斜、患侧面部软组织量少、外耳畸形（附耳、小耳症）、面神经功能不全；咬合平面向患侧倾斜。",
+ i:"CT 三维重建按 Pruzansky-Kaban 分型（Ⅰ 型升支短小、Ⅱa/Ⅱb 髁突形态异常、Ⅲ 型升支髁突缺如）决定术式。",
+ x:"Ⅰ–Ⅱa 型可在生长期用功能矫治器或牵张成骨延长升支；Ⅱb–Ⅲ 型需肋软骨移植重建髁突；成年后正颌 + 自体脂肪或游离皮瓣补充软组织；外耳再造多在 8–10 岁后。",
+ k:"是骨与软组织同时缺量的三维问题，只延长骨骼而不补软组织，往往得不到对称的外观。"},
+
+{n:"下颌面骨发育不全",e:"Treacher Collins syndrome",c:"dev",t:1,s:["md","mx","skin"],p:"",a:"常染色体显性（TCOF1 基因），约 60% 为新发突变",
+ u:"神经嵴细胞增殖与迁移障碍，影响第一、二鳃弓来源结构，与半侧颜面短小不同的是本病为双侧对称受累。",
+ f:"颧骨颧弓发育不全或缺如、睑裂外下斜、下睑缺损、小下颌、外耳畸形与传导性耳聋、腭裂；新生儿期可因小下颌与舌后坠出现严重气道梗阻。",
+ i:"CT 见颧骨发育不良、下颌升支短小、乳突气化不良；基因检测确诊。",
+ x:"新生儿期优先保障气道（俯卧位、鼻咽通气道，必要时下颌牵张成骨或气管切开）；分期行眶颧重建、外耳再造、正颌手术；终身听力与语言干预。",
+ k:"与半侧颜面短小的关键区别是双侧对称、有明确遗传模式；气道管理优先于外形重建。"},
+
+{n:"舌系带过短",e:"Ankyloglossia / tongue-tie",c:"dev",t:1,s:["tng","fom"],p:"",a:"新生儿约 4%–10%，男性多见",
+ u:"舌系带过短、过厚或附着过于靠近舌尖，为发育中系带退缩不全所致。",
+ f:"伸舌受限、舌尖呈「W」形凹陷、舔不到上唇；婴儿期含接困难与母亲乳头疼痛，儿童期可影响 /l/ /r/ /d/ 等舌尖音，也可造成下前牙间隙与牙龈退缩。",
+ i:"临床评估（Hazelbaker 或 Coryllos 分型）结合功能而非仅看外形。",
+ x:"影响哺乳的婴儿可行系带切开术（frenotomy），门诊即可完成；儿童与成人若影响发音或口腔卫生，行系带成形术（Z 成形或菱形缝合）加术后舌肌功能训练。",
+ k:"「看起来短」不等于需要手术，指征是功能受限。过度诊断与过度手术在婴儿期是真实存在的问题。"},
+
+{n:"巨舌症",e:"Macroglossia",c:"dev",t:1,s:["tng"],p:"",a:"真性巨舌多见于婴幼儿；成人以继发性为主",
+ u:"真性：Beckwith-Wiedemann 综合征、唐氏综合征、脉管畸形（淋巴管/静脉畸形）、先天性肌肥大。继发/假性：甲状腺功能减退、肢端肥大症、淀粉样变、牙列缺失后相对增大。",
+ f:"舌体大、伸出口外，舌缘可见牙齿压迹（扇贝样边缘），流涎、构音不清、开𬌗与下颌前突、睡眠打鼾；严重者影响气道。",
+ i:"MRI 判断是否为脉管畸形；筛查甲状腺功能、必要时腹部超声（Beckwith-Wiedemann 需筛查肾母细胞瘤）。",
+ x:"先治病因（甲减替代、淀粉样变治疗）；真性巨舌影响功能者行舌缩小术（keyhole 或前部楔形切除）；脉管畸形可硬化治疗或药物（西罗莫司）。",
+ k:"舌缘扇贝样压迹是提示巨舌的敏感体征；成人新发巨舌须警惕淀粉样变与肢端肥大症。"},
+
+{n:"先天缺牙与外胚叶发育不全",e:"Hypodontia / ectodermal dysplasia",c:"dev",t:1,s:["tooth","gin"],p:"",a:"个别缺牙约 5%（第三磨牙除外）；少汗型外胚叶发育不全为 X 连锁隐性",
+ u:"牙板发育异常，PAX9、MSX1、WNT10A、EDA 基因突变；综合征型伴毛发稀疏、汗腺缺乏、指甲异常。",
+ f:"最常缺失第三磨牙、上颌侧切牙与下颌第二前磨牙；乳牙滞留、牙槽嵴发育不足、锥形牙。少汗型患者不耐热、易高热惊厥。",
+ i:"全景片确认恒牙胚存在与否（需在 6–7 岁后判断），基因检测明确综合征型。",
+ x:"儿童期活动义齿维持垂直距离与外观并随生长更换；成年后种植修复或正畸关闭间隙；侧切牙缺失可用尖牙代型 + 树脂/瓷贴面改形。",
+ k:"生长期不能贸然种植——种植体不随牙槽骨生长而移动，会出现「沉降」低位。上颌侧切牙缺失的正畸间隙关闭与开辟需在换牙早期就作决策。"},
+
+{n:"多生牙",e:"Supernumerary teeth / mesiodens",c:"dev",t:1,s:["tooth","mx"],p:"opaque",a:"约 1%–3%，男性为女性 2 倍，90% 位于上颌前部",
+ u:"牙板局部过度增殖或牙胚分裂。多发多生牙须排查颅骨锁骨发育不全与 Gardner 综合征（家族性腺瘤性息肉病）。",
+ f:"最常见为正中多生牙（mesiodens），多为倒置埋伏，可阻碍上中切牙萌出、造成中缝增宽、切牙移位或牙根吸收；亦见于前磨牙区与磨牙远中（第四磨牙）。",
+ i:"全景片 + CBCT 定位（唇/腭侧、与切牙牙根关系）是拔除方案的关键。",
+ x:"影响恒牙萌出或造成牙根吸收者尽早拔除；无症状深埋且不影响者可观察。拔除后多数切牙可自行萌出，必要时配合牵引。",
+ k:"多发多生牙 + 锁骨发育不良 + 囟门闭合延迟 = 颅骨锁骨发育不全；多发多生牙 + 骨瘤 + 肠息肉 = Gardner 综合征，后者是可致命的信号。"},
+
+{n:"阻生牙",e:"Impacted tooth",c:"dev",t:1,s:["tooth","md","mx"],p:"",a:"下颌第三磨牙最常见，其次为上颌尖牙",
+ u:"颌骨长度不足、萌出道被多生牙或囊肿阻挡、乳牙早失导致间隙丧失、萌出方向异常。",
+ f:"下颌第三磨牙阻生可引发冠周炎、第二磨牙远中龋与骨吸收、含牙囊肿；上颌尖牙腭侧阻生可造成侧切牙牙根吸收（可完全无症状）。",
+ i:"全景片判断阻生类型（垂直、近中、水平、远中）与下牙槽神经管关系；CBCT 用于评估神经管邻接与尖牙对侧切牙牙根的吸收。",
+ x:"有症状或已造成邻牙损害者拔除；上颌尖牙可外科开窗 + 正畸牵引。深部与神经管紧邻者可考虑冠切除术（coronectomy）保留牙根以避免神经损伤。",
+ k:"全景片上「牙根变暗、神经管白线中断、神经管改道」三征提示与下牙槽神经密切，应行 CBCT 并向患者交代麻木风险。"},
+
+{n:"牙釉质发育不全",e:"Enamel hypoplasia / amelogenesis imperfecta",c:"dev",t:1,s:["tooth"],p:"",a:"遗传型（AI）约 1/700–1/14000；获得性者与全身病史相关",
+ u:"遗传型为 AMELX、ENAM、MMP20、FAM83H 等基因突变；获得性由釉质形成期（出生前后至 6 岁）的高热、营养不良、外伤或乳牙根尖感染（Turner 牙）造成。",
+ f:"分为发育不全型（釉质薄、点隙沟状缺损）、钙化不全型与成熟不全型；牙面粗糙着色、敏感、易磨耗与继发龋，牙冠可呈黄褐色。",
+ i:"缺陷条带的位置对应釉质形成受损的时间点，可反推全身事件的年龄；X 线上釉质密度可与牙本质接近。",
+ x:"脱敏与再矿化、树脂渗透或复合树脂修复；重度者行全冠或贴面覆盖恢复形态与垂直距离；儿童可用预成金属冠过渡。",
+ k:"须与磨牙切牙矿化不良（MIH）区分：后者只累及第一恒磨牙与切牙、界限清楚的乳白至黄褐色斑，非遗传性。"},
+
+{n:"牙本质发育不全",e:"Dentinogenesis imperfecta",c:"dev",t:1,s:["tooth"],p:"",a:"常染色体显性，约 1/6000–1/8000；Ⅰ 型伴成骨不全",
+ u:"DSPP 基因突变（Ⅱ、Ⅲ 型）或 COL1A1/COL1A2 突变（Ⅰ 型，伴成骨不全）导致牙本质基质形成异常。",
+ f:"牙呈半透明的琥珀色至蓝灰色（乳光牙本质）；釉质因缺乏牙本质支持而大片剥脱，牙冠迅速磨耗至齿龈水平，但患者常不敏感。",
+ i:"X 线特征性表现：牙冠球形、颈部缩窄、牙根短细、髓腔与根管早期闭塞（Ⅲ 型 Brandywine 型反而呈壳状牙、髓腔巨大）。",
+ x:"尽早全覆盖修复保护剩余牙体、维持垂直距离；儿童用预成冠，成年后全冠或覆盖义齿。髓腔闭塞使根管治疗极为困难。",
+ k:"蓝色巩膜 + 反复骨折 + 乳光牙 = 成骨不全 Ⅰ 型。牙齿表现可能是首个被发现的线索。"},
+
+{n:"氟斑牙",e:"Dental fluorosis",c:"dev",t:1,s:["tooth"],p:"",a:"高氟饮水地区流行；损害发生在 6 岁前釉质形成期",
+ u:"釉质形成期（尤其 2–3 岁）摄入过量氟，干扰成釉细胞对基质蛋白的降解，造成釉质矿化不全与孔隙增多。",
+ f:"对称、成组、与年龄段对应的白垩色条纹或斑块，重者呈黄褐色染色与实质缺损（凹陷、剥脱）；受累牙耐酸性反而增强，龋坏率不高。",
+ i:"Dean 指数分级；关键鉴别点是「对称、成组、按萌出时序分布」，而龋和 MIH 分布散在。",
+ x:"轻度可微研磨或树脂渗透（Icon）；中重度用漂白、贴面或全冠。根本措施是改水源、控制含氟牙膏吞咽量。",
+ k:"萌出后再接触氟不会再造成氟斑牙；因此判断病因时要问的是「6 岁前住在哪里、喝什么水」。"},
+
+{n:"四环素牙",e:"Tetracycline-stained teeth",c:"dev",t:1,s:["tooth"],p:"",a:"孕中期至 8 岁前用药者；现已少见但仍存于既往人群",
+ u:"四环素类与钙螯合形成正磷酸四环素钙沉积于牙本质，光照后氧化变色。",
+ f:"全牙列均匀灰黄至灰褐色带状染色，紫外线下呈黄色荧光；染色随时间由黄转褐/灰。",
+ i:"病史即可诊断，色带位置对应用药时段。",
+ x:"外漂白对轻度有效但易反复；中重度以瓷贴面或全冠遮色为主。",
+ k:"孕妇与 8 岁以下儿童禁用四环素类，这条禁忌正是由这一疾病写进教科书的。"},
+
+/* ===== 牙体牙髓与牙周 ===== */
+{n:"龋病",e:"Dental caries",c:"dental",t:3,s:["tooth"],p:"",a:"人类最普遍的慢性病，各年龄段均可发生",
+ u:"致龋菌（变异链球菌、乳杆菌、放线菌）在牙面生物膜中代谢可发酵碳水化合物产酸，pH 低于 5.5 时羟基磷灰石脱矿；脱矿与再矿化长期失衡即成龋洞。四联因素：细菌、宿主、食物、时间。",
+ f:"早期为白垩斑（可逆），继而形成实质缺损与着色；冷热酸甜刺激敏感、食物嵌塞；深龋近髓时出现较持久的激发痛。",
+ i:"探诊 + 咬翼片查邻面龋；透照与激光荧光辅助。分类按部位（𬌗面点隙沟裂、邻面、根面）与深度（浅、中、深）。",
+ x:"早期白垩斑用氟化物、含氟涂料再矿化；成洞后微创去腐 + 树脂或玻璃离子充填；深龋行间接盖髓或分次去腐；高风险人群做窝沟封闭与饮食干预。",
+ k:"根面龋是老年人与牙龈退缩者的主要类型，进展快、位置隐蔽；正畸患者托槽周围的白垩斑是典型的早期龋。"},
+
+{n:"牙髓炎",e:"Pulpitis",c:"dental",t:2,s:["tooth"],p:"",a:"深龋、外伤或修复体刺激之后",
+ u:"细菌及其毒素经牙本质小管或穿髓孔侵入牙髓；牙髓被无弹性的硬组织包裹，炎性渗出无处释放使髓腔压力骤升，形成缺血—坏死的恶性循环。",
+ f:"可复性牙髓炎：刺激去除后疼痛立即消失。不可复性牙髓炎：自发痛、阵发性剧痛、夜间加重、温度刺激（尤其冷或热）诱发持续痛、疼痛沿三叉神经放散而患者常无法准确定位患牙。",
+ i:"电活力测试与冷热诊；根尖片早期常无阳性发现——这是牙髓炎与根尖周炎的重要区别。咬合痛提示炎症已波及根尖周膜。",
+ x:"可复性者去除刺激 + 间接盖髓可保髓；不可复性者行根管治疗（或年轻恒牙的活髓切断术）；急症先开髓引流以迅速止痛。",
+ k:"「痛得整夜睡不着、含冷水会缓解」几乎是化脓性牙髓炎的特写；而热刺激缓解、冷刺激剧痛的模式提示髓腔内已产气化脓。"},
+
+{n:"根尖周炎",e:"Apical periodontitis / periapical abscess",c:"dental",t:2,s:["tooth","md","mx"],p:"uni",a:"牙髓坏死后的必然去向",
+ u:"坏死牙髓中的细菌及代谢产物经根尖孔持续排出，激发根尖周组织的免疫反应，形成肉芽肿或脓肿；病因也可为根管治疗超填、创伤性咬合。",
+ f:"急性期：患牙有「浮出、伸长」感，咬合剧痛且定位准确，可发展为骨膜下脓肿、黏膜下脓肿甚至面部蜂窝织炎伴发热。慢性期：多无症状，或见根尖区窦道（瘘管）反复流脓。",
+ i:"根尖片见根尖区边界清楚或模糊的圆形透射影（慢性根尖周炎/肉芽肿）；急性期早期 X 线可完全正常，仅根尖牙周膜增宽。窦道插牙胶尖拍片可定位来源牙。",
+ x:"根管治疗为主：彻底清创、消毒、严密充填；急性期先开髓 + 切开引流，全身症状明显时加抗生素。治疗后不愈者行根尖手术或拔除。",
+ k:"根尖透射影不等于囊肿——肉芽肿、脓肿、囊肿在影像上无法可靠区分，需病理确认；直径大于 1 cm 且边缘有致密骨白线者囊肿可能性上升。"},
+
+{n:"牙龈炎",e:"Gingivitis",c:"dental",t:2,s:["gin"],p:"",a:"青少年至成人极为普遍，可逆",
+ u:"龈缘菌斑堆积引起的非特异性炎症；激素（青春期、妊娠）、口呼吸、不良修复体、维生素 C 缺乏可加重。",
+ f:"龈缘红肿、点彩消失、质地松软、探诊出血、刷牙出血；无附着丧失与骨吸收，这是与牙周炎的分界。",
+ i:"探诊深度可因肿胀形成假性牙周袋，但影像上牙槽嵴顶高度正常。",
+ x:"龈上洁治 + 口腔卫生指导，去除充填体悬突等菌斑滞留因素。控制菌斑后 1–2 周内可完全恢复。",
+ k:"牙龈炎完全可逆，牙周炎不可逆——两者的分水岭是「有没有附着丧失」，而不是「肿得厉不厉害」。"},
+
+{n:"牙周炎",e:"Periodontitis",c:"dental",t:2,s:["gin","md","mx"],p:"",a:"35 岁后患病率显著上升，是成人失牙的首位原因",
+ u:"牙龈卟啉单胞菌、福赛坦氏菌、齿垢密螺旋体（红色复合体）等菌群失调引发宿主过度免疫反应，破坏牙周膜与牙槽骨。吸烟、糖尿病、遗传（IL-1 多态性）为主要危险因素。",
+ f:"牙周袋形成、附着丧失、牙龈退缩与「牙变长」、牙齿松动移位、咀嚼无力、口臭、溢脓；晚期出现病理性扇形移位与前牙扇形散开。",
+ i:"六点探诊记录 PD/CAL/BOP；根尖片或全景片见牙槽骨水平或垂直吸收、根分叉病变。2018 新分类按分期（Ⅰ–Ⅳ，依 CAL 与失牙）和分级（A/B/C，依进展速度）描述。",
+ x:"基础治疗（洁治、龈下刮治与根面平整、戒烟、控糖）→ 再评估 → 手术治疗（翻瓣、骨修整、引导组织再生 GTR/釉基质蛋白）→ 终身牙周支持治疗。",
+ k:"牙周炎与糖尿病是双向关系：牙周治疗可降低 HbA1c 约 0.3–0.4%。重度牙周炎还与动脉粥样硬化、早产低体重儿相关。"},
+
+{n:"智齿冠周炎",e:"Pericoronitis",c:"dental",t:3,s:["rmt","gin","md"],p:"",a:"18–30 岁高发，下颌第三磨牙萌出期",
+ u:"部分萌出的第三磨牙冠周龈瓣形成盲袋，食物与细菌滞留，加之对𬌗牙咬伤龈瓣，在抵抗力下降（熬夜、感冒、劳累）时急性发作。",
+ f:"磨牙后区胀痛、咀嚼与吞咽痛、张口受限、龈瓣红肿溢脓、口臭、颌下淋巴结肿大，可伴发热。感染可扩散至咬肌间隙、翼下颌间隙或下颌骨骨髓炎。",
+ i:"全景片评估阻生方向、有无远中骨袋与第二磨牙远中龋。",
+ x:"急性期：局部冲洗（生理盐水/过氧化氢）+ 上药、切开引流、全身抗生素与止痛；炎症消退后拔除病灶牙或（对𬌗牙创伤者）切除龈瓣。",
+ k:"急性期强行拔牙易导致感染扩散，原则是「先消炎、后拔牙」；但反复发作而始终不拔除，才是真正的隐患。张口受限进行性加重需警惕间隙感染。"},
+
+{n:"牙本质敏感",e:"Dentin hypersensitivity",c:"dental",t:9,s:["tooth"],p:"",a:"成人常见，牙龈退缩与酸蚀人群更甚",
+ u:"牙本质小管暴露（釉质磨耗/酸蚀、牙龈退缩致根面暴露、楔状缺损），刺激引起小管内液体流动，激活牙髓内的 A-δ 神经末梢（流体动力学说）。",
+ f:"冷、酸、甜、机械刺激引起的短暂尖锐痛，刺激去除即消失——这与牙髓炎的持续痛截然不同。",
+ i:"排除龋、隐裂、充填体渗漏与牙髓炎后作出的排除性诊断；探针划刮与冷气试验可定位。",
+ x:"含钾盐/锶盐或生物活性玻璃的脱敏牙膏、氟化物涂料、树脂或激光封闭小管；纠正横刷法与酸性饮食；缺损明显者充填。",
+ k:"「短暂、刺激即痛、去除即止」是核心特征；如果转为自发痛或夜间痛，诊断已经变成牙髓炎。"},
+
+{n:"牙隐裂与牙折",e:"Cracked tooth syndrome / tooth fracture",c:"dental",t:9,s:["tooth"],p:"",a:"中年以后、大面积充填或根管治疗后的后牙",
+ u:"𬌗力过大或方向异常（夜磨牙、咬硬物）叠加牙体结构薄弱（大面积充填、失髓牙脱水变脆、深沟裂）。",
+ f:"咬合时（尤其松开的瞬间）出现尖锐刺痛、定位不清、冷刺激敏感；裂纹逐渐加深可引起牙髓炎、根尖周炎，最终纵折而须拔除。",
+ i:"咬棉签/Tooth Slooth 分尖测试、染色（亚甲蓝）、透照；根管治疗牙的纵折在 X 线上可见特征性的「J 形」或「晕状」骨吸收。",
+ x:"早期用全冠或高嵌体箍住牙尖（cuspal coverage）；已波及牙髓者根管治疗后必须冠修复；纵折至根方者拔除。",
+ k:"失髓后牙的脆性主要来自牙体缺损而非「脱水」，因此后牙根管治疗后的冠部保护不是可选项。"},
+
+{n:"磨耗与酸蚀症",e:"Tooth wear: attrition, abrasion, erosion",c:"dental",t:9,s:["tooth"],p:"",a:"随年龄增长普遍存在；病理性者见于夜磨牙、胃食管反流、饮食失调",
+ u:"咀嚼磨耗（attrition，牙对牙）、机械磨损（abrasion，横刷法、咬硬物）、酸蚀（erosion，碳酸饮料、柑橘、胃酸反流、神经性贪食）、应力性缺损（abfraction，颈部楔状缺损）。",
+ f:"牙冠变短、牙尖平坦、透明度增加、充填体高出牙面（酸蚀的典型征象）；上前牙腭侧凹陷提示胃酸来源，唇侧受累提示饮食酸。垂直距离降低可致面下 1/3 变短。",
+ i:"BEWE 指数记录；上前牙腭面与下后牙𬌗面的分布模式提示病因来源。",
+ x:"先找并去除病因（治反流、调整饮食、夜磨牙戴𬌗垫）；缺损用树脂或全瓷修复，重度者需重建垂直距离的全口咬合重建。",
+ k:"「充填体高于周围牙面」是酸蚀的经典线索——因为树脂不被酸溶解。年轻患者的重度腭侧酸蚀应温和询问进食障碍史。"},
+
+{n:"牙根吸收",e:"Root resorption",c:"dental",t:9,s:["tooth"],p:"",a:"正畸治疗中、外伤后与邻近病变压迫时",
+ u:"内吸收源于牙髓内破牙本质细胞活化（多继发于慢性牙髓炎）；外吸收由正畸力过大、外伤后再植、埋伏牙或囊肿压迫、恶性肿瘤浸润引起。侵袭性颈部外吸收与漂白、外伤、正畸相关。",
+ f:"多数无症状，偶然发现；内吸收可见冠部粉红色斑（pink spot）；进展至穿孔后出现症状与牙折。",
+ i:"内吸收：X 线见与根管连续、边缘光滑的膨大透射区。外吸收：根尖变短变钝或根侧凹陷，与根管影像不重叠。CBCT 是判断穿孔与范围的关键。",
+ x:"内吸收行根管治疗（热牙胶或 MTA 充填）阻断；正畸相关者暂停加力并复查；颈部侵袭性吸收需手术显露、清创、树脂/MTA 修补；范围过大者拔除。",
+ k:"恶性肿瘤浸润造成的牙根吸收常呈「刀削样」且伴牙齿悬浮于软组织中（floating teeth），是重要的警示征。"},
+
+{n:"药物性牙龈增生",e:"Drug-induced gingival overgrowth",c:"dental",t:2,s:["gin"],p:"",a:"服药 1–3 个月后起病，青少年更明显",
+ u:"苯妥英钠（约 50%）、环孢素（约 30%）、硝苯地平等钙通道阻滞剂（约 10%–20%）作用于牙龈成纤维细胞，在菌斑炎症的协同下使胶原降解减少。",
+ f:"从牙间乳头开始的结节状、质韧、色泽正常的无痛增生，前牙区最明显，可覆盖牙冠影响咀嚼、发音与清洁，进而加重菌斑滞留。",
+ i:"用药史 + 典型分布即可诊断；须与遗传性牙龈纤维瘤病、白血病浸润、维生素 C 缺乏鉴别。",
+ x:"严格菌斑控制可显著减轻；与内科医师协商换药（如硝苯地平换为其他类降压药）；影响功能与美观者行牙龈切除术或翻瓣修整，但不换药易复发。",
+ k:"菌斑是必要的协同因素——这意味着在开始这些药物之前做好牙周准备，可以明显降低发生率。"}
+];
+</script>
+
+<script>
+D.push(
+/* ===== 感染与颌骨坏死 ===== */
+{n:"颌面部间隙感染",e:"Fascial space infection",c:"infect",t:3,s:["md","neck","skin","buc"],p:"",a:"以牙源性为主（约 90%），糖尿病与免疫低下者病情更重",
+ u:"下颌智齿冠周炎、根尖周炎或牙周脓肿突破骨壁，沿筋膜间的疏松结缔组织蔓延；混合感染，以链球菌与厌氧菌为主。",
+ f:"按间隙定位：眶下间隙（上尖牙）、颊间隙、咬肌间隙（张口受限显著）、翼下颌与颞下间隙（深部剧痛、张口受限而外观肿胀不明显）、下颌下与舌下间隙。双侧下颌下 + 舌下 + 颏下同时受累即路德维希咽峡炎（Ludwig angina），舌被抬高、口底硬如板，可迅速窒息。",
+ i:"增强 CT 是判断脓腔范围、气道受压与是否已达纵隔的关键；须注意有无产气（提示厌氧或坏死性筋膜炎）。",
+ x:"气道优先（必要时清醒气管插管或气管切开）→ 足量广谱抗生素 → 及时切开引流并去除病灶牙 → 支持治疗与血糖控制。感染沿颈血管鞘下行可致纵隔炎，死亡率高。",
+ k:"三个危险信号：张口受限进行性加重、口底抬高与流涎、吞咽与呼吸困难。牙源性感染在颌面部是可以致死的，这一点常被低估。"},
+
+{n:"化脓性颌骨骨髓炎",e:"Suppurative osteomyelitis of the jaw",c:"infect",t:3,s:["md","mx"],p:"moth",a:"下颌骨远多于上颌骨（下颌骨皮质厚、血供为单一下牙槽动脉）",
+ u:"根尖周感染、冠周炎、开放性骨折或拔牙创感染进入骨髓腔，脓液在骨髓腔内蔓延并压迫血管造成骨缺血坏死；金黄色葡萄球菌与混合厌氧菌常见。",
+ f:"急性期：剧烈深部跳痛、发热寒战、多个牙同时松动叩痛、龈沟溢脓、下唇麻木（Vincent 征）。慢性期：瘘管长期排脓、死骨排出、颌骨膨隆增厚、可发生病理性骨折。",
+ i:"急性期 X 线常在 2 周内无变化；随后出现虫蚀状骨破坏、边界不清；慢性期见死骨（周围透射带包绕的高密度骨片）与骨膜新生骨形成的「葱皮样」层状影。核素扫描与 MRI 早期更敏感。",
+ x:"急性期：抗生素（覆盖厌氧菌，疗程数周至数月）+ 引流 + 拔除病灶牙；慢性期：死骨刮除或死骨摘除术、必要时颌骨部分切除加重建；高压氧为辅助手段。",
+ k:"下唇麻木（颏神经受累）在骨髓炎中是重要体征，但同样出现于颌骨恶性肿瘤与转移癌——不能因为「有感染」就停止排查肿瘤。"},
+
+{n:"慢性硬化性骨髓炎与骨膜炎",e:"Chronic sclerosing osteomyelitis / Garré periostitis",c:"infect",t:3,s:["md"],p:"opaque",a:"Garré 型骨膜炎多见于儿童与青少年下颌骨",
+ u:"低毒力细菌的长期慢性刺激（常源于第一恒磨牙的慢性根尖周炎），骨的反应以增生硬化为主而非破坏；弥漫性硬化性骨髓炎的病因至今存疑，部分与 SAPHO 综合征重叠。",
+ f:"下颌骨局部无痛或轻痛性硬性膨隆、面部不对称；症状可反复发作但少有脓液与瘘管。",
+ i:"典型影像为骨膜下层状新生骨（洋葱皮样），咬合片显示最清楚；弥漫性硬化型见广泛棉絮状高密度影伴散在透射区。",
+ x:"去除病灶（多为根管治疗或拔除患牙），骨膜反应可在数月内自行改建消退；弥漫性硬化型顽固，可试用非甾体抗炎药、双膦酸盐，手术效果有限。",
+ k:"儿童下颌骨的「洋葱皮」骨膜反应看似凶险，但与尤文肉瘤不同的是有明确的牙源性病灶且无软组织肿块，去除病因后可完全恢复。"},
+
+{n:"放射性颌骨坏死",e:"Osteoradionecrosis (ORN)",c:"infect",t:9,s:["md","mx"],p:"moth",a:"头颈部放疗剂量超过 60 Gy 者，下颌骨为主；可在放疗后数月至数十年发生",
+ u:"放射造成骨的「低氧、低细胞、低血管」（3H 学说）与后续的纤维萎缩，骨改建能力丧失；拔牙、义齿压疮等创伤成为诱因，但也可自发。",
+ f:"放疗野内骨面暴露超过 3 个月不愈合、疼痛、瘘管、口臭、死骨外露，重者病理性骨折与口外瘘。",
+ i:"全景片/CT 见骨小梁模糊、虫蚀状破坏、死骨形成与皮质不连续；须与肿瘤复发鉴别（PET-CT 与活检）。",
+ x:"预防是核心：放疗前完成所有拔牙与牙周治疗并留出 2–3 周愈合期，放疗后终身氟化物防龋。已发生者按分期处理：局部清创冲洗、抗生素、己酮可可碱+生育酚（PENTO 方案）、高压氧（争议中）；重度者节段性切除 + 血管化腓骨瓣重建。",
+ k:"放疗后拔牙是重要诱因，因此「放疗前口腔清理」是每一位头颈肿瘤患者都应完成的步骤。骨暴露伴剧痛且清创无效时，务必活检排除肿瘤复发。"},
+
+{n:"药物相关性颌骨坏死",e:"MRONJ",c:"infect",t:9,s:["md","mx"],p:"moth",a:"用双膦酸盐或地舒单抗者；肿瘤剂量风险远高于骨质疏松剂量",
+ u:"双膦酸盐、地舒单抗（RANKL 单抗）抑制破骨细胞使骨改建停滞，抗血管生成药（贝伐珠单抗、酪氨酸激酶抑制剂）加重风险；拔牙、种植、义齿压伤为诱因。",
+ f:"颌骨暴露或经口内外瘘管可探及骨面持续 8 周以上，疼痛、肿胀、松动牙、下唇麻木；下颌后牙区与下颌舌骨嵴最常见。",
+ i:"诊断三要素：正在或曾用相关药物 + 颌骨暴露/瘘管超过 8 周 + 无该区域放疗史。影像见骨硬化、牙槽窝不愈合、死骨与骨膜反应。",
+ x:"预防优先：用药前完成口腔评估与拔牙。已发生者按 AAOMS 分期：0–1 期抗菌漱口 + 随访；2 期抗生素 + 清创；3 期死骨切除与重建。是否「药物假期」证据有限，需与肿瘤科/内分泌科共同决定。",
+ k:"骨质疏松口服双膦酸盐者拔牙的 MRONJ 风险很低（约 0.01%–0.1%），不应因此拒绝必要的口腔治疗；而静脉用唑来膦酸的肿瘤患者风险可达 1%–10%。"},
+
+{n:"颌面部放线菌病",e:"Cervicofacial actinomycosis",c:"infect",t:3,s:["skin","md","neck"],p:"",a:"成年男性多见，常继发于拔牙、外伤或智齿冠周炎",
+ u:"以色列放线菌（Actinomyces israelii）——口腔正常菌群中的厌氧革兰阳性丝状菌，在黏膜屏障破坏与局部厌氧环境下侵入深部组织。",
+ f:"腮腺咬肌区或下颌下区无痛性板样硬结，皮肤呈暗紫色，逐渐形成多个瘘管排出带「硫磺颗粒」的黄色脓液；病变不循淋巴引流而直接穿透筋膜与骨。",
+ i:"脓液压片见硫磺颗粒（菌落），革兰染色见分枝丝状菌；厌氧培养阳性率低，故临床与病理常为主要依据。",
+ x:"长疗程大剂量青霉素（静脉 2–6 周后口服 6–12 个月）；结合脓肿切开引流、瘘管与硬结切除、拔除病灶牙。",
+ k:"「硬得像木板、多个瘘管、不痛、抗生素几周就复发」是典型画像，最易被误诊为恶性肿瘤或结核；疗程不足是复发的首因。"},
+
+{n:"颌面部结核",e:"Orofacial tuberculosis",c:"infect",t:3,s:["tng","neck","md"],p:"moth",a:"结核高负担地区与免疫抑制人群",
+ u:"结核分枝杆菌经痰液直接接种于黏膜破损处（原发少见），或经血行/淋巴播散至颈淋巴结（瘰疬）、颌骨与舌。",
+ f:"舌背或舌缘边缘潜行、基底有黄色颗粒状肉芽的疼痛性溃疡（与口腔癌溃疡极易混淆）；颈淋巴结结核为无痛性、串珠状粘连肿块，晚期形成寒性脓肿与瘘管；伴低热、盗汗、消瘦。",
+ i:"活检见干酪样坏死与朗汉斯巨细胞的肉芽肿；抗酸染色、结核分枝杆菌核酸检测（Xpert MTB/RIF）、γ-干扰素释放试验；胸片查肺部病灶。",
+ x:"标准抗结核方案（异烟肼、利福平、吡嗪酰胺、乙胺丁醇）6–9 个月，由感染科主导；口腔病灶随全身治疗愈合，手术仅用于取材与引流。",
+ k:"任何舌部溃疡在活检时都应同时送病理与抗酸/培养；「口腔癌」与「结核性溃疡」的临床外观可以完全一致。"},
+
+{n:"口腔念珠菌病",e:"Oral candidiasis",c:"infect",t:3,s:["tng","buc","hp","lip"],p:"",a:"婴儿、老年义齿佩戴者、免疫抑制与吸入激素使用者",
+ u:"白色念珠菌等在宿主防御下降时由共生转为致病：广谱抗生素、吸入或全身糖皮质激素、口干、糖尿病、HIV、化疗、义齿卫生不良。",
+ f:"急性假膜型（鹅口疮）：可擦去的乳白色凝乳状斑，擦后基底充血渗血。红斑型：舌背乳头萎缩的火红色区，灼痛明显（常见于吸入激素后）。义齿性口炎：义齿覆盖区界限清楚的红斑。增殖型（念珠菌白斑）：不能擦去，好发于口角内侧，具恶变潜能。口角炎常合并存在。",
+ i:"涂片氢氧化钾或 PAS 染色见菌丝与孢子（菌丝提示侵袭）；增殖型必须活检以排除上皮异常增生。",
+ x:"制霉菌素含漱、咪康唑口腔贴片局部治疗；广泛或免疫抑制者用氟康唑全身治疗。同时纠正诱因：义齿夜间取下并浸泡消毒、吸入激素后漱口、控糖。",
+ k:"成年人无诱因的反复念珠菌病，应筛查糖尿病与 HIV。增殖型念珠菌病属潜在恶性病变，抗真菌治疗后仍不消退者必须活检。"},
+
+{n:"原发性疱疹性龈口炎",e:"Primary herpetic gingivostomatitis",c:"infect",t:3,s:["gin","tng","lip","buc"],p:"",a:"6 个月至 5 岁幼儿首次感染 HSV-1 时",
+ u:"单纯疱疹病毒 1 型初次感染。病毒随后潜伏于三叉神经节，在发热、日晒、劳累、免疫抑制时再激活为唇疱疹。",
+ f:"急起高热、烦躁、拒食、流涎；全口牙龈弥漫鲜红肿胀（这是与疱疹性咽峡炎的关键区别），黏膜广泛小水疱破溃融合成不规则浅溃疡，颌下淋巴结肿大。病程 10–14 天自限。",
+ i:"典型临床表现即可诊断；不典型者做 PCR 或 Tzanck 涂片（多核巨细胞）。",
+ x:"支持治疗为主：退热、局部麻醉含漱、保证液体摄入（幼儿脱水是主要风险）。发病 72 小时内用阿昔洛韦可缩短病程；免疫抑制者必须抗病毒治疗。",
+ k:"复发性唇疱疹只在唇红缘与口周皮肤，不累及口内固着黏膜；而原发感染的特征是「牙龈全口鲜红 + 高热 + 幼儿」。"},
+
+{n:"带状疱疹（三叉神经）",e:"Herpes zoster of the trigeminal nerve",c:"infect",t:3,s:["skin","hp","tng","lip"],p:"",a:"50 岁以上与免疫抑制者",
+ u:"水痘–带状疱疹病毒在感觉神经节内再激活，沿单一神经分支播散。",
+ f:"先有数日剧烈灼痛或麻木，随后出现严格不越中线、沿一支分布的成簇水疱与溃疡。眼支受累（鼻尖 Hutchinson 征）可致角膜炎与失明；累及膝状神经节即 Ramsay Hunt 综合征（面瘫 + 外耳道疱疹 + 耳痛 + 眩晕耳鸣）。",
+ i:"单侧、不越中线的皮区分布是诊断核心；水疱液 PCR 可确认。",
+ x:"发病 72 小时内启动阿昔洛韦/伐昔洛韦；加用镇痛（重者用加巴喷丁或普瑞巴林）；Ramsay Hunt 与眼支受累需联合糖皮质激素并急诊转眼科/耳鼻喉科。50 岁以上推荐重组带状疱疹疫苗预防。",
+ k:"疱疹后神经痛是主要后遗症，越早抗病毒越少发生。前驱期的单侧牙痛常被误诊为牙髓炎而做了不必要的根管治疗。"},
+
+{n:"手足口病与疱疹性咽峡炎",e:"Hand-foot-mouth disease / herpangina",c:"infect",t:3,s:["sp","buc","tng"],p:"",a:"5 岁以下儿童，夏秋季托幼机构流行",
+ u:"肠道病毒感染：柯萨奇 A16 与肠道病毒 71 型（EV71）为主，EV71 可引起脑干脑炎等重症。",
+ f:"疱疹性咽峡炎：发热 + 软腭、腭舌弓、悬雍垂的小疱与溃疡，牙龈与口腔前部不受累。手足口病在此基础上加手掌、足底、臀部的斑丘疹与水疱。多在 7–10 天自愈。",
+ i:"临床诊断；重症需咽拭子/粪便病毒核酸分型。",
+ x:"对症与补液；重点是识别重症前兆——持续高热、肢体抖动、易惊、呕吐、心率增快，须立即住院。",
+ k:"「病损集中在口腔后部、牙龈正常」区别于疱疹性龈口炎的「牙龈全口鲜红」，这一条足以在门诊完成鉴别。"},
+
+{n:"坏死性溃疡性龈炎",e:"Necrotizing ulcerative gingivitis / noma",c:"infect",t:3,s:["gin","buc","lip"],p:"",a:"营养不良儿童、HIV 感染者、极度应激与吸烟的年轻人",
+ u:"梭形杆菌与螺旋体（奋森螺旋体）的机会性协同感染，发生在宿主免疫严重下降的背景上。",
+ f:"牙间乳头顶端「火山口样」坏死缺损、覆灰白假膜、剧痛、自发出血与特殊腐败性口臭；进展为坏死性牙周炎乃至走马疳（noma）时，坏死可穿透颊部造成毁损性面部缺损。",
+ i:"临床表现极具特征；须查 HIV 与营养状态。",
+ x:"清创去除坏死组织 + 过氧化氢冲洗 + 甲硝唑；纠正营养与全身状况；恢复后行牙周治疗与牙龈外形修整。走马疳需营养支持、抗感染后行复杂面部重建。",
+ k:"成人突发的坏死性牙龈病变是 HIV 感染的重要指示性疾病，应主动建议检测。走马疳在低收入地区仍是致残致死的现实问题。"},
+
+/* ===== 口腔黏膜病 ===== */
+{n:"复发性阿弗他溃疡",e:"Recurrent aphthous stomatitis",c:"mucosa",t:2,s:["lip","buc","tng","fom"],p:"",a:"最常见的口腔黏膜病，人群患病率约 20%，青年女性多见",
+ u:"病因不明，为多因素：遗传易感、局部创伤、精神应激、内分泌波动（月经期）、缺铁/叶酸/维生素 B12、食物过敏（十二烷基硫酸钠牙膏亦有关）、消化道疾病。",
+ f:"轻型：直径 5 mm 以内、圆或椭圆、「凹、红、黄、痛」（凹陷、红晕、黄色假膜、剧痛），7–10 天自愈无瘢痕，仅发于非角化的可动黏膜。重型（腺周口疮）：大而深、可达 1–3 cm，愈合需数周至数月并遗留瘢痕。疱疹样型：数十个针尖大溃疡成簇。",
+ i:"临床诊断。反复不愈或不典型者查血常规、铁蛋白、叶酸、B12、乳糜泻抗体；伴生殖器溃疡与眼炎须考虑白塞病。",
+ x:"局部糖皮质激素（曲安奈德口腔软膏、地塞米松含漱）、局麻镇痛、氨来呫诺；频繁复发者用秋水仙碱、沙利度胺（重型有效，须严格避孕）或全身激素；纠正营养缺乏。",
+ k:"两条铁律：阿弗他溃疡不发生在角化黏膜（硬腭、附着龈、舌背），出现在这些部位要想别的病；单个溃疡超过 2–3 周不愈必须活检。"},
+
+{n:"创伤性溃疡",e:"Traumatic ulcer",c:"mucosa",t:9,s:["buc","tng","gin","fom"],p:"",a:"任何年龄；义齿佩戴者、尖锐牙尖与残根旁",
+ u:"机械（残根残冠、义齿边缘、正畸装置、咬伤）、化学（阿司匹林贴敷、腐蚀性药物）或热损伤；婴儿的 Riga-Fede 病由新萌下切牙摩擦舌系带所致。",
+ f:"溃疡形态与刺激物吻合（长条形、与义齿边缘一致），周围轻度充血，疼痛程度常低于阿弗他溃疡；去除刺激后 1–2 周愈合。",
+ i:"诊断依据是「找得到刺激因素」加「去除后愈合」。",
+ x:"去除或磨改刺激源、调改义齿、局部保护性药膜。关键在于复查。",
+ k:"这是最重要的一条鉴别流程：去除刺激后 2 周复查，未愈合者一律活检。舌侧缘的「创伤性溃疡」是口腔癌最常见的伪装。"},
+
+{n:"口腔扁平苔藓",e:"Oral lichen planus",c:"mucosa",t:2,s:["buc","tng","gin","lip"],p:"",a:"中年女性多见，患病率约 1%–2%",
+ u:"T 细胞介导的针对基底层角质细胞的自身免疫性反应；与精神应激、丙型肝炎（部分地区）、药物（苔藓样药物反应：降压药、非甾体抗炎药）及银汞充填体接触相关。",
+ f:"双侧对称的白色网纹（Wickham 纹）最典型，多在颊黏膜后部；另有丘疹型、斑块型、萎缩型、糜烂型与大疱型。网纹型多无症状，糜烂型灼痛明显、进食刺激加重。累及牙龈时表现为剥脱性龈炎。皮肤可见紫红色多角形丘疹。",
+ i:"活检见上皮基底层液化变性、固有层带状淋巴细胞浸润；直接免疫荧光可见基底膜区纤维蛋白沉积，用于与类天疱疮鉴别。",
+ x:"无症状网纹型只需随访；有症状者用局部糖皮质激素（首选）、他克莫司软膏；顽固者用全身激素、羟氯喹或霉酚酸酯。去除锐利边缘、控制菌斑、戒烟酒。",
+ k:"WHO 将其列为口腔潜在恶性疾患，恶变率约 1% 左右（多见于糜烂型与舌部病损），需定期复诊。单侧、非对称的「苔藓样」病损应活检以排除异常增生。"},
+
+{n:"口腔白斑",e:"Oral leukoplakia",c:"mucosa",t:7,s:["buc","tng","fom","gin","lip"],p:"",a:"中老年男性，与烟草、槟榔、酒精显著相关",
+ u:"排除性临床诊断：不能被擦去、也不能归因于其他任何疾病的白色斑块。吸烟与咀嚼槟榔是最强的可控危险因素；部分与念珠菌感染或 EBV 相关。",
+ f:"均质型：均匀白色、表面平坦或细皱、恶变风险较低。非均质型：疣状、结节状、颗粒状或红白相间（斑驳型），恶变风险显著更高。口底与舌腹侧的白斑恶变率最高。",
+ i:"必须活检并明确上皮异常增生的程度（轻/中/重度、原位癌），这是决定处理与随访强度的核心依据。甲苯胺蓝染色与自体荧光可辅助选点。",
+ x:"戒烟戒酒戒槟榔；中重度异常增生、非均质型或高危部位者手术切除或激光/冷冻消融；无异常增生的均质型可密切随访（每 3–6 个月）。切除后仍须终身随访，复发与新发常见。",
+ k:"恶变率总体约 1%–5%（各研究差异大），但「口底与舌腹」「非均质型」「重度异常增生」三者叠加时风险成倍上升。切干净不等于治愈——「区域癌化」意味着整片黏膜都暴露过。"},
+
+{n:"口腔红斑",e:"Erythroplakia",c:"mucosa",t:7,s:["fom","tng","sp","buc"],p:"",a:"中老年，远少于白斑但危险得多",
+ u:"同白斑的危险因素，但上皮萎缩变薄使下方血管显露而呈红色；本质上多数已是重度异常增生或原位癌。",
+ f:"边界清楚、天鹅绒样鲜红色斑块，表面平坦或略凹，多无症状，好发于口底、舌腹与软腭复合体。",
+ i:"必须立即活检。文献报告约 50%–90% 的红斑在初次活检即为重度异常增生、原位癌或浸润癌。",
+ x:"完整手术切除（而非观察），切缘阴性；术后严密随访。",
+ k:"在所有口腔潜在恶性疾患中，红斑的恶变风险最高。看到天鹅绒样红斑，不要「先开点药看看」。"},
+
+{n:"口腔黏膜下纤维性变",e:"Oral submucous fibrosis",c:"mucosa",t:7,s:["buc","sp","tng","lip"],p:"",a:"南亚、东南亚与我国湖南、台湾等槟榔流行区，年轻男性居多",
+ u:"槟榔（尤其槟榔碱与鞣质）刺激成纤维细胞过度合成胶原并抑制降解，造成固有层与黏膜下层的进行性纤维化。是明确的因果关系。",
+ f:"早期灼痛、对辣敏感、水疱与溃疡；进而黏膜苍白呈大理石纹、扪及垂直的纤维条索；晚期张口受限进行性加重（可小于 2 cm）、舌乳头萎缩、舌运动受限、吞咽困难。",
+ i:"临床按张口度分期；活检见上皮萎缩伴固有层玻璃样变的致密胶原、血管减少。",
+ x:"立即彻底戒断槟榔（唯一能改变病程的措施）；局部注射糖皮质激素 + 透明质酸酶、口服己酮可可碱与抗氧化剂；张口训练；重度纤维条索可手术松解 + 皮瓣或颊脂垫覆盖，但易复发。",
+ k:"恶变率约 7%–13%，且癌变常发生在张口已严重受限、难以完成检查的口腔深部——这使它比多数白斑更危险。黏膜苍白 + 纤维条索 + 张口受限是三联征。"},
+
+{n:"增殖性疣状白斑",e:"Proliferative verrucous leukoplakia",c:"mucosa",t:7,s:["gin","buc","tng","hp"],p:"",a:"老年女性多见，且多数不吸烟——这一点与普通白斑相反",
+ u:"病因未明，部分研究提示与 HPV、EBV 相关，但证据不一致。特征是多灶、持续扩展、对治疗抵抗。",
+ f:"起初为不起眼的均质白斑，多年间逐渐扩展、增厚为疣状与多灶性病损，牙龈与牙槽黏膜最常受累；切除后原位或邻近反复复发。",
+ i:"诊断依赖长期随访的临床演变而非单次活检；病理表现从单纯增生逐步过渡到疣状增生、疣状癌与鳞癌，需多点多次取材。",
+ x:"手术切除、激光消融并密切随访（每 3 个月），但复发率极高；无确定有效的药物。全口黏膜均需监测。",
+ k:"恶变率可高达 60%–70%，是所有潜在恶性疾患中最高的一类。「不吸烟的老年女性、多灶性牙龈白斑、切不干净」应立刻提高警惕级别。"},
+
+{n:"光化性唇炎",e:"Actinic cheilitis",c:"mucosa",t:7,s:["lip"],p:"",a:"长期户外工作的中老年男性，下唇为主",
+ u:"紫外线累积损伤导致唇红上皮的异常增生，是唇部鳞癌的前驱病变。",
+ f:"下唇红干燥、脱屑、粗糙，唇红与皮肤界限模糊消失，可出现白色斑块、皲裂与糜烂；局部持续不愈的痂皮尤须注意。",
+ i:"对增厚、溃疡或结节区活检；病理见上皮异常增生与固有层日光性弹力纤维变性。",
+ x:"防晒（含 SPF 的唇膏、宽檐帽）；局部 5-氟尿嘧啶或咪喹莫特、光动力治疗、激光消融；广泛病变行唇红切除术（vermilionectomy）。",
+ k:"下唇癌的预后本身较好，但前提是在这一阶段被识别。户外工作者的「唇干裂了好几年」值得一次仔细检查。"},
+
+{n:"天疱疮",e:"Pemphigus vulgaris",c:"mucosa",t:2,s:["buc","hp","gin","sp"],p:"",a:"40–60 岁，犹太与地中海人群较高；口腔常是首发部位",
+ u:"自身抗体（IgG）攻击角质细胞间桥粒的桥粒芯蛋白 3（与 1），使细胞间连接断裂形成上皮内棘层松解。",
+ f:"口腔松弛性大疱迅速破溃为大面积不规则糜烂面，疼痛剧烈、进食困难，数月后才出现皮肤病损；探针可将疱周貌似正常的黏膜推开（尼氏征阳性）。",
+ i:"活检（取病损边缘）见基底层上棘层松解与「墓碑样」基底细胞；直接免疫荧光见细胞间 IgG/C3 呈网状沉积；血清抗 Dsg1/3 抗体滴度可监测活动度。",
+ x:"全身糖皮质激素为基础，联合免疫抑制剂（硫唑嘌呤、霉酚酸酯）；利妥昔单抗（抗 CD20）已成为一线选择，显著改善预后。加强口腔护理与真菌预防。",
+ k:"在激素问世前本病死亡率极高。约半数患者以口腔糜烂为首发且早于皮损数月，口腔科医生往往是第一个能作出诊断的人。"},
+
+{n:"黏膜类天疱疮",e:"Mucous membrane pemphigoid",c:"mucosa",t:2,s:["gin","buc","hp","sp"],p:"",a:"50 岁以上女性多见",
+ u:"自身抗体攻击基底膜带成分（BP180、层粘连蛋白 332），造成上皮下疱——裂开层次比天疱疮更深。",
+ f:"最典型的口腔表现是剥脱性龈炎：牙龈鲜红、上皮易剥脱；可见张力较高、壁较厚的血疱与水疱（比天疱疮更耐破）。眼受累可致睑球粘连与失明，是最需要警惕的并发症。",
+ i:"活检（取病损周围）见上皮下疱、基底细胞完整；直接免疫荧光见基底膜带线状 IgG/C3 沉积；盐裂皮肤试验区分抗体定位。",
+ x:"局部强效糖皮质激素（可用牙龈托盘给药）；广泛或眼受累者用氨苯砜、全身激素、霉酚酸酯或利妥昔单抗。所有患者都应转诊眼科评估。",
+ k:"「剥脱性龈炎」是一个体征而非诊断，其背后主要是类天疱疮、扁平苔藓与天疱疮三者，必须靠活检 + 直接免疫荧光区分。抗层粘连蛋白 332 型与恶性肿瘤相关，需筛查。"},
+
+{n:"多形红斑",e:"Erythema multiforme",c:"mucosa",t:2,s:["lip","buc","tng"],p:"",a:"青壮年，可反复发作",
+ u:"免疫复合物介导的黏膜皮肤反应，最常见诱因为单纯疱疹病毒复发感染（HSV 相关型）与药物（磺胺、抗癫痫药、非甾体抗炎药）。重症型（Stevens-Johnson 综合征/中毒性表皮坏死松解症）几乎均为药物所致。",
+ f:"急起的广泛口腔糜烂，唇红特征性的血痂结壳；皮肤靶形（虹膜状）红斑，多见于四肢伸侧。重症型累及眼、生殖器黏膜并有大面积表皮剥脱，属急症。",
+ i:"临床诊断为主；活检可排除大疱性疾病。反复发作者可行 HSV-DNA 检测。",
+ x:"停用可疑药物；轻型对症支持 + 局部激素；HSV 相关反复发作者用阿昔洛韦长期预防。SJS/TEN 需转入烧伤或 ICU 病房，全身支持、眼科会诊，激素与免疫球蛋白使用尚有争议。",
+ k:"「唇部厚厚的血痂 + 靶形皮疹 + 急性起病」是经典组合。SJS/TEN 的死亡率与受累体表面积相关，识别并立即停药是最关键的一步。"},
+
+{n:"白塞病",e:"Behçet disease",c:"mucosa",t:2,s:["lip","buc","tng","sp"],p:"",a:"「丝绸之路」沿线（土耳其、中东、东亚）高发，20–40 岁起病",
+ u:"病因不明的系统性血管炎，与 HLA-B51 强相关；中小血管（动静脉均可）受累。",
+ f:"口腔复发性阿弗他样溃疡（几乎 100% 且常为首发）+ 生殖器溃疡 + 眼葡萄膜炎为经典三联；另有结节性红斑、痤疮样皮损、针刺反应阳性；重者累及中枢神经、大血管（动脉瘤）与肠道。",
+ i:"国际标准以复发性口腔溃疡（每年≥3 次）为必备项，加其他系统表现计分；无特异性实验室指标，针刺试验（24–48 小时后丘疹脓疱）有辅助价值。",
+ x:"轻型（黏膜皮肤）用秋水仙碱、局部激素；眼、神经、血管受累需全身激素 + 硫唑嘌呤/环孢素，或 TNF-α 抑制剂（英夫利昔单抗、阿达木单抗）；阿普斯特对口腔溃疡有效。",
+ k:"眼与神经系统受累决定预后，而口腔溃疡往往在这些之前数年就已出现——口腔科的一次追问病史（有没有生殖器溃疡、眼红眼痛）可能显著提前诊断。"},
+
+{n:"地图舌",e:"Geographic tongue / benign migratory glossitis",c:"mucosa",t:2,s:["tng"],p:"",a:"人群约 1%–3%，可从儿童期开始，与银屑病、沟纹舌相关",
+ u:"病因不明的良性炎症性病变，与遗传、特应性体质、银屑病相关；不是感染，也不会传染。",
+ f:"舌背丝状乳头片状剥脱形成的红色区，周围环绕白色或黄白色略隆起的边缘，形态与位置每天变化（游走）；多数无症状，部分对辛辣与酸性食物敏感。",
+ i:"临床诊断，通常不需活检；形态的「游走」是关键。",
+ x:"无需治疗，向患者解释其良性与自限性质即可；有灼痛者避免刺激性食物，可用局部激素或锌补充。",
+ k:"最重要的处理是「明确告诉患者这不是癌、不是感染」。许多患者带着数年焦虑就诊，一句解释比任何药物都有效。"},
+
+{n:"沟纹舌与毛舌",e:"Fissured tongue / hairy tongue",c:"mucosa",t:9,s:["tng"],p:"",a:"沟纹舌随年龄增加；毛舌与吸烟、口腔卫生差、抗生素使用相关",
+ u:"沟纹舌为发育性变异，与地图舌、唐氏综合征、Melkersson-Rosenthal 综合征（面瘫 + 唇肿 + 沟纹舌）相关。毛舌为丝状乳头角化延长伴产色菌与色素沉积（黑毛舌）。",
+ f:"沟纹舌：舌背中央或呈叶脉状分布的沟裂，食物残渣滞留可继发念珠菌感染与灼痛。毛舌：舌背中后部呈黄褐至黑色毛绒状，多有异味，偶有恶心。",
+ i:"临床诊断即可。",
+ x:"沟纹舌：用软毛刷轻刷舌背清洁沟内；毛舌：戒烟、停用可疑漱口水（氯己定、过氧化氢）、刷舌或用舌刮器，多在数周内恢复。",
+ k:"两者都是良性形态改变，但都因外观吓人而带来焦虑。黑毛舌与铋剂、抗生素相关，停用后可逆。"},
+
+{n:"灼口综合征",e:"Burning mouth syndrome",c:"mucosa",t:9,s:["tng","hp","lip"],p:"",a:"绝经期前后女性显著多见",
+ u:"原发性者被认为是小纤维感觉神经病变与中枢痛觉调制异常（属慢性神经病理性疼痛）；继发性者由口干、念珠菌、贫血、B 族维生素/锌缺乏、糖尿病、药物（ACEI）、义齿材料过敏等造成。",
+ f:"舌尖与舌缘、硬腭、唇的持续灼痛，黏膜外观完全正常（这是诊断要点）；常晨轻暮重、进食时反而缓解；多伴口干感与味觉改变、焦虑抑郁。",
+ i:"「正常外观 + 持续灼痛」的排除性诊断：查血常规、铁蛋白、B12、叶酸、锌、血糖、甲功、真菌涂片、唾液流率。",
+ x:"先治继发因素。原发性者：局部氯硝西泮含化、α-硫辛酸、低剂量三环类或 SNRI、加巴喷丁类，配合认知行为治疗；重要的是解释疾病性质、建立长期管理预期。",
+ k:"它是真实的神经病理性疼痛，不是「心理问题」。把「检查一切正常，所以没病」告诉患者，是这个病最常见的伤害来源。"},
+
+{n:"口角炎",e:"Angular cheilitis",c:"mucosa",t:3,s:["lip"],p:"",a:"义齿佩戴的老年人与营养不良者",
+ u:"口角处唾液长期浸渍造成皮肤浸软，继发白色念珠菌与金黄色葡萄球菌混合感染；诱因包括垂直距离降低（无牙颌或旧义齿）、缺铁性贫血、B 族维生素缺乏、糖尿病、免疫抑制、频繁舔唇。",
+ f:"双侧口角红斑、皲裂、结痂与疼痛，张口时加剧、易反复。",
+ i:"涂片查真菌；查血常规、铁蛋白、B12、血糖以找全身诱因。",
+ x:"抗真菌 + 抗菌软膏（咪康唑加氢化可的松合剂）局部使用；恢复面下 1/3 垂直距离（重衬或重做义齿）；纠正营养缺乏。",
+ k:"只治口角而不纠正咬合高度或贫血，几乎必然复发。单侧顽固不愈者需排除肿瘤与梅毒。"},
+
+{n:"白色海绵状斑痣",e:"White sponge nevus",c:"mucosa",t:1,s:["buc","tng","fom"],p:"",a:"常染色体显性，儿童期即出现并终身存在",
+ u:"角蛋白 4 或 13（KRT4/KRT13）基因突变导致上皮角化异常。",
+ f:"双侧颊黏膜对称的白色、增厚、柔软海绵状皱褶，可延及舌腹、口底、食管与生殖道黏膜；无症状，不痛不痒，不能擦去。",
+ i:"活检见上皮增厚、棘层水肿与细胞内空泡化、特征性的核周嗜酸性凝聚；家族史支持诊断。",
+ x:"无需治疗；仅需明确诊断以避免被误当作白斑而反复手术。少数报告四环素含漱可减轻。",
+ k:"「双侧对称 + 儿童期起病 + 家族史 + 柔软海绵样」四点即可与白斑区分。这是一个必须靠「不治疗」来正确处理的病。"}
+);
+</script>
+
+<script>
+D.push(
+/* ===== 囊肿与囊肿样病变 ===== */
+{n:"根尖周囊肿",e:"Radicular cyst",c:"cyst",t:4,s:["md","mx","tooth"],p:"uni",a:"最常见的颌骨囊肿（约占 55%–60%），30–50 岁，上颌前牙区居多",
+ u:"牙髓坏死后根尖肉芽肿中的马拉瑟上皮剩余（Malassez 上皮剩余）在炎症刺激下增殖，中心液化坏死形成囊腔；囊液渗透压升高使囊肿持续膨胀。",
+ f:"多数无症状，常在拍片时偶然发现；增大后颌骨膨隆、扪之乒乓球样感（骨壁菲薄）、患牙无活力且可有变色、继发感染时急性肿痛。",
+ i:"根尖片见与患牙根尖相连、边界清楚、周围有致密骨白线的圆形单房透射影，牙周膜间隙与病变相延续。患牙牙髓活力测试阴性——这是与其他透射影的关键区分点。",
+ x:"小者行完善的根管治疗多可愈合；大者行根管治疗 + 根尖切除刮治，或囊肿摘除术；巨大囊肿可先行袋形术（开窗减压）待其缩小后二期摘除，以保护邻牙与神经。",
+ k:"「牙髓无活力」是根尖周囊肿的通行证。若透射影邻近的牙牙髓活力正常，就应该重新考虑角化囊肿、含牙囊肿、单纯性骨囊肿甚至肿瘤。"},
+
+{n:"残余囊肿",e:"Residual cyst",c:"cyst",t:4,s:["md","mx"],p:"uni",a:"拔牙后数年，中老年人的无牙区",
+ u:"根尖周囊肿所附着的患牙被拔除，而囊肿未被彻底刮除，遗留在颌骨内继续存在或缓慢增大。",
+ f:"无牙区颌骨的无痛性膨隆，或全景片上的偶然发现；可影响义齿佩戴。",
+ i:"无牙区边界清楚的单房透射影，附近无牙齿相关。病史（该处曾拔牙）是重要线索。",
+ x:"手术摘除并送病理；较大者可先开窗减压。",
+ k:"提醒了一件常被忽略的事：拔除有根尖病变的牙齿时，应同时搔刮拔牙窝内的肉芽或囊壁组织。"},
+
+{n:"含牙囊肿",e:"Dentigerous cyst",c:"cyst",t:4,s:["md","mx","tooth"],p:"uni",a:"第二常见颌骨囊肿，10–30 岁；下颌第三磨牙与上颌尖牙最多",
+ u:"牙冠形成后，缩余釉上皮与牙冠之间积液，囊肿附着于未萌牙的釉牙骨质界处并将牙冠包绕其中。",
+ f:"无痛性缓慢膨胀，常因恒牙迟迟不萌或乳牙滞留而被发现；可推移邻牙、造成牙根吸收，巨大者可将第三磨牙推至下颌升支甚至髁突下方。",
+ i:"包绕未萌牙牙冠、附着于牙颈部的边界清楚单房透射影，透射区大于 3–4 mm 才具意义（否则为正常牙囊）。",
+ x:"摘除囊肿并拔除受累牙；对有萌出潜力的年轻患者，可行开窗减压（marsupialization）使牙自行萌出后再正畸牵引。",
+ k:"含牙囊肿、单囊型成釉细胞瘤与牙源性角化囊肿在影像上可以完全一样——都可以「包着一颗牙」。区分只能靠病理，所以摘除物必须常规送检。"},
+
+{n:"萌出囊肿",e:"Eruption cyst",c:"cyst",t:4,s:["gin","tooth"],p:"",a:"儿童，乳切牙与第一恒磨牙萌出期",
+ u:"含牙囊肿位于软组织内的对应型：牙冠已突破骨壁但仍被覆盖的黏膜下积液（血性液体时称萌出血肿）。",
+ f:"牙槽嵴上半透明、蓝紫色、柔软的圆顶状隆起，多无痛。",
+ i:"临床外观即可诊断，通常不需影像。",
+ x:"绝大多数在牙齿萌出时自行破裂消退，无需处理；影响进食或反复出血者可局麻下切开顶部释放。",
+ k:"是家长最容易惊慌、而处理最简单的一类病变。蓝紫色外观来自囊内积血，不是「瘀青」或恶性征象。"},
+
+{n:"牙源性角化囊肿",e:"Odontogenic keratocyst (OKC)",c:"cyst",t:6,s:["md","mx"],p:"multi",a:"20–30 岁为高峰，男性略多；60%–80% 位于下颌后部与升支",
+ u:"起源于牙板剩余；PTCH1 基因（Hedgehog 通路）失活突变常见。多发者须排查 Gorlin-Goltz 综合征（痣样基底细胞癌综合征）。",
+ f:"沿颌骨长轴前后方向生长而颌骨外形膨隆不明显——这是它最有辨识度的行为；可长得很大仍无症状，直至继发感染疼痛、下唇麻木或病理性骨折。囊液常为黄白色角化物（豆渣样）。",
+ i:"边界清楚、可单房或多房的透射影，边缘常呈扇贝状；沿骨髓腔生长、颊舌向膨隆轻。病理见 5–8 层排列整齐的不全角化上皮、基底细胞栅栏状排列、上皮薄且易与结缔组织分离，囊壁内可见子囊。",
+ x:"单纯刮除复发率高（可达 25%–60%），故常采用刮治 + 周围骨修整（骨钻打磨）+ Carnoy 液或改良 Carnoy 液化学烧灼；大而侵袭者行整块切除。术后需长期（至少 5–10 年）影像随访。",
+ k:"多发角化囊肿 + 基底细胞癌 + 掌跖点状凹陷 + 大脑镰钙化 + 肋骨异常 = Gorlin-Goltz 综合征，为常染色体显性，应转诊遗传咨询与皮肤科。WHO 2017 版起已将其归回「囊肿」而非「肿瘤」。"},
+
+{n:"侧方牙周囊肿",e:"Lateral periodontal cyst / botryoid odontogenic cyst",c:"cyst",t:4,s:["md","gin"],p:"uni",a:"中老年，下颌尖牙–前磨牙区最典型",
+ u:"起源于牙根侧方的牙板剩余；葡萄状牙源性囊肿为其多囊变异型。",
+ f:"多无症状偶然发现；位于活髓牙的根侧。发生于软组织者称牙龈囊肿，表现为附着龈上的小蓝灰色结节。",
+ i:"位于牙根侧方、边界清楚、有硬化边的小圆形透射影，相邻牙牙髓活力正常。",
+ x:"手术摘除并保留邻牙；葡萄状型复发率较高，需随访。",
+ k:"「活髓牙的根侧透射影」是它与根尖周囊肿（死髓）和牙源性角化囊肿（更大更沿骨长轴）的分界。位置在下颌尖牙区时尤其典型。"},
+
+{n:"腺牙源性囊肿",e:"Glandular odontogenic cyst",c:"cyst",t:6,s:["md"],p:"multi",a:"中年，下颌前部跨中线为特征部位；罕见",
+ u:"牙源性上皮来源，具有腺样/黏液样分化；生物学行为具局部侵袭性。",
+ f:"缓慢膨胀，可跨中线生长，疼痛与感觉异常少见但可发生；复发率较高。",
+ i:"单房或多房透射影，边界可清可不清；病理见立方或柱状表面细胞、纤毛、黏液细胞、上皮球状增厚（epithelial spheres），与中央黏液表皮样癌形态学重叠，需 MAML2 融合基因检测区分。",
+ x:"完整摘除并周围骨修整，或整块切除；长期随访，复发率约 20%–30%。",
+ k:"最重要的鉴别对象是中央性（骨内）黏液表皮样癌——两者形态可以极为相似，而处理与预后完全不同。"},
+
+{n:"牙源性钙化囊肿",e:"Calcifying odontogenic cyst (Gorlin cyst)",c:"cyst",t:4,s:["md","mx"],p:"mixed",a:"各年龄，20–30 岁高峰；上下颌前部（尖牙至切牙）为主",
+ u:"牙源性上皮来源，特征是出现「影细胞」（ghost cells）——一种胞质嗜酸、核消失的角化细胞，可继发钙化。与 CTNNB1（β-catenin）通路异常有关。",
+ f:"无痛性膨隆，约 1/3 位于骨外（周边型）表现为牙龈肿物；可与牙瘤伴发。",
+ i:"边界清楚的透射影中散在不规则钙化点（混合密度）是典型影像；病理见成釉细胞瘤样上皮 + 影细胞 + 钙化。",
+ x:"摘除或刮治即可，复发少见；与牙瘤伴发者一并去除。",
+ k:"「影细胞」是它的身份证，也见于毛母质瘤与影细胞牙源性癌。混合密度 + 前牙区 + 边界清楚，是记忆锚点。"},
+
+{n:"鼻腭管囊肿",e:"Nasopalatine duct cyst",c:"cyst",t:4,s:["hp","mx"],p:"uni",a:"最常见的非牙源性颌骨囊肿，40–60 岁男性多见",
+ u:"胚胎期鼻腭管的上皮剩余增殖形成；位于切牙管内，属发育性囊肿。",
+ f:"腭前部中线的无痛性隆起，可有咸味分泌物溢出、灼痛或压迫感；上中切牙牙髓活力正常。",
+ i:"上颌中线切牙区圆形、卵圆形或心形（被鼻棘遮挡所致）透射影，位于两中切牙牙根之间，多大于 6 mm。",
+ x:"手术摘除，经腭侧入路；预后好，复发罕见。",
+ k:"「心形透射影 + 中线 + 活髓牙」三项即可与中切牙的根尖周囊肿分开。切牙管本身也可以宽大而不是囊肿，6 mm 是常用界值。"},
+
+{n:"鼻唇囊肿",e:"Nasolabial cyst",c:"cyst",t:4,s:["lip","mx","skin"],p:"",a:"中年女性多见，可双侧",
+ u:"鼻泪管下端上皮剩余或胚胎期球状突与上颌突融合处上皮残留；位于骨外软组织内。",
+ f:"鼻翼旁、上唇底部的柔软无痛肿物，可使鼻翼抬高、鼻唇沟变浅、鼻前庭底部隆起；继发感染时红肿疼痛。",
+ i:"X 线上无骨破坏（因为在骨外）——这是关键；MRI 或造影可显示范围。",
+ x:"经口内前庭沟入路完整摘除；也有内镜下开窗术的报道。",
+ k:"「口内前庭沟触及、X 线却看不到骨改变」是它的特点，容易被当成脓肿切开引流而反复不愈。"},
+
+{n:"单纯性骨囊肿",e:"Simple (traumatic) bone cyst",c:"cyst",t:9,s:["md"],p:"uni",a:"10–20 岁青少年，下颌体部与前磨牙–磨牙区",
+ u:"假性囊肿（无上皮衬里）。经典学说为外伤后骨内出血机化不全形成空腔，但多数患者无明确外伤史，病因仍未确定。",
+ f:"几乎均无症状，为拍片偶然发现；牙齿活力正常、无移位、无膨隆。手术开窗时可见空腔或少量淡黄色液体，无囊壁。",
+ i:"特征影像是透射影向牙根之间「爬升」形成扇贝状（scalloping）边缘，而牙周膜与硬骨板保持完整。",
+ x:"探查手术本身即为治疗：搔刮骨壁使出血充满腔隙，多数在 6–12 个月内骨化愈合；定期影像随访。",
+ k:"「大而无症状、牙齿全部活髓且不移位、边缘在牙根间呈扇贝状」是这个病最省事也最容易被过度治疗的画像。"},
+
+{n:"动脉瘤样骨囊肿",e:"Aneurysmal bone cyst",c:"bone",t:6,s:["md","mx"],p:"multi",a:"20 岁以下青少年，下颌后部与升支",
+ u:"含 USP6 基因重排的真性肿瘤性病变（原发型），也可继发于骨化性纤维瘤、纤维异常增殖症、巨细胞病变等（继发型）。腔内为充满血液的海绵状腔隙。",
+ f:"快速增大的膨隆，可伴疼痛、牙移位与松动；穿刺可抽出静脉血但不搏动（与血管畸形不同）。",
+ i:"多房、明显膨胀性的透射影，皮质极薄呈「气球样」；MRI 见特征性的液–液平面（血液分层）。",
+ x:"彻底刮治 + 骨移植，复发率约 20%；巨大或复发者需整块切除；术前须与血管畸形鉴别以免大出血。地诺单抗与硬化治疗在特定病例中有应用。",
+ k:"MRI 上的液–液平面很有提示性但不特异（也见于毛细血管扩张型骨肉瘤）。术前不做影像评估而直接活检可能遇到汹涌出血。"},
+
+{n:"Stafne 骨腔",e:"Stafne bone defect / lingual mandibular bone depression",c:"cyst",t:1,s:["md"],p:"uni",a:"中老年男性，全景片上的偶然发现",
+ u:"并非病变，而是下颌骨舌侧的骨凹陷，内容物多为下颌下腺组织或脂肪、结缔组织；属解剖变异。",
+ f:"完全无症状，无膨隆，患者一无所知。",
+ i:"位于下颌管下方、下颌角前方、边界清楚且有致密硬化边的圆形透射影——「在神经管下面」这个位置是决定性线索。CBCT 或 MRI 可显示骨皮质的舌侧凹陷与其中的腺体。",
+ x:"不需要任何治疗，只需确认诊断；影像不典型者用 CBCT 证实即可。",
+ k:"这是「认识它就等于治好它」的典型。把它当囊肿去手术探查，是一次完全可以避免的手术。"},
+
+{n:"黏液囊肿",e:"Mucocele",c:"cyst",t:9,s:["lip","buc","fom","tng"],p:"",a:"儿童与青少年，下唇为绝对好发部位",
+ u:"绝大多数为外渗性：小唾液腺导管被咬伤或外伤破裂，黏液外溢至周围组织形成假囊（无上皮衬里）；少数为导管阻塞的潴留性囊肿（多见于老年人上唇与腭部）。",
+ f:"下唇黏膜表浅、圆顶状、蓝色半透明的柔软肿物，可自行破裂流出黏稠液体后暂时消失，随后复发；反复发作是典型病史。",
+ i:"临床诊断；位置深者需超声或 MRI。",
+ x:"完整切除囊肿连同相关的小唾液腺（不切除腺体是复发的主因）；也可用激光或冷冻。",
+ k:"上唇的「黏液囊肿」需要谨慎——该部位小唾液腺肿瘤（如多形性腺瘤）并不少见，切除物应送病理。"},
+
+{n:"舌下腺囊肿",e:"Ranula",c:"cyst",t:9,s:["fom","neck"],p:"",a:"青少年与年轻成人",
+ u:"舌下腺导管破裂或阻塞致黏液外渗；口外型（潜突型）为黏液穿过下颌舌骨肌进入下颌下间隙。",
+ f:"口内型：口底一侧蓝紫色、柔软、半透明的膨隆，形似蛙腹（ranula 即拉丁语「小蛙」）；巨大者抬高舌体影响进食发音。口外型：下颌下区无痛性柔软肿块而口底可无明显异常。",
+ i:"MRI/超声可显示与舌下腺的关系及是否穿过下颌舌骨肌，对口外型的诊断很重要。",
+ x:"仅切开引流必定复发。首选连同患侧舌下腺一并切除（口内入路），口外型也多可经口内切除舌下腺解决；小的口内型可试袋形术。",
+ k:"「切开放液就好了、过几周又鼓起来」几乎是每位患者的病史。治疗的对象是腺体，不是那个囊。"},
+
+{n:"皮样与表皮样囊肿",e:"Dermoid / epidermoid cyst",c:"cyst",t:4,s:["fom","neck","skin"],p:"",a:"儿童与青年，口底中线为典型部位",
+ u:"胚胎期第一、二鳃弓融合时的外胚层残留；皮样囊肿含皮肤附属器（毛囊、皮脂腺），表皮样囊肿仅有角化上皮衬里。",
+ f:"口底中线无痛性、面团样（有揉捏感）的肿物；位于颏舌骨肌上方者将舌抬起造成言语与吞咽困难，位于下方者表现为颏下「双下巴」样膨隆。",
+ i:"CT/MRI 见界清含脂肪或角化物的囊性肿物，典型者有「装满弹珠的口袋」样表现；对判断与颏舌骨肌的关系至关重要。",
+ x:"完整手术摘除，按位置选口内或颏下入路；预后良好。",
+ k:"口底中线的囊性肿物需与舌下囊肿、甲状舌管囊肿鉴别；「面团样揉捏感」与不随吞咽上下移动是有用的床旁特征。"},
+
+{n:"甲状舌管囊肿",e:"Thyroglossal duct cyst",c:"cyst",t:4,s:["neck","tng"],p:"",a:"最常见的先天性颈部肿物，半数在 20 岁前发现",
+ u:"甲状腺自舌盲孔下降途中形成的甲状舌管未闭合，残留上皮分泌形成囊肿；位于中线，与舌骨关系密切。",
+ f:"颈前正中、舌骨水平的无痛性肿物，随吞咽与伸舌上下移动（因与舌骨及舌根相连）——这是最有价值的体征；继发感染时红肿或形成瘘管。",
+ i:"超声为首选，必须确认存在正常位置的甲状腺（少数患者的囊肿即为其全部甲状腺组织，贸然切除将致终身甲减）。",
+ x:"Sistrunk 手术：切除囊肿 + 舌骨中段 + 至舌盲孔的管道，复发率低（约 3%–5%）；单纯囊肿切除复发率高达 50%。",
+ k:"术前必须做甲状腺超声。「随伸舌上移」的体征与切除舌骨中段的必要性，是这个病的两大考点，也是两处真实的临床风险。"},
+
+{n:"鳃裂囊肿",e:"Branchial cleft cyst",c:"cyst",t:4,s:["neck"],p:"",a:"20–40 岁；第二鳃裂来源占 95%",
+ u:"胚胎期鳃裂或颈窦未完全闭合而残留的上皮形成囊肿、窦道或瘘管。",
+ f:"胸锁乳突肌前缘上 1/3 的无痛性、柔软肿物，常在上呼吸道感染后突然增大或感染；第一鳃裂来源者位于耳下腮腺区并可能与面神经关系密切。",
+ i:"超声与增强 CT/MRI；穿刺可得清亮或胆固醇结晶液体。",
+ x:"完整手术切除包括瘘管全程，感染控制后再手术；第一鳃裂病变需在面神经监测下进行。",
+ k:"关键警示：40 岁以上「新出现的颈侧囊性肿物」不能想当然按鳃裂囊肿处理——HPV 相关口咽癌的囊性淋巴结转移在影像上极为相似，必须先查原发灶。"},
+
+/* ===== 牙源性肿瘤 ===== */
+{n:"成釉细胞瘤",e:"Ameloblastoma, conventional type",c:"odtu",t:6,s:["md","mx"],p:"multi",a:"最常见的牙源性肿瘤之一，30–60 岁；约 80% 位于下颌，其中多在磨牙区与升支",
+ u:"起源于牙板剩余、缩余釉上皮或含牙囊肿衬里的成釉器样上皮；BRAF V600E 突变见于大多数下颌病例，SMO 突变多见于上颌病例。生长缓慢但具局部侵袭性，可穿透骨小梁间隙远超影像边界。",
+ f:"无痛性、进行性的颌骨膨隆，颊舌侧同时膨出使面部不对称；骨壁菲薄时按压有乒乓球样弹性感与羊皮纸样脆裂声；牙齿松动移位、牙根呈刀削样吸收；晚期可致病理性骨折、下唇麻木。基本不发生远处转移，但可复发数十年。",
+ i:"经典影像为多房「皂泡样」（大房）或「蜂窝样」（小房）透射影，边界清楚，明显膨胀，颊舌向膨隆显著（与角化囊肿相反），常伴牙根刀削状吸收与未萌牙。CT 判断皮质穿破与软组织侵犯。病理：滤泡型/丛状型，周边为柱状细胞呈栅栏状排列、核远离基底膜（极性倒置），中心星网状层。",
+ x:"标准治疗为整块切除并保证 1–1.5 cm 骨性安全边界（节段性或方块切除），同期或二期以血管化腓骨瓣、髂骨瓣重建；单纯刮治复发率高达 55%–90%。术后至少随访 10 年以上。复发或无法切除者，BRAF V600E 阳性病例已有靶向治疗（达拉非尼等）的报道。",
+ k:"这是「组织学良性、行为学侵袭」的经典代表：不转移，但会不停复发并逐步吞噬颌骨。因此它的手术边界原则接近低度恶性肿瘤，而不是囊肿。"},
+
+{n:"单囊型成釉细胞瘤",e:"Unicystic ameloblastoma",c:"odtu",t:6,s:["md"],p:"uni",a:"比常规型年轻十余岁，10–30 岁为主；下颌后部与升支，常包绕阻生第三磨牙",
+ u:"与常规型同源，但呈单一囊腔生长。按上皮增殖方式分为腔内型（luminal）、腔内增生型（intraluminal）与壁内浸润型（mural），后者已侵入囊壁纤维组织。",
+ f:"无痛性膨隆或因阻生牙未萌而发现，临床与含牙囊肿几乎无法区分。",
+ i:"边界清楚的单房透射影，常含一颗未萌牙——与含牙囊肿如出一辙。术前影像无法可靠区分，必须依靠完整标本的病理评估。",
+ x:"腔内型与腔内增生型可行摘除 + 周围骨修整（较保守），复发率相对低；壁内浸润型的行为接近常规型，需按常规型作切除。术后长期随访。",
+ k:"这就是为什么「含牙囊肿」的摘除标本必须完整送病理并要求评估囊壁：区分腔内型与壁内浸润型，直接决定患者是保守治疗还是需要节段性截骨。"},
+
+{n:"骨外/周边型成釉细胞瘤",e:"Peripheral ameloblastoma",c:"odtu",t:5,s:["gin","md","mx"],p:"",a:"中老年，下颌后部牙龈与牙槽黏膜",
+ u:"起源于牙龈黏膜下的牙源性上皮剩余或口腔黏膜基底细胞，位于骨外软组织内。",
+ f:"牙龈或牙槽黏膜上无痛、质韧、外生性的结节，外观与纤维瘤或化脓性肉芽肿相似，生长缓慢。",
+ i:"X 线上骨质多正常，或仅有浅表的碟形压迹（骨受压而非被侵犯）；病理与骨内型一致。",
+ x:"局部完整切除并保证阴性切缘即可，无需截骨；复发率低（约 15%–20%），预后远好于骨内型。",
+ k:"同一种细胞学，不同的位置，预后天差地别。这提示我们：牙龈上「普通的小疙瘩」也应送病理。"},
+
+{n:"腺样牙源性瘤",e:"Adenomatoid odontogenic tumour (AOT)",c:"odtu",t:5,s:["mx","md"],p:"mixed",a:"「三分之二肿瘤」：2/3 为女性、2/3 在上颌、2/3 与阻生尖牙相关、2/3 患者在 10–20 岁",
+ u:"牙源性上皮来源的良性肿瘤，具腺管样结构分化；生长有限、有包膜。",
+ f:"上颌前牙区无痛缓慢膨隆，常因尖牙未萌就诊；有完整包膜，手术时易完整剥离。",
+ i:"包绕阻生牙（常为尖牙）的边界清楚透射影，内含细小雪花状钙化点，且透射范围常越过釉牙骨质界包住部分牙根——这一点与含牙囊肿（仅包冠）不同。病理见玫瑰花结样（rosette）与管状腺样结构。",
+ x:"单纯摘除或刮治即可，因有包膜而易完整取出；复发极罕见，预后极佳。",
+ k:"它常被称为「双 2/3 肿瘤」，也被戏称为「大师的伪装者」（master masquerader），因为影像酷似含牙囊肿；但一旦诊断，处理最简单、预后最好。"},
+
+{n:"牙源性钙化上皮瘤",e:"Calcifying epithelial odontogenic tumour (Pindborg tumour)",c:"odtu",t:6,s:["md"],p:"mixed",a:"30–50 岁，约 2/3 位于下颌前磨牙–磨牙区",
+ u:"牙源性上皮来源，肿瘤细胞产生淀粉样物质并在其中发生同心圆状钙化（Liesegang 环）。",
+ f:"无痛性缓慢膨隆，可与阻生牙相关；局部侵袭性介于成釉细胞瘤与良性肿瘤之间。",
+ i:"混合密度影：透射区内散布大小不等的钙化团块，常呈「驱赶的雪花」样；可包绕阻生牙。病理：多边形上皮细胞、细胞间桥明显、核多形性显著但不代表恶性，加刚果红阳性的淀粉样物质与钙化环。",
+ x:"局部切除并保证安全边界（较刮治可靠），复发率约 10%–15%；上颌病例更具侵袭性，需更彻底的切除。",
+ k:"病理上核异型明显却是良性肿瘤，这一「形态与行为不符」的特点最易造成误判为恶性；刚果红染色的淀粉样物质是诊断关键。"},
+
+{n:"牙瘤",e:"Odontoma",c:"odtu",t:5,s:["mx","md","tooth"],p:"opaque",a:"最常见的牙源性肿瘤（严格说是发育畸形/错构瘤），多在 20 岁前发现",
+ u:"成牙组织的发育异常，形成排列紊乱但结构完整的釉质、牙本质、牙骨质与牙髓。组合性牙瘤含多个牙样小体，混合性牙瘤为无序的硬组织团块。",
+ f:"通常无症状，多因恒牙未萌或乳牙滞留拍片时发现；是恒牙阻生的常见机械性原因。",
+ i:"组合性：多个形似小牙的高密度影（好发上颌前部）。混合性：无定形的致密团块（好发下颌后部）。两者周围均有薄的透射带与硬化边——这是与骨硬化症、牙骨质结构不良的区分点。",
+ x:"手术摘除，操作简单、预后极好；同时评估受阻恒牙能否自行萌出，必要时外科开窗 + 正畸牵引。",
+ k:"儿童「一颗恒牙迟迟不出来」时，一张全景片常常就能找到答案。牙瘤也可与牙源性钙化囊肿、成釉细胞纤维牙瘤伴发。"},
+
+{n:"成釉细胞纤维瘤",e:"Ameloblastic fibroma",c:"odtu",t:5,s:["md"],p:"uni",a:"儿童与青少年（平均约 15 岁），下颌后部",
+ u:"上皮与间叶双相增生的真性混合性牙源性肿瘤，两种成分均为肿瘤性但均未形成硬组织。",
+ f:"无痛性膨隆，常伴牙齿未萌；生长较缓慢。",
+ i:"边界清楚的单房或多房透射影，常包绕未萌牙；病理见成釉器样上皮条索岛屿散布于富细胞的幼稚间叶组织中，无牙本质与釉质形成。",
+ x:"保守的摘除刮治多可治愈，复发率约 20%；反复复发者需警惕恶变为成釉细胞纤维肉瘤。",
+ k:"如果病变中出现了牙本质/釉质，则诊断转为成釉细胞纤维牙瘤；WHO 新版认为后者可能只是发育中的牙瘤，分类仍在演变。"},
+
+{n:"牙源性黏液瘤",e:"Odontogenic myxoma",c:"odtu",t:6,s:["md","mx"],p:"multi",a:"20–40 岁，下颌后部略多",
+ u:"起源于牙乳头或牙囊的间叶组织，富含黏液样基质而细胞稀疏；无包膜，肿瘤沿骨髓腔浸润，因此边界远超影像所见。",
+ f:"无痛性膨隆，可长得相当大并使皮质变薄穿破；牙齿移位常见而牙根吸收相对少见。",
+ i:"特征性的多房透射影，骨隔纤细且常呈直线交叉，形成「网球拍样」或「阶梯样」外观；边界可较模糊。病理见星形梭形细胞散在于大量黏液基质中。",
+ x:"因浸润性生长与无包膜，刮治复发率高（约 25%），主张整块切除加安全边界与重建；术后长期随访。",
+ k:"「网球拍样」骨隔是它最具辨识度的影像；黏液样基质使其在手术中呈胶冻状、难以完整剥离，这正是复发率高的原因。"},
+
+{n:"牙源性纤维瘤",e:"Odontogenic fibroma",c:"odtu",t:5,s:["md","mx","gin"],p:"uni",a:"中年女性略多；骨内型与周边型（牙龈）均有",
+ u:"起源于牙囊、牙周膜或牙乳头的成熟纤维结缔组织，其中含牙源性上皮岛。",
+ f:"骨内型表现为无痛性膨隆并可致牙移位；周边型为牙龈质韧结节，与外周性骨化性纤维瘤外观类似。",
+ i:"边界清楚的单房（大者可多房）透射影，可有硬化边；病理见成熟胶原纤维束中散在牙源性上皮巢，可有钙化。",
+ x:"刮治或局部切除，预后良好，复发少见。",
+ k:"与牙源性黏液瘤是「同一间叶谱系的两端」：纤维成分为主者行为温和，黏液成分为主者浸润性强。"},
+
+{n:"牙骨质母细胞瘤",e:"Cementoblastoma",c:"odtu",t:5,s:["md","tooth"],p:"opaque",a:"20 岁前后，近 3/4 累及下颌第一磨牙或前磨牙",
+ u:"牙骨质母细胞的真性良性肿瘤，围绕牙根形成大量牙骨质样组织，是唯一常引起疼痛的良性牙源性肿瘤。",
+ f:"与牙骨质相连的膨隆，可有钝痛（这在良性牙源性肿瘤中很少见）；患牙牙髓活力保持正常。",
+ i:"极具特征：与牙根融合的圆形高密度团块，周围有一圈均匀的透射带（radiolucent rim），牙根轮廓在团块内被吸收而消失。",
+ x:"连同患牙一并切除肿物（因肿瘤与牙根已融合）；也有截根后保留牙冠的尝试。复发率低。",
+ k:"「牙根被高密度球包住 + 外周一圈透射带 + 患牙活髓」是几乎可以直接下诊断的影像三联；与骨硬化症（无透射带、不与牙根融合）区分要点即在此。"},
+
+{n:"鳞状牙源性瘤",e:"Squamous odontogenic tumour",c:"odtu",t:5,s:["gin","md","mx"],p:"uni",a:"各年龄，罕见；沿牙根侧方",
+ u:"起源于牙周膜内的马拉瑟上皮剩余，形成分化良好的鳞状上皮岛。",
+ f:"牙齿松动、局部轻痛或牙龈肿胀，可累及多颗牙；可多灶发生。",
+ i:"牙根侧方的三角形或半圆形透射影，形似严重的牙周骨缺损——这是最常见的误诊来源。病理见分化成熟、无异型的鳞状上皮岛。",
+ x:"保守的刮治与局部切除，多可治愈；上颌病变侵袭性稍强。",
+ k:"当局部牙周破坏与患者的整体牙周状况明显不符时（「就这一处特别严重」），应考虑牙源性肿瘤而非单纯牙周炎。"},
+
+{n:"成釉细胞癌",e:"Ameloblastic carcinoma",c:"odtu",t:8,s:["md","mx"],p:"moth",a:"中老年，下颌多见；罕见",
+ u:"具有成釉细胞瘤组织学特征但同时出现明确恶性细胞学（核异型、高核分裂、坏死）的牙源性癌；可原发，也可由长期存在或反复复发的成釉细胞瘤恶变而来。",
+ f:"生长迅速的颌骨肿块伴疼痛、感觉异常、牙齿松动与溃破；可发生颈淋巴结与肺转移（这与成釉细胞瘤根本不同）。",
+ i:"边界不清的虫蚀状骨破坏、皮质穿破与软组织肿块；与良性成釉细胞瘤的「边界清楚、膨胀性」形成对照。",
+ x:"根治性切除加安全边界、选择性颈清扫，术后放疗；预后中等，需长期监测肺转移。",
+ k:"要与「转移性成釉细胞瘤」区分：后者组织学仍是良性形态却发生了转移，是一个奇特的分类。任何长期成釉细胞瘤出现快速增大与疼痛，都要考虑恶变。"},
+
+{n:"原发性骨内癌",e:"Primary intraosseous carcinoma",c:"odtu",t:8,s:["md"],p:"moth",a:"中老年男性，下颌后部；罕见",
+ u:"发生于颌骨内、不与口腔黏膜相通的鳞状细胞癌，来源于牙源性上皮剩余或牙源性囊肿（如角化囊肿、含牙囊肿）的衬里恶变。",
+ f:"颌骨肿胀疼痛、牙齿松动、下唇麻木、拔牙创长期不愈；黏膜表面完整是诊断的必要条件。",
+ i:"边界不清的溶骨性破坏，可自一个原本边界清楚的囊性病变演变而来（对比既往片极有价值）。",
+ x:"根治性颌骨切除 + 颈清扫 + 术后放疗；预后较差。",
+ k:"诊断要求「排除口腔黏膜原发癌与转移癌」。这也是为什么每一个囊肿摘除标本都要送病理——恶变虽罕见，但只能靠病理发现。"}
+);
+</script>
+
+<script>
+D.push(
+/* ===== 颌骨骨病与骨肿瘤 ===== */
+{n:"骨纤维异常增殖症",e:"Fibrous dysplasia",c:"bone",t:1,s:["mx","md","skin"],p:"ground",a:"儿童与青少年期起病，多在生长停止后趋于静止；上颌多于下颌",
+ u:"GNAS 基因体细胞激活突变（非遗传），使正常骨被富含纤维的不成熟编织骨取代。分单骨型、多骨型；多骨型伴皮肤咖啡牛奶斑与内分泌亢进（性早熟）即 McCune-Albright 综合征。",
+ f:"颌骨无痛性、单侧、逐渐增大的膨隆造成面部不对称；上颌受累可致眶底抬高、鼻腔与上颌窦变形、眼球移位；牙齿移位但少见松动。青春期后生长多减慢。",
+ i:"特征性的「磨玻璃样」或「橘皮样」密度增高，与正常骨界限模糊、逐渐移行（无边界）——这是与骨化性纤维瘤最关键的区别。上颌病变常向上颌窦扩展使窦腔缩小。",
+ x:"生长活跃期以观察为主；影响功能与外观者在生长停止后行骨轮廓修整（contouring），完整切除通常不必要且创伤大。双膦酸盐可缓解骨痛。放疗禁用（增加肉瘤变风险）。",
+ k:"「边界模糊、磨玻璃样、随颌骨形态膨大」是核心影像。恶变（多为骨肉瘤）罕见（低于 1%），但放疗史会显著提高风险，因此本病禁忌放疗。"},
+
+{n:"骨化性纤维瘤",e:"Ossifying fibroma",c:"bone",t:5,s:["md","mx"],p:"mixed",a:"20–40 岁女性多见，下颌前磨牙–磨牙区；青少年型侵袭性更强",
+ u:"起源于牙周膜的成骨性良性肿瘤，有包膜、呈离心性膨胀生长。青少年小梁状型与沙瘤样型（好发于眶周与筛窦）生长更快、复发率更高。",
+ f:"无痛性膨隆，向下推压下颌骨下缘形成特征性的「下缘下垂」；牙根移位；生长速度快于纤维异常增殖症。",
+ i:"边界清楚、有包膜、周围可见硬化边的膨胀性病变，内部密度随成熟度从透射逐步变为混合密度乃至致密——「界限清楚」是与纤维异常增殖症（界限模糊）的分水岭。",
+ x:"因有包膜可完整摘除（enucleation），大者需切除加重建；青少年型复发率可达 30%–58%，需更彻底切除与密切随访。",
+ k:"临床上最重要的一组对照：纤维异常增殖症界限模糊、磨玻璃样、以修整为主；骨化性纤维瘤界限清楚、有包膜、以完整摘除为主。误判会导致术式选择错误。"},
+
+{n:"牙骨质-骨结构不良",e:"Cemento-osseous dysplasia",c:"bone",t:1,s:["md","mx"],p:"mixed",a:"中年黑人女性最典型；根尖型、局灶型与繁茂型",
+ u:"牙周膜来源的非肿瘤性反应性病变，正常骨被纤维组织与化生的牙骨质样/骨样组织替代。原因不明，无需外来刺激。",
+ f:"绝大多数无症状，为拍片偶然发现；患牙牙髓活力正常（关键）。繁茂型（florid）可累及多个象限、双侧对称，继发感染后极难愈合。",
+ i:"演变三期：早期为根尖区透射影（易被误认为根尖周炎）→ 混合期出现钙化点 → 成熟期为周围绕以透射带的致密团块。多发、双侧、与多颗活髓牙的根尖相关是识别要点。",
+ x:"无症状者不做任何处理，也不要活检（血供差，术后易感染与骨髓炎）；重点是避免误诊后的不必要根管治疗或手术。继发感染时按慢性骨髓炎处理，非常棘手。",
+ k:"这是「最需要被认出来以避免治疗」的病之一。判断的钥匙只有一把：测牙髓活力。活髓 + 多发 + 根尖区 = 结构不良，不是根尖周炎。"},
+
+{n:"中央性巨细胞肉芽肿",e:"Central giant cell granuloma",c:"bone",t:6,s:["md","mx"],p:"multi",a:"30 岁以下，女性多见；下颌前部（跨中线）为特征部位",
+ u:"病因不明的反应性或肿瘤性病变，含破骨样多核巨细胞与富血管的间质。分非侵袭型（缓慢、无症状）与侵袭型（快速生长、疼痛、皮质穿破、复发率高）。",
+ f:"下颌前部无痛或轻痛性膨隆，可致牙移位与牙根吸收；侵袭型在青少年可增长很快。",
+ i:"单房或多房透射影，骨隔纤细呈颗粒状，可跨中线（这是相当有提示性的线索）；边界可清可不清。",
+ x:"刮治为一线，复发率 15%–70%（取决于侵袭性）；辅助治疗有病灶内注射糖皮质激素、降钙素、干扰素-α，近年地诺单抗（RANKL 单抗）用于难治与巨大病例效果显著；侵袭型可需整块切除。",
+ k:"必须先查血钙、血磷与甲状旁腺激素——甲状旁腺功能亢进的「棕色瘤」在病理上与本病无法区分，漏诊会导致治标不治本。"},
+
+{n:"巨颌症",e:"Cherubism",c:"bone",t:1,s:["md","mx"],p:"multi",a:"2–5 岁起病，青春期后自行消退；常染色体显性",
+ u:"SH3BP2 基因突变致破骨细胞过度活化，双侧下颌角与升支区骨被富含巨细胞的纤维组织替代。",
+ f:"双侧对称的下颌角膨隆使面颊丰满、下睑被推压而露出巩膜（形似仰望天空的小天使，故名 cherubism）；牙齿移位、脱落与恒牙萌出障碍；无痛。青春期后病变逐渐骨化消退。",
+ i:"双侧对称的多房透射影，以下颌角与升支为中心，可累及上颌；这种「对称性」在颌骨病变中极为少见，是诊断关键。",
+ x:"以观察等待为主，多数在成年后自行改善；影响功能或外观严重者在病变静止后行骨修整。生长期手术可能刺激病变加速。基因确诊有助于避免过度治疗。",
+ k:"「双侧对称、儿童、无痛、会自愈」——记住这四点就不会把它当作需要大手术的肿瘤。"},
+
+{n:"甲状旁腺功能亢进棕色瘤",e:"Brown tumour of hyperparathyroidism",c:"bone",t:2,s:["md","mx"],p:"multi",a:"成人；原发性（腺瘤）或继发性（慢性肾病）甲旁亢的晚期表现",
+ u:"甲状旁腺激素持续升高致破骨活跃、骨吸收，局部形成含巨细胞与含铁血黄素（故呈棕色）的反应性病灶。",
+ f:"颌骨膨隆的表现与中央性巨细胞肉芽肿完全一致；伴全身表现——「骨、石、腹、精神症状」（骨痛、肾结石、腹痛便秘、抑郁乏力）。",
+ i:"颌骨多房透射影；全景片上另有两个高度提示性的征象：牙硬骨板消失与骨小梁呈磨玻璃样改变。手部 X 线见指骨桡侧骨膜下吸收。",
+ x:"治疗的是甲状旁腺而不是颌骨：切除甲状旁腺腺瘤或治疗肾性甲旁亢后，颌骨病灶多自行消退与骨化。",
+ k:"任何颌骨巨细胞病变都必须查血钙 + PTH。这是全篇最具「性价比」的一条实验室检查建议——一次抽血可以避免一次不必要的颌骨手术。"},
+
+{n:"畸形性骨炎（Paget 病）",e:"Paget disease of bone",c:"bone",t:9,s:["mx","md"],p:"opaque",a:"55 岁以上，欧洲血统人群较多；上颌较下颌常见",
+ u:"破骨与成骨过度且紊乱地交替进行，骨改建失控；可能与遗传（SQSTM1）及慢性病毒感染有关。",
+ f:"上颌进行性对称性增大导致「狮面」、义齿逐渐变紧（患者常以「假牙不合适了」就诊）、牙间隙增宽、牙根吸收与牙骨质过度增生（使拔牙极困难且易骨髓炎）；可有骨痛、听力下降、颅骨增大。",
+ i:"早期溶骨、后期呈特征性的「棉絮状」（cotton-wool）致密影；血清碱性磷酸酶显著升高而血钙血磷正常。",
+ x:"双膦酸盐（唑来膦酸）为主，可显著抑制骨转换；口腔处理需谨慎——牙骨质增生与血供改变使拔牙易出血、易感染，术前应与内科协作。",
+ k:"「假牙戴不上了」+「帽子变小」+ 碱性磷酸酶升高，是三条来自不同科室却指向同一诊断的线索。骨肉瘤变发生率约 1%，出现新发剧痛需警惕。"},
+
+{n:"骨瘤与 Gardner 综合征",e:"Osteoma / Gardner syndrome",c:"bone",t:5,s:["md","mx","skin"],p:"opaque",a:"成年；下颌骨、髁突与鼻窦",
+ u:"成熟骨组织的良性增生（致密型或松质型）。多发颌骨骨瘤是 Gardner 综合征（家族性腺瘤性息肉病的变异型，APC 基因突变）的重要标志。",
+ f:"孤立骨瘤多无症状；髁突骨瘤可致下颌偏斜与咬合改变。Gardner 综合征另有多发皮肤表皮样囊肿、硬纤维瘤、多生牙与阻生牙。",
+ i:"边界清楚的均匀致密影；全景片上多发骨瘤 + 多发多生牙的组合应立即触发对结肠的关注。",
+ x:"有症状或影响功能的骨瘤手术切除。Gardner 综合征患者必须转诊消化科作结肠镜监测——其结直肠癌的终身风险接近 100%。",
+ k:"这是口腔科能够挽救生命的少数场景之一：全景片上的多发骨瘤，可能比腹部症状早很多年出现。"},
+
+{n:"骨隆突",e:"Torus palatinus / mandibularis, exostosis",c:"bone",t:1,s:["hp","md","gin"],p:"opaque",a:"人群中相当常见（腭隆突约 20%，下颌隆突约 8%），成年后逐渐显现",
+ u:"发育性/多因素的良性骨性外生，与遗传及咬合力（磨牙习惯）相关；不是肿瘤。",
+ f:"腭中线或下颌前磨牙区舌侧的骨性硬结，表面黏膜正常而菲薄，易被食物或义齿擦伤形成溃疡；影响全口义齿就位。",
+ i:"临床触诊即可；影像上为致密的骨性突起。",
+ x:"无症状者不处理；妨碍义齿制作、反复溃疡或影响发音者手术切除，注意保护菲薄黏膜。",
+ k:"患者常因「腭上长了硬包」而恐慌就诊；一句「这是骨头，属于正常变异」是最常用也最有效的处理。取自体骨移植时它也是便利的供区。"},
+
+{n:"朗格汉斯细胞组织细胞增生症",e:"Langerhans cell histiocytosis",c:"bone",t:6,s:["md","gin","mx"],p:"moth",a:"儿童与青年男性多见；下颌后部",
+ u:"BRAF V600E 等 MAPK 通路突变驱动的克隆性髓系肿瘤，朗格汉斯细胞异常增殖浸润骨与器官。谱系从孤立性嗜酸性肉芽肿到多系统受累（Letterer-Siwe）。",
+ f:"颌骨疼痛肿胀、牙龈增生溃疡、牙齿显著松动而无相应牙周病——「牙齿悬浮征（floating teeth）」；可伴颅骨溶骨灶、尿崩症、皮疹、肝脾淋巴结肿大。",
+ i:"边界清楚或呈「穿凿样」的溶骨性破坏，牙槽骨大量丧失使牙根似漂浮于软组织中。病理见 CD1a、Langerin(CD207)、S-100 阳性细胞与嗜酸性粒细胞浸润，电镜见 Birbeck 颗粒。",
+ x:"孤立骨病灶可刮治或病灶内激素注射；多灶或多系统受累需化疗（长春碱 + 泼尼松），BRAF 突变者可用维莫非尼等靶向药。需血液肿瘤科主导。",
+ k:"「牙齿浮在空气里」的全景片在儿童身上出现时，鉴别名单里必须有 LCH 与白血病，而不只是侵袭性牙周炎。"},
+
+{n:"骨肉瘤（颌骨）",e:"Osteosarcoma of the jaw",c:"bone",t:8,s:["md","mx"],p:"sun",a:"颌骨骨肉瘤比长骨发病晚 10–20 年（30–40 岁）；下颌体与上颌骨",
+ u:"产生骨样基质的恶性间叶肿瘤。继发者与放疗史、Paget 病、纤维异常增殖症、Li-Fraumeni 与视网膜母细胞瘤（RB1）相关。",
+ f:"快速增大的肿块伴疼痛、感觉异常（下唇麻木）、牙齿松动、鼻塞或眼球移位；病程以周计而非年计。",
+ i:"三个经典征象：牙周膜间隙对称性均匀增宽（最早期表现之一）、骨破坏与成骨混合、以及骨膜反应形成的「日光放射状」骨针。CT/MRI 定范围，胸部 CT 查肺转移。",
+ x:"以根治性手术切除（追求阴性切缘）为核心，多辅以新辅助/辅助化疗（顺铂、阿霉素、大剂量甲氨蝶呤）；颌骨骨肉瘤远处转移率低于长骨，局部复发是主要失败原因，故切缘是决定预后的首要因素。",
+ k:"「牙周膜间隙对称增宽」这一细微征象值得每位读片者记住——它可能是颌骨骨肉瘤在影像上最早留下的痕迹。"},
+
+{n:"软骨肉瘤",e:"Chondrosarcoma",c:"bone",t:8,s:["mx","tmj","md"],p:"mixed",a:"中老年；上颌前部、鼻中隔、髁突等有软骨来源处",
+ u:"产生软骨基质的恶性肿瘤；可原发或继发于骨软骨瘤、内生软骨瘤病。间叶型软骨肉瘤好发于年轻人且侵袭性强。",
+ f:"缓慢增大的无痛性肿块（低级别者），逐渐出现牙松动、鼻塞、眼球突出；髁突病变可有关节症状而被误诊为颞下颌关节紊乱。",
+ i:"骨破坏区内散在「爆米花样」或环弧形的软骨样钙化；MRI 见 T2 高信号的分叶状结构。",
+ x:"以广泛的手术切除为主——软骨肉瘤对放化疗均相对不敏感，因此切缘几乎决定一切；高级别与复发者预后差。",
+ k:"髁突区的持续性肿胀伴关节症状，若对常规颞下颌关节治疗无反应，须行影像学检查——这一区域的肿瘤常被长期当作关节紊乱病处理。"},
+
+{n:"尤文肉瘤",e:"Ewing sarcoma",c:"bone",t:8,s:["md","mx"],p:"moth",a:"10–20 岁，男性略多；下颌骨",
+ u:"EWSR1-FLI1 等基因融合驱动的小圆细胞恶性肿瘤。",
+ f:"疼痛性肿胀迅速增大，可伴发热、白细胞增高与血沉加快而酷似骨髓炎——这是最危险的误诊陷阱；牙齿松动、感觉异常常见。",
+ i:"边界不清的溶骨性破坏伴「洋葱皮样」层状骨膜反应与软组织肿块；MRI 显示软组织成分范围。",
+ x:"以多药化疗为核心（VDC/IE 方案）+ 手术和/或放疗的综合治疗，需儿童肿瘤中心主导；对化疗敏感，规范治疗后局限期长期生存率可达 70% 左右。",
+ k:"「青少年 + 颌骨疼痛肿胀 + 发热 + 洋葱皮骨膜反应」既可能是骨髓炎也可能是尤文肉瘤。对抗生素反应不佳的「骨髓炎」必须活检。"},
+
+{n:"多发性骨髓瘤与浆细胞瘤",e:"Multiple myeloma / plasmacytoma",c:"bone",t:8,s:["md","mx"],p:"moth",a:"60 岁以上；下颌角与升支",
+ u:"浆细胞的克隆性恶性增殖，分泌单克隆免疫球蛋白并激活破骨细胞。",
+ f:"颌骨疼痛、肿胀、牙齿松动、下唇麻木、病理性骨折；全身有贫血、肾功能损害、高钙血症与反复感染（CRAB）。舌部与牙龈可出现淀粉样变沉积导致的巨舌与紫癜。",
+ i:"多发、边界清楚而无硬化边的「穿凿样」溶骨性破坏（颅骨与颌骨均可见）；血清蛋白电泳与免疫固定见 M 蛋白，尿本周蛋白阳性。",
+ x:"血液科主导：蛋白酶体抑制剂（硼替佐米）+ 免疫调节剂 + 抗 CD38 单抗，自体干细胞移植；孤立性浆细胞瘤以放疗为主。双膦酸盐/地舒单抗护骨，但同时带来 MRONJ 风险，用药前须完成口腔处理。",
+ k:"这类患者是 MRONJ 的高危人群。血液科与口腔科的时序配合（先做牙、后用药）能实质性降低并发症。"},
+
+{n:"颌骨转移癌",e:"Metastatic tumours to the jaw",c:"bone",t:8,s:["md"],p:"moth",a:"中老年；约 80% 位于下颌骨后部（造血骨髓丰富处）",
+ u:"经血行播散至颌骨，原发灶以乳腺、肺、肾、甲状腺、前列腺、结肠最常见；约 25% 的病例是以颌骨病变为首发表现。",
+ f:"疼痛、肿胀、牙齿松动、下唇麻木（numb chin sign）、拔牙创不愈；也可完全无症状而在影像上偶然发现。",
+ i:"边界不清的虫蚀状溶骨破坏（前列腺癌与部分乳腺癌可为成骨性高密度）；全身检查（胸腹 CT、PET-CT）寻找原发灶。",
+ x:"多为姑息性：放疗控制局部、双膦酸盐/地舒单抗护骨、针对原发肿瘤的全身治疗；出现病理性骨折时行固定。预后取决于原发肿瘤。",
+ k:"「颏神经麻木征」在无外伤史的成年人身上出现，直到证明是别的原因之前，都应视为恶性肿瘤的信号。"},
+
+/* ===== 软组织良性肿瘤与瘤样病变 ===== */
+{n:"刺激性纤维瘤",e:"Irritation fibroma / fibrous hyperplasia",c:"soft",t:9,s:["buc","tng","lip","gin"],p:"",a:"成人最常见的口腔软组织瘤样病变；颊黏膜咬合线处最典型",
+ u:"慢性机械刺激（反复咬伤、锐利牙尖、义齿边缘）引起的纤维结缔组织反应性增生，不是真性肿瘤。",
+ f:"圆顶状、质韧、无痛、色泽同周围黏膜的结节，直径多在 1 cm 内，表面可因反复咬伤而角化发白或溃疡。",
+ i:"临床诊断；病理为致密的胶原纤维束覆以正常上皮。",
+ x:"手术切除并去除刺激因素（调磨牙尖、修整义齿）；切除物送病理。不去除病因则复发。",
+ k:"义齿性纤维增生（epulis fissuratum）是它在义齿边缘的特殊形式，呈沟槽状包夹义齿翼缘，需切除 + 重衬或重做义齿。"},
+
+{n:"化脓性肉芽肿",e:"Pyogenic granuloma / pregnancy epulis",c:"soft",t:9,s:["gin","lip","tng"],p:"",a:"儿童、青年与孕妇（妊娠期龈瘤，孕 2–3 月起）",
+ u:"名称有误导性——它既非化脓也非肉芽肿，而是局部刺激（菌斑、牙石、创伤）引起的反应性血管增生（分叶状毛细血管瘤）；雌孕激素显著放大这一反应。",
+ f:"鲜红至紫红色、表面光滑或分叶、质软、极易出血（轻触即出血是标志）的带蒂或无蒂肿物，牙间乳头处最多见；生长可以很快。",
+ i:"临床即可诊断；病理见大量增生的毛细血管与炎细胞浸润。",
+ x:"彻底切除至骨膜并刮除相邻牙面的牙石菌斑（不去除刺激源必复发）。妊娠期若无功能障碍可待产后消退再处理，因妊娠期切除复发率高。",
+ k:"「一碰就出血的红色牙龈肿物」在孕妇中十分常见且多为良性，但成人任何牙龈肿物的切除标本都应送病理——牙龈癌与转移瘤也可以长成这个样子。"},
+
+{n:"外周性巨细胞肉芽肿",e:"Peripheral giant cell granuloma",c:"soft",t:9,s:["gin"],p:"",a:"各年龄，女性略多；仅发生于牙龈与无牙牙槽嵴",
+ u:"局部刺激引起的反应性增生，含破骨样多核巨细胞；仅见于牙龈，提示来源于牙周膜或骨膜。",
+ f:"暗红至紫蓝色（比化脓性肉芽肿更深）的质韧结节，可致下方牙槽骨的浅碟状吸收。",
+ i:"X 线可见特征性的「杯状」表浅骨吸收；病理见富含多核巨细胞的间质。",
+ x:"完整切除至骨面并刮除受累骨与去除局部刺激；复发率约 10%。同样需查血钙与 PTH 排除甲旁亢。",
+ k:"牙龈上的三个「瘤」：化脓性肉芽肿（鲜红、易出血）、外周性巨细胞肉芽肿（紫蓝、有骨吸收）、外周性骨化性纤维瘤（粉白、质硬、可含钙化）。三者临床相似，只能靠病理分开。"},
+
+{n:"外周性骨化性纤维瘤",e:"Peripheral ossifying fibroma",c:"soft",t:9,s:["gin"],p:"opaque",a:"青少年与青年女性；上颌前部牙间乳头",
+ u:"来源于牙周膜的反应性增生，可产生骨、牙骨质样组织或营养不良性钙化。",
+ f:"牙间乳头处质硬、粉红或红色、表面可溃疡的结节，可使邻牙移位形成间隙。",
+ i:"病变内可见散在钙化点（这是与另两种牙龈瘤的区别）；牙槽骨一般无明显破坏。",
+ x:"切除必须深达骨膜并刮除受累牙周膜与骨面，否则复发率可达 16%–20%。",
+ k:"三种「龈瘤」的处理原则一致——切干净、去刺激、送病理；差别在于切除深度：骨化性纤维瘤必须连同牙周膜一并去除。"},
+
+{n:"鳞状细胞乳头状瘤",e:"Squamous papilloma",c:"soft",t:5,s:["hp","sp","tng","lip"],p:"",a:"30–50 岁；软腭、悬雍垂、舌与唇",
+ u:"多与人乳头瘤病毒 6 型、11 型（低危型）相关的良性上皮增生。",
+ f:"带蒂的、表面呈指状突起（菜花样或蓬松白色）的小结节，直径多小于 1 cm，无痛，生长有限。",
+ i:"临床特征明显；病理见指状乳头状增生的复层鳞状上皮伴纤维血管轴心。",
+ x:"手术切除（含蒂部）或激光切除，复发少见。",
+ k:"须与疣状癌、尖锐湿疣（HPV6/11，多与口交传播相关）和局灶性上皮增生（Heck 病，HPV13/32）鉴别；儿童多发者应考虑喉乳头状瘤病并转诊。"},
+
+{n:"婴儿血管瘤",e:"Infantile hemangioma",c:"soft",t:5,s:["skin","lip","sal","buc"],p:"",a:"出生后数周出现，女婴多见；头颈部占 60%",
+ u:"GLUT-1 阳性的血管内皮细胞真性增生性肿瘤（与脉管畸形本质不同）。有明确的自然史：增殖期（0–1 岁）→ 消退期（1–5 岁）→ 消退完成期。",
+ f:"鲜红色隆起的「草莓样」斑块（浅表型）或皮下青蓝色包块（深部型）；腮腺区是头颈部深部血管瘤的常见部位。可溃疡、出血；节段型面部血管瘤须警惕 PHACES 综合征。",
+ i:"超声与 MRI 见高流量、边界清楚的富血管肿物；GLUT-1 免疫组化阳性可与脉管畸形明确区分。",
+ x:"多数可观察等待自行消退。影响视力、气道、进食或严重溃疡者首选口服普萘洛尔（一线，起效快）；局部可用噻吗洛尔滴剂；残留纤维脂肪组织在学龄前手术修整。",
+ k:"「出生时没有、几周后出现、先长后退」是血管瘤；「出生就有、随身体等比例长大、从不自行消退」是脉管畸形。两者治疗完全不同，这一区分是最重要的第一步。"},
+
+{n:"静脉畸形",e:"Venous malformation",c:"soft",t:1,s:["buc","tng","lip","skin"],p:"",a:"出生即存在（可不明显），随生长成比例增大，终身不退",
+ u:"血管形态发生异常导致的低流量脉管畸形（TIE2/PIK3CA 体细胞突变），由扩张的静脉腔隙构成。",
+ f:"柔软、可压缩的蓝紫色包块；低头或屏气时增大（体位试验阳性）是特征性体征；可触及静脉石（钙化的血栓）而有硬结与疼痛。累及舌与咽可影响气道。",
+ i:"X 线或 CT 上的静脉石具高度提示性；MRI T2 明显高信号、分叶状；超声见低流速。",
+ x:"硬化治疗为一线（无水乙醇、博来霉素、聚桂醇）；局限病变可手术切除；广泛病变可用西罗莫司（mTOR 抑制剂）。需多学科团队管理。",
+ k:"「低头变大、可压缩、有静脉石」三点几乎可以在椅旁完成诊断。切忌当作囊肿贸然切开——出血可以非常凶险。"},
+
+{n:"淋巴管畸形",e:"Lymphatic malformation",c:"soft",t:1,s:["tng","neck","buc","fom"],p:"",a:"多数在 2 岁前发现；颈部与口底（囊性水瘤）",
+ u:"淋巴管发育异常形成的低流量脉管畸形（PIK3CA 突变）；分大囊型、微囊型与混合型。",
+ f:"柔软、透光的无痛肿物；舌部微囊型表现为舌背密集的「蛙卵样」小泡（可出血呈紫黑色）并导致巨舌与开𬌗畸形；上呼吸道感染后可急剧增大压迫气道。",
+ i:"MRI 区分大囊与微囊（决定治疗方式）；产前超声可发现颈部囊性水瘤。",
+ x:"大囊型对硬化治疗（OK-432/沙培林、博来霉素、多西环素）反应良好；微囊型难治，可手术减容、激光处理黏膜病损，或用西罗莫司全身治疗。气道受累者优先保障气道。",
+ k:"舌背密集的透明或血性小泡是微囊型淋巴管畸形的经典画面，也是儿童巨舌与前牙开𬌗的重要原因之一。"},
+
+{n:"动静脉畸形",e:"Arteriovenous malformation",c:"soft",t:6,s:["md","skin","buc"],p:"",a:"出生即存在但常在青春期或妊娠期「爆发」",
+ u:"动静脉之间存在直接交通（病巢 nidus）而无毛细血管床的高流量脉管畸形，长期高流量导致进行性扩张与破坏。",
+ f:"皮温升高、可触及震颤与搏动、闻及血管杂音；病变区牙齿松动、牙龈自发出血；颌骨内动静脉畸形可在拔牙时发生致命性大出血。",
+ i:"必须行 CTA/MRA 或 DSA 明确供血动脉与病巢；影像上见早期静脉显影与扩张迂曲血管团。",
+ x:"以介入栓塞（超选择性栓塞病巢，而非单纯结扎供血动脉）为核心，常联合手术切除；治疗需在有经验的中心进行。",
+ k:"这是口腔科最凶险的陷阱之一：颌骨中央性动静脉畸形可以表现为「一颗松动牙」，而拔除它可能造成难以控制的喷射性出血。对牙龈自发搏动性出血、松动牙伴局部杂音者，拔牙前必须影像评估。"},
+
+{n:"神经鞘瘤与神经纤维瘤",e:"Schwannoma / neurofibroma",c:"soft",t:5,s:["tng","buc","md","skin"],p:"uni",a:"成人；舌为口内最常见部位；下颌骨内者沿下牙槽神经",
+ u:"神经鞘瘤源于施万细胞、有包膜、偏心生长；神经纤维瘤由施万细胞、成纤维细胞与神经轴索混合构成、无包膜。多发神经纤维瘤提示 1 型神经纤维瘤病（NF1，17 号染色体）。",
+ f:"缓慢生长的无痛性黏膜下结节；骨内者可致下唇麻木或疼痛。NF1 患者有咖啡牛奶斑、腋窝雀斑、虹膜 Lisch 结节、丛状神经纤维瘤致面部畸形。",
+ i:"骨内病变表现为沿下颌管走行的梭形透射影伴神经管扩大；MRI 见「靶征」。病理 S-100 阳性；神经鞘瘤有 Antoni A/B 区与 Verocay 小体。",
+ x:"手术切除，神经鞘瘤常可从神经上剥离而保留神经功能；神经纤维瘤因无包膜需连同受累神经段切除。NF1 的丛状神经纤维瘤可用 MEK 抑制剂（司美替尼）。",
+ k:"NF1 患者的丛状神经纤维瘤有 8%–13% 的终身恶变风险（恶性外周神经鞘瘤），新出现的疼痛或快速增大是警示信号。"},
+
+{n:"脂肪瘤",e:"Lipoma",c:"soft",t:5,s:["buc","tng","fom"],p:"",a:"40 岁以上；颊黏膜与颊脂垫区",
+ u:"成熟脂肪细胞构成的良性肿瘤，有薄包膜。",
+ f:"柔软、可移动、边界清楚的黄色调黏膜下结节，表面黏膜菲薄可透出黄色；生长极缓慢，无痛。",
+ i:"MRI/CT 呈与皮下脂肪一致的信号/密度（脂肪抑制序列上信号被抑制），基本可确诊。",
+ x:"局部完整切除；复发罕见。",
+ k:"口内「黄色调、柔软、能推动」的肿物首先想到脂肪瘤；深部快速增大且不均质者需排除脂肪肉瘤。"},
+
+{n:"颗粒细胞瘤",e:"Granular cell tumour",c:"soft",t:5,s:["tng"],p:"",a:"成人，女性略多；舌背是最经典部位",
+ u:"起源于施万细胞（S-100 阳性）的良性肿瘤；新生儿龈瘤（先天性颗粒细胞瘤）为不同的实体，见于新生儿牙槽嵴。",
+ f:"舌背质韧、无痛、色泽正常或略黄的黏膜下结节，直径通常小于 2 cm。",
+ i:"病理见大量胞质呈粗颗粒状的细胞；其上被覆的上皮常出现「假上皮瘤样增生」——这是本病最重要的诊断陷阱，浅表活检可能被误报为鳞状细胞癌。",
+ x:"局部完整切除，预后良好；恶性型极罕见。",
+ k:"如果一份舌部小结节的浅表活检报告「高分化鳞癌」而临床表现完全不像癌，应与病理科沟通排除颗粒细胞瘤上方的假上皮瘤样增生。"}
+);
+</script>
+
+<script>
+D.push(
+/* ===== 恶性肿瘤 ===== */
+{n:"舌癌",e:"Squamous cell carcinoma of the tongue",c:"malig",t:8,s:["tng"],p:"moth",a:"口腔癌中最常见的部位；50–70 岁男性为主，但年轻非吸烟者（尤其女性）比例正在上升",
+ u:"约 90% 为鳞状细胞癌。主要危险因素为吸烟、饮酒（两者协同放大风险）、咀嚼槟榔；局部慢性刺激（残根、锐利牙尖、不良修复体）为促进因素；由白斑、红斑、扁平苔藓等潜在恶性疾患演变而来者不在少数。",
+ f:"约 80% 发生于舌侧缘中后 1/3（舌背与舌尖少见）。典型为边缘隆起外翻、基底浸润变硬的溃疡，或外生菜花状肿物。早期常无痛而仅有异物感，这正是延误的主因；侵犯舌肌后出现伸舌偏斜、言语与吞咽障碍，侵及舌神经则有剧烈的耳颞部放射痛。舌血供与淋巴丰富，颈淋巴结转移早且比例高（初诊时约 30%–40%）。",
+ i:"活检确诊。增强 MRI 评估浸润深度（DOI，第 8 版 AJCC 已纳入 T 分期）与舌肌、舌骨受累；颈部超声/CT 与胸部 CT 分期；PET-CT 用于晚期与可疑转移。",
+ x:"以手术为主：原发灶按浸润深度行部分舌切除至半舌切除，DOI 超过 4 mm 者行同侧（跨中线者双侧）择区性颈淋巴结清扫；缺损用前臂皮瓣或股前外侧皮瓣修复以保留舌的活动度。中晚期辅以术后放疗或同步放化疗；复发转移者用免疫检查点抑制剂（帕博利珠单抗、纳武利尤单抗）。",
+ k:"「舌侧缘 + 溃疡超过两周 + 基底发硬 + 早期不痛」是必须活检的组合。浸润深度比表面直径更能预测颈转移，这也是现代分期的核心改动。"},
+
+{n:"牙龈癌",e:"Gingival / alveolar ridge carcinoma",c:"malig",t:8,s:["gin","md","mx"],p:"moth",a:"中老年，下颌后牙区多于上颌；女性比例高于其他口腔癌",
+ u:"鳞状细胞癌为主。除吸烟饮酒外，长期慢性牙周炎症、不良修复体的机械刺激被认为参与其中；也可由牙龈的白斑或扁平苔藓演变。",
+ f:"起初类似普通的牙龈炎症或「牙龈增生」，表现为溃疡、肉芽样增生或牙龈肿块；特征是牙齿在没有严重牙周病的情况下松动、拔牙后创口长期不愈并长出肉芽——这是最经典也最常被忽视的表现。侵犯下牙槽神经则出现下唇麻木。",
+ i:"影像见牙槽骨的不规则「虫蚀状」破坏、边界不清、无骨反应；CT 判断骨侵犯深度（是否达骨髓腔决定截骨范围），MRI 评估软组织与神经受累。",
+ x:"手术切除并根据骨侵犯程度行边缘性（保留下颌骨下缘）或节段性下颌骨切除；同期颈清扫；节段性缺损用血管化腓骨瓣重建以恢复外形与种植修复的可能。术后视分期加放疗/放化疗。",
+ k:"牙龈癌是被误当作牙周病治疗最多的口腔癌。三条铁律：拔牙创 3 周不愈要活检；孤立一处的重度骨吸收与全口状况不符要活检；牙龈「增生物」切除必须送病理。"},
+
+{n:"颊黏膜癌",e:"Buccal mucosa carcinoma",c:"malig",t:8,s:["buc"],p:"",a:"槟榔咀嚼流行区（南亚、我国湖南与台湾）尤为高发",
+ u:"与咀嚼槟榔、烟草（含无烟烟草置于颊沟）关系极密切；常在口腔黏膜下纤维性变或白斑的基础上发生。",
+ f:"多起于咬合线附近或磨牙后区延伸的溃疡、疣状或浸润性肿块；因颊部脂肪与肌肉屏障薄，易早期侵犯颊肌、皮下乃至穿透面颊皮肤；张口受限提示已侵犯咬肌或翼肌。",
+ i:"MRI 评估颊肌、颊脂垫、皮肤与下颌骨受累；颈部分期同其他口腔癌。",
+ x:"广泛切除，常需切除全层颊部并以游离皮瓣（前臂皮瓣可折叠做双层衬里）重建；颈清扫 + 术后放疗。伴口腔黏膜下纤维性变者术后张口训练尤为重要。",
+ k:"颊癌以局部复发率高、易外侵皮肤著称，被认为是口腔癌中预后相对较差的部位之一。彻底戒除槟榔是唯一有效的一级预防。"},
+
+{n:"口底癌",e:"Floor of mouth carcinoma",c:"malig",t:8,s:["fom","tng","md"],p:"moth",a:"中老年男性，吸烟饮酒者",
+ u:"鳞癌为主；口底黏膜薄、唾液中致癌物易在此蓄积（「污水池」效应），是白斑与红斑恶变率最高的部位之一。",
+ f:"口底前部中线旁的溃疡或硬结，早期即可侵犯舌下腺、下颌舌骨肌与下颌骨舌侧皮质；可阻塞下颌下腺导管造成腺体肿胀；因位置隐蔽而常被延误。",
+ i:"MRI 判断是否越过中线、是否侵犯舌体深部肌肉与骨膜；口底癌双侧颈转移率高，需评估双侧颈部。",
+ x:"广泛切除（可能连同舌下腺、部分下颌骨），双侧颈清扫；缺损修复须重建口底并保持舌的活动度，前臂皮瓣常用。术后放疗。",
+ k:"口底是白斑最易恶变的部位。检查时必须让患者抬舌，充分暴露舌腹与口底——这个动作在常规检查中被省略的频率高得惊人。"},
+
+{n:"腭癌",e:"Palatal carcinoma",c:"malig",t:8,s:["hp","sp","mx"],p:"moth",a:"中老年；硬腭以小唾液腺来源肿瘤为主，软腭以鳞癌为主",
+ u:"硬腭部位的恶性肿瘤中，来自小唾液腺者（腺样囊性癌、黏液表皮样癌）比例高于鳞癌，这与口腔其他部位相反；反向吸烟（把点燃端含在口内）是特定人群的强危险因素。",
+ f:"腭部无痛性肿块或溃疡，逐渐侵犯腭骨造成穿孔与口鼻腔相通、说话漏气；腺样囊性癌可沿腭大神经向颅底扩展而出现麻木。",
+ i:"CT 评估腭骨破坏与上颌窦、鼻腔、翼腭窝受累；MRI 是判断神经周围侵犯的关键（腺样囊性癌尤其必要）。",
+ x:"上颌骨部分切除（依范围行低位/次全/全上颌骨切除）；缺损以赝复体（阻塞器）或游离皮瓣/骨瓣重建，前者可保留腔隙便于随访复发。术后放疗，神经侵犯者放疗野需覆盖神经路径至颅底。",
+ k:"腭部肿物的第一步不是「是不是癌」，而是「是不是小唾液腺肿瘤」——这决定了完全不同的切除范围与随访策略（腺样囊性癌可在十余年后出现肺转移）。"},
+
+{n:"唇癌",e:"Lip carcinoma",c:"malig",t:8,s:["lip","skin"],p:"",a:"户外工作的中老年男性；下唇占 90% 以上",
+ u:"紫外线累积暴露是下唇癌的主因（常继发于光化性唇炎），吸烟（尤其烟斗）为协同因素；上唇癌与基底细胞癌需注意区分。",
+ f:"下唇唇红缘的经久不愈的痂皮、糜烂或外生结节，生长相对缓慢；由于位置显眼，多数在早期即被发现。",
+ i:"活检确诊；颈淋巴结转移率低于口内鳞癌（约 5%–10%），但中线与厚度大者风险增加。",
+ x:"小病变（小于唇长 1/3）行 V 形楔状切除直接缝合；较大缺损用 Abbe-Estlander、Karapandzic 或扇形瓣修复以保存口轮匝肌功能与口裂大小；晚期加颈清扫与放疗。",
+ k:"唇癌是口腔颌面部预后最好的恶性肿瘤之一（5 年生存率可超过 90%），原因就是「看得见」。这也从反面说明了口底、舌根这些「看不见」的部位为什么危险。"},
+
+{n:"口咽癌（HPV 相关）",e:"HPV-associated oropharyngeal carcinoma",c:"malig",t:8,s:["sp","rmt","neck","tng"],p:"",a:"较传统口腔癌年轻（40–60 岁），常为不吸烟者，男性居多；发病率在多国持续上升",
+ u:"高危型人乳头瘤病毒（主要为 HPV16）持续感染扁桃体隐窝与舌根淋巴上皮，通过 E6/E7 蛋白灭活 p53 与 Rb 通路。这是一种与传统烟酒相关鳞癌在生物学、分期与预后上都不同的疾病。",
+ f:"最常见的首发表现不是口腔症状，而是颈部（Ⅱ 区）无痛性囊性肿块；原发灶（扁桃体、舌根）可以极小甚至隐匿；可有咽部异物感、吞咽痛、牵涉性耳痛。",
+ i:"p16 免疫组化（作为 HPV 替代标记）阳性者按第 8 版 AJCC 的独立分期系统分期，分期显著低于同等病变的 HPV 阴性者。颈部囊性转移灶的细针穿刺 + p16 检测常是诊断起点。",
+ x:"经口机器人手术（TORS）或根治性放疗/同步放化疗，两者均有效；治疗降级（de-escalation）的临床研究正在进行中。预后显著优于 HPV 阴性者（3 年总生存率可达 80% 以上）。",
+ k:"「中年男性、不吸烟、颈部囊性肿块」不要按鳃裂囊肿处理。HPV 疫苗对男性同样重要——它已被证实可预防口咽部的 HPV 感染。"},
+
+{n:"疣状癌",e:"Verrucous carcinoma",c:"malig",t:8,s:["buc","gin","tng"],p:"",a:"老年男性；与长期无烟烟草（鼻烟、嚼烟）置于颊沟相关",
+ u:"高分化的鳞癌变异型，呈推挤式（pushing）而非浸润式生长边界。",
+ f:"外生性、白色、表面粗糙如菜花或「教堂尖顶」的广基肿物，生长缓慢，可长得很大；很少发生淋巴结与远处转移。",
+ i:"诊断依赖足够深的整块活检——浅表活检常只见良性的疣状增生，需要包含病变基底才能评估浸润边界。",
+ x:"以完整手术切除为主，预后良好；须注意约 20% 的病例内部含有普通鳞癌成分（混合型），因此标本必须全面取材。",
+ k:"曾有「放疗可致其间变转化」的说法，现已存疑，但手术仍是首选。关键教训是：活检不够深，就可能把一个癌读成良性增生。"},
+
+{n:"口腔黏膜恶性黑色素瘤",e:"Oral mucosal melanoma",c:"malig",t:8,s:["hp","gin","mx"],p:"moth",a:"50–70 岁，日本与印度人群比例较高；硬腭与上颌牙龈占 80%",
+ u:"黏膜黑色素细胞的恶性肿瘤，与紫外线无关（这与皮肤黑色素瘤不同），分子改变亦不同（KIT 突变较多，BRAF 少）。约 1/3 病例有先行的口腔黑斑。",
+ f:"棕黑色至蓝黑色的斑块或结节，边界不规则、颜色不均，可溃疡出血；约 10%–20% 为无色素型（amelanotic），呈红色肉芽样而极易漏诊。早期完全无痛。",
+ i:"活检（S-100、HMB-45、Melan-A、SOX10 阳性）；影像评估骨破坏与转移。黏膜黑色素瘤无公认的 Breslow 厚度体系，采用单独的 TNM 分期，起点即为 T3。",
+ x:"根治性广泛切除是主要手段；辅助放疗可改善局部控制。晚期用免疫检查点抑制剂（PD-1 抑制剂）与 KIT 抑制剂；黏膜型对免疫治疗的应答率低于皮肤型。",
+ k:"口腔黏膜黑色素瘤预后极差（5 年生存率约 15%–25%），远差于皮肤黑色素瘤。因此任何新出现、增大或颜色改变的口腔色素性病变都应活检，尤其在硬腭与上颌牙龈。"},
+
+{n:"口腔淋巴瘤",e:"Lymphoma of the oral region",c:"malig",t:8,s:["sp","gin","mx","neck"],p:"moth",a:"各年龄；免疫抑制与 HIV 感染者风险显著升高",
+ u:"最常见为弥漫大 B 细胞淋巴瘤，好发于 Waldeyer 环（扁桃体、舌根、鼻咽）与颌骨；结外 NK/T 细胞淋巴瘤（鼻型，EBV 相关）好发于中线部位（腭、鼻腔）并造成毁损性坏死；Burkitt 淋巴瘤在非洲儿童表现为颌骨迅速膨大。",
+ f:"无痛性、迅速增大的软组织肿块或牙龈弥漫肿胀，表面黏膜常完整（与鳞癌溃疡不同）；NK/T 型表现为腭部进行性穿孔坏死伴发热（曾称「致死性中线肉芽肿」）；可有 B 症状（发热、盗汗、体重下降）。",
+ i:"必须取足量新鲜组织送病理与免疫组化、流式与基因重排（细针穿刺常不足以分型）；PET-CT 分期，骨髓活检。",
+ x:"以化疗与免疫治疗为主（R-CHOP 用于 DLBCL；NK/T 型用含培门冬酶方案 + 放疗），手术仅用于取材。淋巴瘤是「不该被手术切除」的口腔恶性肿瘤。",
+ k:"腭部中线进行性坏死穿孔的鉴别诊断包括 NK/T 淋巴瘤、肉芽肿性多血管炎、可卡因滥用与深部真菌感染——这几者的处理南辕北辙，取材与全身评估必须先于任何清创手术。"},
+
+{n:"卡波西肉瘤",e:"Kaposi sarcoma",c:"malig",t:8,s:["hp","gin","tng"],p:"",a:"HIV 感染者（尤其 CD4 低下）与器官移植后免疫抑制者",
+ u:"人疱疹病毒 8 型（HHV-8/KSHV）感染在免疫抑制背景下驱动的血管内皮源性肿瘤。",
+ f:"腭部与牙龈最常见：起初为紫红色斑，逐渐隆起为结节并可溃疡出血；多灶性。在抗逆转录病毒治疗普及前，口腔病损常是 AIDS 的首发表现。",
+ i:"活检见梭形细胞、裂隙样血管腔与红细胞外渗，HHV-8（LANA-1）免疫组化阳性。同时评估 HIV 状态与 CD4 计数。",
+ x:"核心是恢复免疫功能：启动或优化抗逆转录病毒治疗，多数病灶随免疫重建消退；局限病灶可局部化疗注射（长春碱）或放疗；广泛内脏受累用脂质体阿霉素或紫杉醇。",
+ k:"口腔卡波西肉瘤应触发 HIV 检测与感染科转诊。它是「治疗原发免疫缺陷比切除肿瘤更重要」的典型例子。"},
+
+{n:"横纹肌肉瘤",e:"Rhabdomyosarcoma",c:"malig",t:8,s:["skin","mx","md","sp"],p:"moth",a:"儿童与青少年最常见的头颈部软组织肉瘤，中位年龄 5–10 岁",
+ u:"骨骼肌分化的恶性间叶肿瘤；胚胎型（预后较好，PAX-FOXO1 融合阴性）与腺泡型（融合阳性，预后差）。",
+ f:"迅速增大的无痛性肿块，位于眼眶、鼻咽、颞下窝或颌骨；可致眼球突出、鼻塞、面部麻木与脑神经麻痹；「脑膜旁」部位（鼻咽、中耳、翼腭窝）预后较差。",
+ i:"MRI 定范围；活检加融合基因检测决定危险分层；分期需骨髓与全身评估。",
+ x:"多学科综合治疗：化疗（VAC 方案）为骨干 + 手术和/或放疗控制局部；由儿童肿瘤中心主导。局限期患者长期生存率已明显改善。",
+ k:"儿童面部「迅速长大的包块」不要按脓肿或血管瘤处理观察太久。头颈部横纹肌肉瘤的诊断延迟直接影响可切除性与预后。"},
+
+/* ===== 涎腺疾病 ===== */
+{n:"涎石症",e:"Sialolithiasis",c:"sal",t:9,s:["sal","fom","neck"],p:"opaque",a:"30–60 岁男性多见；约 80%–90% 发生于下颌下腺",
+ u:"下颌下腺分泌黏稠、富含钙盐，导管长且走行向上（逆重力），因此最易形成结石；脱水、吸烟与某些药物促进结石形成。",
+ f:"典型的「进食相关」症状：进食时腺体迅速肿胀、剧痛（涎绞痛），进食后数十分钟缓解；口底可沿导管扪及硬结；继发感染时红肿溢脓。",
+ i:"口底咬合片可显示阳性结石（下颌下腺结石多为阳性），腮腺结石常为阴性需超声或 CT；涎腺内镜兼具诊断与治疗价值。",
+ x:"小结石可保暖按摩、酸性刺激促排；导管前段结石经口切开取出；深部或多发结石用涎腺内镜取石、体外冲击波碎石；腺体已纤维化萎缩且反复感染者行腺体切除。",
+ k:"「一吃饭就肿一大块、饭后慢慢消」这句主诉本身就接近诊断。现代趋势是尽量保留腺体（内镜取石），而非一律切除下颌下腺。"},
+
+{n:"急性化脓性腮腺炎",e:"Acute suppurative parotitis",c:"sal",t:3,s:["sal","skin"],p:"",a:"术后、脱水、衰弱的老年患者；免疫抑制者",
+ u:"唾液流量下降（脱水、禁食、抗胆碱能药物）使口腔细菌（主要为金黄色葡萄球菌）经腮腺导管逆行感染。",
+ f:"单侧腮腺区红肿热痛、张口受限、发热；挤压腺体可见腮腺导管口溢脓——这是确诊性体征。",
+ i:"脓液培养 + 药敏；超声或 CT 判断有无脓肿形成。急性期避免做涎腺造影。",
+ x:"补液纠正脱水、加强口腔卫生、酸性物质（柠檬）刺激分泌、按摩腺体、静脉抗生素（覆盖金葡菌）；形成脓肿者切开引流（切口须平行面神经分支走行）。",
+ k:"这是一个高度可预防的疾病：住院与围手术期患者的补液与口腔护理，直接决定它是否发生。"},
+
+{n:"流行性腮腺炎",e:"Mumps",c:"sal",t:3,s:["sal"],p:"",a:"学龄儿童；疫苗接种率下降地区可出现暴发",
+ u:"腮腺炎病毒（副黏病毒科）经飞沫传播，潜伏期 2–3 周。",
+ f:"双侧（可先后）腮腺弥漫肿大、耳垂被上抬、张口与咀嚼痛，导管口红肿但无脓；伴发热头痛。并发症包括睾丸炎（青春期后男性，可致不育）、脑膜脑炎、胰腺炎与感音神经性耳聋。",
+ i:"临床诊断；血清 IgM 抗体或病毒核酸检测确认。血清淀粉酶可升高。",
+ x:"对症支持与隔离（腮腺肿大后 5 天内有传染性）；无特异抗病毒药。预防依靠麻腮风（MMR）疫苗。",
+ k:"「双侧、无脓、有接触史、未接种疫苗」区别于急性化脓性腮腺炎（单侧、导管口溢脓）。这是疫苗可预防疾病的口腔颌面代表。"},
+
+{n:"慢性阻塞性腮腺炎与儿童复发性腮腺炎",e:"Chronic obstructive / juvenile recurrent parotitis",c:"sal",t:2,s:["sal"],p:"",a:"儿童复发性者 3–6 岁起病、青春期后多自愈；成人阻塞性者与导管狭窄相关",
+ u:"儿童型病因不明，可能与先天导管扩张、免疫因素与逆行感染相关；成人型多由导管狭窄、结石或瘢痕造成唾液潴留。",
+ f:"反复发作的单侧或双侧腮腺肿胀伴不适，导管口可挤出「雪花样」或絮状脓性唾液；发作间期基本正常。",
+ i:"涎腺造影或超声见末梢导管点状扩张（如「秋雨落地」）与主导管腊肠样改变；儿童型需与舍格伦综合征及 HIV 相关腺病鉴别。",
+ x:"发作期抗感染与促排（按摩、酸刺激、充分饮水）；间歇期用涎腺内镜冲洗、扩张与灌注激素，可显著减少复发；顽固者极少数需腺体切除。",
+ k:"儿童复发性腮腺炎的家长最需要的信息是：它多在青春期后自行停止，不需要切腺体。涎腺内镜已把这个病的处理从「等待」变成了「干预」。"},
+
+{n:"舍格伦综合征",e:"Sjögren syndrome",c:"sal",t:2,s:["sal","tng","tooth"],p:"",a:"40–60 岁女性（男女比约 1:9）；原发性或继发于类风湿关节炎、系统性红斑狼疮",
+ u:"淋巴细胞浸润破坏外分泌腺的自身免疫病，抗 SSA/Ro 与抗 SSB/La 抗体阳性。",
+ f:"口干（需频繁饮水、进干食困难、义齿固位差）与眼干（异物感）；腮腺反复或持续肿大；舌背乳头萎缩呈「镜面舌」、口角炎、猖獗性根面龋（唾液缓冲与冲洗作用丧失）与念珠菌感染反复发作。",
+ i:"唾液流率测定、Schirmer 试验、抗 SSA/SSB 抗体、下唇小唾液腺活检（灶性淋巴细胞浸润评分≥1）、超声见腺体不均质低回声。",
+ x:"对症为主：人工唾液、含氟制剂与频繁涂氟防龋、无糖木糖醇、毛果芸香碱或西维美林促分泌；眼科人工泪液；系统受累者用羟氯喹或免疫抑制剂。口腔科需建立 3 个月一次的高频防龋随访。",
+ k:"两点必须记住：一是猖獗龋会以极快速度毁掉全口牙列，防龋方案必须比常人更激进；二是本病患者发生黏膜相关淋巴组织（MALT）淋巴瘤的风险升高 15–20 倍，持续单侧腺体肿大需活检。"},
+
+{n:"IgG4 相关性涎腺炎",e:"IgG4-related sialadenitis (Küttner tumour)",c:"sal",t:2,s:["sal","neck"],p:"",a:"中老年男性多见",
+ u:"IgG4 阳性浆细胞浸润与席纹状纤维化导致的系统性免疫性疾病，可同时累及泪腺、胰腺（自身免疫性胰腺炎）、胆管、腹膜后与肾。",
+ f:"双侧下颌下腺（Küttner 瘤）或泪腺+腮腺（Mikulicz 病）无痛性、对称性、质硬肿大；口干程度常轻于舍格伦综合征。",
+ i:"血清 IgG4 升高；病理见 IgG4+/IgG+ 浆细胞比例大于 40%、席纹状纤维化与闭塞性静脉炎；影像评估其他器官受累。",
+ x:"对糖皮质激素反应良好且迅速（这是重要的诊断性特征）；复发者用利妥昔单抗或免疫抑制剂维持。需风湿免疫科长期随访。",
+ k:"过去这些患者常被直接切除腺体。认识到它是一个可用激素治愈的系统性疾病，避免了不必要的手术并让胰腺、肾脏的受累得以及时发现。"},
+
+{n:"多形性腺瘤",e:"Pleomorphic adenoma",c:"sal",t:5,s:["sal","hp","lip"],p:"",a:"最常见的涎腺肿瘤（约占腮腺肿瘤 60%–70%）；30–50 岁女性略多",
+ u:"上皮与肌上皮成分加黏液软骨样间质的良性混合瘤；PLAG1 或 HMGA2 基因重排是分子特征。包膜不完整并有卫星结节向外突出，这是其复发倾向的解剖学基础。",
+ f:"腮腺浅叶（下极最常见）无痛、生长缓慢、质韧、活动的结节；也可见于硬腭（腭部小唾液腺）与上唇。面神经功能正常——这是良性的重要指标。",
+ i:"超声与 MRI（T2 明显高信号、边界清楚分叶状）；细针穿刺细胞学有帮助但不能替代术后病理。腭部者需 CT 评估骨压迫。",
+ x:"腮腺浅叶切除术并保留面神经（而非单纯「摘除肿瘤」）；腭部者连同表面黏膜与骨膜一并切除。禁忌单纯剜除——包膜破裂与卫星结节残留会造成多灶性复发，再次手术时面神经损伤风险大增。",
+ k:"两条：一是复发性多形性腺瘤往往是多灶的、极难根治；二是长期（10–15 年以上）存在的多形性腺瘤有约 5%–10% 恶变为「多形性腺瘤癌变」的风险——多年稳定的肿物突然加速生长或出现面瘫、疼痛，即为警报。"},
+
+{n:"沃辛瘤",e:"Warthin tumour",c:"sal",t:5,s:["sal"],p:"",a:"50–70 岁；与吸烟强相关（风险升高约 8 倍）；男性多见但性别差随女性吸烟率上升而缩小",
+ u:"腮腺内淋巴结中的异位涎腺导管上皮增生，形成嗜酸性上皮 + 淋巴样间质的双层结构。几乎只发生在腮腺（尤其下极）与腮腺周围淋巴结。",
+ f:"腮腺下极柔软至有波动感的无痛肿物，约 10% 为双侧或多灶——这是所有涎腺肿瘤中双侧发生率最高的。可因梗死或炎症而突然增大疼痛。",
+ i:"锝-99m 核素扫描呈「热结节」（与多形性腺瘤的冷结节相反），是相当特异的表现；细针穿刺见嗜酸性细胞与淋巴细胞背景。",
+ x:"局部切除或腮腺浅叶部分切除；复发少见。因恶变极罕见且患者常高龄合并症多，小而无症状者亦可选择随访观察。",
+ k:"「老年吸烟男性、腮腺下极、可双侧、核素热结节」是极具辨识度的组合。它也是唯一一个「戒烟」可算作预防措施的涎腺肿瘤。"},
+
+{n:"基底细胞腺瘤",e:"Basal cell adenoma",c:"sal",t:5,s:["sal","lip"],p:"",a:"中老年女性；腮腺与上唇",
+ u:"由基底样细胞构成、有完整包膜的良性上皮性肿瘤；膜性型可为多发并与皮肤附属器肿瘤（Brooke-Spiegler 综合征）相关。",
+ f:"缓慢生长的无痛性、边界清楚的活动结节，临床上与多形性腺瘤难以区分。",
+ i:"影像与多形性腺瘤相似；病理是唯一可靠的区分手段，需与基底细胞腺癌及腺样囊性癌鉴别。",
+ x:"完整局部切除即可，复发罕见（膜性型除外，其复发率约 25%）。",
+ k:"上唇的小唾液腺肿物中，多形性腺瘤与基底细胞腺瘤是最常见的两类——这提醒我们上唇的「黏液囊肿」需谨慎，因为下唇才是黏液囊肿的常发地。"},
+
+{n:"黏液表皮样癌",e:"Mucoepidermoid carcinoma",c:"sal",t:8,s:["sal","hp","md"],p:"uni",a:"最常见的涎腺恶性肿瘤，也是儿童最常见的涎腺恶性肿瘤；腮腺与腭部",
+ u:"由黏液细胞、表皮样细胞与中间型细胞构成；CRTC1-MAML2 融合基因见于多数低/中级别病例并提示较好预后。放疗史是已知危险因素。",
+ f:"低级别者表现如良性肿瘤——缓慢、无痛、边界清楚，腭部者可呈蓝紫色似黏液囊肿；高级别者生长快、疼痛、面神经麻痹、皮肤固定与淋巴结转移。可发生于颌骨内（中央性黏液表皮样癌），常与含牙囊肿并存。",
+ i:"活检与病理分级（低/中/高级别）是治疗与预后的核心；MRI 评估范围与神经周围侵犯。",
+ x:"手术完整切除为主：低级别者行保留面神经的腮腺浅叶或全叶切除；高级别者需扩大切除 + 颈清扫 + 术后放疗。预后与级别高度相关——低级别 5 年生存率超过 90%，高级别不足 50%。",
+ k:"腭部一个「蓝紫色、像黏液囊肿」的肿物，如果位于硬腭（小唾液腺密集区）而非下唇，应当先想到低级别黏液表皮样癌并送病理。"},
+
+{n:"腺样囊性癌",e:"Adenoid cystic carcinoma",c:"sal",t:8,s:["sal","hp","mx","md"],p:"moth",a:"40–60 岁；小唾液腺（尤其腭部）与下颌下腺比例高",
+ u:"MYB-NFIB 融合基因为特征；以显著的嗜神经性生长（perineural invasion）著称——肿瘤细胞沿神经鞘膜间隙远距离蔓延，可远超肉眼与影像所见的边界。",
+ f:"生长缓慢却持续，早期即可出现与肿块大小不成比例的疼痛、麻木或面瘫（因侵犯神经）；腭部者可沿腭大神经上行至颅底。淋巴结转移少见，但血行转移（尤其肺）常见且可在术后 10–20 年出现。",
+ i:"MRI 是评估神经周围侵犯与颅底受累的必需检查；病理分筛状型、管状型与实体型（实体型预后最差）。",
+ x:"根治性手术切除（追求阴性切缘，必要时牺牲受累神经并做神经移植）+ 术后放疗（对控制神经周围残留有价值）；碳离子/质子治疗在部分中心用于颅底受累者。化疗疗效有限。",
+ k:"它的预后曲线很特别：5 年生存率尚可（约 70%），15–20 年生存率却大幅下降。因此「随访五年就算治愈」的观念对这个病完全不适用，需要终身随访与定期胸部影像。"},
+
+{n:"腺泡细胞癌",e:"Acinic cell carcinoma",c:"sal",t:8,s:["sal"],p:"",a:"任何年龄（含儿童），女性略多；绝大多数在腮腺",
+ u:"具浆液性腺泡分化的低度恶性肿瘤，NR4A3 基因重排为其分子标志。",
+ f:"缓慢生长的无痛性腮腺肿块，临床上常与良性肿瘤无法区分；约 3% 为双侧。可长期稳定后突然进展（高级别转化）。",
+ i:"影像无特异性；诊断依赖病理与免疫组化（DOG1、NR4A3）。",
+ x:"手术完整切除（腮腺浅叶或全叶切除并保留面神经）；高级别转化或切缘阳性者加术后放疗。总体预后良好，但可有晚期复发与转移，需长期随访。",
+ k:"与腺样囊性癌一样，它属于「表现温和但复发很晚」的一类——这类肿瘤真正的危险在于随访被过早终止。"},
+
+{n:"多形性腺瘤癌变",e:"Carcinoma ex pleomorphic adenoma",c:"sal",t:8,s:["sal"],p:"",a:"比多形性腺瘤晚 10–20 年；有长期腮腺肿物病史者",
+ u:"长期存在或反复复发的多形性腺瘤中发生的恶性转化，风险随病程延长而增加（10 年以上约 5%–10%）。",
+ f:"典型病史是「多年不变的肿块近期突然快速增大」，并新出现疼痛、面神经麻痹、皮肤粘连固定与淋巴结肿大。",
+ i:"MRI 见原本边界清楚的肿物出现浸润性边缘；病理需确认残存的多形性腺瘤成分并评估包膜外侵犯范围（微小侵袭者预后接近良性）。",
+ x:"根治性切除（常需牺牲面神经并同期神经移植）+ 颈清扫 + 术后放疗；预后取决于侵袭范围与组织学级别。",
+ k:"这是「早期切除良性肿瘤」这一原则最有力的论据：一个可以在早期用浅叶切除解决的良性肿瘤，拖延十余年后可能需要牺牲面神经的根治性手术。"},
+
+{n:"口干症",e:"Xerostomia / salivary hypofunction",c:"sal",t:9,s:["sal","tng","tooth"],p:"",a:"老年人与多重用药者极为普遍；头颈放疗后几乎必然发生",
+ u:"药物是首要原因（抗胆碱能药、抗抑郁药、抗组胺药、利尿剂等 400 余种）；其次为头颈部放疗、舍格伦综合征、糖尿病、脱水、焦虑与口呼吸。",
+ f:"黏膜干燥发黏、镜面舌、进食干食需水送服、说话不畅、义齿固位差、味觉改变；继发猖獗龋、念珠菌感染与口臭。",
+ i:"静息与刺激唾液流率测定可区分「主观口干感」与真正的分泌减少；查血糖、抗 SSA/SSB、用药清单复核。",
+ x:"审查并调整可疑药物（与内科协作）；人工唾液与含氟制剂、频繁小口饮水、无糖木糖醇口香糖刺激分泌；毛果芸香碱/西维美林用于腺体尚有功能者；放疗患者用调强放疗与腮腺保护技术预防。",
+ k:"口干不是「老了正常」，它是龋病与念珠菌感染的强力放大器。一份完整的用药清单往往就是最有效的诊断工具。"},
+
+{n:"涎腺良性肥大",e:"Sialadenosis / sialosis",c:"sal",t:9,s:["sal"],p:"",a:"中年；与糖尿病、酗酒、进食障碍、营养不良、肥胖相关",
+ u:"非炎症、非肿瘤性的腺泡细胞肥大，被认为与自主神经病变及代谢紊乱有关。",
+ f:"双侧腮腺无痛、对称、柔软的持续性肿大，患者常主诉「脸变方了」；无导管口溢脓、无发热。",
+ i:"超声见腺体均匀增大、回声增强；重点在于全身检查——查糖化血红蛋白、肝功能、营养状态，并在合适的场合温和询问催吐行为。",
+ x:"治疗基础疾病：控糖、戒酒、纠正营养与进食障碍。腺体肿大多随病因控制而减轻；美容需求强烈者极少数考虑手术。",
+ k:"双侧无痛性腮腺肿大是一个「窗口症状」：它可能是未确诊的糖尿病、酒精性肝病或神经性贪食的第一个可见线索。"}
+);
+</script>
+
+<script>
+D.push(
+/* ===== 颞下颌关节疾病 ===== */
+{n:"咀嚼肌紊乱（肌筋膜痛）",e:"Masticatory myofascial pain",c:"tmj",t:9,s:["tmj","skin"],p:"",a:"20–40 岁女性最多；是颞下颌关节紊乱病中最常见的一类",
+ u:"多因素：夜磨牙与日间紧咬（副功能运动）、精神应激与焦虑、睡眠质量差、咬合突然改变、中枢痛觉敏化。与「咬合不正是唯一原因」的旧观念相比，当前证据更支持生物–心理–社会模型。",
+ f:"咬肌与颞肌的钝痛与酸胀，晨起明显、咀嚼硬物加重；扪诊有明确的压痛点并可诱发牵涉痛（常放散至太阳穴、耳前与上下牙列，因此常被误认为牙痛）；张口轻度受限但被动可加大。",
+ i:"依 DC/TMD 标准化触诊与病史；影像用于排除关节结构病变，而非诊断肌痛本身。",
+ x:"以保守可逆治疗为主：宣教与自我管理（软食、限制大张口、避免紧咬）、热敷与按摩、下颌功能训练、稳定型𬌗垫、非甾体抗炎药与肌松剂短期使用、认知行为治疗与睡眠管理。不可逆治疗（大量调𬌗、正畸、手术）应避免。",
+ k:"这是最容易被过度治疗的口腔疾病之一。绝大多数患者可通过可逆治疗显著改善；在明确诊断前磨改牙齿或做全口修复，往往制造新的问题。"},
+
+{n:"可复性关节盘移位",e:"Disc displacement with reduction",c:"tmj",t:9,s:["tmj"],p:"",a:"青年女性多见；人群中弹响相当普遍且多数无需治疗",
+ u:"关节盘（通常向前内侧）移位，闭口时位于髁突前方，开口过程中髁突越过盘后带将其「复位」而产生弹响；与关节囊韧带松弛、外伤、关节负荷过大有关。",
+ f:"开口与闭口时的往复弹响（开口早期与闭口末期各一次）；开口度基本正常；可有轻度不适但常无痛。",
+ i:"临床即可诊断；MRI 是显示关节盘位置的金标准（闭口位盘前移、开口位复位），但无症状者不必常规检查。",
+ x:"无痛、开口正常者只需宣教与观察——不必治疗弹响本身。有疼痛者用保守治疗（同肌筋膜痛）；关节盘复位型𬌗垫可用于特定病例，但长期疗效证据有限。",
+ k:"「有弹响」不等于「有病」。把无痛性弹响当作必须纠正的畸形，是许多不必要治疗的起点。真正需要关注的是弹响消失并伴张口受限——那可能意味着进展为不可复性移位。"},
+
+{n:"不可复性关节盘移位",e:"Disc displacement without reduction (closed lock)",c:"tmj",t:9,s:["tmj"],p:"",a:"多由可复性移位进展而来，也可急性发作",
+ u:"关节盘持续位于髁突前方，开口时不再复位，成为髁突前行的机械阻挡。",
+ f:"急性期：突然张口受限（多在 25–30 mm 以内）、原有弹响消失、下颌开口时偏向患侧、患侧关节疼痛。慢性期：疼痛减轻，开口度可随关节囊与盘后组织的适应而逐渐改善。",
+ i:"临床三联（弹响消失 + 张口受限 + 开口偏向患侧）具高度提示性；MRI 确认盘位置与形态、有无穿孔与骨改变。",
+ x:"急性期可尝试手法复位并随后用𬌗垫维持；多数病例以保守治疗（药物、理疗、渐进性开口训练）即可获得功能改善——「盘不复位而功能恢复」是常见且可接受的结局。顽固者行关节腔灌洗、关节镜或开放手术盘复位。",
+ k:"治疗目标是无痛与足够的开口度，而不是把关节盘放回原位。这一目标的转变，使大量患者免于关节手术。"},
+
+{n:"颞下颌关节骨关节病",e:"TMJ osteoarthritis / degenerative joint disease",c:"tmj",t:9,s:["tmj"],p:"",a:"中老年，女性多见；也可继发于长期的关节盘移位",
+ u:"关节负荷超过适应能力，软骨降解、软骨下骨改建；与年龄、雌激素、关节过度负荷、既往创伤及炎性关节病相关。",
+ f:"关节区钝痛、晨僵、运动时的连续性摩擦音（捻发音，与弹响不同）、开口受限；晚期髁突吸收变短可致后牙早接触与前牙开𬌗。",
+ i:"CBCT 见髁突骨皮质硬化、变平、骨赘、囊样变与侵蚀（这些是诊断标准中的关键征象）；MRI 评估关节盘与积液。",
+ x:"保守为主：软食与关节休息、非甾体抗炎药、𬌗垫、物理治疗与低强度运动；关节腔注射透明质酸或糖皮质激素用于顽固疼痛；晚期结构破坏严重且功能障碍者考虑关节置换。",
+ k:"影像上的骨改变与症状严重程度往往不平行——不少 CBCT 上「很难看」的髁突并不疼。因此治疗针对的是症状与功能，不是影像。"},
+
+{n:"颞下颌关节强直",e:"TMJ ankylosis",c:"tmj",t:9,s:["tmj","md"],p:"",a:"儿童期外伤或感染后数年发生；发展中地区仍较常见",
+ u:"关节内强直多由髁突骨折（尤其儿童囊内骨折）后血肿机化骨化、或化脓性关节炎、类风湿关节炎所致；关节外强直（假性强直）由颧弓骨折错位愈合、放疗或口腔颌面部烧伤瘢痕引起。",
+ f:"进行性开口受限直至完全不能张口；儿童期发病者因下颌生长中心破坏而出现小下颌、「鸟嘴」畸形、面部不对称与严重的阻塞性睡眠呼吸暂停；口腔卫生极差、猖獗龋。",
+ i:"CT 三维重建判断骨性融合的范围与类型（Sawhney 分型），并评估与颅底、翼腭窝的关系；术前必须制定困难气道方案（多需清醒纤支镜插管）。",
+ x:"手术松解：关节成形术（间隙关节成形并置入颞肌筋膜瓣等间置物）或全关节置换；儿童可同期行牵张成骨改善下颌发育。术后早期、长期、坚持的开口训练是防止复发的决定性因素。",
+ k:"复发率高，而复发几乎总是与术后功能训练不足有关。儿童髁突骨折的规范随访与早期功能锻炼，是预防这一致残性疾病最有效的手段。"},
+
+{n:"颞下颌关节脱位",e:"TMJ dislocation",c:"tmj",t:9,s:["tmj"],p:"",a:"急性者见于大张口（打哈欠、拔牙、全麻插管、内镜检查）后；习惯性者见于关节囊松弛与老年人",
+ u:"髁突越过关节结节前方且无法自行退回，咀嚼肌痉挛将其锁定在该位置。",
+ f:"下颌前伸、开口状态无法闭合、流涎、言语不清；双侧脱位时下颌向前突出，单侧脱位时下颌偏向健侧；耳屏前方可扪及凹陷。",
+ i:"临床诊断明确；首次发作者拍片排除髁突骨折。",
+ x:"手法复位（Hippocratic 法：拇指压下后牙、其余指托颏部，向下向后推）；必要时局麻或镇静下进行；复位后限制开口 1–2 周（弹性绷带或颌间牵引）。习惯性脱位可注射硬化剂或肉毒毒素、行关节结节增高/凿平术。",
+ k:"复位后不加限制是再脱位的主因。为张口困难的老人或全麻患者做操作时，托住下颌角的保护性手法可以预防这一并发症。"},
+
+{n:"髁突特发性吸收",e:"Idiopathic condylar resorption",c:"tmj",t:9,s:["tmj","md"],p:"",a:"15–35 岁女性显著多见（男女比约 1:9）；正畸正颌治疗后可加速",
+ u:"病因不明，可能涉及雌激素受体、关节内高负荷与自身免疫因素；正颌手术中髁突位置改变与负荷增加为诱发因素。",
+ f:"进行性的下颌后缩与前牙开𬌗（后牙早接触）、颏部后退，可伴或不伴关节疼痛；面型在数月至数年内持续改变。",
+ i:"系列 CBCT/全景片对比可见髁突高度进行性丢失；MRI 常见关节盘前移与骨髓水肿。需排除类风湿关节炎、幼年特发性关节炎与硬皮病（查自身抗体）。",
+ x:"活动期以稳定关节、减少负荷为主（𬌗垫、限制负荷、必要时药物）；确认病变静止 6–12 个月以上才可实施正颌手术，否则复发率很高；破坏严重者行全关节置换 + 正颌联合。",
+ k:"「年轻女性 + 逐渐加重的前牙开𬌗 + 下颌后缩」这一组合，在做任何正畸或正颌计划之前都必须先识别出来，否则治疗效果会被持续的吸收吞噬。"},
+
+{n:"滑膜软骨瘤病",e:"Synovial chondromatosis",c:"tmj",t:5,s:["tmj"],p:"opaque",a:"40–60 岁女性多见；罕见",
+ u:"滑膜的软骨化生形成多个游离体（关节鼠），可继发钙化与骨化。",
+ f:"关节区肿胀、疼痛、开口受限与摩擦音，症状酷似颞下颌关节紊乱病但对常规保守治疗无反应；可扪及关节区肿块。",
+ i:"CT 见关节间隙内多个大小相近的钙化游离体与关节间隙增宽；MRI 显示未钙化的软骨性游离体与滑膜增厚。可侵蚀颅底，需评估颅内扩展。",
+ x:"手术取出游离体并切除病变滑膜（关节镜或开放手术）；预后良好，复发少见；极少数恶变为软骨肉瘤。",
+ k:"「关节紊乱病治疗数月无效」是一个应当重新做影像的信号。颞下颌关节区的肿瘤性病变虽少，但几乎都是从被当作 TMD 开始的。"},
+
+/* ===== 神经与颌面疼痛 ===== */
+{n:"三叉神经痛",e:"Trigeminal neuralgia",c:"nerve",t:9,s:["skin","tng","gin"],p:"",a:"50 岁以上，女性略多；右侧多于左侧",
+ u:"经典型由颅内血管（多为小脑上动脉）压迫三叉神经根入脑桥区，造成脱髓鞘与异常放电；继发型见于多发性硬化、桥小脑角肿瘤——年轻患者与双侧发作者必须排查。",
+ f:"面部单侧、沿三叉神经分支（多为上颌支 V2 与下颌支 V3）分布的电击样、刀割样剧痛，每次持续数秒至两分钟，有明确的「扳机点」（洗脸、刷牙、说话、咀嚼、风吹可诱发）；发作间期完全无痛；患者常因怕诱发而不敢洗脸进食。",
+ i:"临床诊断；所有患者均应做 MRI（薄层 + 血管成像）以判断神经血管压迫并排除继发病因。神经系统查体若有感觉减退或角膜反射消失，提示继发性。",
+ x:"一线药物为卡马西平或奥卡西平（有效率高，也具诊断价值）；药物无效或不能耐受者行微血管减压术（长期缓解率最高，适合身体条件好者）、经皮球囊压迫/射频热凝、伽玛刀。",
+ k:"最重要的临床教训：三叉神经痛的疼痛常被患者与医生定位到牙齿，导致多次不必要的根管治疗甚至拔牙。「拔了牙还是痛、而且是电击样阵发」应立即重新考虑诊断。"},
+
+{n:"贝尔面瘫",e:"Bell palsy",c:"nerve",t:2,s:["skin"],p:"",a:"任何年龄，15–45 岁多见；妊娠期与糖尿病患者风险升高",
+ u:"特发性周围性面神经麻痹，目前主流认为与单纯疱疹病毒再激活引起的神经水肿及骨性面神经管内受压有关。",
+ f:"数小时至 3 天内急性发生的单侧面部表情肌无力：额纹消失（这是与中枢性面瘫的关键区别——中枢性者额纹存在）、眼睑闭合不全（Bell 现象）、鼻唇沟变浅、口角下垂漏水；可伴同侧味觉减退、听觉过敏与耳后疼痛。",
+ i:"临床诊断。必须排查其他病因：逐渐进展或超过 3 周不改善者、双侧面瘫、伴其他脑神经受累者，需查腮腺肿瘤、莱姆病、Ramsay Hunt 综合征、颅内病变与吉兰-巴雷综合征。",
+ x:"发病 72 小时内口服糖皮质激素（泼尼松龙）显著提高完全恢复率；重症者可联合抗病毒药。角膜保护至关重要——人工泪液、夜间眼膏与眼罩，防止暴露性角膜炎。物理治疗与面肌功能训练辅助。",
+ k:"两点：早期激素的时间窗很窄，识别与转诊必须迅速；额纹是否保留是床旁区分周围性与中枢性（卒中）面瘫的第一步，后者是急症。"},
+
+{n:"面肌痉挛",e:"Hemifacial spasm",c:"nerve",t:9,s:["skin"],p:"",a:"中老年女性多见",
+ u:"多由面神经出脑干区的血管压迫（小脑前下动脉等）引起异位放电；少数继发于肿瘤、动脉瘤或多发性硬化。",
+ f:"单侧面肌不自主的阵发性抽搐，常从眼轮匝肌开始逐渐扩展至口周；紧张、疲劳时加重，睡眠中仍可持续（这一点与功能性抽动不同）。",
+ i:"MRI + 血管成像评估压迫与排除继发病因；肌电图可辅助。",
+ x:"肉毒毒素局部注射是首选的对症治疗，起效快、可重复（疗效维持 3–6 个月）；根治可行微血管减压术。药物（卡马西平、氯硝西泮）效果有限。",
+ k:"须与眼睑痉挛（双侧、以睁眼困难为主）与面瘫后联带运动（有明确面瘫病史）区分——三者的治疗方式并不相同。"},
+
+{n:"下牙槽神经与舌神经损伤",e:"Inferior alveolar / lingual nerve injury",c:"nerve",t:9,s:["md","tng","lip"],p:"",a:"第三磨牙拔除、种植体植入、正颌手术与根管治疗超填后",
+ u:"机械切割、牵拉、压迫（种植体或超充材料）或局麻针刺伤；下牙槽神经损伤致下唇与颏部麻木，舌神经损伤致舌前 2/3 感觉与味觉障碍。",
+ f:"感觉减退（hypoesthesia）、感觉异常（麻刺感）或痛性感觉异常（dysesthesia，最令人困扰）；影响进食、说话、剃须与情绪，痛性者可发展为顽固性神经病理性疼痛。",
+ i:"标准化的感觉测试（轻触、两点辨别、针刺、温度）并绘制麻木区域图，定期复查以判断恢复趋势；CBCT 判断种植体或充填材料是否压迫神经管。",
+ x:"可逆原因应立即处理——种植体压迫神经者应在 24–36 小时内取出或旋出，超填材料尽早清除。早期可用糖皮质激素与维生素 B 族；持续 3 个月无恢复趋势者转诊显微神经外科评估神经修复（吻合或移植），痛性感觉异常按神经病理性疼痛用药。",
+ k:"预防重于处理：术前 CBCT 评估神经管关系、必要时选择冠切除术、种植时保留 2 mm 安全距离。发生后越早干预，恢复机会越大——「先观察半年」可能错过修复窗口。"},
+
+{n:"持续性特发性面痛",e:"Persistent idiopathic facial pain",c:"nerve",t:9,s:["skin","mx","md"],p:"",a:"中年女性多见；常伴焦虑抑郁与既往多次口腔治疗史",
+ u:"病因不明的慢性面痛，被认为涉及中枢痛觉调制异常与神经可塑性改变；部分病例继发于牙科手术（此时称为「牙源性神经病理性疼痛」）。",
+ f:"持续性、深在、难以精确定位的钝痛或烧灼痛，不沿神经解剖分布、无扳机点、无神经功能缺损；检查与影像均无阳性发现；疼痛常跨越中线或部位游走。",
+ i:"排除性诊断：必须先系统排除牙源性疾病、鼻窦疾病、颞下颌关节紊乱、三叉神经痛与颅内病变。",
+ x:"避免进一步的有创牙科治疗（每一次不必要的治疗都可能加重疼痛）；用三环类抗抑郁药（阿米替林）或 SNRI、加巴喷丁类；联合认知行为治疗与疼痛专科的多学科管理；建立现实的治疗预期。",
+ k:"这类患者最大的风险是「治疗性损伤」——因反复求诊而接受一系列根管治疗、拔牙与手术，疼痛却持续存在甚至加重。识别它，本身就是一种保护。"},
+
+/* ===== 颌面创伤 ===== */
+{n:"牙外伤",e:"Dental trauma: luxation & avulsion",c:"trauma",t:9,s:["tooth","gin"],p:"",a:"1–3 岁学步期与 8–12 岁运动期两个高峰；上中切牙最常受累",
+ u:"跌倒、碰撞、运动损伤与暴力；上前牙前突与唇闭合不全者风险显著增高。",
+ f:"按 Andreasen 分类：震荡、亚脱位、侧向脱位、挫入、部分脱出与完全脱出（撕脱）；牙体折断分为釉质折裂、冠折露髓、冠根折与根折。挫入的乳牙可能损伤下方恒牙胚。",
+ i:"多角度根尖片（含偏心投照）与 CBCT 判断根折与牙槽骨骨折；记录牙髓活力基线并定期复查（活力测试在外伤后早期可假阴性）。",
+ x:"完全脱出的恒牙是真正的急症：立即在现场用生理盐水或牛奶冲洗（勿刷洗牙根、勿触碰牙根面）后再植并咬住手帕固定，或将牙保存在牛奶/生理盐水/唾液中立即就诊；离体干燥时间超过 60 分钟预后急剧变差。再植后弹性固定 2 周、评估根管治疗时机、抗生素与破伤风预防。脱位牙复位固定，冠折露髓者行盖髓或部分活髓切断以保存牙髓活力。",
+ k:"公众教育就是治疗的一部分：「牙掉了要用牛奶泡着、越快越好、别擦牙根」这三句话，比诊室里的任何操作都更能决定这颗牙的存亡。乳牙撕脱则不做再植（避免损伤恒牙胚）。"},
+
+{n:"牙槽突骨折",e:"Alveolar process fracture",c:"trauma",t:9,s:["gin","mx","md"],p:"",a:"外伤伴多颗牙同时移位时",
+ u:"直接暴力使含牙的牙槽骨节段整体骨折移位，常与牙脱位并存。",
+ f:"数颗牙作为一个整体活动（这是与单纯牙脱位的鉴别点）、咬合错乱、牙龈撕裂出血。",
+ i:"根尖片与 CBCT 显示骨折线；检查有无邻近下颌骨或上颌骨骨折。",
+ x:"局麻下手法复位骨折段并恢复咬合，用夹板（钢丝复合树脂或正畸弓丝）弹性固定 4 周；缝合软组织撕裂；随访受累牙的牙髓活力，坏死者行根管治疗。",
+ k:"复位的目标是恢复咬合关系而非「看起来整齐」；固定时间比单纯牙脱位更长，因为愈合的是骨。"},
+
+{n:"下颌骨骨折",e:"Mandibular fracture",c:"trauma",t:9,s:["md","tooth"],p:"",a:"面部骨折中最常见之一；青年男性、交通事故、斗殴与跌倒",
+ u:"下颌骨呈弓形且有多个薄弱区（髁突颈、下颌角第三磨牙区、颏孔区、正中联合），力在一处输入常在对侧或髁突产生间接骨折——因此双发骨折很常见。",
+ f:"咬合错乱（最敏感的体征）、局部疼痛肿胀与台阶感、异常动度、开口受限、下唇麻木（下牙槽神经受累）、口底血肿（提示骨折）；髁突骨折表现为患侧后牙早接触与颏部偏向患侧。",
+ i:"全景片 + CT（三维重建），CT 对髁突与正中联合区更可靠。必须系统检查双侧髁突——单发骨折的诊断应保持怀疑。",
+ x:"以恢复咬合关系为首要目标：无移位者保守（软食、观察）或颌间牵引；移位骨折行切开复位内固定（钛板螺钉，遵循 Champy 张力带原则）。髁突骨折的开放与保守治疗仍有争议，儿童与髁突头骨折多倾向保守 + 早期功能训练以保护生长中心。",
+ k:"两个高频疏漏：一是只看到明显的体部骨折而漏掉对侧髁突骨折；二是儿童髁突骨折未做功能训练与长期随访，多年后发展为关节强直与面部不对称。"},
+
+{n:"上颌骨 Le Fort 骨折",e:"Le Fort fractures of the maxilla",c:"trauma",t:9,s:["mx","hp","skin"],p:"",a:"高能量损伤：交通事故、坠落、暴力击打",
+ u:"René Le Fort 通过尸体实验归纳出上颌骨的三条力学薄弱线。实际临床中骨折常为混合型与不对称型。",
+ f:"Ⅰ 型（水平型）：上颌牙槽突以上水平断裂，牙列与硬腭整体活动（「浮动上颌」）。Ⅱ 型（锥形）：经鼻额缝、眶下缘、上颌窦向后，出现眶周瘀斑（「熊猫眼」）、眶下神经麻木与鼻出血。Ⅲ 型（颅面分离）：经鼻额缝、眶壁、颧额缝，整个面中份与颅底分离，面部拉长变扁（「盘状面」）；Ⅱ/Ⅲ 型可伴脑脊液鼻漏。",
+ i:"颌面部 CT 三维重建为标准；同时评估颈椎、颅内损伤与眼球（视力必须记录）。",
+ x:"急救优先级为气道—出血—颈椎—颅脑，面部骨折的确定性处理可延期。手术行切开复位内固定，按「由外向内、由上向下」重建面部支柱（垂直与水平支柱），恢复面中份高度、宽度与突度及咬合关系；脑脊液漏多在复位固定后自愈。",
+ k:"面中份骨折患者的第一件事永远不是骨折本身：气道可能被移位的上颌与出血阻塞，且高能量损伤合并颈椎损伤与颅脑损伤的比例很高。「先救命、后整形」是这一类损伤的铁律。"},
+
+{n:"颧骨颧弓复合体骨折",e:"Zygomaticomaxillary complex fracture",c:"trauma",t:9,s:["skin","mx"],p:"",a:"面部第二常见骨折；侧方暴力",
+ u:"颧骨通过四处连接（颧额缝、颧上颌缝、颧颞缝、眶下缘/眶底）与颅面骨相接，侧方受力时整体塌陷内移。",
+ f:"颧部塌陷（早期常被肿胀掩盖，需在肿胀消退后复查）、眶下神经分布区麻木、张口受限（内陷的颧弓阻挡喙突）、结膜下出血、眼球内陷与复视（合并眶底骨折时）、台阶感。",
+ i:"CT 冠状位与三维重建；眼科评估视力、眼球运动与被动牵拉试验。",
+ x:"无移位且无功能障碍者可观察；移位者行切开复位内固定，通过眉弓外侧、下睑与口内前庭沟切口显露并固定颧额缝、眶下缘与颧上颌支柱；单纯颧弓塌陷可用颞部（Gillies）入路撬起复位。",
+ k:"「张口受限」在颧弓骨折中不是关节问题而是机械阻挡，容易被误诊为颞下颌关节损伤。眼球运动受限与复视需与眶底骨折的肌肉嵌顿一并评估。"},
+
+{n:"眶底爆裂性骨折",e:"Orbital blow-out fracture",c:"trauma",t:9,s:["skin","mx"],p:"",a:"拳击、球类撞击等钝性眼部外伤",
+ u:"眼球受钝力挤压使眶内压骤升，力量沿最薄弱的眶底（上颌窦顶）与眶内壁传导致骨折，眶内容物疝入上颌窦。",
+ f:"复视（尤其向上注视时）、眼球运动受限、眼球内陷、眶下神经区麻木、眶周气肿（擤鼻后加重）；儿童的「活门型（trapdoor）」骨折可嵌顿下直肌并引起眼心反射（恶心、心动过缓），属急症。",
+ i:"CT 冠状位是标准；被动牵拉试验区分肌肉嵌顿与神经性运动障碍。",
+ x:"儿童活门型伴肌肉嵌顿与眼心反射者需在 24–48 小时内急诊手术。成人多在肿胀消退后（1–2 周内）评估：缺损大（超过 1–2 cm²）、明显眼球内陷或持续复视者行眶底重建（钛网或可吸收材料）；无症状小骨折可观察。",
+ k:"儿童的眶底骨折与成人处理时限完全不同——「白眼球爆裂骨折」外观损伤轻微却可能因肌肉缺血坏死而遗留永久性复视。见到外伤后向上看即复视伴恶心呕吐的儿童，应急诊转眼科/颌面外科。"},
+
+{n:"颌面部软组织损伤",e:"Maxillofacial soft tissue injury",c:"trauma",t:9,s:["skin","lip","buc","tng"],p:"",a:"各类外伤；犬咬伤在儿童中占相当比例",
+ u:"锐器割伤、钝器挫裂伤、撕脱伤与动物咬伤；面部血供丰富故愈合能力强、感染率低于身体其他部位。",
+ f:"出血、组织缺损与错位；需特别评估三类深部结构损伤——面神经（分支断裂在耳屏至口角连线外侧需探查吻合）、腮腺导管（颊部贯通伤）与泪小管（内眦区损伤）。",
+ i:"仔细探查伤口深度与异物（玻璃、砂石、牙碎片需拍片确认）；口内贯通伤须检查牙齿是否缺失并考虑误吸/嵌入软组织。",
+ x:"充分清洗与清创（保守去除组织，面部血供好）、分层缝合并精确对位关键标志（唇红缘、眉、睑缘）；面神经与腮腺导管断裂应在显微镜下一期修复；破伤风预防与狂犬病暴露后处置（犬咬伤）；抗生素用于污染伤口、咬伤与贯通伤。",
+ k:"面部缝合的成败往往取决于第一次：唇红缘对位偏差 1 mm 即肉眼可见。因此唇部裂伤应在麻醉浸润前先标记唇红缘（浸润后标志会变形）。"},
+
+/* ===== 全身疾病的口腔表现 ===== */
+{n:"白血病的口腔表现",e:"Oral manifestations of leukaemia",c:"sys",t:8,s:["gin","buc","tng"],p:"moth",a:"急性单核细胞性与粒单核细胞性白血病最易出现牙龈浸润",
+ u:"白血病细胞浸润牙龈组织，加之血小板减少、粒细胞缺乏与贫血共同造成口腔表现。",
+ f:"牙龈弥漫性肿大（可覆盖牙冠）、色泽苍白或暗红、易出血且与菌斑量不成比例；自发性牙龈出血与瘀斑、口腔黏膜苍白、坏死性溃疡与顽固感染、拔牙后出血不止。可伴发热、乏力、骨痛与淋巴结肿大。",
+ i:"血常规（白细胞异常、贫血、血小板减少）+ 外周血涂片是最快捷的线索；确诊靠骨髓穿刺与流式细胞术。",
+ x:"立即转诊血液科；口腔处理以保守与支持为主（温和清洁、氯己定、防治真菌与疱疹感染），化疗期间避免任何有创操作，必要的拔牙需在血象允许并有血制品支持时进行。",
+ k:"口腔科医生有可能是第一个发现急性白血病的人：「牙龈肿得厉害、菌斑却不多、还自发出血」这一组合应立即开一张血常规，而不是安排洁治。"},
+
+{n:"贫血与营养缺乏的口腔表现",e:"Oral signs of anaemia & nutritional deficiency",c:"sys",t:9,s:["tng","lip","buc"],p:"",a:"育龄期女性、老年人、素食者、胃肠吸收障碍与减重手术后",
+ u:"缺铁、维生素 B12、叶酸缺乏影响口腔上皮的快速更新；恶性贫血由内因子缺乏导致 B12 吸收障碍。",
+ f:"舌乳头萎缩、舌面光滑发红（萎缩性舌炎/镜面舌）伴灼痛、口角炎、黏膜苍白、复发性口腔溃疡增多；B12 缺乏另有神经系统症状（肢体麻木、步态不稳）。缺铁 + 吞咽困难 + 食管蹼 = Plummer-Vinson 综合征，与下咽癌风险相关。",
+ i:"血常规、血清铁蛋白（最敏感的铁储备指标）、维生素 B12、叶酸、同型半胱氨酸；铁缺乏的成年男性与绝经后女性必须查消化道来源。",
+ x:"补充相应营养素并同时寻找病因——尤其是消化道慢性失血与吸收障碍；口腔症状多在纠正后数周内改善。",
+ k:"「舌痛、口角裂、反复溃疡」三者同时出现时，一次血常规加铁蛋白往往比任何局部用药更有价值。成人缺铁性贫血本身就是一个需要查明原因的信号。"},
+
+{n:"糖尿病的口腔表现",e:"Oral manifestations of diabetes mellitus",c:"sys",t:9,s:["gin","tng","sal"],p:"",a:"血糖控制不佳者；2 型糖尿病患者中相当比例首诊时已有牙周破坏",
+ u:"高血糖导致微血管病变、中性粒细胞功能受损、晚期糖基化终末产物蓄积与胶原代谢异常，使牙周组织对菌斑的反应放大且修复能力下降。",
+ f:"重度或进展迅速的牙周炎（被称为糖尿病的「第六并发症」）、反复牙周脓肿、口干、念珠菌感染反复发作、口角炎、伤口愈合迟缓、烧灼感与味觉改变。",
+ i:"糖化血红蛋白（HbA1c）反映近 3 个月控制水平；对未确诊者，重度牙周炎可作为筛查糖尿病的提示。",
+ x:"牙周治疗与血糖控制互为因果、必须同步推进：规范的牙周治疗可使 HbA1c 下降约 0.3%–0.4%（相当于加用一种降糖药的效果）。择期手术宜在 HbA1c 控制后进行，术前评估低血糖风险与感染预防。",
+ k:"这是内科与口腔科真正需要互相转诊的场景：血糖控制不好，牙周治疗效果打折；牙周炎不治，血糖也更难控制。"},
+
+{n:"HIV 感染的口腔表现",e:"Oral manifestations of HIV/AIDS",c:"sys",t:3,s:["tng","hp","gin","sal"],p:"",a:"CD4 计数下降者；抗逆转录病毒治疗普及后发生率显著降低",
+ u:"细胞免疫功能缺陷使机会性感染与病毒相关肿瘤易于发生。",
+ f:"口腔念珠菌病（最常见）、口腔毛状白斑（EBV 相关，舌侧缘垂直白色皱褶、不能擦去、几乎特异于 HIV）、卡波西肉瘤（腭部紫红斑块）、线性牙龈红斑与坏死性牙周病、复发性阿弗他溃疡加重、唾液腺疾病与口干、非霍奇金淋巴瘤。",
+ i:"这些病损常是免疫抑制的第一个可见标志；发现后应在知情同意下建议 HIV 检测并转诊感染科。",
+ x:"核心是启动或优化抗逆转录病毒治疗——免疫重建后多数口腔病损消退；同时对症治疗各类机会感染。全程遵守标准预防措施（对所有患者一视同仁）。",
+ k:"口腔毛状白斑与坏死性牙周病在成年人中出现时，应主动、非评判性地建议 HIV 检测。早期发现与治疗使 HIV 成为可控的慢性病。"},
+
+{n:"口面部肉芽肿病与克罗恩病",e:"Orofacial granulomatosis / Crohn disease",c:"sys",t:2,s:["lip","buc","gin"],p:"",a:"青少年与青年；部分为克罗恩病的口腔前驱表现",
+ u:"非干酪样肉芽肿性炎症，可为特发性、食物或添加剂过敏（肉桂醛、苯甲酸盐），或作为克罗恩病、结节病的口腔表现。",
+ f:"持续性、无痛性唇肿（多为下唇，反复发作后成为永久性巨唇）、颊黏膜「鹅卵石样」增生、线状溃疡与黏膜赘生物、牙龈肿胀。Melkersson-Rosenthal 综合征为唇肿 + 面瘫 + 沟纹舌三联征。",
+ i:"活检见非干酪样肉芽肿；须排查克罗恩病（粪钙卫蛋白、肠镜）、结节病（胸片、血管紧张素转换酶）与结核。儿童患者中相当比例最终确诊为克罗恩病。",
+ x:"饮食排除试验（肉桂与苯甲酸盐）对部分患者有效；病灶内注射曲安奈德为局部一线；顽固者用全身激素、沙利度胺、免疫抑制剂或抗 TNF 生物制剂。合并克罗恩病者随消化道治疗改善。",
+ k:"持续性唇肿在儿童与青少年中出现时，肠道症状可能尚未出现——口腔科的一次活检与转诊，可能使克罗恩病提前数年确诊。"},
+
+{n:"阻塞性睡眠呼吸暂停与颌骨形态",e:"Obstructive sleep apnoea & craniofacial morphology",c:"sys",t:9,s:["md","tng","sp"],p:"",a:"中年超重男性与绝经后女性；儿童以腺样体扁桃体肥大为主因",
+ u:"睡眠时上气道塌陷。颅面因素占重要地位：下颌后缩与小下颌、上颌狭窄、舌体肥大、舌骨位置低、软腭冗长；肥胖与颈围增大为叠加因素。",
+ f:"响亮鼾声伴呼吸暂停、夜间憋醒、晨起头痛口干、日间嗜睡、注意力与情绪障碍；长期未治与高血压、心律失常、卒中和交通事故风险相关。儿童表现为张口呼吸、遗尿、多动与生长发育迟缓。",
+ i:"多导睡眠监测（PSG）确诊并计算 AHI；口腔科可提供的线索包括 Mallampati/Friedman 分级、扁桃体大小、头影测量的后气道间隙与舌骨位置。",
+ x:"持续气道正压通气（CPAP）为中重度成人的一线。口腔科的角色明确而重要：轻中度或不耐受 CPAP 者用下颌前移矫治器（MAD）；儿童优先腺样体扁桃体切除，上颌狭窄者行快速扩弓；重度骨性畸形者行上下颌前移术（MMA），其治愈率在外科术式中最高。",
+ k:"口腔科医生常常是第一个注意到「下颌后缩 + 舌体大 + 磨牙」的人。把这些形态学线索与打鼾主诉联系起来并转诊睡眠监测，其价值可能超过绝大多数常规治疗。"}
+);
+</script>
+
+<style>
+:root{--tissue:#E3C9CD;--tissue-2:#EDDADC;--bonet:#E0DBD0;--bonet-2:#EAE6DD;
+  --xbone:#585F67;--xdark:#1B2127;--xrim:#D4DDE5;--xhaze:#7E868E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --tissue:#4C343A;--tissue-2:#3C2A2F;--bonet:#3B382F;--bonet-2:#2F2D27;
+  --xbone:#4A5058;--xdark:#0E1216;--xrim:#AEB9C3;--xhaze:#6B747C}}
+:root[data-theme="dark"]{--tissue:#4C343A;--tissue-2:#3C2A2F;--bonet:#3B382F;--bonet-2:#2F2D27;
+  --xbone:#4A5058;--xdark:#0E1216;--xrim:#AEB9C3;--xhaze:#6B747C}
+.rg.on .rg-shape{fill:var(--ink)!important}
+.rg.on text{fill:var(--panel)}
+.rg .hit{fill:transparent}
+.mapstatic .rg{cursor:default;pointer-events:none}
+body.has-tray{padding-bottom:62px}
+</style>
+
+<script>
+/* ---------- tiny svg helpers ---------- */
+const NS="http://www.w3.org/2000/svg";
+function el(t,a,kids){const e=document.createElementNS(NS,t);
+  for(const k in a||{})e.setAttribute(k,a[k]);
+  (kids||[]).forEach(c=>e.appendChild(c));return e;}
+function svg(vb,cls){const s=el("svg",{viewBox:vb,role:"img"});if(cls)s.setAttribute("class",cls);return s;}
+function txt(x,y,s,attr){const t=el("text",Object.assign({x:x,y:y},attr||{}));t.textContent=s;return t;}
+const rad=d=>d*Math.PI/180;
+
+/* deterministic pseudo-random for organic shapes */
+function rnd(seed){let s=seed;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+function blob(cx,cy,rx,ry,pts,jit,seed){
+  const r=rnd(seed),P=[];
+  for(let i=0;i<pts;i++){const a=i/pts*Math.PI*2,f=1+(r()-.5)*jit;
+    P.push([cx+Math.cos(a)*rx*f,cy+Math.sin(a)*ry*f]);}
+  let d="M "+((P[0][0]+P[pts-1][0])/2).toFixed(1)+" "+((P[0][1]+P[pts-1][1])/2).toFixed(1);
+  for(let i=0;i<pts;i++){const c=P[i],n=P[(i+1)%pts];
+    d+=" Q "+c[0].toFixed(1)+" "+c[1].toFixed(1)+" "+((c[0]+n[0])/2).toFixed(1)+" "+((c[1]+n[1])/2).toFixed(1);}
+  return d+" Z";
+}
+
+/* ---------- intraoral concentric region map ---------- */
+const CX=150,CY=127,R=128,K=.84;
+function pt(r,a){return[CX+R*r*Math.cos(rad(a)),CY+R*r*K*Math.sin(rad(a))];}
+function seg(r1,r2,a1,a2){
+  const A=pt(r2,a1),B=pt(r2,a2),C=pt(r1,a2),Dp=pt(r1,a1);
+  const big=(a2-a1)>180?1:0, R2x=(R*r2).toFixed(1),R2y=(R*r2*K).toFixed(1),
+        R1x=(R*r1).toFixed(1),R1y=(R*r1*K).toFixed(1);
+  if(r1<=0) return `M ${CX} ${CY} L ${A[0].toFixed(1)} ${A[1].toFixed(1)} A ${R2x} ${R2y} 0 ${big} 1 ${B[0].toFixed(1)} ${B[1].toFixed(1)} Z`;
+  return `M ${A[0].toFixed(1)} ${A[1].toFixed(1)} A ${R2x} ${R2y} 0 ${big} 1 ${B[0].toFixed(1)} ${B[1].toFixed(1)}`
+       + ` L ${C[0].toFixed(1)} ${C[1].toFixed(1)} A ${R1x} ${R1y} 0 ${big} 0 ${Dp[0].toFixed(1)} ${Dp[1].toFixed(1)} Z`;
+}
+const INTRA=[
+ {s:"lip", n:"唇",       tone:"--tissue-2", segs:[[.80,1,235,305],[.80,1,55,125]],  lab:[[.90,270]]},
+ {s:"buc", n:"颊",       tone:"--tissue",   segs:[[.80,1,305,415],[.80,1,125,235]], lab:[[.90,332],[.90,208]]},
+ {s:"gin", n:"牙龈·牙槽", tone:"--bonet",   segs:[[.60,.80,200,340],[.60,.80,20,160]], lab:[[.70,270],[.70,90]]},
+ {s:"rmt", n:"磨牙后",    tone:"--bonet-2",  segs:[[.60,.80,160,200],[.60,.80,340,380]], lab:[[.70,180],[.70,0]]},
+ {s:"hp",  n:"硬腭",     tone:"--tissue-2", segs:[[.30,.60,180,360]], lab:[[.45,270]]},
+ {s:"sp",  n:"软腭·口咽", tone:"--tissue",   segs:[[0,.30,180,360]],   lab:[[.16,272]]},
+ {s:"tng", n:"舌",       tone:"--tissue",   segs:[[0,.42,0,180]],     lab:[[.20,90]]},
+ {s:"fom", n:"口底",     tone:"--tissue-2", segs:[[.42,.60,0,180]],   lab:[[.51,90]]}
+];
+function intraMap(interactive,highlight){
+  const s=svg("0 0 300 248",interactive?"":"mapstatic");
+  s.appendChild(el("title",{},[])).textContent="口腔各分区示意图";
+  INTRA.forEach(rg=>{
+    const on=highlight&&highlight.includes(rg.s);
+    const g=el("g",{class:"rg"+(on?" on":""),"data-site":rg.s});
+    if(interactive){g.setAttribute("tabindex","0");g.setAttribute("role","button");
+      g.setAttribute("aria-label",rg.n);}
+    rg.segs.forEach(sg=>g.appendChild(el("path",{d:seg(sg[0],sg[1],sg[2],sg[3]),
+      class:"rg-shape",fill:"var("+rg.tone+")"})));
+    rg.lab.forEach(l=>{const p=pt(l[0],l[1]);g.appendChild(txt(p[0].toFixed(1),p[1].toFixed(1),rg.n));});
+    const t=el("title");t.textContent=rg.n;g.appendChild(t);
+    s.appendChild(g);
+  });
+  return s;
+}
+
+/* ---------- lateral view map ---------- */
+const LAT=[
+ {s:"tmj", n:"颞下颌关节",shapes:[["circle",{cx:116,cy:105,r:11}]],tone:"--bonet-2",
+  lab:[44,78],lead:[[68,84],[105,99]]},
+ {s:"sal", n:"涎腺",shapes:[["ellipse",{cx:80,cy:152,rx:21,ry:31}],["ellipse",{cx:130,cy:234,rx:27,ry:14}]],
+  tone:"--tissue",lab:[78,152]},
+ {s:"mx",  n:"上颌骨",shapes:[["path",{d:"M 140 144 L 194 148 Q 202 149 201 157 L 199 172 L 140 172 Z"}]],
+  tone:"--bonet",lab:[170,161]},
+ {s:"md",  n:"下颌骨",shapes:[["path",{d:"M 102 124 L 102 194 Q 102 213 123 215 L 189 210 Q 201 209 200 199 L 197 187 L 138 189 L 138 124 Q 138 113 120 113 Q 102 113 102 124 Z"}]],
+  tone:"--bonet",lab:[166,202]},
+ {s:"skin",n:"面部软组织",shapes:[["ellipse",{cx:170,cy:116,rx:32,ry:20}]],tone:"--tissue-2",lab:[170,116]},
+ {s:"neck",n:"颈部",shapes:[["path",{d:"M 86 250 L 160 254 L 174 292 L 76 292 Z"}]],tone:"--tissue-2",lab:[124,274]}
+];
+const HEAD="M 124 30 C 172 22 216 52 220 96 C 222 112 216 120 218 128 C 222 136 231 142 229 148 "+
+ "C 227 154 215 154 213 158 C 211 164 215 168 209 173 C 203 179 207 185 205 191 "+
+ "C 203 201 213 205 207 213 C 201 223 183 229 167 233 C 153 237 141 239 133 245 L 129 253 "+
+ "L 86 249 C 74 213 66 177 70 141 C 74 89 90 40 124 30 Z";
+function teeth(){
+  const g=el("g",{});
+  for(let i=0;i<6;i++){const x=147+i*8;
+    g.appendChild(el("rect",{x:x,y:173,width:6,height:13,rx:1.5,
+      fill:"var(--panel)",stroke:"var(--line)","stroke-width":.9}));}
+  return g;
+}
+function latMap(interactive,highlight){
+  const s=svg("0 0 262 292",interactive?"":"mapstatic");
+  s.appendChild(el("path",{d:HEAD,fill:"var(--panel-2)",stroke:"var(--line)","stroke-width":"1.2"}));
+  LAT.forEach(rg=>{
+    const on=highlight&&highlight.includes(rg.s);
+    const g=el("g",{class:"rg"+(on?" on":""),"data-site":rg.s});
+    if(interactive){g.setAttribute("tabindex","0");g.setAttribute("role","button");
+      g.setAttribute("aria-label",rg.n);}
+    if(rg.lead)g.appendChild(el("path",{class:"lead",
+      d:"M "+rg.lead[0][0]+" "+rg.lead[0][1]+" L "+rg.lead[1][0]+" "+rg.lead[1][1]}));
+    rg.shapes.forEach(sh=>g.appendChild(el(sh[0],Object.assign({class:"rg-shape",
+      fill:"var("+rg.tone+")"},sh[1]))));
+    g.appendChild(txt(rg.lab[0],rg.lab[1],rg.n));
+    const t=el("title");t.textContent=rg.n;g.appendChild(t);
+    s.appendChild(g);
+    if(rg.s==="mx")s.appendChild(teeth());
+  });
+  return s;
+}
+
+/* ---------- radiographic pattern tiles ---------- */
+function filmBase(w,h){
+  const s=svg("0 0 "+w+" "+h);
+  s.appendChild(el("rect",{x:0,y:0,width:w,height:h,fill:"var(--xbone)"}));
+  return s;
+}
+function patternSVG(id,w,h){
+  const s=filmBase(w,h),sx=w/128,sy=h/80,S=(x,y)=>[x*sx,y*sy];
+  const dark="var(--xdark)",rim="var(--xrim)",bone="var(--xbone)",haze="var(--xhaze)";
+  const g=el("g",{transform:"scale("+sx+","+sy+")"});
+  if(id==="uni"){
+    g.appendChild(el("ellipse",{cx:64,cy:40,rx:33,ry:22,fill:dark,stroke:rim,"stroke-width":2}));
+  }else if(id==="multi"){
+    const cs=[[44,36,17],[68,30,15],[80,48,16],[52,54,14],[64,42,12]];
+    cs.forEach(c=>g.appendChild(el("circle",{cx:c[0],cy:c[1],r:c[2],fill:dark})));
+    cs.forEach(c=>g.appendChild(el("circle",{cx:c[0],cy:c[1],r:c[2],fill:"none",stroke:rim,"stroke-width":1.4,opacity:.85})));
+  }else if(id==="mixed"){
+    g.appendChild(el("ellipse",{cx:64,cy:40,rx:34,ry:23,fill:dark,stroke:rim,"stroke-width":1.8}));
+    [[52,34,5],[68,32,7],[75,45,5],[58,48,6],[64,40,3]].forEach(c=>
+      g.appendChild(el("circle",{cx:c[0],cy:c[1],r:c[2],fill:rim,opacity:.9})));
+  }else if(id==="opaque"){
+    g.appendChild(el("path",{d:blob(64,40,30,20,10,.28,7),fill:rim}));
+    g.appendChild(el("path",{d:blob(64,40,35,25,10,.28,7),fill:"none",stroke:dark,"stroke-width":2.6,opacity:.7}));
+  }else if(id==="ground"){
+    const fid="gg"+(patternSVG.seq=(patternSVG.seq||0)+1);
+    const f=el("filter",{id:fid});
+    f.appendChild(el("feTurbulence",{type:"fractalNoise",baseFrequency:"0.55",numOctaves:"3",seed:"4"}));
+    f.appendChild(el("feColorMatrix",{type:"saturate",values:"0"}));
+    s.appendChild(f);
+    g.appendChild(el("ellipse",{cx:64,cy:40,rx:36,ry:24,fill:haze}));
+    g.appendChild(el("ellipse",{cx:64,cy:40,rx:36,ry:24,filter:"url(#"+fid+")",opacity:.55}));
+  }else if(id==="moth"){
+    [[46,34,13,9,3],[64,30,11,8,11],[78,42,13,10,5],[56,50,12,8,19],[70,52,10,7,23]].forEach(c=>
+      g.appendChild(el("path",{d:blob(c[0],c[1],c[2],c[3],9,.55,c[4]),fill:dark})));
+  }else if(id==="sun"){
+    for(let i=0;i<17;i++){const a=rad(-180+i*180/16);
+      g.appendChild(el("line",{x1:64+Math.cos(a)*14,y1:52+Math.sin(a)*9,
+        x2:64+Math.cos(a)*40,y2:52+Math.sin(a)*32,stroke:rim,"stroke-width":1.6,opacity:.9}));}
+    g.appendChild(el("ellipse",{cx:64,cy:54,rx:26,ry:12,fill:dark,opacity:.85}));
+    g.appendChild(el("rect",{x:16,y:56,width:96,height:5,fill:rim,opacity:.55}));
+  }
+  s.appendChild(g);
+  return s;
+}
+</script>
+
+<script>
+/* ---------- reference plates ---------- */
+function figGrowth(){
+  const s=svg("0 0 360 130"),d="var(--xdark)",r="var(--xrim)",b="var(--xbone)";
+  s.appendChild(el("rect",{x:0,y:0,width:360,height:130,fill:b}));
+  const cap=(x,t)=>{const e=txt(x,120,t,{fill:r,"font-size":11,"text-anchor":"middle",
+    "font-family":"var(--sans)"});s.appendChild(e);};
+  /* cyst: smooth expansion, dense white rim */
+  s.appendChild(el("ellipse",{cx:60,cy:56,rx:38,ry:27,fill:d,stroke:r,"stroke-width":3}));
+  cap(60,"囊肿 · 膨胀 · 骨白线完整");
+  /* benign tumour: lobulated, cortex thinned but continuous */
+  s.appendChild(el("path",{d:blob(180,56,38,27,9,.22,13),fill:d,stroke:r,"stroke-width":1.8}));
+  s.appendChild(el("path",{d:"M 152 70 Q 180 88 208 70",fill:"none",stroke:r,"stroke-width":1.2,opacity:.8}));
+  s.appendChild(el("path",{d:"M 160 42 Q 182 30 202 44",fill:"none",stroke:r,"stroke-width":1.2,opacity:.8}));
+  cap(180,"良性肿瘤 · 分叶 · 皮质变薄未断");
+  /* malignant: moth-eaten, cortex broken */
+  [[276,44,14,10,3],[300,40,12,9,9],[312,58,13,10,17],[286,64,12,9,21],[300,54,9,7,29]].forEach(c=>
+    s.appendChild(el("path",{d:blob(c[0],c[1],c[2],c[3],9,.6,c[4]),fill:d})));
+  s.appendChild(el("path",{d:"M 250 30 L 268 30 M 322 30 L 340 30 M 250 82 L 272 82 M 318 82 L 340 82",
+    stroke:r,"stroke-width":2.4,fill:"none"}));
+  cap(298,"恶性 · 虫蚀 · 皮质中断");
+  return s;
+}
+function figMandible(){
+  const s=svg("0 0 360 150"),ink="var(--ink)",l="var(--line)",ac="var(--accent)";
+  /* frontal-ish mandible arch */
+  s.appendChild(el("path",{d:"M 40 34 L 40 74 C 40 112 74 130 116 132 L 244 132 C 286 130 320 112 320 74 L 320 34",
+    fill:"var(--bonet)",stroke:l,"stroke-width":1.4}));
+  s.appendChild(el("path",{d:"M 62 34 L 62 72 C 62 100 88 112 120 114 L 240 114 C 272 112 298 100 298 72 L 298 34",
+    fill:"var(--panel)",stroke:l,"stroke-width":1.2}));
+  s.appendChild(el("ellipse",{cx:40,cy:26,rx:13,ry:10,fill:"var(--bonet)",stroke:l,"stroke-width":1.4}));
+  s.appendChild(el("ellipse",{cx:320,cy:26,rx:13,ry:10,fill:"var(--bonet)",stroke:l,"stroke-width":1.4}));
+  const mark=(x,y,x2,y2,t,pct)=>{
+    s.appendChild(el("path",{d:"M "+x+" "+y+" L "+x2+" "+y2,stroke:ac,"stroke-width":2.4,"stroke-dasharray":"4 3"}));
+    s.appendChild(txt(t[0],t[1],t[2],{fill:"var(--ink-2)","font-size":10.5,"font-family":"var(--sans)","text-anchor":t[3]||"middle"}));
+    s.appendChild(txt(t[0],t[1]+13,pct,{fill:ac,"font-size":10,"font-family":"var(--mono)","text-anchor":t[3]||"middle"}));
+  };
+  mark(27,20,53,32,[34,14,"髁突","middle"],"~30%");
+  mark(333,20,307,32,[326,14,"髁突","middle"],"~30%");
+  mark(46,84,70,80,[24,96,"角部","start"],"~20%");
+  mark(314,84,290,80,[336,96,"角部","end"],"~20%");
+  mark(96,124,110,104,[86,144,"体部","middle"],"~25%");
+  mark(180,132,180,110,[180,148,"正中联合","middle"],"~15%");
+  return s;
+}
+function figLeFort(){
+  const s=svg("0 0 300 200"),l="var(--line)";
+  s.appendChild(el("path",{d:"M 150 12 C 208 12 236 56 234 104 C 232 146 206 176 150 188 C 94 176 68 146 66 104 C 64 56 92 12 150 12 Z",
+    fill:"var(--bonet-2)",stroke:l,"stroke-width":1.4}));
+  s.appendChild(el("ellipse",{cx:114,cy:82,rx:19,ry:14,fill:"var(--panel)",stroke:l,"stroke-width":1.2}));
+  s.appendChild(el("ellipse",{cx:186,cy:82,rx:19,ry:14,fill:"var(--panel)",stroke:l,"stroke-width":1.2}));
+  s.appendChild(el("path",{d:"M 150 92 L 144 118 L 156 118 Z",fill:"var(--panel)",stroke:l,"stroke-width":1.1}));
+  s.appendChild(el("rect",{x:112,y:150,width:76,height:14,rx:2,fill:"var(--panel)",stroke:l,"stroke-width":1.1}));
+  const line=(d,c,lab,lx,ly)=>{
+    s.appendChild(el("path",{d:d,fill:"none",stroke:c,"stroke-width":2.4,"stroke-dasharray":"6 4","stroke-linecap":"round"}));
+    s.appendChild(txt(lx,ly,lab,{fill:c,"font-size":11,"font-family":"var(--mono)","text-anchor":lx<150?"end":"start"}));
+  };
+  line("M 92 143 Q 150 133 208 143","var(--n1)","Ⅰ",86,147);
+  line("M 78 108 Q 106 104 130 92 Q 150 78 170 92 Q 194 104 222 108","var(--n7)","Ⅱ",72,112);
+  line("M 68 84 Q 100 78 122 66 Q 150 50 178 66 Q 200 78 232 84","var(--n8)","Ⅲ",62,88);
+  return s;
+}
+
+/* ---------- state ---------- */
+const F={q:"",sites:new Set(),nats:new Set(),pats:new Set()};
+const PICK=[];
+const CATMAP={},NATMAP={},SITEMAP={},PATMAP={};
+CATS.forEach(c=>CATMAP[c.id]=c);NAT.forEach(n=>NATMAP[n.id]=n);
+SITES.forEach(s=>SITEMAP[s.id]=s);PATS.forEach(p=>PATMAP[p.id]=p);
+D.forEach((d,ix)=>{d._x=ix;d._hay=[d.n,d.e,d.a,d.u,d.f,d.i,d.x,d.k,
+  (d.s||[]).map(s=>SITEMAP[s]?SITEMAP[s].n:"").join(""),
+  d.p&&PATMAP[d.p]?PATMAP[d.p].n:"",NATMAP[d.t].n,CATMAP[d.c].n].join(" ").toLowerCase();});
+
+const $=s=>document.querySelector(s);
+const natColor=t=>"var("+NATMAP[t].v+")";
+
+/* ---------- build instruments ---------- */
+$("#map-intra").appendChild(intraMap(true));
+$("#map-lat").appendChild(latMap(true));
+document.querySelectorAll(".maps .rg").forEach(g=>{
+  const site=g.getAttribute("data-site");
+  const n=D.filter(d=>(d.s||[]).includes(site)).length;
+  const t=g.querySelector("title");if(t)t.textContent=SITEMAP[site].n+" · "+n+" 条";
+  const act=()=>{toggle(F.sites,site);render();};
+  g.addEventListener("click",act);
+  g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();act();}});
+});
+
+const filmsEl=$("#films");
+PATS.forEach(p=>{
+  const n=D.filter(d=>d.p===p.id).length;
+  const b=document.createElement("button");
+  b.className="film-t";b.setAttribute("data-pat",p.id);
+  b.setAttribute("aria-pressed","false");
+  b.appendChild(patternSVG(p.id,128,80));
+  const lb=document.createElement("div");lb.className="lbl";
+  lb.innerHTML="<span>"+p.n+"</span><i>"+n+"</i>";
+  b.appendChild(lb);
+  b.addEventListener("click",()=>{toggle(F.pats,p.id);render();});
+  filmsEl.appendChild(b);
+});
+
+const natEl=$("#natures");
+NAT.forEach(nt=>{
+  const n=D.filter(d=>d.t===nt.id).length;
+  const b=document.createElement("button");
+  b.className="chip";b.setAttribute("data-nat",nt.id);
+  b.innerHTML='<span class="sw" style="background:var('+nt.v+')"></span>'+nt.n+" <i>"+n+"</i>";
+  b.addEventListener("click",()=>{toggle(F.nats,nt.id);render();});
+  natEl.appendChild(b);
+});
+
+function toggle(set,v){set.has(v)?set.delete(v):set.add(v);}
+
+/* ---------- filtering + rendering ---------- */
+function matches(d){
+  if(F.sites.size&&!(d.s||[]).some(s=>F.sites.has(s)))return false;
+  if(F.nats.size&&!F.nats.has(d.t))return false;
+  if(F.pats.size&&!F.pats.has(d.p))return false;
+  if(F.q){const q=F.q.toLowerCase().trim();
+    if(!q.split(/\s+/).every(w=>d._hay.includes(w)))return false;}
+  return true;
+}
+function card(d){
+  const b=document.createElement("button");
+  b.className="card"+(PICK.includes(d._x)?" picked":"");
+  b.setAttribute("data-i",d._x);
+  b.innerHTML=
+    '<span class="nm"><span class="sw" style="background:'+natColor(d.t)+'"></span><strong>'+d.n+"</strong></span>"+
+    '<span class="en">'+d.e+"</span>"+
+    '<span class="gist">'+d.k+"</span>"+
+    '<span class="meta"><span class="mchip" style="color:'+natColor(d.t)+';border-color:currentColor">'+NATMAP[d.t].n+"</span>"+
+      (d.s||[]).slice(0,3).map(s=>'<span class="mchip">'+SITEMAP[s].n+"</span>").join("")+
+      (d.p?'<span class="mchip">'+PATMAP[d.p].n+"</span>":"")+"</span>"+
+    '<span class="pick" role="button" aria-label="加入对比">'+(PICK.includes(d._x)?"✓":"+")+"</span>";
+  b.addEventListener("click",e=>{
+    if(e.target.closest(".pick")){e.stopPropagation();togglePick(d._x);return;}
+    openDrawer(d);
+  });
+  return b;
+}
+function render(){
+  const list=D.filter(matches);
+  $("#count").textContent=list.length+" / "+D.length+" 条";
+  const res=$("#results");res.innerHTML="";
+  if(!list.length){
+    res.innerHTML='<div class="empty"><b>没有符合条件的病种</b>试试减少筛选条件，或换一个关键词。</div>';
+  }else{
+    CATS.forEach(c=>{
+      const g=list.filter(d=>d.c===c.id);if(!g.length)return;
+      const sec=document.createElement("div");sec.className="group";
+      sec.innerHTML='<div class="group-h"><h3>'+c.n+'</h3><span class="en">'+c.e+'</span><span class="n">'+g.length+"</span></div>";
+      const gr=document.createElement("div");gr.className="grid";
+      g.forEach((d,idx)=>{const el2=card(d);el2.style.animationDelay=Math.min(idx*18,240)+"ms";gr.appendChild(el2);});
+      sec.appendChild(gr);res.appendChild(sec);
+    });
+  }
+  document.querySelectorAll(".maps .rg").forEach(g=>
+    g.classList.toggle("on",F.sites.has(g.getAttribute("data-site"))));
+  document.querySelectorAll(".film-t").forEach(b=>{
+    const on=F.pats.has(b.getAttribute("data-pat"));
+    b.classList.toggle("on",on);b.setAttribute("aria-pressed",on?"true":"false");});
+  document.querySelectorAll("#natures .chip").forEach(b=>
+    b.classList.toggle("on",F.nats.has(+b.getAttribute("data-nat"))));
+  renderActive();
+}
+function renderActive(){
+  const a=$("#active");a.innerHTML="";
+  const items=[];
+  F.sites.forEach(s=>items.push(["部位",SITEMAP[s].n,()=>F.sites.delete(s)]));
+  F.nats.forEach(n=>items.push(["性质",NATMAP[n].n,()=>F.nats.delete(n)]));
+  F.pats.forEach(p=>items.push(["影像",PATMAP[p].n,()=>F.pats.delete(p)]));
+  if(F.q)items.push(["搜索",F.q,()=>{F.q="";$("#q").value="";}]);
+  if(!items.length){a.innerHTML='<span class="lead">未筛选 · 显示全部</span>';return;}
+  const lead=document.createElement("span");lead.className="lead";lead.textContent="当前筛选";a.appendChild(lead);
+  items.forEach(it=>{
+    const t=document.createElement("button");t.className="tag";
+    t.innerHTML="<b>"+it[0]+"</b>"+it[1]+" ✕";
+    t.addEventListener("click",()=>{it[2]();render();});
+    a.appendChild(t);
+  });
+  const c=document.createElement("button");c.className="clear";c.textContent="全部清除";
+  c.addEventListener("click",()=>{F.sites.clear();F.nats.clear();F.pats.clear();F.q="";$("#q").value="";render();});
+  a.appendChild(c);
+}
+
+/* ---------- drawer ---------- */
+let lastFocus=null;
+function figureFor(d){
+  const wrap=document.createElement("div");wrap.className="figbox";
+  if(d.p){
+    wrap.appendChild(patternSVG(d.p,320,180));
+    wrap.insertAdjacentHTML("beforeend",'<div class="figcap">示意图 · 典型 X 线形态：'+PATMAP[d.p].n+
+      "（"+PATMAP[d.p].e+"）。非真实影像资料。</div>");
+  }else{
+    wrap.style.background="var(--panel-2)";
+    const row=document.createElement("div");
+    row.style.cssText="display:grid;grid-template-columns:1fr 1fr;gap:4px";
+    row.appendChild(intraMap(false,d.s||[]));
+    row.appendChild(latMap(false,d.s||[]));
+    wrap.appendChild(row);
+    wrap.insertAdjacentHTML("beforeend",'<div class="figcap" style="color:var(--ink-3)">示意图 · 好发部位：'+
+      (d.s||[]).map(s=>SITEMAP[s].n).join(" / ")+"</div>");
+  }
+  return wrap;
+}
+function openDrawer(d){
+  lastFocus=document.activeElement;
+  const dr=$("#drawer");
+  dr.innerHTML=
+   '<div class="dr-top"><button class="dr-close" aria-label="关闭">✕</button>'+
+   '<div class="kicker">'+CATMAP[d.c].n+" · "+CATMAP[d.c].e+"</div>"+
+   '<h2 id="dr-name">'+d.n+'</h2><div class="en">'+d.e+"</div>"+
+   '<div class="dr-chips"><span class="dchip solid" style="background:'+natColor(d.t)+'">'+NATMAP[d.t].n+"</span>"+
+     (d.s||[]).map(s=>'<span class="dchip" style="color:var(--ink-3)">'+SITEMAP[s].n+"</span>").join("")+
+     (d.p?'<span class="dchip" style="color:var(--ink-2)">'+PATMAP[d.p].n+"</span>":"")+"</div></div>"+
+   '<div class="dr-body"></div>';
+  const body=dr.querySelector(".dr-body");
+  body.appendChild(figureFor(d));
+  const dl=document.createElement("dl");dl.className="rec";
+  [["好发",d.a],["成因",d.u],["表现",d.f],["影像·病理",d.i],["处理",d.x],["要点",d.k]].forEach(r=>{
+    const dt=document.createElement("dt");dt.textContent=r[0];
+    const dd=document.createElement("dd");dd.textContent=r[1];
+    if(r[0]==="要点")dd.style.color="var(--ink)";
+    dl.appendChild(dt);dl.appendChild(dd);
+  });
+  body.appendChild(dl);
+  const foot=document.createElement("div");foot.className="dr-foot";
+  const bp=document.createElement("button");bp.className="btn pri";
+  bp.textContent=PICK.includes(d._x)?"已加入对比":"加入鉴别对比";
+  bp.addEventListener("click",()=>{togglePick(d._x);bp.textContent=PICK.includes(d._x)?"已加入对比":"加入鉴别对比";});
+  foot.appendChild(bp);
+  (d.s||[]).forEach(s=>{
+    const b=document.createElement("button");b.className="btn";b.textContent="看「"+SITEMAP[s].n+"」全部";
+    b.addEventListener("click",()=>{F.sites.clear();F.sites.add(s);closeDrawer();render();
+      $("#list").scrollIntoView({behavior:"smooth",block:"start"});});
+    foot.appendChild(b);
+  });
+  body.appendChild(foot);
+  dr.querySelector(".dr-close").addEventListener("click",closeDrawer);
+  dr.classList.add("on");$("#scrim").classList.add("on");dr.focus();
+}
+function closeDrawer(){
+  $("#drawer").classList.remove("on");$("#scrim").classList.remove("on");
+  if(lastFocus&&lastFocus.focus)lastFocus.focus();
+}
+$("#scrim").addEventListener("click",closeDrawer);
+document.addEventListener("keydown",e=>{
+  if(e.key!=="Escape")return;
+  if($("#cmp-wrap").classList.contains("on"))$("#cmp-wrap").classList.remove("on");
+  else closeDrawer();
+});
+
+/* ---------- compare tray ---------- */
+function togglePick(i){
+  const k=PICK.indexOf(i);
+  if(k>=0)PICK.splice(k,1);
+  else{if(PICK.length>=4){PICK.shift();}PICK.push(i);}
+  renderTray();render();
+}
+function renderTray(){
+  const t=$("#tray"),p=$("#picks");
+  t.classList.toggle("on",PICK.length>0);
+  document.body.classList.toggle("has-tray",PICK.length>0);
+  p.innerHTML="";
+  PICK.forEach(i=>{
+    const d=D[i],s=document.createElement("span");s.className="ptag";
+    s.innerHTML='<span class="sw" style="display:inline-block;width:8px;height:8px;border-radius:1px;background:'+
+      natColor(d.t)+'"></span>'+d.n+' <button aria-label="移除">✕</button>';
+    s.querySelector("button").addEventListener("click",()=>togglePick(i));
+    p.appendChild(s);
+  });
+  $("#cmp-open").disabled=PICK.length<2;
+  $("#cmp-open").style.opacity=PICK.length<2?.45:1;
+}
+$("#cmp-clear").addEventListener("click",()=>{PICK.length=0;renderTray();render();});
+$("#cmp-open").addEventListener("click",()=>{
+  if(PICK.length<2)return;
+  const ds=PICK.map(i=>D[i]);
+  const rows=[["性质",d=>NATMAP[d.t].n],["部位",d=>(d.s||[]).map(s=>SITEMAP[s].n).join("、")],
+    ["影像形态",d=>d.p?PATMAP[d.p].n:"—"],["好发",d=>d.a],["成因",d=>d.u],
+    ["表现",d=>d.f],["影像·病理",d=>d.i],["处理",d=>d.x],["要点",d=>d.k]];
+  $("#cmp").innerHTML='<button class="dr-close" id="cmp-x" aria-label="关闭">✕</button>'+
+    "<h3>鉴别对比</h3><p style=\"font-size:13px;color:var(--ink-2)\">并排阅读同一字段，差异会比逐条翻阅明显得多。</p>"+
+    '<div class="scroller"><table class="ct"><thead><tr><th></th>'+
+    ds.map(d=>'<th><span class="sw" style="display:inline-block;width:9px;height:9px;border-radius:1px;margin-right:6px;background:'+
+      natColor(d.t)+'"></span>'+d.n+'<div style="font-family:var(--mono);font-size:10px;font-weight:400;color:var(--ink-3)">'+d.e+"</div></th>").join("")+
+    "</tr></thead><tbody>"+
+    rows.map(r=>"<tr><th>"+r[0]+"</th>"+ds.map(d=>"<td>"+r[1](d)+"</td>").join("")+"</tr>").join("")+
+    "</tbody></table></div>";
+  $("#cmp-wrap").classList.add("on");
+  $("#cmp-x").addEventListener("click",()=>$("#cmp-wrap").classList.remove("on"));
+});
+$("#cmp-wrap").addEventListener("click",e=>{if(e.target.id==="cmp-wrap")$("#cmp-wrap").classList.remove("on");});
+
+/* ---------- search, theme, plates ---------- */
+let qt;
+$("#q").addEventListener("input",e=>{clearTimeout(qt);qt=setTimeout(()=>{F.q=e.target.value;render();},110);});
+
+const root=document.documentElement;
+function curTheme(){
+  const a=root.getAttribute("data-theme");
+  if(a)return a;
+  return window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";
+}
+try{const saved=localStorage.getItem("omfa-theme");if(saved)root.setAttribute("data-theme",saved);}catch(e){}
+$("#themebtn").addEventListener("click",()=>{
+  const next=curTheme()==="dark"?"light":"dark";
+  root.setAttribute("data-theme",next);
+  try{localStorage.setItem("omfa-theme",next);}catch(e){}
+});
+
+$("#fig-growth").appendChild(figGrowth());
+$("#fig-mand").appendChild(figMandible());
+$("#fig-lefort").appendChild(figLeFort());
+$("#t-dis").textContent=D.length;
+$("#t-cat").textContent=CATS.length;
+$("#t-site").textContent=SITES.length;
+renderTray();render();
+</script>
