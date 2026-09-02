@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0d1014">
+<meta name="description" content="《和平精英 · 绿洲启元》创意玩法《突出重围》网页复刻版：15 关仿生人围攻、武器进化、封锁线收缩、突围撤离。">
+<title>突出重围 · 绿洲启元</title>
+<link rel="stylesheet" href="css/hud.css">
+</head>
+<body>
+<div id="app">
+  <canvas id="cv"></canvas>
+
+  <!-- ══════════ 局内 HUD ══════════ -->
+  <div id="hud" class="hidden">
+
+    <!-- 罗盘 -->
+    <div id="compass"><div id="compassStrip"></div><div id="compassMark"></div></div>
+
+    <!-- 小地图 -->
+    <div id="mapBox">
+      <canvas id="minimap" width="320" height="320"></canvas>
+      <div id="mapZoom">1x</div>
+    </div>
+
+    <!-- 存活 / 击杀 -->
+    <div id="counters">
+      <div class="cnt"><span class="lab">剩余敌人</span><span id="cAlive" class="val">0</span></div>
+      <div class="cnt"><span class="lab">击杀</span><span id="cKill" class="val">0</span></div>
+    </div>
+
+    <!-- 击杀播报 -->
+    <div id="killfeed"></div>
+
+    <!-- 波次 / 补给期 -->
+    <div id="phaseBar"><span id="phaseLabel">备战期</span><span id="phaseTime">00:30</span></div>
+
+    <!-- BOSS 血条 -->
+    <div id="bossBar" class="hidden">
+      <div class="bname">仿生领主 · 泰坦</div>
+      <div class="bwrap"><div id="bossFill"></div><i class="seg s1"></i><i class="seg s2"></i></div>
+      <div id="bossPhase">阶段 1</div>
+    </div>
+
+    <!-- 准心 + 命中标记 -->
+    <div id="reticle">
+      <i class="l t"></i><i class="l b"></i><i class="l le"></i><i class="l r"></i><i class="dot"></i>
+    </div>
+    <div id="hitmark"><i></i><i></i><i></i><i></i></div>
+
+    <!-- 受击方向 -->
+    <div id="dmgDirs"></div>
+
+    <!-- 关卡横幅 -->
+    <div id="banner"><div class="bn1"></div><div class="bn2"></div></div>
+
+    <!-- 提示 -->
+    <div id="hint"></div>
+    <div id="lockHint" class="hidden">点击画面锁定鼠标 · 进入射击视角</div>
+    <div id="pickPrompt" class="hidden"><b id="pickName">物资</b><span id="pickKey">F</span></div>
+    <div id="useBar" class="hidden"><div id="useFill"></div><span id="useName"></span></div>
+
+    <!-- 屏幕效果 -->
+    <div id="lowhp"></div>
+    <div id="hurtFlash"></div>
+    <div id="blockWarn" class="hidden">⚠ 警告：脱离作战区域</div>
+    <div id="blindFx"></div>
+    <div id="scopeMask" class="hidden"></div>
+
+    <!-- 药品竖排 -->
+    <div id="meds">
+      <div class="med" data-item="bandage"><i class="ico bandage"></i><b>绷带</b><span class="n">0</span><em>4</em></div>
+      <div class="med" data-item="firstaid"><i class="ico firstaid"></i><b>急救包</b><span class="n">0</span><em>5</em></div>
+      <div class="med" data-item="medkit"><i class="ico medkit"></i><b>医疗箱</b><span class="n">0</span><em>6</em></div>
+      <div class="med" data-item="energy"><i class="ico energy"></i><b>能量饮料</b><span class="n">0</span><em>7</em></div>
+      <div class="med" data-item="adrenal"><i class="ico adrenal"></i><b>加速药剂</b><span class="n">0</span><em>8</em></div>
+    </div>
+
+    <!-- 底部：血条 + 护甲 -->
+    <div id="vitals">
+      <div id="armorIcons">
+        <div class="ar" id="helmIcon"><svg viewBox="0 0 24 24"><path d="M12 3c5 0 8 3.4 8 8v4H4v-4c0-4.6 3-8 8-8z"/><rect x="3" y="15" width="18" height="3" rx="1"/></svg><b id="helmLv">2</b></div>
+        <div class="ar" id="vestIcon"><svg viewBox="0 0 24 24"><path d="M8 3l4 3 4-3 4 2v14H4V5z"/></svg><b id="vestLv">2</b></div>
+      </div>
+      <div id="barsWrap">
+        <div id="boostBar"><div id="boostFill"></div></div>
+        <div id="hpBar">
+          <div id="hpFill"></div><div id="hpGhost"></div>
+          <i class="tick" style="left:25%"></i><i class="tick" style="left:50%"></i><i class="tick" style="left:75%"></i>
+          <span id="hpText">100</span>
+        </div>
+      </div>
+      <div id="reviveInfo"><span>重整旗鼓</span><b id="revN">3</b></div>
+    </div>
+
+    <!-- 倒地读秒 -->
+    <div id="downed" class="hidden">
+      <div class="dt">你已倒地</div>
+      <div class="dr"><div id="downFill"></div></div>
+      <div class="dh">使用 急救包 / 医疗箱 自救（<b id="downSec">10</b>s）</div>
+    </div>
+
+    <!-- 武器槽 -->
+    <div id="weapons">
+      <div class="wslot" data-slot="1">
+        <div class="wtop"><b class="wname">—</b><i class="wq"></i></div>
+        <div class="wgun"></div>
+        <div class="wammo"><b>0</b><span>/0</span></div>
+        <div class="wevo"><div class="wevoFill"></div><em class="wlv">Lv1</em></div>
+        <div class="wkey">1</div>
+      </div>
+      <div class="wslot" data-slot="2">
+        <div class="wtop"><b class="wname">—</b><i class="wq"></i></div>
+        <div class="wgun"></div>
+        <div class="wammo"><b>0</b><span>/0</span></div>
+        <div class="wevo"><div class="wevoFill"></div><em class="wlv">Lv1</em></div>
+        <div class="wkey">2</div>
+      </div>
+      <div class="wslot" data-slot="3">
+        <div class="wtop"><b class="wname">—</b><i class="wq"></i></div>
+        <div class="wgun"></div>
+        <div class="wammo"><b>∞</b><span></span></div>
+        <div class="wevo"><div class="wevoFill"></div><em class="wlv">Lv1</em></div>
+        <div class="wkey">3</div>
+      </div>
+    </div>
+
+    <!-- 换弹进度 -->
+    <div id="reloadRing" class="hidden"><svg viewBox="0 0 40 40"><circle class="bg" cx="20" cy="20" r="16"/><circle id="reloadArc" cx="20" cy="20" r="16"/></svg><span>换弹</span></div>
+
+    <!-- 左摇杆 -->
+    <div id="stick"><div id="stickRing"></div><div id="stickKnob"></div></div>
+    <div id="lookZone"></div>
+
+    <!-- 右侧按钮 -->
+    <div id="btns">
+      <div class="btn round big" id="btnFire"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.6"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg></div>
+      <div class="btn round mid" id="btnFire2"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.6"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg><em>开火</em></div>
+      <div class="btn round" id="btnAds"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg><em>开镜</em></div>
+      <div class="btn round sm" id="btnReload"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 3v5h-5"/></svg><em>换弹</em></div>
+      <div class="btn round sm" id="btnJump"><svg viewBox="0 0 24 24"><path d="M12 20V6M6 12l6-6 6 6"/></svg><em>跳</em></div>
+      <div class="btn round sm" id="btnCrouch"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.4"/><path d="M12 8v5l-3 6M12 13l3 6M8 10h8"/></svg><em>蹲</em></div>
+      <div class="btn round sm" id="btnProne"><svg viewBox="0 0 24 24"><circle cx="5" cy="10" r="2.2"/><path d="M8 12h11M8 15h8"/></svg><em>趴</em></div>
+      <div class="btn round sm" id="btnPick"><svg viewBox="0 0 24 24"><path d="M4 8h16v12H4zM8 8V5a4 4 0 0 1 8 0v3"/></svg><em>拾取</em></div>
+      <div class="btn round sm" id="btnThrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="14" r="5.5"/><path d="M12 8.5V5h3"/></svg><em id="throwName">手雷</em></div>
+      <div class="btn round xs" id="btnThrowCycle"><svg viewBox="0 0 24 24"><path d="M17 3l4 4-4 4M21 7H8a5 5 0 0 0 0 10h1"/></svg></div>
+    </div>
+
+    <div class="btn sq" id="btnPause"><svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg></div>
+    <div id="fps"></div>
+  </div>
+
+  <!-- ══════════ 开始界面 ══════════ -->
+  <div id="menu">
+    <div class="mbg"></div>
+    <div class="mwrap">
+      <div class="mlogo">
+        <div class="oasis">绿洲启元 · 创意玩法</div>
+        <h1>突出重围</h1>
+        <div class="sub">BREAK&nbsp;THROUGH&nbsp;THE&nbsp;SIEGE</div>
+      </div>
+
+      <div class="mcols">
+        <section class="mcard">
+          <h3>玩法说明</h3>
+          <p>你是被围困在废土基地的特种兵。仿生人军团从<b>八个方位</b>合围而来，
+             红色<b>封锁线</b>不断收缩，把战场越压越小。</p>
+          <ul>
+            <li><b>15 关</b>递进波次，第 5 / 10 关精英波，第 15 关首领「仿生领主·泰坦」。</li>
+            <li>关卡之间有 <b>20 秒补给期</b>，空投带来高级武器与三级装备。</li>
+            <li>击杀会给当前武器充能，<b>武器进化</b> 白→绿→蓝→紫→金，满级解锁特化。</li>
+            <li>血量归零先<b>倒地</b>，10 秒内用急救包自救；机会用尽即失败。</li>
+            <li>打完第 15 关，<b>撤离点</b>开启 —— 冲过去坚守 40 秒，登机突围。</li>
+          </ul>
+        </section>
+
+        <section class="mcard">
+          <h3>选择地图</h3>
+          <div class="picks" id="mapPicks">
+            <button class="pick on" data-map="wasteland"><b>废土基地</b><span>黄昏沙尘 · 集装箱与哨塔</span></button>
+            <button class="pick" data-map="zombie"><b>丧尸营地</b><span>深夜前哨 · 敌人更凶</span></button>
+          </div>
+          <h3>选择难度</h3>
+          <div class="picks" id="diffPicks">
+            <button class="pick on" data-diff="normal"><b>普通</b><span>3 次重整旗鼓</span></button>
+            <button class="pick" data-diff="hard"><b>困难</b><span>2 次 · 敌人更强</span></button>
+            <button class="pick" data-diff="hell"><b>地狱</b><span>1 次 · 生死一线</span></button>
+          </div>
+          <div class="keyhelp">
+            <span>WASD 移动</span><span>鼠标 视角</span><span>左键 开火</span><span>右键 开镜</span>
+            <span>R 换弹</span><span>空格 跳</span><span>C 蹲</span><span>Z 趴</span>
+            <span>1/2/3 换枪</span><span>G 投掷</span><span>B 切换投掷物</span><span>F 拾取</span>
+            <span>4~8 药品</span><span>Esc 暂停</span>
+          </div>
+        </section>
+      </div>
+
+      <button id="startBtn">进 入 战 场</button>
+      <div class="mfoot">网页复刻版 · 玩法结构参照《和平精英》绿洲启元同名创意玩法</div>
+    </div>
+  </div>
+
+  <!-- ══════════ 暂停 ══════════ -->
+  <div id="pause" class="hidden">
+    <div class="pbox">
+      <h2>暂停</h2>
+      <div class="prow"><span>音量</span><input id="volRange" type="range" min="0" max="100" value="85"></div>
+      <div class="prow"><span>灵敏度</span><input id="sensRange" type="range" min="20" max="300" value="100"></div>
+      <div class="prow"><span>画质</span>
+        <div class="segbtns" id="qualityBtns">
+          <button data-q="low">流畅</button><button data-q="mid" class="on">均衡</button><button data-q="high">高清</button>
+        </div>
+      </div>
+      <button id="resumeBtn">继续战斗</button>
+      <button id="quitBtn" class="ghost">退出到大厅</button>
+    </div>
+  </div>
+
+  <!-- ══════════ 结算 ══════════ -->
+  <div id="result" class="hidden">
+    <div class="rbox">
+      <div id="rTitle">突围成功</div>
+      <div id="rTitleSub"></div>
+      <div id="rRank"><span id="rTitleName">王牌·突出重围</span></div>
+      <div class="rgrid">
+        <div><b id="rWave">15</b><span>到达关卡</span></div>
+        <div><b id="rKill">0</b><span>淘汰</span></div>
+        <div><b id="rDmg">0</b><span>总伤害</span></div>
+        <div><b id="rAcc">0%</b><span>命中率</span></div>
+        <div><b id="rHead">0</b><span>爆头</span></div>
+        <div><b id="rTime">00:00</b><span>存活时长</span></div>
+      </div>
+      <div class="rscore"><span>综合评分</span><b id="rScore">0</b></div>
+      <div class="rbtns"><button id="againBtn">再来一局</button><button id="lobbyBtn" class="ghost">返回大厅</button></div>
+    </div>
+  </div>
+
+  <div id="dmgLayer"></div>
+  <div id="loading"><div class="ring"></div><span>正在载入战场…</span></div>
+</div>
+
+<script type="module" src="js/game.js"></script>
+</body>
+</html>
