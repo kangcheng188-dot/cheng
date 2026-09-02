@@ -17,7 +17,8 @@ import numpy as np, matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as pe
-from matplotlib.patches import Circle, Rectangle, FancyArrowPatch
+from matplotlib.patches import Rectangle, FancyArrowPatch, PathPatch
+from matplotlib.path import Path
 import scienceplots  # noqa
 import pubstyle as ps
 import rockphys as rp
@@ -25,7 +26,8 @@ import microstructure as ms
 
 OK = ps.OKABE_ITO
 C_VES, C_CRK, C_RAY = OK["blue"], OK["vermillion"], OK["purple"]
-C_MTX, C_VOID, C_EDGE, C_TXT = "#C9D1CE", "#FFFFFF", "#788782", "#55635F"
+C_MTX, C_VOID, C_EDGE, C_TXT = "#C2CCC8", "#FFFFFF", "#6C7C77", "#55635F"
+C_LATH = "#B2BDB8"
 HALO = [pe.withStroke(linewidth=1.6, foreground="white")]
 
 ps.use("nature", base_pt=7)
@@ -36,13 +38,16 @@ gs = fig.add_gridspec(2, 6, height_ratios=[0.92, 1.0],
                       wspace=1.30, hspace=.40)
 
 
-def head(ax, letter, title, dx=0.0):
-    """面板号 + 标题排在面板上方同一行，避免被裁掉。"""
-    ax.text(dx, 1.085, letter, transform=ax.transAxes, fontsize=8,
+def head(ax, letter, title, dx=0.0, sub=None, dy=1.085):
+    """面板号 + 标题排在面板上方同一行，避免被裁掉；sub 是标题下的小字说明。"""
+    ax.text(dx, dy, letter, transform=ax.transAxes, fontsize=8,
             fontweight="bold", va="bottom", ha="left")
     if title:
-        ax.text(dx + .075, 1.088, title, transform=ax.transAxes, fontsize=7,
+        ax.text(dx + .075, dy + .003, title, transform=ax.transAxes, fontsize=7,
                 fontweight="bold", va="bottom", ha="left", color="#1E2A26")
+    if sub:
+        ax.text(dx + .075, dy - .012, sub, transform=ax.transAxes, fontsize=6.1,
+                va="top", ha="left", color=C_TXT)
 
 
 # ═════════════════════════ (a) 实验构型 ═════════════════════════
@@ -96,31 +101,45 @@ ax.text(.50, .055, "$V_\\mathrm{P}=L\\,/\\,t$", fontsize=8.5, ha="center",
 
 
 # ═════════════ (b)(c) 微结构 + 真实最快路径 ═════════════
-def micro(ax, with_cracks, accent, note):
-    S = ms.slowness(with_cracks)
+def micro(ax, with_cracks, accent):
+    """孔隙与裂缝都是同一个隐式场的 d = 0 等值线，所以并生颈部和
+    裂缝-孔壁接合处天然是圆滑过渡，不是两个图元硬拼在一起。"""
+    S, _ = ms.slowness(with_cracks)
     xy, tt, geom = ms.fastest_path(S)
-    xy = ms.smooth(xy, 11)
-    ax.add_patch(Rectangle((0, 0), 1, 1, facecolor=C_MTX,
-                           edgecolor=accent, lw=.75, zorder=1))
-    if with_cracks:
-        for p, q in ms.CRACKS:
-            ax.plot([p[0], q[0]], [p[1], q[1]], lw=1.3, color=C_VOID,
-                    solid_capstyle="round", zorder=2)
-            ax.plot([p[0], q[0]], [p[1], q[1]], lw=.45, color=C_EDGE,
-                    solid_capstyle="round", zorder=3, alpha=.9)
-    for (vx, vy), vr in zip(ms.VES_XY, ms.VES_R):
-        ax.add_patch(Circle((vx, vy), vr, facecolor=C_VOID,
-                            edgecolor=C_EDGE, lw=.45, zorder=4))
-    ax.plot(xy[:, 0], xy[:, 1], lw=1.5, color=C_RAY, zorder=6,
+    xy = ms.smooth(xy, 13)
+
+    ax.add_patch(Rectangle((0, 0), 1, 1, facecolor=C_MTX, ec="none", zorder=1))
+    for a, b in ms.laths():                       # 基质里的斜长石微晶纹理
+        ax.plot([a[0], b[0]], [a[1], b[1]], lw=.28, color=C_LATH,
+                solid_capstyle="round", zorder=2)
+    # 等值线抽稀后当一条复合路径画：顶点少 10 倍，矢量文件才不会失控。
+    # 非零绕数填充，孔隙/裂缝为白，被裂缝环包住的基质孤岛不会被误填。
+    def compound(polys, close):
+        verts, codes = [], []
+        for q in polys:
+            if close:
+                q = np.vstack([q, q[:1]])
+                cd = np.r_[Path.MOVETO, np.full(len(q) - 2, Path.LINETO),
+                           Path.CLOSEPOLY]
+            else:
+                cd = np.r_[Path.MOVETO, np.full(len(q) - 1, Path.LINETO)]
+            verts.append(q); codes.append(cd)
+        return Path(np.vstack(verts), np.concatenate(codes))
+
+    ax.add_patch(PathPatch(compound(ms.void_fill(with_cracks), True),
+                           facecolor=C_VOID, edgecolor="none", zorder=3))
+    ax.add_patch(PathPatch(compound(ms.void_outline(with_cracks), False),
+                           facecolor="none", edgecolor=C_EDGE, lw=.32,
+                           joinstyle="round", capstyle="round", zorder=4))
+
+    ax.plot(xy[:, 0], xy[:, 1], lw=1.15, color=C_RAY, zorder=6,
             solid_capstyle="round", solid_joinstyle="round",
-            path_effects=[pe.withStroke(linewidth=2.6, foreground="white")])
-    ax.add_patch(FancyArrowPatch(xy[-10], xy[-1], arrowstyle="-|>",
+            path_effects=[pe.withStroke(linewidth=2.05, foreground="white")])
+    ax.add_patch(FancyArrowPatch(xy[-26], xy[-1], arrowstyle="-|>",
                                  mutation_scale=7.5, lw=0, color=C_RAY, zorder=7))
-    ax.text(.5, .022, note, transform=ax.transAxes, fontsize=6.1,
-            color="#2E3A36", ha="center", va="bottom", zorder=8,
-            bbox=dict(boxstyle="square,pad=.30", fc="white", ec=C_EDGE,
-                      lw=.35, alpha=.94))
-    ax.set_xlim(-.012, 1.012); ax.set_ylim(-.012, 1.012)
+    ax.add_patch(Rectangle((0, 0), 1, 1, facecolor="none", edgecolor=accent,
+                           lw=.8, zorder=9))
+    ax.set_xlim(-.004, 1.004); ax.set_ylim(-.004, 1.004)
     ax.set_aspect("equal"); ax.axis("off")
     ax.text(.5, -.055, f"path length {geom:.2f}$L$   ·   traveltime "
             f"{tt:.2f}$\\,t_0$", transform=ax.transAxes, fontsize=6.1,
@@ -128,10 +147,14 @@ def micro(ax, with_cracks, accent, note):
     return geom, tt
 
 
-axb = fig.add_subplot(gs[0, 2:4]); head(axb, "b", "Isolated equant vesicles", dx=-.03)
-gb, tb = micro(axb, False, C_VES, r"$\alpha\approx1$,  pores unconnected")
-axc = fig.add_subplot(gs[0, 4:6]); head(axc, "c", "Vesicles + microcracks", dx=-.03)
-gc, tc = micro(axc, True, C_CRK, r"$\alpha\sim10^{-4}\!-\!10^{-3}$,  connected")
+axb = fig.add_subplot(gs[0, 2:4])
+head(axb, "b", "Isolated equant vesicles", dx=-.03, dy=1.135,
+     sub=r"$\alpha\approx1$, pore space unconnected")
+gb, tb = micro(axb, False, C_VES)
+axc = fig.add_subplot(gs[0, 4:6])
+head(axc, "c", "Vesicles + microcracks", dx=-.03, dy=1.135,
+     sub=r"$\alpha\sim10^{-4}\!-\!10^{-3}$, connected network")
+gc, tc = micro(axc, True, C_CRK)
 
 
 # ═══════════ (d) Vp vs 有效压力：裂缝逐级闭合 ═══════════
