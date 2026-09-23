@@ -1036,8 +1036,8 @@ function paintHUD() {
   const util = [
     ['pause', () => togglePause()],
     ['sound', () => toggleSound()],
-    ['full', () => toggleFullscreen()],
   ];
+  if (canFullscreen()) util.push(['full', () => toggleFullscreen()]);
   util.forEach(([k, fn], i) => {
     const b = addBtn({ id: 'util' + k, x: 4 + i * 27, y: 76, w: 23, h: 20, onClick: fn });
     rrect(b.x, b.y, b.w, b.h, 4, hov(b) ? 'rgba(255,240,200,0.9)' : 'rgba(210,168,106,0.85)', '#5a3a14', 1);
@@ -1110,6 +1110,10 @@ function toggleSound() {
   Sfx.init(); Sfx.setOn(Game.soundOn);
   if (Game.soundOn) Sfx.startMusic();
   try { localStorage.setItem('aow_sound', Game.soundOn ? '1' : '0'); } catch (e) {}
+}
+function canFullscreen() {
+  const el = document.documentElement;
+  return !!(el.requestFullscreen || el.webkitRequestFullscreen) && document.fullscreenEnabled !== false;
 }
 function toggleFullscreen() {
   const d = document, el = d.documentElement;

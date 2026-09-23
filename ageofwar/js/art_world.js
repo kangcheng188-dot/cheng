@@ -393,13 +393,17 @@ function stainedWindow(x, y, w, h) {
   c.save();
   c.beginPath(); c.moveTo(ix, iy + ih); c.lineTo(ix, iy + iw * 0.5); c.quadraticCurveTo(ix + iw / 2, iy - iw * 0.2, ix + iw, iy + iw * 0.5); c.lineTo(ix + iw, iy + ih); c.closePath();
   c.clip();
-  const cols = ['#e41b1b', '#f4e21a', '#1bd0e0', '#27c95a'];
+  // lozenge pattern: yellow ground with red centre panes, cyan and green diamonds (as in the original)
+  c.fillStyle = '#f4e21a'; c.fillRect(ix - 1, iy - 6, iw + 2, ih + 8);
   const cw = iw / 3, chh = ih / 5;
-  for (let i = 0; i < 3; i++) for (let j = 0; j < 6; j++) {
-    c.fillStyle = cols[(i * 3 + j * 2 + (i === 1 ? 1 : 0)) % 4];
-    c.fillRect(ix + i * cw, iy - chh + j * chh, cw + 0.5, chh + 0.5);
+  c.fillStyle = '#e41b1b'; c.fillRect(ix + cw, iy + ih * 0.12, cw, ih * 0.8);
+  for (let j = 0; j < 6; j++) {
+    const yy = iy + j * chh;
+    for (const [xx, col] of [[ix + cw * 0.5, j % 2 ? '#27c95a' : '#1bd0e0'], [ix + cw * 2.5, j % 2 ? '#1bd0e0' : '#27c95a']]) {
+      c.beginPath(); c.moveTo(xx, yy - chh * 0.45); c.lineTo(xx + cw * 0.48, yy); c.lineTo(xx, yy + chh * 0.45); c.lineTo(xx - cw * 0.48, yy); c.closePath();
+      c.fillStyle = col; c.fill();
+    }
   }
-  c.fillStyle = '#e41b1b'; c.fillRect(ix + cw, iy + ih * 0.25, cw, ih * 0.55);
   c.strokeStyle = '#222'; c.lineWidth = 0.6;
   c.beginPath();
   for (let i = 1; i < 3; i++) { c.moveTo(ix + i * cw, iy - 5); c.lineTo(ix + i * cw, iy + ih); }
@@ -433,8 +437,8 @@ function baseRenaissance() {
   // stone blocks at the foot
   poly([62, 0, 64, -8, 72, -8, 72, 0], '#a6a6a0');
   // window ledges
-  rect(-2, top, 68, 4, '#a89066');
-  rect(-2, -62, 68, 5, '#a89066');
+  rect(-2, top, 68, 4, '#a9a9a2');
+  rect(-2, -62, 68, 5, '#a9a9a2');
 }
 
 function baseModern() {
@@ -517,9 +521,9 @@ function towerSegment(age, i, isTop) {
   } else if (age === 3) {
     rect(-4, 0, 58, h + 1, '#c9b184');
     stainedWindow(-1, 7, 13, 36); stainedWindow(18, 7, 13, 36); stainedWindow(37, 7, 13, 36);
-    rect(-6, 0, 62, 5, '#a89066');
+    rect(-6, 0, 62, 5, '#a9a9a2');
     if (isTop) {
-      rect(-6, -4, 62, 5, '#b59d72');
+      rect(-6, -4, 62, 5, '#b4b4ac');
       for (const hx of [-4, 26, 52]) poly([hx - 3, -3, hx, -14, hx + 3, -3], '#f0ead8');
     }
   } else if (age === 4) {

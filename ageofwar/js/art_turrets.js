@@ -77,11 +77,11 @@ const TURRET_DRAW = [
     restore();
   },
   // 7 small cannon (brass)
-  (k) => cannonDraw(k, BRASS, BRASS_D, '#f0cf6a', 1),
+  (k) => cannonDraw(k, BRASS, BRASS_D, '#f0cf6a', 0.64),
   // 8 large cannon (steel)
-  (k) => cannonDraw(k, '#4c5462', '#2c323a', '#8a93a3', 1.1),
+  (k) => cannonDraw(k, '#4c5462', '#2c323a', '#8a93a3', 0.8),
   // 9 explosive cannon (dark red)
-  (k) => cannonDraw(k, '#7c1818', '#4a0c0c', '#c04444', 1.12),
+  (k) => cannonDraw(k, '#7c1818', '#4a0c0c', '#c04444', 0.84),
   // 10 single turret
   (k) => mgDraw(k, 1),
   // 11 rocket turret
