@@ -91,7 +91,7 @@ const TURRET_SPOT_Y = [-80, -125, -172, -220];
 const I18N = {
   en: {
     title: 'AGE OF WAR',
-    play: 'Play', instructions: 'Instructions', extras: 'Extras', moreGames: 'More games',
+    play: 'Play', instructions: 'Instructions', extras: 'Extras', moreGames: 'Play more games',
     byline: 'A game by louissi', tribute: 'Fan remake of the 2007 Flash classic · mobile / tablet / PC',
     difficulty: 'Difficulty:', chooseDiff: 'Choose a difficulty to start the game:',
     normal: 'Normal', harder: 'Harder', impossible: 'Impossible',

@@ -65,7 +65,7 @@ function baseImage(age, addons) {
 }
 
 // ------------------------------------------------------------------ game state
-const Game = { screen: 'start', prevScreen: null, t: 0, fadeT: 0, menuUnit: 1, menuUnitT: 0, soundOn: true, portraitOk: false };
+const Game = { screen: 'start', prevScreen: null, t: 0, fadeT: 0, menuUnit: 3, menuUnitT: 0, soundOn: true, portraitOk: false };
 let S = null;
 
 function newMatch(diff) {
@@ -80,7 +80,7 @@ function newMatch(diff) {
     ai: { timer: 0, uTimer: -1, check: false, action: 0, uof: 0, techTimer: 0, unitLevel: 1, will: 0, uTotal: 0 },
     camX: 0, pcamX: 0, shakeX: 0, shakeY: 0, paused: false, over: null, overT: 0,
     menu: 'main', desc: '', buildId: 0, flash: 0, evolveFlash: 0,
-    inertia: 0,
+    inertia: 0, uidBase: Math.random(),
   };
   S.entities = [S.pBase, S.eBase];
 }
@@ -948,10 +948,15 @@ function specialIcon(age, x, y, w, h) {
   rect(x, y, w, h, null, '#111', 1.4);
 }
 
-function drawHUD() {
+// The HUD is painted into an offscreen canvas and only repainted when something visible changes
+// (money, menu, hover...). Continuously animated bits are drawn on top every frame by drawHUD().
+const hudCache = { key: null, img: null, buttons: [], spots: {} };
+
+function paintHUD() {
   if (!caches.panels) buildPanels();
   const c = G.ctx;
   const P = caches.panels;
+  const spots = hudCache.spots = {};
   // light band behind the HUD like the original
   c.fillStyle = linGrad(0, 0, 0, 105, [[0, 'rgba(255,255,255,0.4)'], [1, 'rgba(255,255,255,0)']]);
   c.fillRect(0, 0, viewW, 105);
@@ -970,10 +975,6 @@ function drawHUD() {
 
   // training progress + queue
   rect(127.5, 6.5, 217.75, 6.75, '#e8f4fb', '#1a3040', 1);
-  if (S.trainTotal > 0) {
-    const pr = 1 - S.trainTimer / S.trainTotal;
-    rect(128, 7, 216.75 * pr, 5.75, '#e00000', null);
-  }
   for (let k = 0; k < 5; k++) {
     rect(349.5 + 12 * k, 4.5, 10, 10, S.tray[k] ? '#3a78c8' : '#e8f4fb', '#1a3040', 1);
     if (S.tray[k]) rect(351.5 + 12 * k, 6.5, 6, 6, '#8ac0ff', null);
@@ -1000,10 +1001,7 @@ function drawHUD() {
       const b = addBtn({ id: 'm' + k, x: 433 + 40 * i + mx, y: 23, w: 35, h: 35, desc: d, onClick: fn });
       goldFrame(b.x, b.y, b.w, b.h, hov(b));
       menuIcon(k, b.x, b.y);
-      if (k === 'evolve' && S.tech < 5 && S.xp >= EVOLVE_XP[S.tech - 1]) {
-        const a = 0.35 + 0.35 * Math.sin(Game.t * 0.15);
-        rect(b.x + 3, b.y + 3, b.w - 6, b.h - 6, `rgba(255,255,160,${a})`, null);
-      }
+      if (k === 'evolve') spots.evolve = b;
     });
   } else if (S.menu === 'units' || S.menu === 'turrets') {
     const isU = S.menu === 'units';
@@ -1031,10 +1029,8 @@ function drawHUD() {
   text(T.special, 536 + mx, 80, { font: 'bold 12px ' + FONT_HUD, color: '#ffff00', stroke: '#6a5000', sw: 1.6 });
   const sb = addBtn({ id: 'special', x: 586 + mx, y: 73, w: 56, h: 25, desc: S.specTimer >= SPECIAL_COOLDOWN ? T.specialReady(T.specialName[S.tech - 1]) : T.specialWait(Math.ceil((SPECIAL_COOLDOWN - S.specTimer) / FPS)), onClick: useSpecial });
   specialIcon(S.tech, sb.x, sb.y, sb.w, sb.h);
-  if (S.specTimer < SPECIAL_COOLDOWN) {
-    const k = S.specTimer / SPECIAL_COOLDOWN;
-    rect(sb.x + sb.w * k, sb.y, sb.w * (1 - k), sb.h, 'rgba(0,0,0,0.78)', null);
-  } else if (hov(sb)) rect(sb.x, sb.y, sb.w, sb.h, 'rgba(255,255,255,0.2)', null);
+  spots.special = sb;
+  if (S.specTimer >= SPECIAL_COOLDOWN && hov(sb)) rect(sb.x, sb.y, sb.w, sb.h, 'rgba(255,255,255,0.2)', null);
 
   // small utility buttons (pause / sound / fullscreen) under the gold panel
   const util = [
@@ -1052,6 +1048,43 @@ function drawHUD() {
   const td = Game.touchDesc && performance.now() - Game.touchDesc[1] < 1800 ? Game.touchDesc[0] : null;
   const desc = hoverDesc || td || S.desc;
   if (desc) text(desc, 129, 33, { font: '12px ' + FONT_HUD, color: '#ffff33', stroke: '#5a4a00', sw: 2 });
+}
+
+const HUD_H = 112;
+function hudKey() {
+  let hover = '';
+  if (Input.over) for (const b of hudCache.buttons) if (Input.x >= b.x && Input.x <= b.x + b.w && Input.y >= b.y && Input.y <= b.y + b.h) hover = b.id;
+  const td = Game.touchDesc && performance.now() - Game.touchDesc[1] < 1800 ? Game.touchDesc[0] : '';
+  const spec = S.specTimer >= SPECIAL_COOLDOWN ? 'r' : Math.ceil((SPECIAL_COOLDOWN - S.specTimer) / FPS);
+  return [S.uidBase, Math.floor(S.cash), Math.floor(S.xp), S.menu, S.tech, S.addons, S.tray.join(','), S.trainId, S.buildId, S.desc,
+    hover, td, spec, lang, Game.soundOn, viewW, scale].join('|');
+}
+
+function drawHUD() {
+  const c = G.ctx;
+  const key = hudKey();
+  if (key !== hudCache.key || !hudCache.img) {
+    const saved = buttons;
+    buttons = [];
+    hudCache.img = renderTo(viewW, HUD_H, scale, () => paintHUD());
+    hudCache.buttons = buttons;
+    hudCache.key = key;
+    buttons = saved;
+  }
+  c.drawImage(hudCache.img, 0, 0, viewW, HUD_H);
+  for (const b of hudCache.buttons) buttons.push(b);
+  // live overlays
+  if (S.trainTotal > 0) rect(128, 7, 216.75 * (1 - S.trainTimer / S.trainTotal), 5.75, '#e00000', null);
+  const ev = hudCache.spots.evolve;
+  if (ev && S.tech < 5 && S.xp >= EVOLVE_XP[S.tech - 1]) {
+    const a = 0.35 + 0.35 * Math.sin(Game.t * 0.15);
+    rect(ev.x + 3, ev.y + 3, ev.w - 6, ev.h - 6, `rgba(255,255,160,${a})`, null);
+  }
+  const sb = hudCache.spots.special;
+  if (sb && S.specTimer < SPECIAL_COOLDOWN) {
+    const k = S.specTimer / SPECIAL_COOLDOWN;
+    rect(sb.x + sb.w * k, sb.y, sb.w * (1 - k), sb.h, 'rgba(0,0,0,0.78)', null);
+  }
 }
 
 function utilIcon(k, x, y) {
@@ -1187,7 +1220,7 @@ function drawUnitObj(u, alpha) {
   if (u.dead && u.dc > 60) c.globalAlpha = Math.max(0, 1 - (u.dc - 60) / 20);
   save(); tr(x, u.y);
   if (u.side === 2) scl(-1, 1);
-  drawUnit(u.id, { anim: u.anim, f, len, hit: u.hit, v: u.v, t: u.t + alpha });
+  blitUnit(u.id, u.anim, f, len, u.hit, u.v);
   restore();
   c.globalAlpha = 1;
   // hover / tap health bar
@@ -1229,8 +1262,9 @@ function titleText(str, x, y, size) {
   c.textAlign = 'center'; c.textBaseline = 'alphabetic';
   c.lineJoin = 'round';
   c.fillStyle = 'rgba(0,0,0,0.45)'; c.fillText(str, x + 3, y + 4);
-  c.strokeStyle = '#5a4000'; c.lineWidth = 3; c.strokeText(str, x, y);
-  c.fillStyle = linGrad(0, y - size * 0.8, 0, y, [[0, '#fff9c0'], [0.35, '#ffe24a'], [0.55, '#c89400'], [0.75, '#fff2a0'], [1, '#b08000']]);
+  c.strokeStyle = '#5a4000'; c.lineWidth = Math.max(2, size / 24); c.strokeText(str, x, y);
+  // chrome gold: bright white band on top, deep gold in the middle, light rim at the bottom
+  c.fillStyle = linGrad(0, y - size * 0.75, 0, y, [[0, '#ffffff'], [0.22, '#fff6b0'], [0.45, '#f2c21c'], [0.62, '#a87800'], [0.8, '#f8e070'], [1, '#fffbe0']]);
   c.fillText(str, x, y);
 }
 
@@ -1269,7 +1303,7 @@ function drawTitle() {
   buttons = [];
   drawMenuBackground();
   const cx = viewW / 2;
-  titleText(T.title, cx, 80, 58);
+  titleText(T.title, cx, 84, Math.min(72, viewW * 0.105));
   // a unit walking above the menu box, cycling through the ages like the original title screen
   Game.menuUnitT++;
   if (Game.menuUnitT > 200) { Game.menuUnitT = 0; Game.menuUnit = Game.menuUnit % 16 + 1; }
@@ -1278,7 +1312,7 @@ function drawTitle() {
   const sc = U.w > 90 ? 0.75 : 1.2;
   scl(sc);
   drawShadow(U.w);
-  drawUnit(Game.menuUnit, { anim: 'walk', f: (Game.t * 1) % U.anim.walk, len: U.anim.walk, hit: 0, v: 0, t: Game.t });
+  blitUnit(Game.menuUnit, 'walk', Game.t % U.anim.walk, U.anim.walk, 0, 0);
   restore();
   translucentBox(cx - 140, 188, 280, 262);
   menuItem('play', T.play, cx, 202, 26, () => { Game.screen = 'difficulty'; Sfx.play('click'); });
@@ -1374,7 +1408,7 @@ function drawExtras() {
       const anim = (Math.floor(Game.t / 160) + id) % 2 ? 'walk' : 'attack';
       const A = U.anim;
       const len = anim === 'walk' ? A.walk : A.attack[0][0];
-      drawUnit(id, { anim, f: Game.t % len, len, hit: anim === 'attack' ? A.attack[0][1] : 0, v: 0, t: Game.t });
+      blitUnit(id, anim, Game.t % len, len, anim === 'attack' ? A.attack[0][1] : 0, 0);
       restore();
       text(T.unitNames[id], x + 38, y + 18, { font: `bold 10px ${FONT_HUD}`, color: '#222' });
       text(`$${U.cost}  HP ${U.hp}`, x + 38, y + 31, { font: `10px ${FONT_HUD}`, color: '#555' });
@@ -1456,6 +1490,7 @@ function frame(now) {
 function render(alpha) {
   const c = ctx;
   G.set(c);
+  Sprites.beginFrame();
   c.setTransform(1, 0, 0, 1, 0, 0);
   c.fillStyle = '#000'; c.fillRect(0, 0, cv.width, cv.height);
   if (Game.screen !== 'start' && offY > 1) {
