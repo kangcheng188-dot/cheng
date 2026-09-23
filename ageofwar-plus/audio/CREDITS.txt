@@ -1,0 +1,9 @@
+Audio used by Age of War Plus (all public domain, CC0 1.0)
+
+Music
+  music_battle.mp3  "Battle Theme A" by cynicmusic (cynicmusic.com) — https://opengameart.org/content/battle-theme-a — CC0
+  music_title.mp3   "Town Theme RPG" by cynicmusic (cynicmusic.com) — https://opengameart.org/content/town-theme-rpg — CC0
+
+Sound effects and jingles
+  Kenney (www.kenney.nl) — Impact Sounds, Sci-fi Sounds, Interface Sounds, RPG Audio, Digital Audio, Music Jingles — CC0
+  Files were trimmed/re-encoded to mono MP3.

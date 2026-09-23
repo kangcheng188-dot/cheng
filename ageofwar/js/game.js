@@ -1323,7 +1323,7 @@ function drawTitle() {
   menuItem('play', T.play, cx, 202, 26, () => { Game.screen = 'difficulty'; Sfx.play('click'); });
   menuItem('instr', T.instructions, cx, 238, 26, () => { Game.screen = 'instructions'; Sfx.play('click'); });
   menuItem('extras', T.extras, cx, 274, 26, () => { Game.screen = 'extras'; Game.t = 0; Sfx.play('click'); });
-  if (!window.AOW_EMBEDDED) menuItem('more', T.moreGames, cx, 310, 26, () => { window.location.href = '../'; });
+  if (!window.AOW_EMBEDDED) menuItem('more', T.moreGames, cx, 310, 26, () => { window.location.href = '../ageofwar-plus/'; });
   serifText(T.tribute, cx, 356, 11, { color: '#fff' });
   // language + sound toggles
   menuItem('lang', lang === 'zh' ? 'English' : '中文', cx - 60, 382, 17, () => { setLang(lang === 'zh' ? 'en' : 'zh'); caches.icons = {}; Sfx.play('click'); });

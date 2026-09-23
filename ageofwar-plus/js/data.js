@@ -4,7 +4,7 @@
 // timer here is expressed in those frames ("ticks").
 
 const FPS = 40;
-const STAGE_H = 450;
+const STAGE_H = 500;   // Plus: taller stage, the command bar sits on the dirt below the battlefield
 const WORLD_W = 1000;
 const GROUND_Y = 425;
 const BASE_STAGE_W = 650;
@@ -91,7 +91,7 @@ const TURRET_SPOT_Y = [-80, -125, -172, -220];
 const I18N = {
   en: {
     title: 'AGE OF WAR',
-    play: 'Play', instructions: 'Instructions', extras: 'Extras', moreGames: 'Plus edition →',
+    play: 'Play', instructions: 'Instructions', extras: 'Extras', moreGames: 'Play more games',
     byline: 'A game by louissi', tribute: 'Fan remake of the 2007 Flash classic · mobile / tablet / PC',
     difficulty: 'Difficulty:', chooseDiff: 'Choose a difficulty to start the game:',
     normal: 'Normal', harder: 'Harder', impossible: 'Impossible',
@@ -140,7 +140,7 @@ const I18N = {
   },
   zh: {
     title: 'AGE OF WAR',
-    play: '开始游戏', instructions: '游戏说明', extras: '兵种图鉴', moreGames: 'Plus 重制版 →',
+    play: '开始游戏', instructions: '游戏说明', extras: '兵种图鉴', moreGames: '更多游戏',
     byline: '原作：louissi', tribute: '2007 年经典 Flash 游戏复刻版 · 手机 / 平板 / 电脑',
     difficulty: '难度：', chooseDiff: '选择难度开始游戏：',
     normal: '普通', harder: '困难', impossible: '地狱',
