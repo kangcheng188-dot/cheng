@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0b1624">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="《超级鸡马》同人复刻 · 主机架地图：派对盒选道具、放陷阱、赛跑到终点。手机与电脑都能玩。">
+<title>超级鸡马 · 主机架</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=ZCOOL+KuaiLe&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="game" aria-label="游戏画面"></canvas>
+
+<section id="scr-title" class="screen">
+  <div class="logo">
+    <span class="cn"><span>超</span><span>级</span><span>鸡</span><span>马</span></span>
+    <span class="en">ULTIMATE CHICKEN HORSE · FAN REMAKE</span>
+  </div>
+  <div class="mapbadge"><span class="chip">CPU</span><span>地图：主机架 <small>MAINFRAME</small></span></div>
+  <div class="btns">
+    <button class="btn primary" id="btn-play">开始派对</button>
+    <button class="btn" id="btn-help">怎么玩</button>
+    <button class="btn ghost" id="btn-sound">音效：开</button>
+  </div>
+  <div class="foot">非官方同人作品 · 致敬 Clever Endeavour Games 的《Ultimate Chicken Horse》· 所有美术与音乐为程序生成的原创内容</div>
+</section>
+
+<section id="scr-setup" class="screen dim" hidden>
+  <div class="panel">
+    <h2 id="setup-title">选择你的角色</h2>
+    <div class="seg" id="seg-picking" hidden style="justify-content:center;margin-bottom:6px">
+      <button data-v="0" class="on">为 1P 选</button><button data-v="1">为 2P 选</button>
+    </div>
+    <div class="chars" id="chars"></div>
+    <div class="opts">
+      <label for="seg-cpu">电脑对手</label>
+      <div class="seg" id="seg-cpu"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3" class="on">3</button></div>
+      <label for="seg-diff">电脑难度</label>
+      <div class="seg" id="seg-diff"><button data-v="easy">简单</button><button data-v="normal" class="on">普通</button><button data-v="hard">困难</button></div>
+      <label for="seg-win">胜利分数</label>
+      <div class="seg" id="seg-win"><button data-v="3">3 分</button><button data-v="5" class="on">5 分</button><button data-v="7">7 分</button></div>
+      <label for="seg-humans">本地玩家</label>
+      <div class="seg" id="seg-humans"><button data-v="1" class="on">1 人</button><button data-v="2">2 人</button></div>
+    </div>
+    <p class="note" id="humans-note" hidden>双人模式：1P 用 WASD + 空格 + 左 Shift（Q/E 旋转），2P 用 方向键 + 回车 + 右 Shift（. 旋转），也可插手柄。</p>
+    <div class="btns">
+      <button class="btn ghost" id="btn-back">返回</button>
+      <button class="btn green" id="btn-start">开始!</button>
+    </div>
+  </div>
+</section>
+
+<section id="scr-help" class="screen dim" hidden>
+  <div class="panel">
+    <h2>怎么玩</h2>
+    <h3>每一回合</h3>
+    <ul>
+      <li><b>派对盒</b>：每人从盒子里挑一个道具。</li>
+      <li><b>放置</b>：把道具放进地图——搭桥帮自己，或者放陷阱坑别人。</li>
+      <li><b>奔跑</b>：大家一起从左边的服务器机柜出发，跑到右边的红旗。</li>
+    </ul>
+    <h3>主机架的机关</h3>
+    <ul>
+      <li>坑上方有两块<b>电路板</b>。你跑过/跳过的格子会亮起你的颜色。</li>
+      <li>这些亮起的格子<b>下一回合会变成实体方块</b>，再下一回合又被新的路径替换。炸弹炸不掉它们。</li>
+    </ul>
+    <h3>计分</h3>
+    <ul>
+      <li>到达终点 +1；第一个到 +0.2；只有你一个人到（3 人以上）+0.6。</li>
+      <li>别人死在你放的陷阱上，每次 +0.2；带着金币到终点 +0.2；落后很多时到达终点，逆袭 +0.6。</li>
+      <li>所有人都到终点 = <b>太简单了</b>，没人到 = <b>没有赢家</b>，这两种情况都不计分。</li>
+    </ul>
+    <h3>操作</h3>
+    <ul>
+      <li>电脑：<span class="kbd">←→</span>/<span class="kbd">AD</span> 移动，<span class="kbd">空格</span>/<span class="kbd">↑</span> 跳（按久跳高），<span class="kbd">Shift</span> 冲刺，贴墙按住方向可滑墙，再跳=蹬墙跳。</li>
+      <li>放置：方向键或鼠标移动，<span class="kbd">R</span>/右键/滚轮 旋转，<span class="kbd">空格</span>/左键 放下。<span class="kbd">Esc</span> 暂停，<span class="kbd">F</span> 快进，<span class="kbd">M</span> 静音。</li>
+      <li>手机（建议横屏）：左半屏拖动移动（推到底自动冲刺），右边“跳”“冲”；放置时在屏幕任意处拖动道具，再点“旋转”“放置”。</li>
+      <li>也支持手柄：A 跳/确认，X 冲刺，B/LB/RB 旋转，Start 暂停。</li>
+    </ul>
+    <div class="btns" style="margin-top:12px"><button class="btn green" id="btn-help-close">知道了</button></div>
+  </div>
+</section>
+
+<section id="scr-pause" class="screen dim" hidden>
+  <div class="panel" style="text-align:center">
+    <h2>暂停</h2>
+    <div class="btns" style="flex-direction:column;align-items:center">
+      <button class="btn green" id="btn-resume">继续</button>
+      <button class="btn" id="btn-restart">重新开始本局</button>
+      <button class="btn ghost" id="btn-sound2">音效：开</button>
+      <button class="btn ghost" id="btn-quit">回到标题</button>
+    </div>
+  </div>
+</section>
+
+<section id="scr-win" class="screen" hidden style="justify-content:flex-end;padding-bottom:max(22px,env(safe-area-inset-bottom))">
+  <div class="btns">
+    <button class="btn primary" id="btn-again">再来一局</button>
+    <button class="btn ghost" id="btn-menu">回到标题</button>
+  </div>
+</section>
+
+<section id="rotate" class="screen" hidden>
+  <div class="phone" aria-hidden="true"></div>
+  <p style="font-size:20px;margin:0">把手机横过来玩更爽</p>
+  <p style="font-size:13px;color:#b9c6e4;margin:0">竖屏也能玩，只是画面会小一些</p>
+  <button class="btn ghost" id="btn-rotate-ok">继续竖屏</button>
+</section>
+
+<div id="toast"></div>
+<div id="loading">载入中…</div>
+
+<script src="js/util.js"></script>
+<script src="js/level.js"></script>
+<script src="js/items.js"></script>
+<script src="js/physics.js"></script>
+<script src="js/world.js"></script>
+<script src="js/input.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/art_chars.js"></script>
+<script src="js/art_items.js"></script>
+<script src="js/art_level.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/render.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/aipool.js"></script>
+<script src="js/game.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
