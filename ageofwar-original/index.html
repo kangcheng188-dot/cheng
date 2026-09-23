@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Age of War">
+<meta name="description" content="战争进化史 Age of War — the original 2007 game file, running in the browser on phone, tablet and PC.">
+<title>战争进化史 原版素材版</title>
+<link rel="icon" href="../ageofwar/icon.png">
+<link rel="apple-touch-icon" href="../ageofwar/icon.png">
+<style>
+:root { color-scheme: dark; --ground: #000; --ink: #f4efe2; --muted: #b9ae95; --gold: #f0c830; --panel: rgba(20, 16, 10, 0.92); }
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: var(--ground); color: var(--ink); overscroll-behavior: none; }
+body { position: fixed; inset: 0; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent;
+  font: 15px/1.45 -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif; }
+#game { position: absolute; left: 0; top: 0; display: block; touch-action: none; outline: none; }
+.center { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; }
+.card { max-width: 440px; width: 100%; background: var(--panel); border: 1px solid #5a4a2a; border-radius: 12px; padding: 22px 22px 18px; box-sizing: border-box; }
+.card h1 { font-size: 18px; margin: 0 0 10px; color: var(--gold); font-weight: 700; }
+.card p { margin: 0 0 14px; color: var(--ink); }
+.bar { height: 8px; border-radius: 4px; background: #2c251a; overflow: hidden; margin: 12px 0; }
+.bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #d9a520, var(--gold)); transition: width .15s; }
+.note { font-size: 12px; color: var(--muted); margin: 0; }
+.btn { display: inline-block; font: inherit; font-weight: 600; color: #1b1406; background: var(--gold); border: 0; border-radius: 8px; padding: 9px 16px; cursor: pointer; }
+.btn:focus-visible, .tbtn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+a { color: var(--gold); }
+#pick .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+#pfile { position: absolute; width: 1px; height: 1px; opacity: 0; }
+#tb { position: fixed; display: flex; gap: 6px; z-index: 3; }
+.tbtn { width: 34px; height: 30px; border-radius: 8px; border: 1px solid rgba(0,0,0,.35); background: rgba(255, 244, 214, .55); color: #2a1a06; font: 15px/1 sans-serif; cursor: pointer; padding: 0; }
+#rotate { position: fixed; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 5;
+  padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px)); background: rgba(0,0,0,.8); text-align: center; font-weight: 600; }
+#rotate .phone { width: 26px; height: 42px; border: 3px solid var(--ink); border-radius: 6px; animation: rot 2s ease-in-out infinite; }
+@keyframes rot { 0%, 30% { transform: rotate(0deg); } 60%, 100% { transform: rotate(-90deg); } }
+@media (prefers-reduced-motion: reduce) { #rotate .phone { animation: none; } .bar i { transition: none; } }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<canvas id="game" tabindex="0" aria-label="Age of War"></canvas>
+<div id="load" class="center"><div class="card">
+  <h1>战争进化史 · Age of War</h1>
+  <p id="ltxt"></p>
+  <div class="bar"><i id="lbar"></i></div>
+  <p id="lnote" class="note"></p>
+</div></div>
+<div id="pick" class="center" hidden><div class="card">
+  <h1 id="ptitle"></h1>
+  <p id="ptext"></p>
+  <div class="row">
+    <label class="btn"><span id="pbtn"></span><input id="pfile" type="file" accept=".swf,application/x-shockwave-flash"></label>
+    <a id="plink" href="https://archive.org/details/flash_age_of_war" target="_blank" rel="noopener"></a>
+  </div>
+</div></div>
+<div id="tb">
+  <button id="bpause" class="tbtn" type="button" aria-label="Pause" hidden>❚❚</button>
+  <button id="bsnd" class="tbtn" type="button"></button>
+  <button id="bfull" class="tbtn" type="button" aria-label="Fullscreen">⛶</button>
+</div>
+<div id="rotate" hidden><div class="phone"></div><div id="rtxt"></div><button id="rgo" class="btn" type="button"></button></div>
+<script src="js/swf.js"></script>
+<script src="js/player.js"></script>
+<script src="js/render.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
