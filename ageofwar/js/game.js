@@ -952,7 +952,6 @@ function drawHUD() {
   if (!caches.panels) buildPanels();
   const c = G.ctx;
   const P = caches.panels;
-  buttons = [];
   // light band behind the HUD like the original
   c.fillStyle = linGrad(0, 0, 0, 105, [[0, 'rgba(255,255,255,0.4)'], [1, 'rgba(255,255,255,0)']]);
   c.fillRect(0, 0, viewW, 105);
@@ -1367,9 +1366,9 @@ function drawExtras() {
     text(T.ageNames[a - 1], cx - 285, y + 22, { font: `bold 11px ${FONT_SERIF}`, color: '#333' });
     ids.forEach((id, i) => {
       const U = UNITS[id];
-      const x = cx - 150 + i * 130;
+      const x = cx - 205 + i * 128;
       save(); tr(x, y + 52);
-      const sc = Math.min(0.75, 52 / (U.h + 6), 110 / (U.w + 20));
+      const sc = Math.min(0.75, 52 / (U.h + 6), 62 / (U.w + 10));
       scl(sc);
       drawShadow(U.w);
       const anim = (Math.floor(Game.t / 160) + id) % 2 ? 'walk' : 'attack';
@@ -1377,8 +1376,8 @@ function drawExtras() {
       const len = anim === 'walk' ? A.walk : A.attack[0][0];
       drawUnit(id, { anim, f: Game.t % len, len, hit: anim === 'attack' ? A.attack[0][1] : 0, v: 0, t: Game.t });
       restore();
-      text(T.unitNames[id], x + 26, y + 18, { font: `bold 10px ${FONT_HUD}`, color: '#222' });
-      text(`$${U.cost}  HP ${U.hp}`, x + 26, y + 31, { font: `10px ${FONT_HUD}`, color: '#555' });
+      text(T.unitNames[id], x + 38, y + 18, { font: `bold 10px ${FONT_HUD}`, color: '#222' });
+      text(`$${U.cost}  HP ${U.hp}`, x + 38, y + 31, { font: `10px ${FONT_HUD}`, color: '#555' });
     });
   }
   backLink(cx, 400);
@@ -1479,6 +1478,7 @@ function render(alpha) {
     case 'victory': drawEnd(true); break;
     case 'defeat': drawEnd(false); break;
     case 'play':
+      buttons = [];
       drawWorld(S.paused ? 1 : alpha);
       if (!S.paused && !S.over) drawHUD();
       else if (S.over) { buttons = []; drawHUD(); buttons = []; }
