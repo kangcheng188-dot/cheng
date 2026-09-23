@@ -1,0 +1,1243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>生命的密码锁</title>
+<meta name="description" content="从银河、太阳系到分子与细胞：以已发表的研究为依据，逐一拨开生命诞生所依赖的 16 个苛刻条件。">
+<meta name="theme-color" content="#06050c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@700;900&display=swap">
+<style>
+:root{
+  color-scheme:dark;
+  --ground:#06050c;
+  --ink:#ece5d3;
+  --ink-2:#bdb6a4;
+  --dim:#8d887a;
+  --line:rgba(236,229,211,.13);
+  --line-2:rgba(236,229,211,.28);
+  --wash:rgba(236,229,211,.035);
+  --amber:#ffb547;
+  --amber-ink:#1c1206;
+  --teal:#6fd3c7;
+  --red:#ff6b57;
+  --ice:#cfe6ff;
+  --gutter:clamp(16px,4vw,56px);
+  --f-display:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --f-body:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{background:var(--ground);transition:background-color 1.4s ease;scroll-behavior:smooth}
+body{margin:0;padding-inline:var(--gutter);background:var(--ground);color:var(--ink);font:400 16px/1.85 var(--f-body);transition:background-color 1.4s ease;-webkit-font-smoothing:antialiased}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+sub,sup{line-height:0}
+
+/* ---------- HUD ---------- */
+.hud{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;gap:16px;padding:calc(env(safe-area-inset-top,0px) + 10px) var(--gutter) 14px;background:linear-gradient(to bottom,rgba(4,4,9,.86),rgba(4,4,9,.55) 60%,rgba(4,4,9,0));pointer-events:none}
+.hud>*{pointer-events:auto}
+.hud-name{font:500 12px/1 var(--f-mono);letter-spacing:.14em;color:var(--ink-2);white-space:nowrap;text-decoration:none}
+.notches{display:flex;gap:3px;flex:1;min-width:0;max-width:640px}
+.notch{flex:1;height:22px;border:0;background:transparent;padding:0;position:relative;cursor:pointer}
+.notch::before{content:"";position:absolute;left:50%;top:4px;bottom:4px;width:2px;transform:translateX(-50%);background:var(--line-2);border-radius:1px;transition:background .4s,width .4s,box-shadow .4s}
+.notch.on::before{background:var(--amber);width:4px;box-shadow:0 0 10px rgba(255,181,71,.7)}
+.notch:hover::before{background:var(--ink-2)}
+.notch.on:hover::before{background:#ffd08a}
+.hud-count{font:500 12px/1 var(--f-mono);color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.hud-count b{color:var(--amber);font-weight:500}
+@media (max-width:560px){.hud-name{display:none}}
+
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);z-index:45;transform:translate(-50%,16px);opacity:0;pointer-events:none;font:500 13px/1.4 var(--f-mono);color:var(--amber-ink);background:var(--amber);padding:9px 16px;border-radius:999px;box-shadow:0 8px 30px rgba(0,0,0,.45);transition:opacity .35s,transform .35s;white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding-block:clamp(120px,18vh,180px) clamp(64px,10vh,110px);max-width:1200px;margin:0 auto}
+.hero canvas{position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;height:100%;z-index:0;pointer-events:none}
+.hero-in{position:relative;z-index:1}
+.eyebrow{font:500 12.5px/1.6 var(--f-mono);letter-spacing:.14em;color:var(--teal);margin:0}
+.hero h1{font:900 clamp(52px,12.5vw,164px)/1 var(--f-display);letter-spacing:.04em;margin:.18em 0 .32em;text-wrap:balance}
+.hero-lede{max-width:34em;font-size:clamp(16.5px,1.9vw,20px);line-height:1.9;margin:0;color:var(--ink)}
+.tumblers{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:6px;max-width:900px;margin:40px 0 34px}
+@media (max-width:760px){.tumblers{grid-template-columns:repeat(8,minmax(0,1fr));row-gap:12px}}
+.tum{display:block;text-decoration:none;min-width:0}
+.tum-box{display:block;height:46px;border:1px solid var(--line-2);border-radius:4px;overflow:hidden;position:relative;background:var(--wash);transition:border-color .5s,background .5s;-webkit-mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent)}
+.strip{position:absolute;left:0;right:0;top:0;display:flex;flex-direction:column;align-items:center;font:500 17px/46px var(--f-mono);color:var(--ink-2);animation:roll var(--dur,1.4s) steps(10) infinite;transition:opacity .4s}
+@keyframes roll{to{transform:translateY(-460px)}}
+.tum.on .tum-box{border-color:var(--amber);background:rgba(255,181,71,.12);-webkit-mask-image:none;mask-image:none}
+.tum.on .strip{opacity:0}
+.tum.on .tum-box::after{content:"";position:absolute;left:50%;top:44%;width:7px;height:14px;border:solid var(--amber);border-width:0 2.5px 2.5px 0;transform:translate(-50%,-50%) rotate(45deg)}
+.tum-lab{display:block;font:400 11.5px/1.3 var(--f-body);color:var(--dim);text-align:center;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tum.on .tum-lab{color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){.strip{animation:none}}
+.hero-foot{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px}
+.honest{font-size:13.5px;line-height:1.7;color:var(--ink-2);max-width:32em;margin:0}
+
+/* ---------- Buttons & controls ---------- */
+.btn{display:inline-flex;align-items:center;gap:8px;font:500 13px/1 var(--f-mono);color:var(--ink);background:transparent;border:1px solid var(--line-2);border-radius:999px;padding:10px 16px;cursor:pointer;text-decoration:none;transition:border-color .2s,background .2s,color .2s;white-space:nowrap}
+.btn:hover{border-color:var(--amber)}
+.btn.solid{background:var(--amber);border-color:var(--amber);color:var(--amber-ink)}
+.btn.solid:hover{background:#ffc86e}
+.btn[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--amber-ink)}
+input[type=range]{width:100%;margin:0;accent-color:var(--amber);height:30px;cursor:pointer;background:transparent}
+.ctrl{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.ctrl label{font:500 12px/1.4 var(--f-mono);letter-spacing:.06em;color:var(--ink-2)}
+.ctrl output{font:500 15px/1 var(--f-mono);color:var(--amber);font-variant-numeric:tabular-nums}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:12px 16px}
+.ro{font:400 11px/1.4 var(--f-mono);color:var(--dim);letter-spacing:.06em;margin:0}
+.ro b{display:block;font:500 17px/1.35 var(--f-mono);color:var(--ink);letter-spacing:0;font-variant-numeric:tabular-nums;margin-top:3px}
+.verdict{margin:0;font-size:14.5px;line-height:1.75;color:var(--ink)}
+.chip{display:inline-block;font:500 11.5px/1 var(--f-mono);letter-spacing:.04em;padding:5px 9px;border-radius:3px;margin-right:8px;vertical-align:2px;background:var(--teal);color:#04201c;white-space:nowrap}
+.chip.warn{background:var(--amber);color:var(--amber-ink)}
+.chip.bad{background:var(--red);color:#2a0803}
+.chip.cold{background:var(--ice);color:#0b2036}
+.chip.ok2{background:rgba(111,211,199,.3);color:var(--ink)}
+
+/* ---------- Acts & dials ---------- */
+.act-head{max-width:1200px;margin:0 auto;padding-block:clamp(96px,16vh,180px) clamp(28px,5vh,56px)}
+.scale{font:500 12px/1.6 var(--f-mono);letter-spacing:.14em;color:var(--teal);margin:0;display:flex;flex-wrap:wrap;gap:4px 18px}
+.scale span+span{color:var(--dim)}
+.act-head h2{font:900 clamp(38px,6.4vw,78px)/1.12 var(--f-display);margin:.22em 0 .34em;letter-spacing:.02em;text-wrap:balance}
+.act-head .lede{max-width:36em;font-size:clamp(16px,1.6vw,18.5px);line-height:1.9;color:var(--ink-2);margin:0}
+.dial{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(28px,5vw,76px);align-items:start;padding-block:clamp(56px,9vh,104px);border-top:1px solid var(--line)}
+.dial.flip{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}
+.dial.flip .dial-text{order:2}
+.dial-text{max-width:34em}
+.kicker{font:500 12px/1.4 var(--f-mono);letter-spacing:.12em;color:var(--ink-2);display:flex;align-items:center;gap:10px;margin:0}
+.kicker i{width:9px;height:9px;border-radius:50%;border:1px solid var(--line-2);flex:none;transition:background .5s,border-color .5s,box-shadow .5s}
+.dial.on .kicker i{background:var(--amber);border-color:var(--amber);box-shadow:0 0 12px var(--amber)}
+.dial h3{font:700 clamp(25px,3vw,35px)/1.38 var(--f-display);margin:.55em 0 .7em;text-wrap:balance;letter-spacing:.01em}
+.dial-text p{margin:0 0 1.05em}
+.dial-text p.more{color:var(--ink-2)}
+.big{font:900 clamp(58px,8vw,100px)/1 var(--f-display);color:var(--amber);letter-spacing:-.01em;margin:.35em 0 .12em!important;font-variant-numeric:lining-nums}
+.big small{font-size:.36em;font-weight:700;letter-spacing:.02em;margin-left:.2em;color:var(--ink-2)}
+.big-cap{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.debate{display:inline-block;font:500 11.5px/1.6 var(--f-mono);color:var(--ink-2);border:1px dashed var(--line-2);border-radius:3px;padding:2px 9px;margin:0 0 1.1em}
+.debate b{color:var(--amber);font-weight:500;margin-right:6px}
+.src{font:400 11.5px/1.65 var(--f-mono);color:var(--dim);margin-top:1.6em!important}
+.stage{margin:0;border:1px solid var(--line);border-radius:6px;background:var(--wash);overflow:hidden;position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px)}
+.stage canvas{display:block;width:100%;height:auto;touch-action:pan-y}
+.stage-ui{padding:16px 18px 18px;display:grid;gap:14px;border-top:1px solid var(--line)}
+.stage-cap{margin:0;font:400 11.5px/1.6 var(--f-mono);color:var(--dim);padding:10px 18px;border-top:1px solid var(--line)}
+.stage-pad{padding:22px 20px}
+@media (max-width:880px){
+  .dial,.dial.flip{grid-template-columns:1fr}
+  .dial.flip .dial-text{order:0}
+  .stage{position:relative;top:auto}
+  body{font-size:15.5px}
+}
+.ar-43{aspect-ratio:4/3}
+.ar-1610{aspect-ratio:16/10}
+.ar-21{aspect-ratio:2/1}
+@media (max-width:560px){.ar-m1{aspect-ratio:1/1}.ar-m43{aspect-ratio:4/3}}
+
+/* Hoyle bars */
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:5.2em minmax(0,1fr) 6.5em;align-items:center;gap:12px;font:500 13px/1 var(--f-mono)}
+.bar-name{color:var(--ink)}
+.bar-track{height:14px;background:rgba(236,229,211,.08);border-radius:2px;overflow:hidden}
+.bar-fill{height:100%;width:100%;background:var(--teal);transition:width .25s}
+.bar-fill.o{background:var(--ice)}
+.bar-val{text-align:right;color:var(--ink-2);font-variant-numeric:tabular-nums}
+
+/* star types */
+.sbar-lab{font:500 11.5px/1.4 var(--f-mono);color:var(--dim);letter-spacing:.06em;margin:0 0 8px}
+.sbar{display:flex;height:30px;border-radius:3px;overflow:visible;position:relative}
+.sbar span{height:100%;display:block}
+.sbar span:first-child{border-radius:3px 0 0 3px}
+.sbar span:last-child{border-radius:0 3px 3px 0}
+.sbar .g{outline:2px solid var(--ink);outline-offset:1px;position:relative;z-index:1}
+.sun-mark{position:absolute;top:-24px;font:500 11.5px/1 var(--f-mono);color:var(--amber);white-space:nowrap;transform:translateX(-100%);padding-right:4px}
+.legend{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px 18px;font:400 12.5px/1.6 var(--f-mono);color:var(--ink-2)}
+.legend li{display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}
+.legend i{width:10px;height:10px;border-radius:2px;flex:none}
+.legend b{font-weight:500;color:var(--ink);margin-left:auto}
+.legend li.g{color:var(--amber)}
+.legend li.g b{color:var(--amber)}
+.split{display:flex;height:22px;border-radius:3px;overflow:hidden;font:500 11.5px/22px var(--f-mono)}
+.split span{padding-left:8px;white-space:nowrap;overflow:hidden}
+
+/* legend for tilt */
+.keyline{display:flex;flex-wrap:wrap;gap:6px 16px;font:400 11.5px/1.4 var(--f-mono);color:var(--ink-2)}
+.keyline span{display:inline-flex;align-items:center;gap:6px}
+.keyline i{width:16px;height:0;border-top:1.5px solid}
+
+/* water */
+.wgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line)}
+.wgrid div{background:var(--ground);padding:22px 20px 24px;transition:background-color 1.4s ease}
+.wgrid .num{font:900 clamp(34px,4.4vw,52px)/1 var(--f-display);color:var(--teal);margin:0}
+.wgrid .num small{font:500 12px/1 var(--f-mono);color:var(--dim);margin-left:6px;letter-spacing:.04em}
+.wgrid p{margin:.8em 0 0;font-size:14px;line-height:1.75;color:var(--ink-2)}
+@media (max-width:560px){.wgrid{grid-template-columns:1fr}}
+
+/* chirality */
+.chi{display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:3px;font:500 11px/1 var(--f-mono)}
+.chi span{aspect-ratio:1/1;display:grid;place-items:center;border-radius:2px;background:rgba(111,211,199,.16);color:var(--teal)}
+.chi span.d{background:rgba(255,107,87,.14);color:var(--red)}
+@media (max-width:560px){.chi{grid-template-columns:repeat(10,minmax(0,1fr));font-size:12px}}
+
+/* protein */
+.seqblock{display:grid;gap:12px}
+.seq-lab{font:500 11px/1 var(--f-mono);color:var(--dim);letter-spacing:.06em;margin:0 0 6px;display:flex;justify-content:space-between;gap:8px}
+.seq{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));gap:2px;font:500 12px/1 var(--f-mono)}
+.seq span{display:grid;place-items:center;height:26px;border-radius:2px;background:rgba(236,229,211,.06);color:var(--ink-2)}
+.seq.tgt span{background:rgba(255,181,71,.14);color:var(--amber)}
+.seq span.hit{background:var(--teal);color:#04201c}
+@media (max-width:560px){.seq{grid-template-columns:repeat(15,minmax(0,1fr))}.seq span{height:24px}}
+
+/* genes */
+.genes{display:grid;grid-template-columns:repeat(auto-fill,minmax(11px,1fr));gap:3px}
+.genes span{aspect-ratio:1/1;border-radius:50%;background:rgba(111,211,199,.55);transition:transform .3s}
+.genes span.u{background:var(--amber)}
+.genes-key{display:flex;flex-wrap:wrap;gap:6px 18px;font:400 12px/1.4 var(--f-mono);color:var(--ink-2);margin-top:14px}
+.genes-key i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:0}
+.facts3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.facts3 div{background:var(--ground);padding:16px 16px 18px;transition:background-color 1.4s ease}
+.facts3 .n{font:900 28px/1.1 var(--f-display);color:var(--amber);margin:0}
+.facts3 p{margin:.45em 0 0;font-size:12.5px;line-height:1.6;color:var(--ink-2)}
+@media (max-width:560px){.facts3{grid-template-columns:1fr}}
+
+/* svg & timeline */
+.scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.svg-o2{display:block;width:100%;min-width:600px;height:auto}
+.svg-o2 text{font-family:var(--f-body);font-size:11px;fill:var(--ink-2)}
+.svg-o2 .mono{font-family:var(--f-mono);font-size:10.5px;fill:var(--dim)}
+.svg-o2 .hi{fill:var(--amber)}
+.tl{position:relative;height:200px;min-width:560px;margin:8px 18px 0}
+.tl-axis{position:absolute;left:0;right:0;top:150px;height:1px;background:var(--line-2)}
+.tl-tick{position:absolute;top:156px;font:400 10.5px/1 var(--f-mono);color:var(--dim);transform:translateX(-50%);white-space:nowrap}
+.tl-tick:first-of-type{transform:none}
+.tl-tick.end{transform:translateX(-100%)}
+.tl-band{position:absolute;top:18px;height:132px;background:rgba(207,230,255,.1);border-inline:1px solid rgba(207,230,255,.25)}
+.tl-band em{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font:normal 400 10.5px/1 var(--f-body);color:var(--ice);white-space:nowrap}
+.tl-line{position:absolute;top:18px;height:132px;border-left:1px dashed var(--teal)}
+.tl-line em{position:absolute;top:-16px;left:4px;font:normal 400 10.5px/1 var(--f-body);color:var(--teal);white-space:nowrap}
+.tl-bar{position:absolute;bottom:50px;width:18px;transform:translateX(-50%);background:rgba(255,107,87,.55);border:0;padding:0;cursor:pointer;border-radius:2px 2px 0 0;transition:background .2s}
+.tl-bar:hover,.tl-bar.sel{background:var(--red)}
+.tl-bar span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font:500 10.5px/1.8 var(--f-mono);color:var(--ink-2);white-space:nowrap}
+.tl-bar.sel span{color:var(--red)}
+.tl-info{margin:0;padding:12px 18px 16px;font-size:14px;line-height:1.75;color:var(--ink);border-top:1px solid var(--line)}
+.tl-info b{color:var(--red);font-weight:500}
+
+/* finale */
+.finale{max-width:1200px;margin:0 auto;padding-block:clamp(96px,16vh,180px) clamp(60px,10vh,120px)}
+.fin-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(28px,6vw,90px);align-items:center}
+@media (max-width:880px){.fin-grid{grid-template-columns:1fr}}
+.lock{width:100%;max-width:300px;height:auto;display:block;margin:0 auto}
+.lock .shackle{fill:none;stroke:var(--ink-2);stroke-width:13;stroke-linecap:round;transition:transform 1.2s cubic-bezier(.3,1.4,.5,1),stroke .8s}
+.lock.open .shackle{transform:translateY(-30px);stroke:var(--amber)}
+.lock .body{fill:#1d130b;stroke:var(--line-2);stroke-width:1.5}
+.lock .seg{fill:none;stroke:rgba(236,229,211,.2);stroke-width:10;transition:stroke .6s}
+.lock .seg.on{stroke:var(--amber)}
+.lock .you{font:900 70px/1 var(--f-display);fill:var(--ink);transition:fill .8s}
+.lock.open .you{fill:var(--amber)}
+.lock-msg{text-align:center;font:500 12.5px/1.6 var(--f-mono);color:var(--ink-2);margin:14px 0 0}
+.finale h2{font:900 clamp(64px,12vw,150px)/1 var(--f-display);margin:.1em 0 .3em;letter-spacing:.04em}
+.finale p{max-width:34em;margin:0 0 1.1em;font-size:clamp(16px,1.6vw,18px);line-height:1.95}
+.cal{margin-top:clamp(56px,9vh,96px);border:1px solid var(--line);border-radius:6px;background:var(--wash);padding:22px clamp(16px,3vw,32px) 24px}
+.cal h3{font:700 clamp(22px,2.6vw,30px)/1.4 var(--f-display);margin:0 0 4px}
+.cal-sub{margin:0 0 20px!important;font-size:14px!important;color:var(--ink-2)}
+.cal-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 28px;margin-bottom:14px}
+.cal-date{font:900 clamp(40px,6vw,72px)/1 var(--f-display);color:var(--amber);margin:4px 0 0!important}
+.cal-time{font:500 clamp(18px,2.2vw,24px)/1.3 var(--f-mono);color:var(--ink);margin:6px 0 0!important;font-variant-numeric:tabular-nums}
+.cal-ago{font:500 clamp(18px,2.2vw,24px)/1.3 var(--f-mono);color:var(--ink);margin:4px 0 0!important;text-align:right;font-variant-numeric:tabular-nums}
+.cal-track{position:relative;padding-top:18px}
+.cal-ticks{position:absolute;left:0;right:0;top:0;height:18px}
+.cal-ticks button{position:absolute;top:0;width:12px;height:18px;margin-left:-6px;border:0;padding:0;background:transparent;cursor:pointer}
+.cal-ticks button::before{content:"";position:absolute;left:5px;top:3px;width:2px;height:12px;background:var(--teal);opacity:.7;border-radius:1px}
+.cal-ticks button.cur::before{background:var(--amber);opacity:1;height:14px;top:2px}
+.cal-axis{position:relative;height:18px;font:400 10.5px/1 var(--f-mono);color:var(--dim)}
+.cal-axis span{position:absolute;top:4px;transform:translateX(-50%);white-space:nowrap}
+.cal-axis span:first-child{transform:none}
+.cal-axis span:last-child{transform:translateX(-100%)}
+.cal-ev{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 24px;margin-top:18px}
+.cal-ev p{margin:0!important;font-size:14.5px!important;line-height:1.7!important}
+.cal-ev .ro{font-size:11px!important}
+.cal-row{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;margin-top:16px}
+.cal-note{font:400 12.5px/1.6 var(--f-mono);color:var(--ink-2);margin:0!important}
+.cal-note b{color:var(--amber);font-weight:500}
+.coda{max-width:1200px;margin:0 auto;padding-block:clamp(40px,8vh,90px) clamp(60px,10vh,110px);border-top:1px solid var(--line)}
+.coda p{max-width:36em;font-size:clamp(16px,1.6vw,18px);line-height:1.95;margin:0 0 1.2em}
+.quote{font:700 clamp(22px,3vw,34px)/1.6 var(--f-display)!important;color:var(--ink);margin:1.4em 0 .3em!important;text-wrap:balance}
+.quote-by{font:400 13px/1.6 var(--f-mono)!important;color:var(--dim)}
+.foot{font:400 12px/1.8 var(--f-mono)!important;color:var(--dim);margin-top:3em!important}
+</style>
+</head>
+<body>
+<div lang="zh-CN">
+
+<nav class="hud" aria-label="拨盘进度">
+  <a class="hud-name" href="#top">生命的密码锁</a>
+  <div class="notches" id="notches"></div>
+  <span class="hud-count" aria-live="polite"><b id="hud-n">0</b> / 16 已对准</span>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<header class="hero" id="top" data-ground="#06050c">
+  <canvas id="cv-hero" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <p class="eyebrow">从 10²¹ 米的银河，到 10⁻⁹ 米的分子</p>
+    <h1>生命的密码锁</h1>
+    <p class="hero-lede">想象一把有 16 个拨盘的锁。每个拨盘都是一个真实存在的条件：恒星里的一条核共振、地球与太阳的距离、一条蛋白质的序列、一颗小行星的落点……任何一个没有对准，你都不会在这里读到这句话。</p>
+    <div class="tumblers" id="tumblers" aria-label="16 个拨盘"></div>
+    <div class="hero-foot">
+      <a class="btn solid" href="#act1">开始对准第一个拨盘 ↓</a>
+      <p class="honest">向下滚动，拨盘会一个个对准；每一节都有可以拖动、点击的实验。所有数字都来自已发表的研究，科学界尚无定论之处会标出「有争议」。</p>
+    </div>
+  </div>
+</header>
+
+<!-- ================= ACT I ================= -->
+<section id="act1" data-ground="#070b1a">
+  <header class="act-head">
+    <p class="scale"><span>10²¹ m → 10⁷ m</span><span>138 亿年前 → 45 亿年前</span></p>
+    <h2>第一幕　恰好的位置</h2>
+    <p class="lede">在谈论生命之前，先要有一个能让生命待下去的地方。它需要恒星锻造出的碳，需要一颗安静的恒星，需要一条恰好的轨道，还需要一整套看不见的防护。</p>
+  </header>
+
+  <article class="dial" id="d1" data-i="0">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 01 · 恒星核合成</p>
+      <h3>每一个碳原子，都要穿过一道极窄的门</h3>
+      <p>宇宙大爆炸几乎只造出了氢和氦。你体重的约 18% 是碳，这些碳全部是在恒星内部，由三个氦核聚合而成的。这个反应本该慢到几乎不会发生——除非碳-12 恰好有一个能量为 7.65 MeV 的激发态，让反应产生「共振」。</p>
+      <p>1953 年，天文学家弗雷德·霍伊尔仅凭「我们存在，所以宇宙里一定有足够的碳」这一推理，预言了这个能级。同年，它在加州理工学院的实验中被证实，后来被称为「霍伊尔态」。</p>
+      <p class="big">0.5%</p>
+      <p class="big-cap">2000 年发表在《科学》上的计算：强相互作用只要改变约 0.5%，或电磁力改变约 4%，几乎所有恒星里的碳或者氧就会被摧毁殆尽。</p>
+      <p class="src">来源：Hoyle, ApJS (1954)；Oberhummer, Csótó &amp; Schlattl, Science (2000)</p>
+    </div>
+    <figure class="stage">
+      <div class="stage-ui" style="border-top:0">
+        <div class="ctrl"><label for="r-strong">改变宇宙的强相互作用</label><output id="o-strong" for="r-strong">±0.00%</output></div>
+        <input type="range" id="r-strong" min="-1" max="1" step="0.01" value="0">
+        <div class="bars">
+          <div class="bar"><span class="bar-name">碳 ¹²C</span><div class="bar-track"><div class="bar-fill" id="b-c"></div></div><span class="bar-val" id="v-c">×1</span></div>
+          <div class="bar"><span class="bar-name">氧 ¹⁶O</span><div class="bar-track"><div class="bar-fill o" id="b-o"></div></div><span class="bar-val" id="v-o">×1</span></div>
+        </div>
+        <p class="verdict" id="t-strong"></p>
+      </div>
+      <figcaption class="stage-cap">对数刻度示意。依据 Oberhummer 等（2000）的结论：偏差超过约 0.5% 时，碳或氧会减少 30–1000 倍以上。</figcaption>
+    </figure>
+  </article>
+
+  <article class="dial flip" id="d2" data-i="1">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 02 · 银河系</p>
+      <h3>不在中心，也不在边缘</h3>
+      <p>太阳距银河系中心约 2.6 万光年，大约每 2.3 亿年绕银心一圈。离中心太近，超新星和伽马射线暴频繁，辐射会一遍遍「消毒」行星表面；离得太远，恒星诞生时缺少铁、硅、氧等重元素，很难造出岩石行星。</p>
+      <p>2004 年的一项研究把这个「银河宜居带」估计为距银心 7–9 千秒差距（约 2.3 万–2.9 万光年）的环带，并且由 40 亿–80 亿年前形成的恒星组成。太阳，正好都在里面。</p>
+      <p class="debate"><b>有争议</b>也有学者认为，银盘的大部分区域都可能宜居。</p>
+      <p class="src">来源：Lineweaver, Fenner &amp; Gibson, Science (2004)；GRAVITY Collaboration, A&amp;A (2019)</p>
+    </div>
+    <figure class="stage">
+      <canvas id="cv-galaxy" class="ar-43" aria-label="银河系示意图：太阳位于虚线标出的宜居带环内"></canvas>
+      <figcaption class="stage-cap">示意：银河系俯视（略倾斜）。虚线环 = 7–9 千秒差距的银河宜居带，银盘半径约 5 万光年。</figcaption>
+    </figure>
+  </article>
+
+  <article class="dial" id="d3" data-i="2">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 03 · 恒星</p>
+      <h3>一颗安静、独居、寿命够长的恒星</h3>
+      <p>太阳是一颗 G 型黄矮星。银河系里约 76% 的恒星是红矮星：它们常常爆发剧烈的耀斑，而且宜居带离恒星太近，行星很可能被潮汐锁定——一面永远白昼，一面永远黑夜。</p>
+      <p>太阳还是「单身」：约 46% 的类太阳恒星都有伴星，行星轨道会被扰动。太阳的亮度在 11 年的活动周期里只变化约 0.1%；它已经稳定燃烧了 46 亿年，还能再烧约 50 亿年。</p>
+      <p class="src">来源：LeDrew, JRASC (2001)；Raghavan et al., ApJS (2010)</p>
+    </div>
+    <figure class="stage">
+      <div class="stage-pad">
+        <p class="sbar-lab">银河系主序星的光谱类型（按数量）</p>
+        <div class="sbar" role="img" aria-label="M 型 76.5%，K 型 12.1%，G 型 7.6%，F 型 3%，A 型 0.6%，B 型 0.13%">
+          <span style="width:76.45%;background:#ff7f55"></span><span style="width:12.1%;background:#ffae66"></span><span class="g" style="width:7.6%;background:#ffe08a"></span><span style="width:3%;background:#fff1cf"></span><span style="width:.6%;background:#e8edff"></span><span style="width:.25%;background:#b9ccff"></span>
+          <span class="sun-mark" style="left:92.4%">太阳 ↓</span>
+        </div>
+        <ul class="legend">
+          <li><i style="background:#ff7f55"></i>M 红矮星<b>76.5%</b></li>
+          <li><i style="background:#ffae66"></i>K 橙矮星<b>12.1%</b></li>
+          <li class="g"><i style="background:#ffe08a"></i>G 黄矮星<b>7.6%</b></li>
+          <li><i style="background:#fff1cf"></i>F 型<b>3.0%</b></li>
+          <li><i style="background:#e8edff"></i>A 型<b>0.6%</b></li>
+          <li><i style="background:#b9ccff"></i>B 型<b>0.13%</b></li>
+          <li><i style="background:#9fb6ff"></i>O 型<b>0.00003%</b></li>
+        </ul>
+        <p class="sbar-lab" style="margin-top:26px">类太阳恒星的伴星情况</p>
+        <div class="split" role="img" aria-label="单星 54%，有伴星 46%">
+          <span style="width:54%;background:#ffe08a;color:var(--amber-ink)">单星 54%</span><span style="width:46%;background:rgba(236,229,211,.16);color:var(--ink)">有伴星 46%</span>
+        </div>
+      </div>
+      <figcaption class="stage-cap">数据：LeDrew (2001) 的恒星类型统计；Raghavan 等 (2010) 对 454 颗类太阳恒星的巡天。</figcaption>
+    </figure>
+  </article>
+
+  <article class="dial flip" id="d4" data-i="3">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 04 · 轨道距离</p>
+      <h3>向内一小步是金星，向外一大步是火星</h3>
+      <p>地球离太阳 1 个天文单位（AU，约 1.496 亿公里）。阳光强度与距离的平方成反比：只要再靠近 3%–5%，阳光就会强 6%–11%。多个气候模型显示，这足以把海洋推入「失控温室」——海水蒸发，水汽在高空被紫外线分解，氢逃逸到太空。</p>
+      <p>更苛刻的是时间：太阳在慢慢变亮，大约每 1.1 亿年增亮 1%。在 40 多亿年里始终能保持液态水的「持续宜居带」，估计只有 0.95–1.15 AU 这一窄条。</p>
+      <p class="more">拖动右侧的地球，看看它离太阳远一点、近一点会怎样。</p>
+      <p class="src">来源：Kasting, Whitmire &amp; Reynolds, Icarus (1993)；Kopparapu et al., ApJ (2013)；Leconte et al., Nature (2013)</p>
+    </div>
+    <figure class="stage">
+      <canvas id="cv-orbit" class="ar-43 ar-m1" aria-label="可拖动的地球轨道距离模拟"></canvas>
+      <div class="stage-ui">
+        <div class="ctrl"><label for="r-orbit">地球到太阳的距离</label><output id="o-orbit" for="r-orbit">1.000 AU</output></div>
+        <input type="range" id="r-orbit" min="0.5" max="2" step="0.005" value="1">
+        <div class="readouts">
+          <p class="ro">距离<b id="ro-km">1.50 亿公里</b></p>
+          <p class="ro">阳光强度<b id="ro-sun">100%</b></p>
+          <p class="ro">与今天相比<b id="ro-dsun">±0%</b></p>
+        </div>
+        <p class="verdict" id="t-orbit"></p>
+      </div>
+      <figcaption class="stage-cap">条带颜色依据文献中的宜居带边界；行星外观为示意（假设大气成分与今天相同）。</figcaption>
+    </figure>
+  </article>
+
+  <article class="dial" id="d5" data-i="4">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 05 · 月球与地轴</p>
+      <h3>一次撞击，送来了一个稳定器</h3>
+      <p>约 45 亿年前，一颗火星大小的天体（忒伊亚）撞上原始地球，飞溅出的物质聚成了月球。它的质量是地球的 1/81——按与母行星的质量比，它是八大行星中最大的卫星。</p>
+      <p>月球的引力让地轴只在 22.1°–24.5° 之间缓慢摆动（周期约 4.1 万年），带来温和而规律的四季。1993 年的模拟显示，如果没有月球，地轴倾角可能在 0°–85° 之间混沌漂移。</p>
+      <p class="debate"><b>有争议</b>2012 年的模拟认为，没有月球时的摆动也许没那么剧烈。</p>
+      <p class="more">月球的潮汐还在给地球「踩刹车」：14 亿年前，一天只有约 18.7 小时；月球至今仍以每年约 3.8 厘米的速度远离。自转太慢会怎样？看看月球自己：它的一天约等于 29.5 个地球日，白天约 120°C，夜里约 −170°C。</p>
+      <p class="src">来源：Laskar, Joutel &amp; Robutel, Nature (1993)；Lissauer, Barnes &amp; Chambers, Icarus (2012)；Meyers &amp; Malinverno, PNAS (2018)</p>
+    </div>
+    <figure class="stage">
+      <canvas id="cv-tilt" class="ar-43 ar-m1" aria-label="地轴倾角与四季示意"></canvas>
+      <div class="stage-ui">
+        <div class="ctrl"><label for="r-tilt">地轴倾角</label><output id="o-tilt" for="r-tilt">23.4°</output></div>
+        <input type="range" id="r-tilt" min="0" max="90" step="0.1" value="23.4">
+        <div class="keyline"><span><i style="border-color:rgba(236,229,211,.6)"></i>赤道</span><span><i style="border-color:#ffb547"></i>南北回归线</span><span><i style="border-color:#6fd3c7"></i>南北极圈（极昼 / 极夜边界）</span></div>
+        <div class="readouts">
+          <p class="ro">极圈纬度<b id="ro-arc">66.6°</b></p>
+          <p class="ro">北京 夏至白昼<b id="ro-sum">14.8 小时</b></p>
+          <p class="ro">北京 冬至白昼<b id="ro-win">9.2 小时</b></p>
+        </div>
+        <div class="btns"><button class="btn" id="b-season" type="button" aria-pressed="false">切换到 12 月</button><button class="btn" id="b-earth" type="button">回到 23.44°</button></div>
+        <p class="verdict" id="t-tilt"></p>
+      </div>
+    </figure>
+  </article>
+
+  <article class="dial flip" id="d6" data-i="5">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 06 · 看不见的护盾</p>
+      <h3>一颗液态铁的心脏</h3>
+      <p>地球外核的液态铁不停翻滚，像发电机一样产生全球磁场。在朝阳的一侧，它把太阳风挡在约 6.4 万公里（约 10 个地球半径）之外。</p>
+      <p>火星在约 40 亿年前失去了全球磁场。NASA 的 MAVEN 探测器测得，太阳风如今仍以每秒约 100 克的速度剥走火星的大气。曾经流淌过河流的火星，今天的地表气压不到地球的 1%。</p>
+      <p class="more">地球还有一样太阳系里独一无二的东西：板块运动。岩石风化吸收 CO₂，俯冲带和火山再把它送回大气——这是一台以数十万年为周期运转的「碳-硅酸盐恒温器」。</p>
+      <p class="src">来源：Jakosky et al. (MAVEN), Science (2015)；Walker, Hays &amp; Kasting, JGR (1981)</p>
+    </div>
+    <figure class="stage">
+      <canvas id="cv-mag" class="ar-1610 ar-m43" aria-label="地球磁层与太阳风模拟"></canvas>
+      <div class="stage-ui">
+        <div class="btns"><button class="btn" id="b-mag" type="button" aria-pressed="false">关闭磁场</button><button class="btn" id="b-atm" type="button">恢复大气</button></div>
+        <div class="readouts"><p class="ro">大气层保留<b id="ro-atm">100%</b></p><p class="ro">磁场<b id="ro-mag">开启</b></p></div>
+        <p class="verdict" id="t-mag"></p>
+      </div>
+      <figcaption class="stage-cap">示意，非比例：真实的磁层顶在约 10 个地球半径之外。</figcaption>
+    </figure>
+  </article>
+
+  <article class="dial" id="d7" data-i="6">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 07 · 巨行星</p>
+      <h3>木星：盾牌，也是投石者</h3>
+      <p>木星的质量是地球的 318 倍。1994 年 7 月，苏梅克-列维 9 号彗星在此前飞掠木星时已被潮汐撕成 21 块碎片，它们接连撞进木星大气。最大的碎片 G 释放的能量约相当于 600 万兆吨 TNT，留下的暗斑比整个地球还大。</p>
+      <p>长期以来，人们认为木星像盾牌一样替地球拦截彗星：1994 年的一项模拟估计，没有木星，地球遭受的彗星撞击可能多上千倍。但后来的研究发现情况更复杂——木星既会把一些天体甩出太阳系，也会把另一些推向内太阳系。</p>
+      <p class="more">「大迁徙」假说还认为，木星早年曾向内迁移到约 1.5 AU，又被土星「拉」了回去。这也许能解释火星为什么这么小，小行星带为什么这么稀疏。</p>
+      <p class="debate"><b>有争议</b>木星对地球究竟是保护多一些，还是威胁多一些，至今没有定论。</p>
+      <p class="src">来源：Wetherill, Ap&amp;SS (1994)；Horner &amp; Jones, Int. J. Astrobiology (2008)；Walsh et al., Nature (2011)</p>
+    </div>
+    <figure class="stage">
+      <canvas id="cv-sl9" class="ar-43" aria-label="1994 年苏梅克-列维 9 号彗星撞击木星的重现动画"></canvas>
+      <div class="stage-ui"><div class="btns"><button class="btn" id="b-sl9" type="button">重播撞击</button></div></div>
+      <figcaption class="stage-cap">按真实事件重现：21 块碎片撞击约南纬 44°，撞击点在木星背面，随自转转入视野。时间已压缩。</figcaption>
+    </figure>
+  </article>
+</section>
+
+<!-- ================= ACT II ================= -->
+<section id="act2" data-ground="#03161a">
+  <header class="act-head">
+    <p class="scale"><span>10⁻¹⁰ m → 10⁻⁶ m</span><span>45 亿年前 → 35 亿年前</span></p>
+    <h2>第二幕　从无到有</h2>
+    <p class="lede">地球形成于 45.4 亿年前。在 35 亿年前的岩石里，已经出现了微生物留下的叠层石化石。这中间，没有生命的分子是怎样变成会自我复制的细胞的？这是科学中最大的未解之谜之一。</p>
+  </header>
+
+  <article class="dial" id="d8" data-i="7">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 08 · 溶剂</p>
+      <h3>一种反常的液体</h3>
+      <p>所有已知生命都离不开液态水。它看起来平淡无奇，物理性质却处处「反常」，而这些反常恰好都对生命有利。</p>
+      <p>水从哪里来，也仍是个谜。罗塞塔号测得彗星 67P 的水，氘氢比约是地球海水的 3 倍，所以今天更多学者认为，地球上的大部分水来自富含水的小行星。</p>
+      <p class="src">来源：Altwegg et al. (Rosetta), Science (2015)</p>
+    </div>
+    <figure class="stage">
+      <div class="wgrid">
+        <div><p class="num">0.917<small>g/cm³</small></p><p>冰的密度，比液态水轻。绝大多数物质固态比液态重，水却让冰浮在上面：湖海从表面结冰，冰层下的水得以保温。</p></div>
+        <div><p class="num">3.98<small>°C</small></p><p>液态水在这个温度下密度最大。因此冬天的湖底常年保持在约 4°C，水生生物得以越冬。</p></div>
+        <div><p class="num">4.18<small>J/(g·K)</small></p><p>水的比热容，远高于岩石和大多数常见液体。海洋像一个巨大的热缓冲器，抹平了昼夜和四季的温差。</p></div>
+        <div><p class="num">0.023<small>%</small></p><p>海洋只占地球质量的约万分之二。再少，地球是一片荒漠；再多很多，陆地会被完全淹没。</p></div>
+      </div>
+    </figure>
+  </article>
+
+  <article class="dial flip" id="d9" data-i="8">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 09 · 第一批积木</p>
+      <h3>闪电劈进原始海洋</h3>
+      <p>1952 年，芝加哥大学的研究生斯坦利·米勒把水、甲烷、氨和氢封进玻璃瓶，用电火花模拟闪电。一周后，瓶里出现了氨基酸——蛋白质的积木。2008 年，科学家重新分析他当年保存的样品，找到了 22 种氨基酸。</p>
+      <p>太空也在「投递」原料：1969 年坠落在澳大利亚的默奇森陨石含有 70 多种氨基酸；2025 年，OSIRIS-REx 从小行星贝努带回的样本中，检出了地球生命所用 20 种氨基酸中的 14 种，以及全部 5 种核碱基。</p>
+      <p class="more">但积木不等于房子。在水里，氨基酸之间的连接更容易被水解断开，这被称为「水的悖论」。原始大气的真实成分也仍有争论。</p>
+      <p class="src">来源：Miller, Science (1953)；Johnson et al., Science (2008)；Glavin et al., Nature Astronomy (2025)</p>
+    </div>
+    <figure class="stage">
+      <canvas id="cv-soup" class="ar-43" aria-label="原始海洋与闪电模拟：点击释放闪电"></canvas>
+      <div class="stage-ui">
+        <div class="readouts"><p class="ro">闪电<b id="soup-s">0</b></p><p class="ro">生成的氨基酸<b id="soup-a">0</b></p><p class="ro">种类<b id="soup-k">0</b></p></div>
+        <p class="verdict" id="soup-hint">点击水面，释放一道闪电。</p>
+      </div>
+      <figcaption class="stage-cap">Gly 甘氨酸 · Ala 丙氨酸 · Asp 天冬氨酸 · Glu 谷氨酸 · Val 缬氨酸 · Ser 丝氨酸 · Abu 氨基丁酸 · βAla β-丙氨酸——均在米勒类实验中出现过。</figcaption>
+    </figure>
+  </article>
+
+  <article class="dial" id="d10" data-i="9">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 10 · 镜像</p>
+      <h3>只用左手</h3>
+      <p>组成蛋白质的 20 种氨基酸里，除了甘氨酸，都有左、右两种互为镜像的结构，就像你的两只手。实验室里合成出来的总是左右各半，可地球生命的蛋白质几乎只用「左手型」，DNA 和 RNA 里的糖只用「右手型」。</p>
+      <p>如果全凭抛硬币，100 个氨基酸全是左手型的概率是 1/2¹⁰⁰，约 7.9 × 10⁻³¹。陨石里发现过轻微的左旋过剩（最高约 18%），也有化学反应能放大微小的偏差（如 1995 年发现的 Soai 反应）——但生命是怎样走到「纯左手」的，至今没有定论。</p>
+      <p class="src">来源：Glavin &amp; Dworkin, PNAS (2009)；Soai et al., Nature (1995)</p>
+    </div>
+    <figure class="stage">
+      <div class="stage-ui" style="border-top:0">
+        <div class="chi" id="chi" aria-label="100 个随机生成的氨基酸：L 为左手型，D 为右手型"></div>
+        <div class="btns"><button class="btn" id="b-chi" type="button">随机合成 100 个</button><button class="btn" id="b-chi-auto" type="button" aria-pressed="false">每秒 1000 次</button></div>
+        <div class="readouts"><p class="ro">本次左手型<b id="chi-l">—</b></p><p class="ro">最多一次<b id="chi-best">—</b></p><p class="ro">尝试次数<b id="chi-n">0</b></p></div>
+        <p class="verdict">全部 100 个都是左手型的概率：<b>1 / 1.27 × 10³⁰</b>。按每秒 1000 次尝试，平均要试 4 × 10¹⁹ 年——约是宇宙年龄的 29 亿倍。</p>
+      </div>
+    </figure>
+  </article>
+
+  <article class="dial flip" id="d11" data-i="10">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 11 · 序列</p>
+      <h3>一台 20 面骰子的老虎机</h3>
+      <p>蛋白质是由 20 种氨基酸串成的链，排列顺序决定它折叠成什么形状、能做什么。胰岛素的 B 链只有 30 个氨基酸——胰岛素也是史上第一个被完整测出序列的蛋白质。随机拼出这 30 个字母的概率是 1/20³⁰。</p>
+      <p class="big">10³⁹<small>分之一</small></p>
+      <p>蛋白质不需要一字不差才有功能。但有功能的序列到底有多稀少？一项实验在 80 个氨基酸的随机序列中估计约为 10¹¹ 分之一（Keefe &amp; Szostak, 2001）；另一项针对特定酶结构的估计则是 10⁷⁷ 分之一（Axe, 2004）。两个估计相差 66 个数量级，这本身就说明我们知道得多么少。</p>
+      <p class="more">真实的化学演化不是一次性抽签：短链可以逐步延长、被筛选、被复制。但这条路具体怎么走，至今没有人在实验室里完整重现。</p>
+      <p class="src">来源：Keefe &amp; Szostak, Nature (2001)；Axe, J. Mol. Biol. (2004)</p>
+    </div>
+    <figure class="stage">
+      <div class="stage-ui" style="border-top:0">
+        <div class="seqblock">
+          <div><p class="seq-lab"><span>目标：人胰岛素 B 链</span><span>30 aa</span></p><div class="seq tgt" id="seq-t"></div></div>
+          <div><p class="seq-lab"><span>本次随机合成</span><span id="seq-m">— / 30</span></p><div class="seq" id="seq-a"></div></div>
+          <div><p class="seq-lab"><span>迄今最接近的一次</span><span id="seq-bm">— / 30</span></p><div class="seq" id="seq-b"></div></div>
+        </div>
+        <div class="btns"><button class="btn" id="b-seq" type="button">随机合成 1 条</button><button class="btn" id="b-seq-auto" type="button" aria-pressed="false">每秒 1 万次</button></div>
+        <div class="readouts"><p class="ro">尝试次数<b id="seq-n">0</b></p><p class="ro">全对的概率<b>1 / 1.07 × 10³⁹</b></p></div>
+        <p class="verdict">按每秒 1 万次，平均需要约 3.4 × 10²⁷ 年——宇宙年龄的 2.5 × 10¹⁷ 倍。从大爆炸到今天，这台机器只能转 4.4 × 10²¹ 次。</p>
+      </div>
+    </figure>
+  </article>
+
+  <article class="dial" id="d12" data-i="11">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 12 · 信息</p>
+      <h3>一套百万里挑一的密码，和一个最小的细胞</h3>
+      <p>DNA 用 4 种碱基、每 3 个一组（共 64 个密码子）来编码 20 种氨基酸。1998 年的一项分析发现：在一百万套随机生成的遗传密码中，只有大约一套比地球生命实际使用的这套更能抵抗突变带来的错误。</p>
+      <p>2016 年，科学家造出了「最小人工生命」JCVI-syn3.0：只保留维持生存和繁殖所必需的 473 个基因。其中 149 个基因，在论文发表时连具体功能都不清楚。</p>
+      <p class="more">今天所有生命的最后共同祖先（LUCA），据 2024 年的估算生活在约 42 亿年前，就已经拥有约 2600 种蛋白质。第一个细胞，从一开始就不简单——而它之前的那一段路，至今仍是空白。</p>
+      <p class="src">来源：Freeland &amp; Hurst, J. Mol. Evol. (1998)；Hutchison et al., Science (2016)；Moody et al., Nat. Ecol. Evol. (2024)</p>
+    </div>
+    <figure class="stage">
+      <div class="stage-pad">
+        <p class="sbar-lab">JCVI-syn3.0 的 473 个基因（每个点 = 1 个基因）</p>
+        <div class="genes" id="genes" role="img" aria-label="473 个基因，其中 149 个功能未知"></div>
+        <div class="genes-key"><span><i style="background:rgba(111,211,199,.55)"></i>已知功能 324</span><span><i style="background:var(--amber)"></i>发表时功能未知 149</span></div>
+      </div>
+      <div class="facts3">
+        <div><p class="n">64 → 20</p><p>64 个密码子编码 20 种氨基酸和「终止」信号。</p></div>
+        <div><p class="n">31 亿</p><p>你每个细胞核里的碱基对数量，拉直约 2 米。</p></div>
+        <div><p class="n">~2600</p><p>LUCA 已拥有的蛋白质种类（估算）。</p></div>
+      </div>
+    </figure>
+  </article>
+</section>
+
+<!-- ================= ACT III ================= -->
+<section id="act3" data-ground="#0b140c">
+  <header class="act-head">
+    <p class="scale"><span>10⁻⁶ m → 10⁰ m</span><span>35 亿年前 → 今天</span></p>
+    <h2>第三幕　从一个细胞到你</h2>
+    <p class="lede">此后 35 亿多年，生命从未中断。它要穿过有毒的氧气、全球冰封、五次大灭绝，以及一次几乎灭种的瓶颈。其中任何一次，只要通向你的那一支断掉，后来的一切都不会发生。</p>
+  </header>
+
+  <article class="dial" id="d13" data-i="12">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 13 · 大气</p>
+      <h3>第一场生态灾难，是一种新的「废气」</h3>
+      <p>蓝细菌发明了产氧光合作用。约 24 亿年前，氧气开始在大气中积累，这就是「大氧化事件」。对当时的大多数厌氧生命来说，氧是毒药；氧还消耗掉了大气里的甲烷这种温室气体，地球随后陷入长达数亿年的休伦冰期。</p>
+      <p>但氧也带来了臭氧层和高效的有氧呼吸。今天大气含氧 21%；约 3 亿年前的石炭纪一度高达 30% 以上，翼展约 70 厘米的巨脉蜻蜓在森林间飞行。</p>
+      <p class="more">7.2 亿到 6.35 亿年前，地球至少两次几乎整个被冰封（雪球地球）。冰雪消融后不久，约 5.39 亿年前，寒武纪大爆发在两三千万年间造就了几乎所有现代动物门类的祖先。</p>
+      <p class="src">来源：Lyons, Reinhard &amp; Planavsky, Nature (2014)；Hoffman et al., Science Advances (2017)</p>
+    </div>
+    <figure class="stage">
+      <div class="scrollx" style="padding:18px 12px 8px">
+        <svg class="svg-o2" viewBox="0 0 640 208" role="img" aria-label="过去 46 亿年大气含氧量示意图（对数刻度）">
+          <line x1="40" y1="40" x2="616" y2="40" stroke="rgba(236,229,211,.12)"/>
+          <line x1="40" y1="84" x2="616" y2="84" stroke="rgba(236,229,211,.12)"/>
+          <line x1="40" y1="128" x2="616" y2="128" stroke="rgba(236,229,211,.12)"/>
+          <line x1="40" y1="172" x2="616" y2="172" stroke="rgba(236,229,211,.3)"/>
+          <rect x="315.5" y="30" width="37.5" height="142" fill="rgba(207,230,255,.1)"/>
+          <rect x="525.9" y="30" width="10.6" height="142" fill="rgba(207,230,255,.16)"/>
+          <line x1="315.5" y1="30" x2="315.5" y2="172" stroke="#ffb547" stroke-dasharray="3 3"/>
+          <line x1="548.4" y1="30" x2="548.4" y2="172" stroke="#6fd3c7" stroke-dasharray="3 3"/>
+          <path d="M40,162.8 L303,162.8 L315.5,110.4 L328,75.2 L353,62 L365.6,79.6 L390.6,92.8 L515.8,92.8 L540.9,66.4 L548.4,57.6 L563.4,45.5 L578.4,36 L590.9,42.2 L616,40 L616,172 L40,172 Z" fill="rgba(111,211,199,.14)"/>
+          <path d="M40,162.8 L303,162.8 L315.5,110.4 L328,75.2 L353,62 L365.6,79.6 L390.6,92.8 L515.8,92.8 L540.9,66.4 L548.4,57.6 L563.4,45.5 L578.4,36 L590.9,42.2 L616,40" fill="none" stroke="#6fd3c7" stroke-width="2" stroke-linejoin="round"/>
+          <text class="mono" x="34" y="43" text-anchor="end">100%</text>
+          <text class="mono" x="34" y="87" text-anchor="end">1%</text>
+          <text class="mono" x="34" y="131" text-anchor="end">0.01%</text>
+          <text x="40" y="18">大气含氧量（相对今天，对数刻度）</text>
+          <text class="hi" x="319" y="24" style="fill:#ffb547">大氧化事件</text>
+          <text x="522" y="24" text-anchor="end" style="fill:#cfe6ff">雪球地球</text>
+          <text x="552" y="24" style="fill:#6fd3c7">寒武纪</text>
+          <text x="334" y="150" text-anchor="middle" style="fill:#cfe6ff">休伦冰期</text>
+          <text x="453" y="112" text-anchor="middle">「无聊的十亿年」</text>
+          <text x="170" y="154" text-anchor="middle">几乎无氧</text>
+          <text class="mono" x="40" y="192">46 亿年前</text>
+          <text class="mono" x="240" y="192" text-anchor="middle">30 亿</text>
+          <text class="mono" x="365.6" y="192" text-anchor="middle">20 亿</text>
+          <text class="mono" x="490.8" y="192" text-anchor="middle">10 亿</text>
+          <text class="mono" x="616" y="192" text-anchor="end">今天</text>
+        </svg>
+      </div>
+      <figcaption class="stage-cap">示意曲线，依据 Lyons 等（2014）综述简化；早期含氧量的具体数值仍有很大不确定性。窄屏可左右滑动。</figcaption>
+    </figure>
+  </article>
+
+  <article class="dial flip" id="d14" data-i="13">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 14 · 复杂细胞</p>
+      <h3>一次没有被消化掉的吞噬</h3>
+      <p>大约 20 亿年前前后，一个古菌吞下了一个细菌，却没有消化它。那个细菌留了下来，变成了线粒体——细胞的发电站。有了它，细胞才有足够的能量变大、变复杂。</p>
+      <p>从酵母、橡树到你，所有真核生物都来自同一个祖先。也就是说，就我们所知，这样的融合在几十亿年里只留下了这一支后代。2020 年，日本海洋研究开发机构的团队花了 12 年，才在实验室里培养出这种古菌的近亲——阿斯加德古菌。</p>
+      <p class="more">有了真核细胞之后，多细胞生命至少独立出现过 25 次，但发展出复杂身体结构的只有动物、植物、真菌等少数几支——它们全都是真核生物。</p>
+      <p class="src">来源：Sagan (Margulis), J. Theor. Biol. (1967)；Imachi et al., Nature (2020)；Grosberg &amp; Strathmann, Annu. Rev. Ecol. Evol. Syst. (2007)</p>
+    </div>
+    <figure class="stage">
+      <canvas id="cv-eng" class="ar-43" aria-label="古菌吞噬细菌、形成线粒体的示意动画：点击触发"></canvas>
+      <div class="stage-ui">
+        <div class="readouts"><p class="ro">体内的线粒体<b id="eng-n">0</b></p></div>
+        <p class="verdict" id="eng-t">点击任意位置，让古菌吞下离那里最近的细菌。</p>
+      </div>
+    </figure>
+  </article>
+
+  <article class="dial" id="d15" data-i="14">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 15 · 灭绝与机会</p>
+      <h3>五次清零，和一个 13% 的落点</h3>
+      <p>过去 5 亿年里，地球经历了五次大灭绝，每一次都有约四分之三甚至更多的物种消失。二叠纪末那一次最惨烈，海洋物种的损失估计在 81%–96% 之间。</p>
+      <p>6600 万年前，一颗直径约 10 公里的小行星撞上今天墨西哥的尤卡坦半岛。日本东北大学海保邦夫团队 2017 年的研究发现：地球表面只有约 13% 的区域岩层富含有机质，被撞击后能喷出足够的烟尘，让全球急剧降温。小行星恰好落在了其中。</p>
+      <p class="more">如果它落在其余 87% 的地方，恐龙很可能会活下来——而当时的哺乳动物，大多只有老鼠那么大。</p>
+      <p class="src">来源：Barnosky et al., Nature (2011)；Kaiho &amp; Oshima, Sci. Rep. (2017)</p>
+    </div>
+    <figure class="stage">
+      <div class="scrollx"><div class="tl" id="tl"></div></div>
+      <p class="tl-info" id="tl-info"></p>
+      <canvas id="cv-ast" class="ar-21" aria-label="小行星落点实验：13% 的格子富含有机质"></canvas>
+      <div class="stage-ui">
+        <div class="btns"><button class="btn" id="b-ast" type="button">投下小行星</button></div>
+        <div class="readouts"><p class="ro">投掷次数<b id="ast-n">0</b></p><p class="ro">引发大灭绝<b id="ast-x">0</b></p><p class="ro">比例<b id="ast-p">—</b></p></div>
+        <p class="verdict" id="ast-t">棕色格子 = 富含有机质的岩层（占 13%）。随机投下一颗小行星，看看结果。</p>
+      </div>
+      <figcaption class="stage-cap">柱高 = 物种损失比例（Barnosky 等 2011）。格子位置为示意，只保留 13% 这一比例。</figcaption>
+    </figure>
+  </article>
+
+  <article class="dial flip" id="d16" data-i="15">
+    <div class="dial-text">
+      <p class="kicker"><i></i>拨盘 16 · 祖先</p>
+      <h3>1280 个祖先，撑过 11.7 万年</h3>
+      <p>人与黑猩猩的祖先大约在 600 万–700 万年前分开。2023 年发表在《科学》上的一项基因组研究推测：约 93 万到 81 万年前，人类祖先的繁殖种群骤降到大约 1280 人，并在这个边缘维持了约 11.7 万年——约 98.7% 的祖先群体消失了。</p>
+      <p class="debate"><b>有争议</b>这一结论来自统计模型的推断，也有研究对它提出质疑。</p>
+      <p>约 30 万年前，智人出现在非洲。尼安德特人、丹尼索瓦人……人属的其他成员都已消失，只有部分基因留在了我们体内。今天，我们是人属仅存的一支。</p>
+      <p class="src">来源：Hu et al., Science (2023)；Hublin et al., Nature (2017)</p>
+    </div>
+    <figure class="stage">
+      <canvas id="cv-neck" class="ar-1610 ar-m43" aria-label="人类祖先种群瓶颈示意：1000 个点缩减到 13 个"></canvas>
+      <div class="stage-ui">
+        <div class="readouts"><p class="ro">繁殖种群（约）<b id="neck-n">98,460</b></p><p class="ro">时间<b id="neck-t">约 93 万年前</b></p></div>
+        <div class="btns"><button class="btn" id="b-neck" type="button">重播</button></div>
+      </div>
+      <figcaption class="stage-cap">每个点约代表 98 人。最后剩下的 13 个点里，有你的祖先。</figcaption>
+    </figure>
+  </article>
+</section>
+
+<!-- ================= FINALE ================= -->
+<section id="you" data-ground="#170e07">
+  <div class="finale">
+    <div class="fin-grid">
+      <div>
+        <svg class="lock" id="lock" viewBox="0 0 240 290" role="img" aria-label="密码锁">
+          <path class="shackle" d="M70 132 V88 a50 50 0 0 1 100 0 V132"/>
+          <circle class="body" cx="120" cy="190" r="90"/>
+          <g id="lock-segs"></g>
+          <text class="you" x="120" y="214" text-anchor="middle">你</text>
+        </svg>
+        <p class="lock-msg" id="lock-msg"></p>
+      </div>
+      <div>
+        <p class="scale"><span>10⁰ m</span><span>此刻</span></p>
+        <h2>你</h2>
+        <p>你由约 30 万亿个细胞组成。它们里面的碳来自早已死去的恒星，线粒体来自约 20 亿年前的一次吞噬，遗传密码可以追溯到约 40 亿年前的一个共同祖先。</p>
+        <p>从第一个细胞到你，这条链上的每一位祖先，都活到了能够繁衍的那一天——35 亿多年里，一次也没有中断。</p>
+      </div>
+    </div>
+
+    <div class="cal">
+      <h3>把 138 亿年压缩成一年</h3>
+      <p class="cal-sub">大爆炸在 1 月 1 日零点，此刻是 12 月 31 日午夜。拖动滑块（对数刻度，越往右越接近今天）。</p>
+      <div class="cal-top">
+        <div><p class="ro">宇宙日历</p><p class="cal-date" id="cal-date">12 月 31 日</p><p class="cal-time" id="cal-time">23:48:00</p></div>
+        <div><p class="ro" style="text-align:right">真实时间</p><p class="cal-ago" id="cal-ago">31.5 万年前</p></div>
+      </div>
+      <div class="cal-track">
+        <div class="cal-ticks" id="cal-ticks"></div>
+        <input type="range" id="r-cal" min="0" max="1000" step="1" value="458" aria-label="时间，对数刻度">
+      </div>
+      <div class="cal-axis" id="cal-axis"></div>
+      <div class="cal-ev">
+        <div><p class="ro">已经发生</p><p id="cal-prev"></p></div>
+        <div><p class="ro">下一件大事</p><p id="cal-next"></p></div>
+      </div>
+      <div class="cal-row">
+        <p class="cal-note">按 80 年计，你的一生在宇宙日历上约占 <b>0.18 秒</b>。</p>
+        <button class="btn" id="b-cal" type="button">从大爆炸开始播放</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="coda">
+    <p>为什么宇宙恰好允许这一切？有人用「人择原理」回答：只有在允许观察者存在的宇宙里，才会有人提出这个问题；有人设想存在无数个宇宙，我们只是恰好身处其中之一；也有人在其中看到更深的意义。科学还没有最终答案。</p>
+    <p>可以确定的是：这把锁的每一个拨盘都对准了。而你，在这里。</p>
+    <p class="quote">「我们是宇宙认识自己的一种方式。」</p>
+    <p class="quote-by">—— 卡尔·萨根，《宇宙》（1980）</p>
+    <p class="foot">关于本页：正文中的数字均出自各节标注的已发表研究；动画中的尺寸、速度和位置为便于观看做了夸大或示意，以正文为准。人体细胞数量引自 Sender, Fuchs &amp; Milo, PLoS Biology (2016)。</p>
+  </div>
+</section>
+
+</div>
+<script>
+(function(){
+'use strict';
+document.documentElement.lang='zh-CN';
+const $=(s,r=document)=>r.querySelector(s);
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+const lerp=(a,b,t)=>a+(b-a)*t;
+const RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+const AMB=RM?0:1;
+const MONO='"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace';
+const SANS='"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif';
+const COL={ink:'#ece5d3',ink2:'#bdb6a4',dim:'#8d887a',amber:'#ffb547',teal:'#6fd3c7',red:'#ff6b57',ice:'#cfe6ff'};
+const TAU=Math.PI*2;
+const pad2=n=>String(n).padStart(2,'0');
+const fmtInt=n=>Math.round(n).toLocaleString('en-US');
+function seeded(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+/* ---------- noise & planet texture ---------- */
+function hash3(x,y,z){let h=Math.imul(x|0,374761393)^Math.imul(y|0,668265263)^Math.imul(z|0,1274126177);h=Math.imul(h^(h>>>13),1274126177);h^=h>>>16;return(h>>>0)/4294967296;}
+function vnoise(x,y,z){const xi=Math.floor(x),yi=Math.floor(y),zi=Math.floor(z),xf=x-xi,yf=y-yi,zf=z-zi;const u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf),w=zf*zf*(3-2*zf);
+  const a=lerp(hash3(xi,yi,zi),hash3(xi+1,yi,zi),u),b=lerp(hash3(xi,yi+1,zi),hash3(xi+1,yi+1,zi),u),c=lerp(hash3(xi,yi,zi+1),hash3(xi+1,yi,zi+1),u),d=lerp(hash3(xi,yi+1,zi+1),hash3(xi+1,yi+1,zi+1),u);
+  return lerp(lerp(a,b,v),lerp(c,d,v),w);}
+function fbm(x,y,z,o){o=o||5;let a=.5,f=1,s=0,n=0;for(let i=0;i<o;i++){s+=a*vnoise(x*f,y*f,z*f);n+=a;a*=.5;f*=2.03;}return s/n;}
+const TEX=(function(){const TW=256,TH=128,E=new Float32Array(TW*TH);
+  for(let j=0;j<TH;j++){const lat=(.5-(j+.5)/TH)*Math.PI,cl=Math.cos(lat),sl=Math.sin(lat);
+    for(let i=0;i<TW;i++){const lon=(i+.5)/TW*TAU;E[j*TW+i]=fbm(cl*Math.cos(lon)*1.7+3.1,sl*1.7+7.7,cl*Math.sin(lon)*1.7+1.9,5);}}
+  const s=Float32Array.from(E).sort();return{TW,TH,E,sea:s[Math.floor(s.length*.7)],lo:s[0],hi:s[s.length-1]};})();
+function makeGlobe(N){
+  const cv=document.createElement('canvas');cv.width=cv.height=N;const g=cv.getContext('2d');const img=g.createImageData(N,N),D=img.data;
+  const {TW,TH,E,sea,lo,hi}=TEX;
+  return function(ctx,cx,cy,R,o){
+    const tilt=o.tilt||0,rot=o.rot||0,sun=o.sun,heat=o.heat||0,amb=o.amb==null?.1:o.amb;
+    const iceS=Math.sin(clamp(o.ice==null?72:o.ice,0,90)*Math.PI/180);
+    const ct=Math.cos(tilt),st=Math.sin(tilt),seaE=sea-(sea-lo)*.8*heat,hz=Math.pow(heat,1.3)*.86,dry=clamp(heat*2.5,0,1);
+    for(let j=0;j<N;j++){const vy0=1-(j+.5)*2/N;
+      for(let i=0;i<N;i++){const k=(j*N+i)<<2;let vx=(i+.5)*2/N-1,vy=vy0,r2=vx*vx+vy*vy;
+        if(r2>1){const q=1/Math.sqrt(r2);vx*=q;vy*=q;r2=1;}
+        const vz=Math.sqrt(Math.max(0,1-r2)),qx=vx*ct+vy*st,qy=-vx*st+vy*ct;
+        const lat=Math.asin(clamp(qy,-1,1));let u=(Math.atan2(qx,vz)+rot)/TAU;u-=Math.floor(u);
+        const e=E[Math.min(TH-1,((.5-lat/Math.PI)*TH)|0)*TW+((u*TW)|0)];
+        let r,gg,b;
+        if(e<seaE){const dd=clamp((seaE-e)/(seaE-lo+1e-6)*2.2,0,1);r=26-12*dd;gg=92-40*dd;b=150-38*dd;}
+        else{const hh=clamp((e-seaE)/(hi-seaE+1e-6),0,1);r=lerp(64+100*hh,168+50*hh,dry);gg=lerp(104+50*hh,122+40*hh,dry);b=lerp(58+46*hh,78+30*hh,dry);}
+        if(Math.abs(qy)>iceS){r=228;gg=236;b=242;}
+        if(hz>0){r+=(236-r)*hz;gg+=(198-gg)*hz;b+=(128-b)*hz;}
+        const L=vx*sun[0]+vy*sun[1]+vz*sun[2],f=amb+(1-amb)*(L>0?L:0);
+        D[k]=r*f;D[k+1]=gg*f;D[k+2]=b*f;D[k+3]=255;}}
+    g.putImageData(img,0,0);ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,TAU);ctx.clip();ctx.drawImage(cv,cx-R,cy-R,R*2,R*2);ctx.restore();
+  };
+}
+function norm(v){const l=Math.hypot(v[0],v[1],v[2]);return[v[0]/l,v[1]/l,v[2]/l];}
+function capsule(ctx,x,y,a,L,W){ctx.save();ctx.translate(x,y);ctx.rotate(a);const r=W/2;ctx.beginPath();ctx.moveTo(-L/2+r,-r);ctx.lineTo(L/2-r,-r);ctx.arc(L/2-r,0,r,-Math.PI/2,Math.PI/2);ctx.lineTo(-L/2+r,r);ctx.arc(-L/2+r,0,r,Math.PI/2,Math.PI*1.5);ctx.closePath();ctx.restore();}
+
+/* ---------- scene system ---------- */
+const scenes=[],tickers=[];
+function scene(canvas,o){
+  if(!canvas)return null;
+  const s=Object.assign({canvas,ctx:canvas.getContext('2d'),w:0,h:0,visible:false},o);
+  const fit=()=>{const r=canvas.getBoundingClientRect();if(!r.width||!r.height)return;const dpr=Math.min(2,window.devicePixelRatio||1);
+    if(Math.abs(r.width-s.w)<.5&&Math.abs(r.height-s.h)<.5&&s.dpr===dpr)return;
+    s.w=r.width;s.h=r.height;s.dpr=dpr;canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);s.ctx.setTransform(dpr,0,0,dpr,0,0);
+    if(s.resize)s.resize(s);s.draw(s,performance.now(),0);};
+  if('ResizeObserver' in window)new ResizeObserver(fit).observe(canvas);else{addEventListener('resize',fit);}
+  fit();
+  new IntersectionObserver(es=>{const e=es[es.length-1];s.visible=e.isIntersecting;if(s.visible&&s.onShow)s.onShow(s);},{rootMargin:'120px 0px'}).observe(canvas);
+  scenes.push(s);return s;
+}
+let last=performance.now();
+function frame(now){const dt=Math.min(.05,Math.max(0,(now-last)/1000));last=now;
+  for(const f of tickers)f(dt,now);
+  for(const s of scenes)if(s.visible&&s.w)s.draw(s,now,dt);
+  requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+
+/* ---------- dials, HUD, lock ---------- */
+const DIALS=[['碳','碳的共振'],['银河','银河宜居带'],['恒星','一颗安静的恒星'],['轨道','轨道距离'],['月球','月球与地轴'],['磁场','磁场与板块'],['木星','木星'],['水','水'],['闪电','第一批积木'],['手性','只用左手'],['序列','蛋白质序列'],['密码','遗传密码与最小细胞'],['氧气','大氧化事件'],['吞噬','线粒体的起源'],['落点','小行星的落点'],['祖先','人类瓶颈']];
+const lit=new Set();
+const notchEl=$('#notches'),tumEl=$('#tumblers'),segEl=$('#lock-segs');
+const notches=[],tums=[],segs=[];
+DIALS.forEach((d,i)=>{
+  const b=document.createElement('button');b.className='notch';b.type='button';b.title=`拨盘 ${pad2(i+1)} · ${d[1]}`;b.setAttribute('aria-label',b.title);
+  b.addEventListener('click',()=>document.getElementById('d'+(i+1)).scrollIntoView({behavior:RM?'auto':'smooth',block:'start'}));
+  notchEl.appendChild(b);notches.push(b);
+  const t=document.createElement('a');t.className='tum';t.href='#d'+(i+1);t.setAttribute('aria-label',`拨盘 ${pad2(i+1)}：${d[1]}`);
+  const dur=(0.9+((i*37)%11)/10).toFixed(2);
+  t.innerHTML=`<span class="tum-box"><span class="strip" style="--dur:${dur}s;animation-delay:-${(i*.13).toFixed(2)}s">0<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>0</span></span><span class="tum-lab">${d[0]}</span>`;
+  tumEl.appendChild(t);tums.push(t);
+  const a0=(-90+i*22.5+2)*Math.PI/180,a1=a0+18.5*Math.PI/180,r=74,cx=120,cy=190;
+  const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+  p.setAttribute('d',`M${(cx+r*Math.cos(a0)).toFixed(2)} ${(cy+r*Math.sin(a0)).toFixed(2)} A${r} ${r} 0 0 1 ${(cx+r*Math.cos(a1)).toFixed(2)} ${(cy+r*Math.sin(a1)).toFixed(2)}`);
+  p.setAttribute('class','seg');segEl.appendChild(p);segs.push(p);
+});
+let toastT=0;
+function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2400);}
+function updateLock(){const n=lit.size;$('#hud-n').textContent=n;
+  segs.forEach((el,i)=>el.classList.toggle('on',lit.has(i)));
+  $('#lock').classList.toggle('open',n===16);
+  $('#lock-msg').textContent=n===16?'16 / 16 个拨盘全部对准。锁开了。':`${n} / 16 已对准 · 还有 ${16-n} 个拨盘在上面等你。`;}
+function light(i){if(lit.has(i))return;lit.add(i);notches[i].classList.add('on');tums[i].classList.add('on');document.getElementById('d'+(i+1)).classList.add('on');
+  updateLock();toast(`拨盘 ${pad2(i+1)} 已对准 · ${DIALS[i][1]}`);}
+const dio=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting)light(+e.target.dataset.i);},{threshold:.2,rootMargin:'0px 0px -30% 0px'});
+document.querySelectorAll('.dial').forEach(el=>dio.observe(el));
+updateLock();
+const gio=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting)document.documentElement.style.setProperty('--ground',e.target.dataset.ground);},{rootMargin:'-48% 0px -48% 0px'});
+document.querySelectorAll('[data-ground]').forEach(el=>gio.observe(el));
+
+/* ---------- hero ---------- */
+let hpx=0,hpy=0;
+addEventListener('pointermove',e=>{hpx=e.clientX/innerWidth-.5;hpy=e.clientY/innerHeight-.5;},{passive:true});
+scene($('#cv-hero'),{
+  resize(s){const rnd=seeded(11),n=Math.min(1400,Math.round(s.w*s.h/1700));s.st=[];for(let i=0;i<n;i++)s.st.push({x:rnd()*s.w,y:rnd()*s.h,z:rnd(),p:rnd()*TAU,warm:rnd()<.12});},
+  draw(s,now){const {ctx,w,h}=s;ctx.clearRect(0,0,w,h);const t=now/1000;
+    for(const a of s.st){const tw=.6+.4*Math.sin(t*(.5+a.z*1.6)*AMB+a.p);ctx.globalAlpha=(.16+.72*a.z*a.z)*tw;ctx.fillStyle=a.warm?'#ffd7a1':'#e6e3ff';const r=.5+a.z*1.3;ctx.fillRect(a.x-hpx*a.z*18*AMB,a.y-hpy*a.z*12*AMB,r,r);}
+    ctx.globalAlpha=1;
+    const bx=w*.86,by=Math.max(96,h*.15),pr=RM?.3:(t*.35)%1;
+    ctx.strokeStyle=`rgba(143,196,255,${.55*(1-pr)})`;ctx.lineWidth=1;ctx.beginPath();ctx.arc(bx,by,4+pr*22,0,TAU);ctx.stroke();
+    ctx.fillStyle='#9cc8ff';ctx.beginPath();ctx.arc(bx,by,2,0,TAU);ctx.fill();
+    ctx.font=`11px ${SANS}`;ctx.fillStyle='rgba(189,182,164,.85)';ctx.textAlign='right';ctx.textBaseline='alphabetic';ctx.fillText('暗淡蓝点',bx-12,by+24);}
+});
+
+/* ---------- 01 Hoyle ---------- */
+(function(){
+  const r=$('#r-strong');
+  function fac(l){if(l>-.02)return'×1';if(l<-6)return'≈ 0';const v=Math.pow(10,-l);return'×1/'+fmtInt(v);}
+  function up(){const x=+r.value,dep=-2.5*Math.pow(Math.abs(x)/.5,2),lc=x<0?dep:0,lo=x>0?dep:0;
+    $('#o-strong').textContent=(x>0?'+':x<0?'−':'±')+Math.abs(x).toFixed(2)+'%';
+    $('#b-c').style.width=clamp(1+lc/5,0,1)*100+'%';$('#b-o').style.width=clamp(1+lo/5,0,1)*100+'%';
+    $('#v-c').textContent=fac(lc);$('#v-o').textContent=fac(lo);
+    const t=$('#t-strong');
+    if(Math.abs(x)<.08)t.innerHTML='<span class="chip">现实宇宙</span>碳和氧都很充足。你体重的约 65% 是氧、约 18% 是碳。';
+    else if(x>0)t.innerHTML=`<span class="chip ${x<.3?'warn':'bad'}">${x<.3?'氧在减少':'氧几乎消失'}</span>共振能级变低，恒星里的碳生成得更快，却来不及变成氧。没有足够的氧，也就没有足够的水。`;
+    else t.innerHTML=`<span class="chip ${x>-.3?'warn':'bad'}">${x>-.3?'碳在减少':'碳几乎消失'}</span>共振能级变高，碳刚生成就被迅速烧成氧。没有碳，就没有有机化学，也就没有你。`;}
+  r.addEventListener('input',up);up();
+})();
+
+/* ---------- 02 Galaxy ---------- */
+scene($('#cv-galaxy'),{
+  resize(s){const rnd=seeded(7),N=Math.min(3400,Math.round(s.w*s.h/70));s.p=[];const k=1/Math.tan(13*Math.PI/180)*.55;
+    for(let i=0;i<N;i++){let r,th,a;const q=rnd();
+      if(q<.14){r=Math.abs((rnd()+rnd()+rnd()-1.5))*.16;th=rnd()*TAU;a=.5+rnd()*.5;}
+      else if(q<.72){const arm=i%4;r=.07+Math.pow(rnd(),.8)*.95;th=arm*Math.PI/2+Math.log(r/.07)*k+(rnd()-.5)*.55*(1.25-r);r+=(rnd()-.5)*.04;a=.35+rnd()*.6;}
+      else{r=.05+Math.pow(rnd(),.7)*.98;th=rnd()*TAU;a=.12+rnd()*.3;}
+      const warm=r<.22;s.p.push({r,th,a,c:warm?'#ffdcae':(rnd()<.5?'#cdd6ff':'#eef0ff'),z:.6+rnd()*1.1});}},
+  draw(s,now){const {ctx,w,h}=s;ctx.clearRect(0,0,w,h);const cx=w/2,cy=h*.5,R=Math.min(w*.47,h*.8),sq=.58,rot=now*.00002*AMB;
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,R*.3);g.addColorStop(0,'rgba(255,220,170,.55)');g.addColorStop(1,'rgba(255,200,140,0)');ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(cx,cy,R*.3,R*.3*sq,0,0,TAU);ctx.fill();
+    for(const p of s.p){const a=p.th+rot;ctx.globalAlpha=p.a;ctx.fillStyle=p.c;ctx.fillRect(cx+Math.cos(a)*p.r*R,cy+Math.sin(a)*p.r*R*sq,p.z,p.z);}
+    ctx.globalAlpha=1;
+    const r1=R*7/15,r2=R*9/15;
+    ctx.fillStyle='rgba(111,211,199,.08)';ctx.beginPath();ctx.ellipse(cx,cy,r2,r2*sq,0,0,TAU);ctx.ellipse(cx,cy,r1,r1*sq,0,0,TAU);ctx.fill('evenodd');
+    ctx.setLineDash([4,4]);ctx.strokeStyle='rgba(111,211,199,.75)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.ellipse(cx,cy,r1,r1*sq,0,0,TAU);ctx.stroke();ctx.beginPath();ctx.ellipse(cx,cy,r2,r2*sq,0,0,TAU);ctx.stroke();ctx.setLineDash([]);
+    const sa=2.35+rot,sr=R*8.2/15,sx=cx+Math.cos(sa)*sr,sy=cy+Math.sin(sa)*sr*sq;
+    ctx.fillStyle=COL.amber;ctx.beginPath();ctx.arc(sx,sy,3.5,0,TAU);ctx.fill();ctx.strokeStyle=COL.amber;ctx.beginPath();ctx.arc(sx,sy,9,0,TAU);ctx.stroke();
+    ctx.font=`12px ${SANS}`;ctx.textBaseline='middle';const left=sx>cx;ctx.textAlign=left?'left':'right';ctx.fillStyle=COL.amber;ctx.fillText('太阳 · 距银心约 2.6 万光年',sx+(left?14:-14),sy);
+    ctx.fillStyle='rgba(236,229,211,.75)';ctx.textAlign='center';ctx.font=`11px ${SANS}`;ctx.fillText('银心',cx,cy-R*.2*sq-10);
+    ctx.fillStyle='rgba(111,211,199,.95)';ctx.fillText('银河宜居带',cx,cy+r2*sq+14);}
+});
+
+/* ---------- 04 Orbit ---------- */
+const ORB={d:1};
+const ZONES=[[.3,.95,'#ff6b57'],[.95,.99,'#ffb547'],[.99,1.67,'#6fd3c7'],[1.67,2,'#cfe6ff']];
+const SUNV=norm([-.78,.18,.6]);
+function orbitState(d){const S=1/(d*d),pct=Math.round((S-1)*100);
+  const heat=clamp((.99-d)/.19,0,1),ice=72-clamp((d-1.02)/.43,0,1)*72;
+  let k,chip,t;
+  if(d<.95){k='bad';chip='失控温室';t=`阳光比今天强 ${pct}%。海洋持续蒸发，水汽被紫外线分解、氢逃逸到太空——金星可能就是这样失去海洋的。金星（0.72 AU）如今表面约 464°C，气压是地球的 92 倍。`;}
+  else if(d<.99){k='warn';chip='危险边缘';t='不同气候模型给出的宜居带内边界在 0.95–0.99 AU 之间。地球离这条线只有 1%–5%。';}
+  else if(d<=1.02){k='';chip='今天的地球';t='液态海洋覆盖 71% 的地表。但太阳每 1.1 亿年约变亮 1%，大约 10 亿年后，这里也会越过内边界。';}
+  else if(d<=1.15){k='ok2';chip='仍可能宜居';t='仍在「持续宜居带」内，但阳光更弱，需要比今天更强的温室效应。若大气不变，冰盖会明显扩大。';}
+  else if(d<=1.67){k='cold';chip='需要厚大气';t='理论上的宜居带一直延伸到约 1.67 AU，但需要数个大气压的 CO₂ 才能保暖。若大气不变，冰盖可能一路扩展到赤道（雪球地球）。火星（1.52 AU）表面平均约 −60°C，气压不到地球的 1%。';}
+  else{k='bad';chip='冰封';t='超出了「最大温室」极限：即使大气全是 CO₂，也无法让水保持液态。';}
+  return{k,chip,t,S,heat,ice};}
+function trackY(h){return Math.max(46,h*.15);}
+const sO=scene($('#cv-orbit'),{
+  resize(s){if(!s.globe)s.globe=makeGlobe(150);},
+  draw(s,now){const {ctx,w,h}=s;ctx.clearRect(0,0,w,h);const xs=26,xe=w-22,ty=trackY(h),X=d=>xs+(d/2)*(xe-xs);
+    let g=ctx.createRadialGradient(xs-8,ty,0,xs-8,ty,56);g.addColorStop(0,'rgba(255,236,190,1)');g.addColorStop(.3,'rgba(255,190,90,.55)');g.addColorStop(1,'rgba(255,160,60,0)');ctx.fillStyle=g;ctx.fillRect(0,ty-56,90,112);
+    ctx.fillStyle='rgba(236,229,211,.2)';ctx.fillRect(xs,ty-.5,xe-xs,1);
+    for(const z of ZONES){ctx.globalAlpha=.34;ctx.fillStyle=z[2];ctx.fillRect(X(z[0]),ty-4,X(z[1])-X(z[0]),8);}ctx.globalAlpha=1;
+    ctx.fillStyle=COL.teal;ctx.fillRect(X(.95),ty+10,X(1.15)-X(.95),2.5);
+    ctx.textBaseline='alphabetic';ctx.font=`11px ${SANS}`;ctx.textAlign='left';ctx.fillStyle='rgba(111,211,199,.95)';ctx.fillText('40 亿年持续宜居带',X(.95),ty+27);
+    ctx.fillStyle='rgba(236,229,211,.6)';ctx.fillText('太阳',4,ty+27);
+    ctx.font=`10.5px ${MONO}`;ctx.textAlign='center';ctx.fillStyle='rgba(141,136,122,.95)';
+    for(const v of [.5,1,1.5,2]){ctx.fillRect(X(v)-.5,ty+5,1,4);ctx.fillText(v.toFixed(1)+' AU',Math.min(X(v),xe-18),ty+44);}
+    ctx.font=`11px ${SANS}`;
+    for(const [n,d,c] of [['水星',.387,'#b9b3a2'],['金星',.723,'#e8c98a'],['火星',1.524,'#e0795a']]){ctx.fillStyle=c;ctx.beginPath();ctx.arc(X(d),ty,3.2,0,TAU);ctx.fill();if(Math.abs(ORB.d-d)>.09)ctx.fillText(n,X(d),ty-12);}
+    ctx.strokeStyle='rgba(236,229,211,.55)';ctx.setLineDash([2,3]);ctx.beginPath();ctx.arc(X(1),ty,8,0,TAU);ctx.stroke();ctx.setLineDash([]);
+    if(Math.abs(ORB.d-1)>.07){ctx.fillStyle='rgba(236,229,211,.6)';ctx.fillText('今天',X(1),ty-12);}
+    const st=orbitState(ORB.d),ex=X(ORB.d);
+    ctx.strokeStyle=COL.amber;ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(ex,ty,11,0,TAU);ctx.stroke();ctx.lineWidth=1;
+    ctx.fillStyle='#5aa9ff';ctx.beginPath();ctx.arc(ex,ty,5,0,TAU);ctx.fill();ctx.fillStyle=COL.amber;ctx.fillText('地球',ex,ty-16);
+    const top=ty+58,gh=h-top,R=Math.max(20,Math.min(w*.27,gh*.4)),gx=w/2,gy=top+gh/2;
+    const rays=clamp(st.S,0,4),lg=ctx.createLinearGradient(0,0,gx-R*.6,0);lg.addColorStop(0,`rgba(255,200,120,${.05+.07*rays})`);lg.addColorStop(1,'rgba(255,200,120,0)');ctx.fillStyle=lg;ctx.fillRect(0,gy-R*1.1,gx-R*.6,R*2.2);
+    const halo=st.heat>0?`rgba(236,190,120,${.25+.35*st.heat})`:st.ice<40?'rgba(207,230,255,.25)':'rgba(120,180,255,.28)';
+    g=ctx.createRadialGradient(gx,gy,R*.95,gx,gy,R*1.28);g.addColorStop(0,halo);g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(gx,gy,R*1.3,0,TAU);ctx.fill();
+    s.globe(ctx,gx,gy,R,{rot:now*.00011*AMB+2.2,tilt:.41,sun:SUNV,heat:st.heat,ice:st.ice});}
+});
+(function(){
+  const r=$('#r-orbit'),cv=$('#cv-orbit');let drag=false;
+  function set(d){ORB.d=clamp(d,.5,2);r.value=ORB.d;const st=orbitState(ORB.d);
+    $('#o-orbit').textContent=ORB.d.toFixed(3)+' AU';$('#ro-km').textContent=(ORB.d*1.496).toFixed(2)+' 亿公里';
+    $('#ro-sun').textContent=Math.round(st.S*100)+'%';const dd=Math.round((st.S-1)*100);$('#ro-dsun').textContent=(dd>0?'+':dd<0?'−':'±')+Math.abs(dd)+'%';
+    $('#t-orbit').innerHTML=`<span class="chip ${st.k}">${st.chip}</span>${st.t}`;
+    if(sO&&!sO.visible)sO.draw(sO,performance.now(),0);}
+  function fromX(cx){const b=cv.getBoundingClientRect();const xs=26,xe=b.width-22;set((cx-b.left-xs)/(xe-xs)*2);}
+  cv.addEventListener('pointerdown',e=>{const b=cv.getBoundingClientRect();if(e.clientY-b.top<trackY(b.height)+40){drag=true;try{cv.setPointerCapture(e.pointerId);}catch(_){}fromX(e.clientX);}});
+  cv.addEventListener('pointermove',e=>{if(drag)fromX(e.clientX);});
+  const end=()=>{drag=false;};cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+  r.addEventListener('input',()=>set(+r.value));set(1);
+})();
+
+/* ---------- 05 Tilt ---------- */
+const TL={deg:23.4,dec:false};
+function latCircle(ctx,cx,cy,R,latDeg,tilt){const la=latDeg*Math.PI/180,ct=Math.cos(tilt),st=Math.sin(tilt);ctx.beginPath();let pen=false;
+  for(let a=0;a<=360;a+=3){const lo=a*Math.PI/180,px=Math.cos(la)*Math.sin(lo),py=Math.sin(la),pz=Math.cos(la)*Math.cos(lo);
+    if(pz>=0){const X=cx+(px*ct-py*st)*R,Y=cy-(px*st+py*ct)*R;if(pen)ctx.lineTo(X,Y);else ctx.moveTo(X,Y);pen=true;}else pen=false;}
+  ctx.stroke();}
+function dayLen(lat,dec){const x=-Math.tan(lat*Math.PI/180)*Math.tan(dec*Math.PI/180);if(x<=-1)return 24;if(x>=1)return 0;return 2*Math.acos(x)*180/Math.PI/15;}
+const sT=scene($('#cv-tilt'),{
+  resize(s){if(!s.globe)s.globe=makeGlobe(170);},
+  draw(s,now){const {ctx,w,h}=s;ctx.clearRect(0,0,w,h);const left=!TL.dec,R=Math.min(w,h)*.32,gx=w/2,gy=h*.53,tilt=TL.deg*Math.PI/180;
+    const sx=left?-w*.1:w*1.1;let g=ctx.createRadialGradient(sx,gy,0,sx,gy,w*.55);g.addColorStop(0,'rgba(255,210,130,.35)');g.addColorStop(1,'rgba(255,190,100,0)');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle='rgba(255,205,130,.12)';for(let i=-5;i<=5;i++){const yy=gy+i*R*.2;ctx.beginPath();if(left){ctx.moveTo(0,yy);ctx.lineTo(gx-R,yy);}else{ctx.moveTo(w,yy);ctx.lineTo(gx+R,yy);}ctx.stroke();}
+    ctx.font=`11px ${SANS}`;ctx.fillStyle='rgba(255,210,140,.85)';ctx.textAlign=left?'left':'right';ctx.textBaseline='alphabetic';ctx.fillText(left?'← 阳光（6 月）':'阳光（12 月）→',left?12:w-12,22);
+    s.globe(ctx,gx,gy,R,{rot:now*.00016*AMB,tilt,sun:left?[-1,0,0]:[1,0,0],amb:.14,ice:70});
+    ctx.lineWidth=1.2;ctx.strokeStyle='rgba(236,229,211,.55)';latCircle(ctx,gx,gy,R,0,tilt);
+    if(TL.deg>.4){ctx.strokeStyle='rgba(255,181,71,.95)';latCircle(ctx,gx,gy,R,TL.deg,tilt);latCircle(ctx,gx,gy,R,-TL.deg,tilt);
+      ctx.strokeStyle='rgba(111,211,199,.95)';latCircle(ctx,gx,gy,R,90-TL.deg,tilt);latCircle(ctx,gx,gy,R,-(90-TL.deg),tilt);}
+    const ax=-Math.sin(tilt),ay=Math.cos(tilt);ctx.strokeStyle='rgba(236,229,211,.8)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(gx-ax*R*1.32,gy+ay*R*1.32);ctx.lineTo(gx+ax*R*1.32,gy-ay*R*1.32);ctx.stroke();
+    ctx.setLineDash([3,4]);ctx.strokeStyle='rgba(236,229,211,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,gy-R*1.32);ctx.lineTo(gx,gy-R*1.05);ctx.stroke();ctx.setLineDash([]);
+    ctx.strokeStyle=COL.amber;ctx.beginPath();const a0=-Math.PI/2,a1=-Math.PI/2-tilt;ctx.arc(gx,gy,R*1.2,Math.min(a0,a1),Math.max(a0,a1));ctx.stroke();
+    ctx.fillStyle=COL.ink;ctx.textAlign='center';ctx.font=`12px ${MONO}`;ctx.fillText('N',gx+ax*R*1.42,gy-ay*R*1.42+4);
+    ctx.fillStyle=COL.amber;ctx.fillText(TL.deg.toFixed(1)+'°',gx+ax*R*.6-10,gy-R*1.3);}
+});
+(function(){
+  const r=$('#r-tilt');
+  function tState(t){
+    if(t<5)return['几乎没有四季','太阳终年直射赤道附近：赤道一直酷热，两极一直严寒，温差只存在于纬度之间，没有季节交替。'];
+    if(t<18)return['四季微弱','季节变化很弱，高纬度地区的夏天可能不足以融化冬天的积雪。'];
+    if(t<=27)return['温和的四季','接近今天的地球（23.44°）。月球让它只在 22.1°–24.5° 之间缓慢摆动，四季温和而规律。'];
+    if(t<54)return['季节剧烈','夏天更炎热、冬天更寒冷，极昼和极夜的范围一路扩展到中纬度。'];
+    if(t<80)return['两极比赤道更晒','倾角超过约 54° 后，两极全年接收的阳光总量反而超过赤道。'];
+    return['像天王星一样躺着转','天王星的倾角是 97.8°，它的一年约 84 个地球年：每个极区轮流经历约 42 年的极昼和 42 年的极夜。'];}
+  function up(){TL.deg=+r.value;$('#o-tilt').textContent=TL.deg.toFixed(1)+'°';$('#ro-arc').textContent=(90-TL.deg).toFixed(1)+'°';
+    const f=v=>v>=24?'24 小时（极昼）':v<=0?'0 小时（极夜）':v.toFixed(1)+' 小时';
+    $('#ro-sum').textContent=f(dayLen(40,TL.deg));$('#ro-win').textContent=f(dayLen(40,-TL.deg));
+    const s=tState(TL.deg),k=TL.deg>=18&&TL.deg<=27?'':(TL.deg<5||TL.deg>=54?'bad':'warn');
+    $('#t-tilt').innerHTML=`<span class="chip ${k}">${s[0]}</span>${s[1]}`;if(sT&&!sT.visible)sT.draw(sT,performance.now(),0);}
+  r.addEventListener('input',up);
+  $('#b-season').addEventListener('click',e=>{TL.dec=!TL.dec;e.currentTarget.setAttribute('aria-pressed',TL.dec);e.currentTarget.textContent=TL.dec?'切换到 6 月':'切换到 12 月';});
+  $('#b-earth').addEventListener('click',()=>{r.value=23.44;up();});
+  up();
+})();
+
+/* ---------- 06 Magnetosphere ---------- */
+const MAG={on:true,atm:1};
+const sM=scene($('#cv-mag'),{
+  resize(s){s.p=[];s.sp=[];s.fa=MAG.on?1:0;if(!s.globe)s.globe=makeGlobe(72);const G=s.geo(s),sp=s.w/5,n=Math.round(s.w*s.h/2300);
+    for(let i=0;i<n;i++){const y=Math.random()*s.h,lim=Math.min(s.w,G.x0+G.k*(y-G.ey)*(y-G.ey));s.p.push({x:Math.random()*Math.max(1,lim-2),y,vx:sp*(.8+Math.random()*.4),vy:0});}},
+  geo(s){const ex=s.w*.7,ey=s.h*.5,R=Math.min(s.w,s.h)*.085,x0=ex-R*3.4,k=(ex+R*2.5-x0)/Math.pow(s.h*.5,2);return{ex,ey,R,x0,k};},
+  draw(s,now,dt){const {ctx,w,h}=s;ctx.clearRect(0,0,w,h);const G=s.geo(s),{ex,ey,R,x0,k}=G,xb=y=>x0+k*(y-ey)*(y-ey),sp=w/5;
+    let g=ctx.createRadialGradient(-w*.25,h/2,0,-w*.25,h/2,w*.6);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(1,'rgba(255,170,80,0)');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+    ctx.font=`11px ${SANS}`;ctx.fillStyle='rgba(255,210,140,.85)';ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillText('太阳风 →',12,22);
+    s.fa=lerp(s.fa,MAG.on?1:0,Math.min(1,dt*3));
+    if(dt>0){const target=Math.round(w*h/2300);let add=0;while(s.p.length<target&&add<8){s.p.push({x:-Math.random()*40,y:Math.random()*h,vx:sp*(.8+Math.random()*.4),vy:0});add++;}}
+    if(s.fa>.02){ctx.strokeStyle=`rgba(111,211,199,${.45*s.fa})`;ctx.lineWidth=1.2;ctx.beginPath();for(let y=0;y<=h;y+=4){const x=xb(y);if(y)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.stroke();
+      ctx.lineWidth=1;for(const L of [1.7,2.5,3.5]){ctx.strokeStyle=`rgba(111,211,199,${.22*s.fa})`;for(const side of [-1,1]){ctx.beginPath();for(let th=.15;th<=Math.PI-.15;th+=.05){const rr=L*R*Math.pow(Math.sin(th),2),f=side<0?.72:1.7,x=ex+side*rr*Math.sin(th)*f,y=ey-rr*Math.cos(th);if(th===.15)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}}}
+    ctx.fillStyle='rgba(255,214,150,.9)';
+    for(let i=s.p.length-1;i>=0;i--){const p=s.p[i];p.x+=p.vx*dt;p.y+=p.vy*dt;
+      if(MAG.on&&p.x>xb(p.y)&&p.x<ex+R*3){const yy=p.y-ey,sg=yy===0?(Math.random()<.5?-1:1):Math.sign(yy),tx=2*k*Math.abs(yy),L=Math.hypot(tx,1);p.x=xb(p.y);p.vx=sp*tx/L;p.vy=sp*sg/L;}
+      else if(p.x>=ex+R*3){p.vy*=.97;p.vx=lerp(p.vx,sp,.03);}
+      if(!MAG.on){const dx=p.x-ex,dy=p.y-ey,ar=R*(1.04+.34*MAG.atm);if(dx*dx+dy*dy<ar*ar){MAG.atm=Math.max(.12,MAG.atm-.0011);s.sp.push({x:p.x,y:p.y,t:0});s.p.splice(i,1);continue;}}
+      if(p.x>w+10||p.y<-10||p.y>h+10){s.p.splice(i,1);continue;}
+      ctx.fillRect(p.x,p.y,2.4,1.2);}
+    const ar=R*(1.04+.34*MAG.atm);g=ctx.createRadialGradient(ex,ey,R*.98,ex,ey,ar);g.addColorStop(0,`rgba(120,180,255,${.5*MAG.atm+.1})`);g.addColorStop(1,'rgba(120,180,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(ex,ey,ar,0,TAU);ctx.fill();
+    s.globe(ctx,ex,ey,R,{rot:now*.0002*AMB,tilt:.2,sun:[-1,0,.25],amb:.18});
+    if(s.fa>.05){const fl=.55+.35*Math.sin(now*.006)*AMB;for(const sy of [-1,1]){g=ctx.createRadialGradient(ex,ey+sy*R*.92,0,ex,ey+sy*R*.92,R*.55);g.addColorStop(0,`rgba(120,255,170,${fl*s.fa})`);g.addColorStop(1,'rgba(120,255,170,0)');ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(ex,ey+sy*R*.95,R*.6,R*.3,0,0,TAU);ctx.fill();}}
+    for(let i=s.sp.length-1;i>=0;i--){const q=s.sp[i];q.t+=dt;if(q.t>.4){s.sp.splice(i,1);continue;}ctx.fillStyle=`rgba(255,230,180,${1-q.t/.4})`;ctx.beginPath();ctx.arc(q.x,q.y,1.5+q.t*8,0,TAU);ctx.fill();}
+    const pct=Math.round(MAG.atm*100);if(pct!==s.lastPct){s.lastPct=pct;$('#ro-atm').textContent=pct+'%';}}
+});
+(function(){
+  const b=$('#b-mag');
+  function txt(){$('#ro-mag').textContent=MAG.on?'开启':'关闭';b.textContent=MAG.on?'关闭磁场':'打开磁场';b.setAttribute('aria-pressed',!MAG.on);
+    $('#t-mag').innerHTML=MAG.on?'<span class="chip">护盾开启</span>太阳风沿着磁层顶绕行，一小部分顺着磁力线落入两极，点亮极光。':'<span class="chip bad">护盾消失</span>太阳风直接冲刷大气层，把它一点点剥走——火星在约 40 亿年前失去磁场后，经历的就是这个过程。';}
+  b.addEventListener('click',()=>{MAG.on=!MAG.on;if(MAG.on&&sM){const G=sM.geo(sM);sM.p=sM.p.filter(p=>!(p.x>G.x0+G.k*(p.y-G.ey)*(p.y-G.ey)&&p.x<G.ex+G.R*3));}txt();});
+  $('#b-atm').addEventListener('click',()=>{MAG.atm=1;});
+  txt();
+})();
+
+/* ---------- 07 SL9 ---------- */
+const SL={t:-1,played:false,hits:0,spots:[],fl:[],gl:0,grs:-25};
+const LET='ABCDEFGHJKLMNPQRSTUVW';
+const SIZE={G:1,K:.85,L:.8,H:.62,E:.5,Q:.5,C:.45,R:.45,A:.38,S:.4,W:.4,D:.32,F:.3};
+function slStart(){SL.t=0;SL.hits=0;SL.spots=[];SL.fl=[];SL.gl=0;}
+function slFinal(){SL.t=99;SL.hits=21;SL.fl=[];SL.spots=LET.split('').map((c,i)=>({lon:70-i*6.5,sz:SIZE[c]||.28}));}
+const BANDS=[[90,62,'#8f8274'],[62,42,'#cbb899'],[42,30,'#b88a60'],[30,20,'#e7d8ba'],[20,8,'#a36f48'],[8,-6,'#efe3c9'],[-6,-20,'#a8744c'],[-20,-30,'#e3d2b2'],[-30,-42,'#bf946c'],[-42,-62,'#d2bea0'],[-62,-90,'#958676']];
+const sJ=scene($('#cv-sl9'),{
+  geo(s){const cx=s.w*.42,cy=s.h*.52,R=Math.min(s.w*.34,s.h*.42),la=44*Math.PI/180,n=[Math.cos(la),Math.sin(la)],P=[cx+R*n[0],cy+R*n[1]],a=-.5,d=[n[0]*Math.cos(a)-n[1]*Math.sin(a),n[0]*Math.sin(a)+n[1]*Math.cos(a)];return{cx,cy,R,n,P,d};},
+  resize(s){const G=s.geo(s),R=G.R,dpr=s.dpr,sz=Math.ceil(R*2*dpr);const c=document.createElement('canvas');c.width=c.height=sz;const g=c.getContext('2d');g.scale(dpr,dpr);
+    g.save();g.beginPath();g.arc(R,R,R,0,TAU);g.clip();for(const [a,b,col] of BANDS){g.fillStyle=col;const y1=R-R*Math.sin(a*Math.PI/180),y2=R-R*Math.sin(b*Math.PI/180);g.fillRect(0,y1,R*2,y2-y1+1);}
+    const rnd=seeded(3);for(let i=0;i<260;i++){const la=(rnd()*2-1)*1.3,y=R-R*Math.sin(la),x=rnd()*R*2;g.fillStyle=`rgba(${rnd()<.5?'255,245,225':'120,80,50'},${.06+rnd()*.1})`;g.beginPath();g.ellipse(x,y,6+rnd()*26,1+rnd()*2.5,0,0,TAU);g.fill();}
+    g.restore();s.band=c;},
+  onShow(s){if(!SL.played){SL.played=true;if(RM)slFinal();else slStart();}},
+  draw(s,now,dt){const {ctx,w,h}=s;ctx.clearRect(0,0,w,h);const G=s.geo(s),{cx,cy,R,n,P,d}=G;
+    if(s.band)ctx.drawImage(s.band,cx-R,cy-R,R*2,R*2);
+    const om=4*AMB*dt;SL.grs-=om;if(SL.grs<-180)SL.grs+=360;for(const q of SL.spots){q.lon-=om;if(q.lon<-180)q.lon+=360;}
+    ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,TAU);ctx.clip();
+    const drawSpot=(lat,lon,rx,ry,fill)=>{if(Math.abs(lon)>=90)return;const la=lat*Math.PI/180,lo=lon*Math.PI/180,x=cx+R*Math.cos(la)*Math.sin(lo),y=cy-R*Math.sin(la),f=Math.cos(lo);ctx.fillStyle=fill;ctx.beginPath();ctx.ellipse(x,y,Math.max(.5,rx*f),ry,0,0,TAU);ctx.fill();};
+    drawSpot(-22,SL.grs,R*.16,R*.075,'rgba(196,92,58,.85)');
+    for(const q of SL.spots){drawSpot(-44,q.lon,R*.11*q.sz+2,R*.05*q.sz+1.2,'rgba(70,40,24,.45)');drawSpot(-44,q.lon,R*.06*q.sz+1.2,R*.03*q.sz+.8,'rgba(30,16,10,.9)');}
+    ctx.restore();
+    let g=ctx.createRadialGradient(cx,cy,R*.55,cx,cy,R);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.5)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,TAU);ctx.fill();
+    g=ctx.createLinearGradient(cx-R,0,cx+R,0);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.7,'rgba(0,0,0,.05)');g.addColorStop(1,'rgba(0,0,0,.45)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,TAU);ctx.fill();
+    if(SL.t>=0&&SL.t<99){SL.t+=dt;const sp=R*.2,v=sp/.6,L0=R*.8;
+      for(let i=0;i<21;i++){const D=L0+i*sp-v*SL.t;
+        if(D<=0){if(i>=SL.hits){SL.hits=i+1;const c=LET[i];SL.fl.push({t:0,sz:SIZE[c]||.28,c});SL.spots.push({lon:94,sz:SIZE[c]||.28});}continue;}
+        const x=P[0]+d[0]*D,y=P[1]+d[1]*D;if(x>w+30||y>h+30)continue;
+        ctx.strokeStyle='rgba(200,230,255,.35)';ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+14,y-2);ctx.stroke();
+        ctx.fillStyle='#eaf4ff';ctx.beginPath();ctx.arc(x,y,1.6+(SIZE[LET[i]]||.28)*1.6,0,TAU);ctx.fill();}
+      if(SL.hits>=21&&!SL.fl.length)SL.t=99;}
+    for(let i=SL.fl.length-1;i>=0;i--){const f=SL.fl[i];f.t+=dt;if(f.t>2.2){SL.fl.splice(i,1);continue;}
+      const e=Math.min(1,f.t/.35),a=f.t<.35?1:1-(f.t-.35)/1.85,rr=R*(.05+.12*f.sz)*(.4+.6*e),px=P[0]+n[0]*R*.03,py=P[1]+n[1]*R*.03;
+      g=ctx.createRadialGradient(px,py,0,px,py,rr);g.addColorStop(0,`rgba(255,255,240,${a})`);g.addColorStop(.35,`rgba(255,200,120,${a*.7})`);g.addColorStop(1,'rgba(255,150,60,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,rr,0,TAU);ctx.fill();
+      if(f.c==='G'&&f.t<.2)SL.gl=1;}
+    if(SL.gl>0){ctx.fillStyle=`rgba(255,230,190,${SL.gl*.1})`;ctx.fillRect(0,0,w,h);SL.gl=Math.max(0,SL.gl-dt*1.5);}
+    ctx.textBaseline='alphabetic';ctx.textAlign='left';ctx.font=`11px ${MONO}`;ctx.fillStyle='rgba(189,182,164,.9)';ctx.fillText('1994.07.16 – 07.22',14,22);
+    ctx.font=`500 13px ${MONO}`;ctx.fillStyle=COL.amber;ctx.fillText(`撞击 ${SL.hits} / 21`,14,42);
+    const gF=SL.fl.find(f=>f.c==='G');if(gF||(SL.hits>=7&&SL.hits<=10&&SL.t<99)){ctx.font=`12px ${SANS}`;ctx.fillStyle=COL.ink;ctx.textAlign='right';ctx.fillText('碎片 G：≈ 600 万兆吨 TNT',w-14,h-18);}}
+});
+$('#b-sl9').addEventListener('click',()=>{SL.played=true;slStart();});
+
+/* ---------- 09 Soup ---------- */
+const SOUP={s:0,a:0,k:new Set(),last:-1e9};
+const MOL=[['H₂O','#9fd9ff'],['CH₄','#c7b5ff'],['NH₃','#b5efc0'],['H₂','#e6e6e6']];
+const AAS=['Gly','Ala','Asp','Glu','Val','Ser','Abu','βAla'];
+function molNew(s,top){return{x:Math.random()*s.w,y:top?-8:Math.random()*s.h,vx:(Math.random()-.5)*10,vy:(Math.random()-.5)*10,t:(Math.random()*4)|0,aa:false,born:0};}
+function boltPts(x0,y0,x1,y1){let p=[[x0,y0],[x1,y1]],disp=Math.hypot(x1-x0,y1-y0)*.2;for(let it=0;it<5;it++){const q=[p[0]];for(let i=1;i<p.length;i++){const a=p[i-1],b=p[i];q.push([(a[0]+b[0])/2+(Math.random()-.5)*disp,(a[1]+b[1])/2+(Math.random()-.5)*disp*.3]);q.push(b);}p=q;disp*=.55;}return p;}
+function strike(s,x,y){SOUP.last=performance.now();SOUP.s++;s.b.push({p:boltPts(x+(Math.random()-.5)*70,0,x,y),t:0});s.fl=1;
+  const rad=Math.max(70,s.w*.13);let made=0,near=null,nd=1e9;
+  for(const m of s.m){if(m.aa)continue;const dd=Math.hypot(m.x-x,m.y-y);if(dd<nd){nd=dd;near=m;}if(dd<rad&&Math.random()<.4){m.aa=true;m.name=AAS[(Math.random()*AAS.length)|0];m.born=SOUP.s;made++;}}
+  if(!made&&near){near.aa=true;near.name=AAS[(Math.random()*AAS.length)|0];near.born=SOUP.s;made=1;}
+  for(const m of s.m)if(m.aa&&m.born===SOUP.s){SOUP.a++;SOUP.k.add(m.name);}
+  let aas=s.m.filter(m=>m.aa);if(aas.length>26){aas.sort((a,b)=>a.born-b.born);const drop=new Set(aas.slice(0,aas.length-26));s.m=s.m.filter(m=>!drop.has(m));}
+  while(s.m.filter(m=>!m.aa).length<s.n)s.m.push(molNew(s,true));
+  $('#soup-s').textContent=SOUP.s;$('#soup-a').textContent=SOUP.a;$('#soup-k').textContent=SOUP.k.size;
+  if(SOUP.a>=10)$('#soup-hint').innerHTML='<span class="chip warn">积木有了</span>但它们不会自己连成蛋白质：在水里，氨基酸之间的连接更容易被水解断开。';
+  else $('#soup-hint').textContent='闪电把简单分子重新组合成了氨基酸。继续点击水面。';}
+const sS=scene($('#cv-soup'),{
+  resize(s){s.n=Math.round(s.w*s.h/4600);s.m=[];for(let i=0;i<s.n;i++)s.m.push(molNew(s));s.b=[];s.fl=0;},
+  draw(s,now,dt){const {ctx,w,h}=s;let g=ctx.createLinearGradient(0,0,0,h);g.addColorStop(0,'#0c2c35');g.addColorStop(1,'#031319');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle='rgba(111,211,199,.06)';ctx.lineWidth=1;for(let k=0;k<6;k++){ctx.beginPath();for(let x=0;x<=w;x+=12){const y=h*(.12+k*.15)+Math.sin(x*.02+now*.0006*AMB+k)*8;if(x)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.stroke();}
+    if(!RM&&s.visible&&now-SOUP.last>3800&&SOUP.s<40)strike(s,w*(.15+Math.random()*.7),h*(.35+Math.random()*.5));
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    for(const m of s.m){if(dt){m.vx+=(Math.random()-.5)*16*dt;m.vy+=(Math.random()-.5)*16*dt;m.vx*=.985;m.vy*=.985;m.x+=m.vx*dt*AMB;m.y+=m.vy*dt*AMB;}
+      if(m.x<-12)m.x=w+12;if(m.x>w+12)m.x=-12;if(m.y<-12)m.y=h+12;if(m.y>h+12)m.y=-12;
+      if(m.aa){g=ctx.createRadialGradient(m.x,m.y,0,m.x,m.y,18);g.addColorStop(0,'rgba(111,211,199,.5)');g.addColorStop(1,'rgba(111,211,199,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(m.x,m.y,18,0,TAU);ctx.fill();
+        ctx.fillStyle=COL.teal;ctx.beginPath();ctx.arc(m.x,m.y,4,0,TAU);ctx.fill();ctx.font=`500 10.5px ${MONO}`;ctx.fillStyle=COL.ink;ctx.fillText(m.name,m.x,m.y-12);}
+      else{const c=MOL[m.t];ctx.fillStyle=c[1];ctx.globalAlpha=.85;ctx.beginPath();ctx.arc(m.x,m.y,2.2,0,TAU);ctx.fill();ctx.globalAlpha=.55;ctx.font=`9.5px ${MONO}`;ctx.fillText(c[0],m.x,m.y+10);ctx.globalAlpha=1;}}
+    for(let i=s.b.length-1;i>=0;i--){const b=s.b[i];b.t+=dt;if(b.t>.35){s.b.splice(i,1);continue;}ctx.strokeStyle=`rgba(215,232,255,${1-b.t/.35})`;ctx.lineWidth=2.2;ctx.shadowColor='rgba(160,200,255,.9)';ctx.shadowBlur=14;ctx.beginPath();b.p.forEach((p,j)=>{if(j)ctx.lineTo(p[0],p[1]);else ctx.moveTo(p[0],p[1]);});ctx.stroke();ctx.shadowBlur=0;}
+    if(s.fl>0){ctx.fillStyle=`rgba(200,220,255,${s.fl*.22})`;ctx.fillRect(0,0,w,h);s.fl=Math.max(0,s.fl-dt*4);}}
+});
+$('#cv-soup').addEventListener('pointerdown',e=>{const b=e.currentTarget.getBoundingClientRect();strike(sS,e.clientX-b.left,e.clientY-b.top);});
+
+/* ---------- 10 Chirality ---------- */
+(function(){
+  const g=$('#chi'),cells=[];for(let i=0;i<100;i++){const c=document.createElement('span');c.textContent='·';g.appendChild(c);cells.push(c);}
+  let n=0,best=0,auto=false,acc=0,lastL=[];
+  function one(){const a=[];let L=0;for(let i=0;i<100;i++){const l=Math.random()<.5;a.push(l);if(l)L++;}n++;if(L>best)best=L;lastL=a;return L;}
+  function show(L){for(let i=0;i<100;i++){cells[i].textContent=lastL[i]?'L':'D';cells[i].className=lastL[i]?'':'d';}
+    $('#chi-l').textContent=L+' / 100';$('#chi-best').textContent=best+' / 100';$('#chi-n').textContent=fmtInt(n);}
+  $('#b-chi').addEventListener('click',()=>show(one()));
+  const ab=$('#b-chi-auto');ab.addEventListener('click',()=>{auto=!auto;ab.setAttribute('aria-pressed',auto);ab.textContent=auto?'停止':'每秒 1000 次';});
+  tickers.push(dt=>{if(!auto)return;acc+=dt*1000;let L=0,k=Math.min(200,Math.floor(acc));acc-=k;for(let i=0;i<k;i++)L=one();if(k)show(L);});
+  show(one());
+})();
+
+/* ---------- 11 Protein ---------- */
+(function(){
+  const AA='ACDEFGHIKLMNPQRSTVWY',T='FVNQHLCGSHLVEALYLVCGERGFFYTPKT',ti=[...T].map(c=>AA.indexOf(c));
+  const mk=id=>{const el=$(id),a=[];for(let i=0;i<30;i++){const s=document.createElement('span');s.textContent='·';el.appendChild(s);a.push(s);}return a;};
+  const rt=mk('#seq-t'),ra=mk('#seq-a'),rb=mk('#seq-b');rt.forEach((s,i)=>s.textContent=T[i]);
+  let n=0,best=-1,auto=false,acc=0;const cur=new Uint8Array(30);
+  function one(){let m=0;for(let i=0;i<30;i++){cur[i]=(Math.random()*20)|0;if(cur[i]===ti[i])m++;}n++;if(m>best){best=m;for(let i=0;i<30;i++){rb[i].textContent=AA[cur[i]];rb[i].className=cur[i]===ti[i]?'hit':'';}$('#seq-bm').textContent=m+' / 30';}return m;}
+  function show(m){for(let i=0;i<30;i++){ra[i].textContent=AA[cur[i]];ra[i].className=cur[i]===ti[i]?'hit':'';}$('#seq-m').textContent=m+' / 30';$('#seq-n').textContent=fmtInt(n);}
+  $('#b-seq').addEventListener('click',()=>show(one()));
+  const ab=$('#b-seq-auto');ab.addEventListener('click',()=>{auto=!auto;ab.setAttribute('aria-pressed',auto);ab.textContent=auto?'停止':'每秒 1 万次';});
+  tickers.push(dt=>{if(!auto)return;acc+=dt*10000;const k=Math.min(1000,Math.floor(acc));acc-=k;let m=0;for(let i=0;i<k;i++)m=one();if(k)show(m);});
+  show(one());
+})();
+
+/* ---------- 12 Genes ---------- */
+(function(){const el=$('#genes'),rnd=seeded(42),u=new Set();while(u.size<149)u.add((rnd()*473)|0);const f=document.createDocumentFragment();
+  for(let i=0;i<473;i++){const s=document.createElement('span');if(u.has(i))s.className='u';f.appendChild(s);}el.appendChild(f);})();
+
+/* ---------- 14 Engulf ---------- */
+const ENG={n:0,auto:false};
+function bacNew(s){for(let k=0;k<300;k++){const x=20+Math.random()*(s.w-40),y=20+Math.random()*(s.h-40);if(Math.hypot(x-s.cx,y-s.cy)>s.R*1.6)return{x,y,a:Math.random()*TAU,va:(Math.random()-.5)*.8,vx:(Math.random()-.5)*16,vy:(Math.random()-.5)*16};}return{x:16,y:16,a:0,va:0,vx:0,vy:0};}
+function engulf(s,px,py){if(!s||s.job||!s.bac.length)return;let best=null,bd=1e9;for(const b of s.bac){const d=Math.hypot(b.x-px,b.y-py);if(d<bd){bd=d;best=b;}}
+  const ang=Math.random()*TAU,rr=.28+Math.random()*.34;s.job={b:best,t:0,fx:best.x,fy:best.y,rx:Math.cos(ang)*rr,ry:Math.sin(ang)*rr};}
+const ENG_T=['点击任意位置，让古菌吞下离那里最近的细菌。','<span class="chip warn">没有被消化</span>被吞下的细菌留了下来，在宿主体内分裂、传代——它成了线粒体。','<span class="chip">发电站</span>今天，你的一个细胞里有数百到上千个线粒体。它们仍保留着自己的一小段 DNA，那是 20 亿年前那个细菌留下的痕迹。'];
+const sE=scene($('#cv-eng'),{
+  resize(s){s.cx=s.w*.5;s.cy=s.h*.52;s.R=Math.min(s.w,s.h)*.24;s.mito=s.mito||[];s.bac=[];for(let i=0;i<5;i++)s.bac.push(bacNew(s));s.job=null;
+    const rnd=seeded(9);s.dna=[];for(let i=0;i<9;i++)s.dna.push([(rnd()-.5)*.5,(rnd()-.5)*.5]);},
+  onShow(s){if(!ENG.auto){ENG.auto=true;setTimeout(()=>engulf(s,s.w,s.cy),RM?60:1500);}},
+  draw(s,now,dt){const {ctx,w,h}=s;ctx.clearRect(0,0,w,h);const t=now/1000*AMB,R=s.R*(1+.04*Math.min(ENG.n,5)),cx=s.cx,cy=s.cy;
+    for(const b of s.bac){if(s.job&&b===s.job.b)continue;b.x+=b.vx*dt*AMB;b.y+=b.vy*dt*AMB;b.a+=b.va*dt*AMB;if(b.x<14||b.x>w-14)b.vx*=-1;if(b.y<14||b.y>h-14)b.vy*=-1;b.x=clamp(b.x,14,w-14);b.y=clamp(b.y,14,h-14);
+      const dx=b.x-cx,dy=b.y-cy,d=Math.hypot(dx,dy)||1;if(d<R*1.45){b.x=cx+dx/d*R*1.45;b.y=cy+dy/d*R*1.45;b.vx=dx/d*12;b.vy=dy/d*12;}}
+    let bA=0,bT=0;
+    if(s.job){const J=s.job;J.t+=dt/(RM?.05:1.9);const e=Math.min(1,J.t),k=e<.5?2*e*e:1-Math.pow(-2*e+2,2)/2;J.b.x=lerp(J.fx,cx+J.rx*R,k);J.b.y=lerp(J.fy,cy+J.ry*R,k);
+      bT=Math.atan2(J.fy-cy,J.fx-cx);bA=Math.max(0,Math.hypot(J.fx-cx,J.fy-cy)-R+12)*Math.sin(Math.PI*Math.min(1,e*1.15));
+      if(J.t>=1){s.mito.push({rx:J.rx,ry:J.ry,a:J.b.a,ph:Math.random()*6});s.bac.splice(s.bac.indexOf(J.b),1);s.bac.push(bacNew(s));s.job=null;ENG.n++;$('#eng-n').textContent=ENG.n;$('#eng-t').innerHTML=ENG_T[Math.min(2,ENG.n)];}}
+    const rad=th=>{let dth=th-bT;dth=Math.atan2(Math.sin(dth),Math.cos(dth));return R*(1+.035*Math.sin(3*th+t*.8)+.025*Math.sin(5*th-t*1.2))+bA*Math.exp(-(dth*dth)/.1);};
+    ctx.strokeStyle='rgba(111,211,199,.55)';ctx.lineWidth=2;
+    for(let i=0;i<6;i++){const th=i/6*TAU+.4,r0=rad(th),L=R*(.32+.08*Math.sin(t*1.3+i)),bx=cx+Math.cos(th)*r0,by=cy+Math.sin(th)*r0,ex=cx+Math.cos(th+.12*Math.sin(t+i))*(r0+L),ey=cy+Math.sin(th+.12*Math.sin(t+i))*(r0+L),mx=cx+Math.cos(th-.15)*(r0+L*.5),my=cy+Math.sin(th-.15)*(r0+L*.5);ctx.beginPath();ctx.moveTo(bx,by);ctx.quadraticCurveTo(mx,my,ex,ey);ctx.stroke();}
+    ctx.beginPath();for(let i=0;i<=96;i++){const th=i/96*TAU,r=rad(th),x=cx+Math.cos(th)*r,y=cy+Math.sin(th)*r;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.closePath();
+    let g=ctx.createRadialGradient(cx,cy,R*.2,cx,cy,R*1.1);g.addColorStop(0,'rgba(111,211,199,.08)');g.addColorStop(1,'rgba(111,211,199,.24)');ctx.fillStyle=g;ctx.fill();ctx.strokeStyle='rgba(111,211,199,.9)';ctx.lineWidth=2;ctx.stroke();
+    ctx.strokeStyle='rgba(236,229,211,.35)';ctx.lineWidth=1.2;ctx.beginPath();s.dna.forEach((p,i)=>{const x=cx+p[0]*R+Math.sin(t*.7+i)*2,y=cy+p[1]*R+Math.cos(t*.6+i)*2;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);});ctx.stroke();
+    for(const m of s.mito){const x=cx+m.rx*R+Math.sin(t*.5+m.ph)*3,y=cy+m.ry*R+Math.cos(t*.4+m.ph)*3,a=m.a+Math.sin(t*.3+m.ph)*.2;capsule(ctx,x,y,a,28,14);ctx.fillStyle='rgba(255,181,71,.85)';ctx.fill();
+      ctx.save();ctx.translate(x,y);ctx.rotate(a);ctx.strokeStyle='rgba(120,70,10,.9)';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(-9,0);for(let q=0;q<6;q++)ctx.lineTo(-9+q*3.6+1.8,q%2?-4:4);ctx.stroke();ctx.restore();}
+    for(const b of s.bac){capsule(ctx,b.x,b.y,b.a,26,12);ctx.fillStyle='rgba(232,150,196,.85)';ctx.fill();ctx.strokeStyle='rgba(232,150,196,.5)';ctx.lineWidth=1;ctx.beginPath();const fx=b.x-Math.cos(b.a)*13,fy=b.y-Math.sin(b.a)*13;ctx.moveTo(fx,fy);for(let q=1;q<=4;q++){const d=q*5;ctx.lineTo(fx-Math.cos(b.a)*d+Math.sin(t*6+q)*2*Math.sin(b.a),fy-Math.sin(b.a)*d-Math.sin(t*6+q)*2*Math.cos(b.a));}ctx.stroke();}
+    ctx.font=`11px ${SANS}`;ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillStyle='rgba(111,211,199,.95)';ctx.fillText('古菌（宿主）',12,22);ctx.fillStyle='rgba(232,150,196,.95)';ctx.fillText('细菌',12,40);ctx.fillStyle=COL.amber;ctx.fillText('线粒体',12,58);}
+});
+$('#cv-eng').addEventListener('pointerdown',e=>{const b=e.currentTarget.getBoundingClientRect();ENG.auto=true;engulf(sE,e.clientX-b.left,e.clientY-b.top);});
+
+/* ---------- 15 Timeline + asteroid ---------- */
+(function(){
+  const EXT=[[444,86,'奥陶纪末','约 4.44 亿年前 · 约 86% 的物种消失。冰川扩张、海平面骤降，浅海生态几乎被清空。'],[372,75,'泥盆纪晚期','约 3.72 亿年前起 · 约 75% 的物种消失。海洋大面积缺氧，古老的礁生态崩溃。'],[252,96,'二叠纪末','约 2.52 亿年前 · 海洋物种损失估计 81%–96%，是地球史上最惨烈的一次。西伯利亚大规模火山喷发，海洋升温、酸化、缺氧。'],[201,80,'三叠纪末','约 2.01 亿年前 · 约 80% 的物种消失。中大西洋岩浆区喷发；灾难过后，恐龙开始称霸。'],[66,76,'白垩纪末','6600 万年前 · 约 76% 的物种消失。希克苏鲁伯小行星撞击，非鸟恐龙全部灭绝，哺乳动物的时代开始。']];
+  const tl=$('#tl'),X=t=>(800-t)/800*100;
+  let html='<div class="tl-axis"></div>';
+  html+=`<div class="tl-band" style="left:${X(717)}%;width:${X(635)-X(717)}%"><em>雪球地球</em></div>`;
+  html+=`<div class="tl-line" style="left:${X(538.8)}%"><em>寒武纪大爆发</em></div>`;
+  [[800,'8 亿年前'],[600,'6 亿'],[400,'4 亿'],[200,'2 亿'],[0,'今天']].forEach(([t,l],i)=>{html+=`<span class="tl-tick${i===4?' end':''}" style="left:${X(t)}%">${l}</span>`;});
+  EXT.forEach((e,i)=>{html+=`<button class="tl-bar" type="button" data-i="${i}" style="left:${X(e[0])}%;height:${e[1]*1.05}px" aria-label="${e[2]}"><span>${i===2?'81–96%':e[1]+'%'}</span></button>`;});
+  tl.innerHTML=html;
+  const bars=tl.querySelectorAll('.tl-bar');
+  function sel(i){bars.forEach((b,j)=>b.classList.toggle('sel',j===i));$('#tl-info').innerHTML=`<b>${EXT[i][2]}</b>　${EXT[i][3]}`;}
+  bars.forEach(b=>b.addEventListener('click',()=>sel(+b.dataset.i)));sel(4);
+})();
+const AST={W:40,H:20,hyd:new Uint8Array(800),n:0,x:0,a:null,last:-1};
+(function(){const v=[];for(let j=0;j<AST.H;j++)for(let i=0;i<AST.W;i++)v.push([fbm(i*.21+11.3,j*.21+4.1,2.7,4),j*AST.W+i]);v.sort((a,b)=>b[0]-a[0]);for(let k=0;k<104;k++)AST.hyd[v[k][1]]=1;})();
+function astGeo(s){const pad=12,cs=Math.min((s.w-pad*2)/AST.W,(s.h-pad*2)/AST.H);return{cs,ox:(s.w-cs*AST.W)/2,oy:(s.h-cs*AST.H)/2};}
+function astResolve(){AST.n++;const hit=AST.hyd[AST.a.idx];if(hit)AST.x++;AST.last=AST.a.idx;
+  $('#ast-n').textContent=AST.n;$('#ast-x').textContent=AST.x;$('#ast-p').textContent=Math.round(AST.x/AST.n*100)+'%';
+  $('#ast-t').innerHTML=hit?'<span class="chip bad">大灭绝</span>落在富含有机质的岩层上：烟尘遮天蔽日，全球急剧降温。恐龙退场，哺乳动物的时代开始——这就是真实发生的那一次。':'<span class="chip ok2">恐龙幸存</span>撞击造成了区域性灾难，但喷出的烟尘不足以让全球气候崩溃。按这项研究的推断，恐龙很可能会继续统治地球。';}
+const sA=scene($('#cv-ast'),{
+  draw(s,now,dt){const {ctx,w,h}=s;ctx.clearRect(0,0,w,h);const {cs,ox,oy}=astGeo(s);
+    for(let j=0;j<AST.H;j++)for(let i=0;i<AST.W;i++){const k=j*AST.W+i;ctx.fillStyle=AST.hyd[k]?'#8f5c2c':'rgba(111,211,199,.13)';ctx.fillRect(ox+i*cs+.6,oy+j*cs+.6,cs-1.2,cs-1.2);}
+    ctx.strokeStyle='rgba(236,229,211,.25)';ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(ox,oy+cs*AST.H/2);ctx.lineTo(ox+cs*AST.W,oy+cs*AST.H/2);ctx.stroke();ctx.setLineDash([]);
+    const cc=k=>[ox+(k%AST.W+.5)*cs,oy+(((k/AST.W)|0)+.5)*cs];
+    if(AST.last>=0&&!AST.a){const [x,y]=cc(AST.last);ctx.strokeStyle=AST.hyd[AST.last]?COL.red:COL.teal;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,cs*1.1,0,TAU);ctx.stroke();ctx.lineWidth=1;}
+    if(AST.a){const A=AST.a;A.t+=dt;const [tx,ty]=cc(A.idx),sx=w+20,sy=-20;
+      if(A.t<.9){const e=A.t/.9,k=e*e,x=lerp(sx,tx,k),y=lerp(sy,ty,k);const g=ctx.createLinearGradient(x,y,x+(sx-tx)*.12,y+(sy-ty)*.12);g.addColorStop(0,'rgba(255,220,160,.9)');g.addColorStop(1,'rgba(255,160,80,0)');ctx.strokeStyle=g;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+(sx-tx)*.12,y+(sy-ty)*.12);ctx.stroke();ctx.lineWidth=1;ctx.fillStyle='#fff3dc';ctx.beginPath();ctx.arc(x,y,3.5,0,TAU);ctx.fill();}
+      else{if(!A.done){A.done=true;astResolve();}const e=clamp((A.t-.9)/1.3,0,1),hit=AST.hyd[A.idx];ctx.strokeStyle=hit?`rgba(255,107,87,${1-e})`:`rgba(111,211,199,${1-e})`;ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(tx,ty,cs*(.6+e*(hit?9:3)),0,TAU);ctx.stroke();ctx.lineWidth=1;
+        if(hit&&e<1){ctx.fillStyle=`rgba(60,40,30,${.35*(1-e)})`;ctx.fillRect(0,0,w,h);}if(A.t>2.2)AST.a=null;}}
+    ctx.font=`11px ${SANS}`;ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillStyle='rgba(236,229,211,.7)';ctx.fillText('地球表面（示意）',ox+4,oy-2>12?oy-2:14);}
+});
+$('#b-ast').addEventListener('click',()=>{if(AST.a)return;AST.a={t:RM?.9:0,idx:(Math.random()*800)|0,done:false};});
+
+/* ---------- 16 Bottleneck ---------- */
+const NB={t:-1,played:false,lastAlive:-1};
+const sN=scene($('#cv-neck'),{
+  resize(s){const rnd=seeded(5),cols=Math.max(20,Math.round(Math.sqrt(1000*s.w/s.h))),rows=Math.ceil(1000/cols),gx=s.w/(cols+1),gy=s.h/(rows+1),sv=new Set();while(sv.size<13)sv.add((rnd()*1000)|0);
+    s.r=Math.max(1.2,Math.min(gx,gy)*.28);s.d=[];for(let i=0;i<1000;i++){const c=i%cols,r=(i/cols)|0;s.d.push({x:gx*(c+1)+(rnd()-.5)*gx*.5,y:gy*(r+1)+(rnd()-.5)*gy*.5,die:sv.has(i)?9:.03+rnd()*.94,s:sv.has(i)});}},
+  onShow(s){if(!NB.played){NB.played=true;NB.t=RM?99:0;}},
+  draw(s,now,dt){const {ctx,w,h}=s;ctx.clearRect(0,0,w,h);if(NB.t>=0&&NB.t<99)NB.t+=dt;const p=NB.t<0?0:clamp((NB.t-.5)/3.8,0,1);let alive=0;
+    for(const d of s.d){if(d.s){const gl=clamp((p-.85)/.15,0,1);if(gl>0){const g=ctx.createRadialGradient(d.x,d.y,0,d.x,d.y,s.r*6);g.addColorStop(0,`rgba(255,181,71,${.55*gl})`);g.addColorStop(1,'rgba(255,181,71,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(d.x,d.y,s.r*6,0,TAU);ctx.fill();}
+        ctx.fillStyle=gl>0?COL.amber:'rgba(236,229,211,.75)';ctx.beginPath();ctx.arc(d.x,d.y,s.r*(1+gl*.8),0,TAU);ctx.fill();alive++;continue;}
+      const a=clamp((d.die-p)/.05,0,1);if(a<=0)continue;alive++;ctx.globalAlpha=.75*a;ctx.fillStyle=COL.ink;ctx.beginPath();ctx.arc(d.x,d.y,s.r,0,TAU);ctx.fill();ctx.globalAlpha=1;}
+    const al=s.d.filter(d=>d.s||d.die>p).length;if(al!==NB.lastAlive){NB.lastAlive=al;$('#neck-n').textContent=fmtInt(Math.round(al*98.46/10)*10);$('#neck-t').textContent=p<1?'约 93 万年前':'此后约 11.7 万年';}}
+});
+$('#b-neck').addEventListener('click',()=>{NB.played=true;NB.t=RM?99:0;});
+
+/* ---------- Cosmic calendar ---------- */
+(function(){
+  const T0=13.8e9,LG=Math.log10(T0),ML=[31,28,31,30,31,30,31,31,30,31,30,31];
+  const EV=[[13.8e9,'大爆炸'],[13.6e9,'第一批恒星点亮（约）'],[4.57e9,'太阳系诞生'],[4.5e9,'撞击形成月球'],[4.4e9,'最早的液态水证据（锆石）'],[3.48e9,'最早的确切生命化石（叠层石）'],[2.4e9,'大氧化事件'],[1.8e9,'真核细胞出现（约）'],[1.05e9,'多细胞红藻出现'],[5.388e8,'寒武纪大爆发'],[4.7e8,'植物登上陆地'],[2.52e8,'二叠纪末大灭绝'],[6.6e7,'小行星撞击，恐龙退场'],[7e6,'人与黑猩猩的祖先分开（约）'],[3.15e5,'智人出现'],[1.2e4,'农业出现'],[5.2e3,'文字出现'],[339,'牛顿发表《原理》'],[57,'人类登上月球'],[1,'一年前']];
+  const pOf=t=>Math.log10(T0/t)/LG,tOf=p=>T0*Math.pow(10,-p*LG);
+  const r=$('#r-cal'),ticks=$('#cal-ticks'),tb=[];
+  const pos=p=>`calc(${(p*100).toFixed(3)}% * (1 - 16px / 100%) + 8px)`;
+  EV.forEach((e,i)=>{const b=document.createElement('button');b.type='button';b.title=e[1];b.setAttribute('aria-label',e[1]);b.style.left=`calc(${(pOf(e[0])*100).toFixed(3)}% - ${(pOf(e[0])*16-8).toFixed(2)}px)`;b.addEventListener('click',()=>{stop();r.value=Math.round(pOf(e[0])*1000);up();});ticks.appendChild(b);tb.push(b);});
+  const ax=$('#cal-axis');[[T0,'138 亿年前'],[1e9,'10 亿年'],[1e6,'100 万年'],[1e3,'1000 年'],[1,'1 年前']].forEach(([t,l])=>{const s=document.createElement('span');const p=pOf(t);s.style.left=`calc(${(p*100).toFixed(3)}% - ${(p*16-8).toFixed(2)}px)`;s.textContent=l;ax.appendChild(s);});
+  function ago(t){if(t>=1e8)return(t/1e8).toFixed(1).replace(/\.0$/,'')+' 亿年前';if(t>=1e4){const v=t/1e4;return(v>=100?Math.round(v):v.toFixed(1).replace(/\.0$/,''))+' 万年前';}return fmtInt(t)+' 年前';}
+  function dur(sec){if(sec>=86400)return(sec/86400).toFixed(1)+' 天';if(sec>=3600)return(sec/3600).toFixed(1)+' 小时';if(sec>=60)return(sec/60).toFixed(1)+' 分钟';return sec.toFixed(2)+' 秒';}
+  function cal(t){const sec=(1-t/T0)*31536000;let d=Math.floor(sec/86400),rem=sec-d*86400,m=0;while(m<11&&d>=ML[m]){d-=ML[m];m++;}return{m:m+1,d:d+1,hh:Math.floor(rem/3600),mm:Math.floor(rem%3600/60),ss:rem%60};}
+  function up(){const p=+r.value/1000,t=tOf(p),c=cal(t);
+    $('#cal-date').textContent=`${c.m} 月 ${c.d} 日`;
+    const ss=t<1e5?(Math.floor(c.ss*100)/100).toFixed(2).padStart(5,'0'):pad2(Math.floor(c.ss));
+    $('#cal-time').textContent=`${pad2(c.hh)}:${pad2(c.mm)}:${ss}`;$('#cal-ago').textContent=ago(t);
+    let pi=-1;EV.forEach((e,i)=>{if(e[0]>=t*.9999)pi=i;});
+    tb.forEach((b,i)=>b.classList.toggle('cur',i===pi));
+    const pv=EV[pi],nx=EV[pi+1];
+    $('#cal-prev').innerHTML=pv?`<b style="color:var(--amber);font-weight:500">${pv[1]}</b>　${ago(pv[0])}`:'—';
+    $('#cal-next').innerHTML=nx?`${nx[1]}　<span style="color:var(--ink-2)">在宇宙日历上还要再等 ${dur((t-nx[0])/T0*31536000)}</span>`:'<span style="color:var(--ink-2)">此刻：你正在读这行字。</span>';}
+  let play=null;const pb=$('#b-cal');
+  function stop(){if(play){play=null;pb.textContent='从大爆炸开始播放';}}
+  pb.addEventListener('click',()=>{if(play){stop();return;}play={t:0};pb.textContent='暂停';r.value=0;up();});
+  tickers.push(dt=>{if(!play)return;play.t+=dt;const e=clamp(play.t/14,0,1);r.value=Math.round(e*1000);up();if(e>=1)stop();});
+  r.addEventListener('input',()=>{stop();up();});up();
+})();
+
+})();
+</script>
+</body>
+</html>
