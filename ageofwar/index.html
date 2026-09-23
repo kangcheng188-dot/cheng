@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Age of War">
+<meta name="description" content="战争进化史 Age of War — fan remake of the 2007 Flash classic, playable on phone, tablet and PC.">
+<title>战争进化史 Age of War</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+@font-face { font-family: "AoWSerif"; src: url("fonts/bonum-bold.woff2") format("woff2"); font-weight: 400 900; font-display: swap; }
+@font-face { font-family: "AoWTitle"; src: url("fonts/cinzel-700.woff2") format("woff2"); font-weight: 400 900; font-display: swap; }
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; overscroll-behavior: none; }
+body { position: fixed; inset: 0; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+#game { position: absolute; left: 0; top: 0; display: block; touch-action: none; outline: none; }
+#rotate { position: fixed; left: 0; right: 0; bottom: 0; display: none; flex-direction: column; align-items: center; gap: 10px;
+  padding: 18px 16px calc(18px + env(safe-area-inset-bottom)); background: rgba(0,0,0,0.78); color: #fff;
+  font: 600 15px/1.4 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; text-align: center; z-index: 5; }
+#rotate .phone { width: 26px; height: 42px; border: 3px solid #fff; border-radius: 6px; animation: rot 2s ease-in-out infinite; }
+@keyframes rot { 0%, 30% { transform: rotate(0deg); } 60%, 100% { transform: rotate(-90deg); } }
+#rotate button { font: inherit; color: #111; background: #f0c830; border: 0; border-radius: 6px; padding: 8px 18px; }
+noscript { color: #fff; font-family: sans-serif; position: fixed; top: 40%; width: 100%; text-align: center; }
+</style>
+</head>
+<body>
+<canvas id="game" tabindex="0"></canvas>
+<div id="safe" style="position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)"></div>
+<div id="rotate"><div class="phone"></div><div id="rotateTxt"></div><button id="rotateGo" type="button"></button></div>
+<noscript>This game needs JavaScript. / 需要开启 JavaScript。</noscript>
+<script src="js/data.js"></script>
+<script src="js/gfx.js"></script>
+<script src="js/art_world.js"></script>
+<script src="js/art_turrets.js"></script>
+<script src="js/rig.js"></script>
+<script src="js/art_units.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
