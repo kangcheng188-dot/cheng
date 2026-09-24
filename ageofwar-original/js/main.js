@@ -50,6 +50,13 @@ async function fetchBytes(url, onProgress) {
   for (const c of chunks) { out.set(c, o); o += c.length; }
   return out;
 }
+// a bundle that cannot serve .swf files ships the file as base64 text (*.b64.txt)
+function fromBase64(u8) {
+  const bin = atob(new TextDecoder().decode(u8).replace(/\s+/g, ''));
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
 function isSwf(u8) { return u8 && u8.length > 8 && (u8[0] === 0x43 || u8[0] === 0x46) && u8[1] === 0x57 && u8[2] === 0x53; }
 
 function setStatus(text, k) {
@@ -72,7 +79,8 @@ async function boot() {
   setStatus(T.loading, 0);
   for (const url of SWF_SOURCES) {
     try {
-      const u8 = await fetchBytes(url, (k) => setStatus(T.loading, k * 0.8));
+      let u8 = await fetchBytes(url, (k) => setStatus(T.loading, k * 0.8));
+      if (/\.b64\.txt$/.test(url)) u8 = fromBase64(u8);
       if (isSwf(u8)) { await start(u8); return; }
     } catch (e) { /* try the next source */ }
   }
