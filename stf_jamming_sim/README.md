@@ -9,6 +9,8 @@ The two inputs you suggested are used directly:
 
 It is tested against every experiment in Mukuhira et al. (2025): Table 1 plus the supplementary tests.
 
+**Slides explaining the procedure step by step:** [`deck/STF_jamming_analysis.pptx`](deck/STF_jamming_analysis.pptx) (14 slides, speaker notes included). The conceptual figures are made by `deck/make_deck_figures.py` and the deck by `deck/build_deck.js`.
+
 ## Result
 
 | Test | Specimen / fluid | Stress (MPa) | 1st BP (MPa) | Jamming number Π_J | Model: where the pressure levels off | **Model: STF jams & pressure rebuilds?** | Observed |
